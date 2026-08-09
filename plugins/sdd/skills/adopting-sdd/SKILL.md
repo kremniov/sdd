@@ -65,7 +65,15 @@ For each path in the config, create it from the scaffold at
 | `roadmap` | `roadmap.md` | |
 | `features` | — | Create the empty directory. |
 | `adr` | — | Create the empty directory. |
-| docs root `README.md` | `docs-README.md` | The three-lifetimes table. Only if the docs root has no README. |
+| docs guide | `docs-README.md` | The three-lifetimes table. See the placement rule below. |
+
+**Where the docs guide goes.** Its home is the parent directory of `canon` — for
+`canon: docs/architecture/` that is `docs/README.md`. Two refusals, both
+absolute: never write it to the repository root, where it would compete with the
+project's own README; and never write it where a README already exists. When the
+parent of `canon` is the repository root, skip this file entirely and say so —
+the guide is a convenience, and no project needs it badly enough to have its
+front page displaced.
 
 Substitute every `{{key}}` placeholder with the value from `.sdd.yml`. Do not
 leave a placeholder in a written file.

@@ -62,6 +62,13 @@ A good invariant is **falsifiable and load-bearing**. Test each candidate:
 Prefer eight rules that decide review arguments to thirty that describe the
 code. Restating what the language or framework already enforces is filler.
 
+**Cut to the budget before presenting, not after.** Draft as many candidates as
+the evidence supports, then rank them: mechanically enforced rules first, then
+the ones whose violation would be a bug, then the rest. Everything past fifteen
+comes off the list — and if that hurts, the ones you were reluctant to cut are
+the ones to keep. A canon nobody finishes reading is not consulted in the review
+where it would have mattered.
+
 ## 3. Confirm with the operator
 
 Present the candidates as a numbered list, one line each, in the order you would

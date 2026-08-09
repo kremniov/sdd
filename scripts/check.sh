@@ -61,6 +61,17 @@ else
   note OK "no origin-project terms in skills or templates"
 fi
 
+echo "section nests"
+if head -1 plugins/sdd/templates/project/CLAUDE.section.md | grep -q '^## '; then
+  if grep -q '^# ' plugins/sdd/templates/project/CLAUDE.section.md; then
+    note FAIL "CLAUDE.section.md has an H1 — it is appended into someone's file"
+  else
+    note OK "CLAUDE.section.md starts at H2 and has no H1"
+  fi
+else
+  note FAIL "CLAUDE.section.md must start with an H2 heading"
+fi
+
 echo "scaffold renders"
 python3 - <<'PY' || fail=1
 import re, glob, sys

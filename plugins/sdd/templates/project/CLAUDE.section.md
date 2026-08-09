@@ -1,4 +1,4 @@
-# Development method
+## Development method
 
 This project runs spec-driven development sized to the task. The paths below are
 recorded in `.sdd.yml`; the skills read them from there.
@@ -12,7 +12,7 @@ recorded in `.sdd.yml`; the skills read them from there.
 | Decision records | `{{adr}}` |
 | Verification command | `{{verify}}` |
 
-## Process tiers
+### Process tiers
 
 The design cycle costs roughly the same regardless of task size, while its
 payoff scales with how ambiguous the task is. Size the process to the task —
@@ -86,12 +86,12 @@ Invoke a skill when the task is plainly the one it covers. A per-turn check of
 every available skill against questions like "what does this file do" is a tax
 with no return.
 
-## Architectural invariants
+### Architectural invariants
 
 See `{{canon}}invariants.md` — the canonical list. These rules apply to all
 work; other documents link there rather than restating them.
 
-## Significant decisions
+### Significant decisions
 
 `{{adr}}` holds one decision per file (why we chose X). Read the relevant one
 before reworking a seam it governs.
@@ -104,7 +104,7 @@ moves, a non-obvious trade-off is taken, or the resulting shape will invite
 someone to "fix" it back. The trigger is tier-independent; a one-file Tier 0
 change can earn an ADR and a Tier 2 feature can earn none.
 
-## Docs discipline
+### Docs discipline
 
 Before finishing a development branch, if the work changed a seam documented in
 `{{canon}}`, update that file in the same PR. Keep the architecture layer
@@ -115,7 +115,7 @@ the finished diff, before the branch is integrated. Neither follows from how the
 work was planned: a branch that ran the full design cycle can still land without
 the ADR its own decision earned.
 
-## Comments
+### Comments
 
 A comment carries the constraint that gives the code its current shape — why a
 value is persisted only after the operation is confirmed, why two calls sit in
