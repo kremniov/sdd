@@ -5,14 +5,18 @@ ambiguity of the job, rather than charging full price for a one-line change.
 
 ## Why this exists
 
-Prescriptive agent workflows tend to share two flaws. They are calibrated for a
-model whose default is to cut corners, so their dominant genre is
-anti-rationalization — tables of excuses, red-flag blocks, hard gates that fire
-on "every project regardless of perceived simplicity". And their cost is roughly
-constant while their payoff scales with how open the task is, so a one-file fix
-pays the same eight round-trips as a subsystem rewrite.
+Prescriptive agent workflows tend to share one structural flaw: their cost is
+roughly constant while their payoff scales with how open the task is. A one-file
+fix pays the same eight round-trips as a subsystem rewrite. They are also
+calibrated for a model whose default is to cut corners, so a large share of
+their text is anti-rationalization — tables of excuses, red-flag blocks, gates
+that fire on "every project regardless of perceived simplicity" — which spends
+attention on compliance rather than on the problem.
 
-This one starts from the opposite premise. The design cycle is expensive and
+Neither is a criticism of the discipline itself; see Prior art below for what
+this is built on. It is an argument that the discipline needs a dial.
+
+This one starts from that premise. The design cycle is expensive and
 worth it exactly when the task is genuinely ambiguous; the operator's attention
 is the scarce resource; and the rules that actually earn their place are few
 enough to state without a catalogue of ways to disobey them.
@@ -134,6 +138,38 @@ named by some skill, verifies this repo's own `CLAUDE.md` still matches the
 scaffold it ships, and greps for origin-project vocabulary that would break
 portability.
 
+## Prior art
+
+This method owes its shape to [Superpowers](https://github.com/obra/superpowers)
+by Jesse Vincent (MIT) — a genuinely good corpus, and the one we ran against for
+months before writing anything of our own. Several of its ideas are load-bearing
+here: that a coding agent benefits from an explicit, named procedure rather than
+improvised discipline; that debugging deserves a process of its own; and the
+rule that three failed fixes means the architecture is the problem, not the
+fourth fix. That last one is theirs, and it has earned its place more than once.
+
+What changed is calibration, not disagreement. Superpowers is built for an agent
+whose default is to cut corners, so its dominant register is
+anti-rationalization — tables of excuses, red-flag blocks, gates that fire on
+every project regardless of size. Running it on a real codebase, we measured the
+cost: three small tickets, each done twice — once with the full cycle, once
+without — in separate worktrees and separate sessions. The full cycle took 18
+round-trips of the operator's attention against 3, and about 1000 lines of
+process artifact per ticket, with no difference in the result that would repay
+it. A blind reviewer comparing the diffs still preferred the planned arm every
+time, for a different reason each time.
+
+That is a small sample on small work, and it says nothing about the tier where
+the cycle plainly earns its keep — no ticket in it moved an invariant or several
+modules at once. Which is the finding: the cost is near-constant while the
+payoff scales with ambiguity, so the discipline needs a dial rather than a
+verdict. That dial is the tier table, and everything here follows from it.
+
+So: thank you, and full credit. The text in this plugin is written from scratch
+— no file here is a copy or a derivative of a Superpowers file — but the
+thinking started there, and pretending otherwise would be poor manners.
+
 ## License
 
-MIT.
+MIT. Independent work; not affiliated with or endorsed by the Superpowers
+project.
