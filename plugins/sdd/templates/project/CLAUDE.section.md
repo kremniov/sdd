@@ -91,7 +91,17 @@ with no return.
 ### Architectural invariants
 
 See `{{canon}}invariants.md` — the canonical list. These rules apply to all
-work; other documents link there rather than restating them.
+work; other documents link there rather than restating them. Each entry carries
+how a violation is detected and what happens when one is found, so the list is
+readable as a review procedure and not only as prose.
+
+The list grows one line at a time, on the branch that earned the line. Before
+integrating, ask the four questions in `/sdd:deriving-canon` against the
+finished diff: did a listed rule stop being true, did this branch establish one,
+did a checker change, did an exception move? Most branches answer no to all
+four — that is the expected answer, not a failure to look. A rule that moves or
+retires needs an ADR; a rule merely being written down for the first time does
+not.
 
 ### Significant decisions
 
@@ -115,10 +125,12 @@ Before finishing a development branch, if the work changed a seam documented in
 `{{canon}}`, update that file in the same PR. Keep the architecture layer
 current so agents read it instead of re-reading code.
 
-Check both requirements — the canon update and the ADR trigger above — against
-the finished diff, before the branch is integrated. Neither follows from how the
-work was planned: a branch that ran the full design cycle can still land without
-the ADR its own decision earned.
+Check all three requirements — the canon update, the ADR trigger, and the
+invariant questions above — against the finished diff, before the branch is
+integrated. None of them follows from how the work was planned: a branch that
+ran the full design cycle can still land without the ADR its own decision
+earned, and a design that promised to move an invariant does not always turn out
+to have moved it.
 
 ### Comments
 

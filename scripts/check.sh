@@ -78,6 +78,9 @@ PY
 echo ".sdd.yml is well-formed"
 python3 scripts/check_config.py || fail=1
 
+echo "canon entries are complete"
+python3 scripts/check_canon.py || fail=1
+
 echo "own CLAUDE.md matches the template"
 python3 - <<'PY' || fail=1
 import re, sys

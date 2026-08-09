@@ -8,17 +8,30 @@ This is the single source of truth for the invariants. The rules file and featur
 designs **link here**; they do not restate them.
 
 <!--
-Populate this list with `/sdd:deriving-canon`, which reads the codebase and
-proposes the rules it already holds. An invariant is a rule the code obeys
-today and that a reviewer would push back on breaking — not an aspiration.
+Populate and extend this list with `/sdd:deriving-canon` — it establishes the
+list from the codebase, adds a line when a merging branch earns one, and audits
+the list against code that has drifted.
 
-Each entry: a bold name, then what must hold, stated so a reviewer can decide
-whether a diff violates it. Name the mechanism that enforces it where one
-exists; a rule nothing checks is a convention, and worth marking as such.
+An invariant is a rule the code obeys today and that a reviewer would push back
+on breaking — not an aspiration. Each entry carries three parts:
+
+    N. **Short name.** What must hold, phrased so a reviewer can decide whether
+       a diff violates it.
+       *Detect:* a command, a grep, or the question a reviewer asks.
+       *On violation:* reject, or open an ADR to move the rule.
+
+The detection note belongs on the rule, never in a summary at the foot of the
+file — a footer drifts the first time a checker grows, and nothing catches it.
+A rule whose *Detect* is only a question is a convention; say so rather than
+implying a rigour that is absent.
+
+Numbers are stable: other documents cite them. Append, never renumber. A retired
+rule keeps its number, struck through, naming the ADR that retired it.
 -->
 
 1. **<Name>.** <What must hold.>
-2. …
+   *Detect:* <command, grep, or review question>
+   *On violation:* <reject | ADR to move the rule>
 
 ## Per-layer responsibilities
 
