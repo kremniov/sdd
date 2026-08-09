@@ -2,10 +2,11 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin.json",
   "name": "sdd",
   "displayName": "Spec-Driven Development",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Sizes design process to the task at hand. Brings a tier table, the rules that make an approved plan run to its end, artifact skeletons, and skills to build and keep a project's architectural canon.",
   "author": {
-    "name": "Andrey Kremnev"
+    "name": "Andrey Kremnev",
+    "url": "https://github.com/kremnev"
   },
   "license": "MIT",
   "keywords": [
@@ -14,5 +15,7 @@
     "architecture",
     "planning",
     "debugging"
-  ]
+  ],
+  "homepage": "https://github.com/<account>/claude-plugins",
+  "repository": "https://github.com/<account>/claude-plugins"
 }

@@ -59,8 +59,8 @@ the plugin, so a fix to a skeleton reaches every project that installed it.
 ## Install
 
 ```
-/plugin marketplace add kremnev/sdd
-/plugin install sdd@kremnev-sdd
+/plugin marketplace add <account>/claude-plugins
+/plugin install sdd@<account>
 ```
 
 Then, in the repository you want to adopt it:
@@ -168,6 +168,17 @@ verdict. That dial is the tier table, and everything here follows from it.
 So: thank you, and full credit. The text in this plugin is written from scratch
 — no file here is a copy or a derivative of a Superpowers file — but the
 thinking started there, and pretending otherwise would be poor manners.
+
+## Who made this
+
+Built by [Andrey Kremnev](https://github.com/kremnev). The method was developed
+and run for months on a production codebase before any of it was
+extracted here — every rule in it survived contact with a real codebase, and the
+ones that did not are the reason the tier table exists.
+
+Issues and pull requests welcome. If you adopt it and something does not fit
+your project, that is worth an issue: the seam between the plugin and a
+repository is the part most likely to be wrong for a codebase I have never seen.
 
 ## License
 
