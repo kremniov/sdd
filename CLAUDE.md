@@ -101,7 +101,7 @@ how a violation is detected and what happens when one is found, so the list is
 readable as a review procedure and not only as prose.
 
 The list grows one line at a time, on the branch that earned the line. Before
-integrating, ask the four questions in `/sdd:deriving-canon` against the
+integrating, ask the four questions in `/sdd:canon` against the
 finished diff: did a listed rule stop being true, did this branch establish one,
 did a checker change, did an exception move? Most branches answer no to all
 four — that is the expected answer, not a failure to look. A rule that moves or
@@ -121,13 +121,13 @@ moves, a non-obvious trade-off is taken, or the resulting shape will invite
 someone to "fix" it back. The trigger is tier-independent; a one-file Tier 0
 change can earn an ADR and a Tier 2 feature can earn none.
 
-The skeleton ships with the `sdd` plugin; `/sdd:brainstorming` names its path.
+The skeleton ships with the `sdd` plugin; `/sdd:design` names its path.
 Follow an existing file in `docs/adr/` when one is there.
 
 ### Docs discipline
 
 Before finishing a development branch, if the work changed a seam documented in
-`docs/architecture/`, update that file in the same PR — `/sdd:documenting-subsystems`
+`docs/architecture/`, update that file in the same PR — `/sdd:subsystem`
 carries the procedure. Keep the architecture layer current so agents read it
 instead of re-reading code. When a branch changed a seam that no document
 covers, that is the trigger to write one, not a reason to skip the step.

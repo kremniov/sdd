@@ -38,16 +38,16 @@ to test something once it has failed. Evidence before any completion claim. The
 ticket moves to Done *after* the review, as the last commit — because it records
 that the work shipped.
 
-**Six skills:**
+**Six skills**, named after what they work on:
 
 | Skill | For |
 |---|---|
-| `adopting-sdd` | Install the method into a repository. Run once. |
-| `deriving-canon` | Establish, amend or audit the invariants the codebase holds. |
-| `documenting-subsystems` | Write and keep the architecture doc for one part of the system. |
-| `brainstorming` | Turn an ambiguous ticket into an agreed design. Tier 2. |
-| `managing-tasks` | The ticket format for the queue. |
-| `systematic-debugging` | Root cause before fix; three failed fixes means the architecture. |
+| `/sdd:setup` | Install the method into a repository. Run once. |
+| `/sdd:canon` | Establish, amend or audit the architectural invariants. |
+| `/sdd:subsystem` | Write and keep the architecture doc for one part of the system. |
+| `/sdd:design` | Turn an ambiguous ticket into an agreed design, then a plan. Tier 2. |
+| `/sdd:tasks` | The ticket format for the queue. |
+| `/sdd:debug` | Root cause before fix; three failed fixes means the architecture. |
 
 **Three artifact skeletons** — `_DESIGN.md`, `_PLAN.md`, `_ADR.md` — read from
 the plugin, so a fix to a skeleton reaches every project that installed it.
@@ -62,7 +62,7 @@ the plugin, so a fix to a skeleton reaches every project that installed it.
 Then, in the repository you want to adopt it:
 
 ```
-/sdd:adopting-sdd
+/sdd:setup
 ```
 
 It surveys what your project already has, proposes a `.sdd.yml` mapping, creates
@@ -74,7 +74,7 @@ safe — the section it writes is fenced in a marker it recognizes as its own.
 Then populate the canon:
 
 ```
-/sdd:deriving-canon
+/sdd:canon
 ```
 
 This reads your codebase and proposes the architectural rules it already

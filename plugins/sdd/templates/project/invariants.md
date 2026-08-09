@@ -8,7 +8,7 @@ This is the single source of truth for the invariants. The rules file and featur
 designs **link here**; they do not restate them.
 
 <!--
-Populate and extend this list with `/sdd:deriving-canon` — it establishes the
+Populate and extend this list with `/sdd:canon` — it establishes the
 list from the codebase, adds a line when a merging branch earns one, and audits
 the list against code that has drifted.
 

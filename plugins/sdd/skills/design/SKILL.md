@@ -1,9 +1,9 @@
 ---
-name: brainstorming
-description: Use when a tier-2 task is picked up — a new seam, an invariant that moves, or several modules moving together — to turn the ticket into an agreed design before any code. Produces the feature's design.md.
+name: design
+description: Use when a tier-2 task is picked up — a new seam, an invariant that moves, or several modules moving together — to turn an ambiguous ticket into an agreed design before any code, then into a plan that sequences the work. Produces design.md and plan.md.
 ---
 
-# Brainstorming
+# Design and Plan
 
 Turn a ticket into a design through dialogue, then write it down.
 
@@ -21,7 +21,7 @@ Read it first.
 Reading `.sdd.yml`: one `key: value` per line; the first `:` separates them and
 everything from the first `#` is a comment. Values are used verbatim — no
 unquoting, no variable expansion. If the file is absent, say so and stop — the project has not
-adopted this method (`/sdd:adopting-sdd`). If a key this skill needs is absent
+adopted this method (`/sdd:setup`). If a key this skill needs is absent
 or its value is empty, name the key and ask; do not fall back to a default path,
 because writing to a guessed location is how a project ends up with two task
 queues.
@@ -78,7 +78,7 @@ here; the design is what the plan executes, so it settles first.
 - Name which invariants the work touches and which canon documents update in the
   same PR. A design that moves an invariant without saying so is not finished.
   If the work changes a seam no subsystem document covers, say that the branch
-  will write one (`/sdd:documenting-subsystems`).
+  will write one (`/sdd:subsystem`).
 
 ## After the design: the plan
 

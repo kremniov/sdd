@@ -1,9 +1,9 @@
 ---
-name: adopting-sdd
-description: Use to install this spec-driven method into a repository — detect the existing docs layout, write .sdd.yml, create the missing scaffold, and add the rules section to CLAUDE.md. Run once per project; safe to re-run.
+name: setup
+description: Use to install this spec-driven method into a repository — survey the existing docs layout, write .sdd.yml, create the missing scaffold, and add the method's rules to CLAUDE.md or AGENTS.md. Run once per project; safe to re-run.
 ---
 
-# Adopting SDD
+# Setting Up SDD
 
 Install the method into this repository. **Additive only:** never overwrite a
 file you did not write, never reformat one that already exists. Anything you
@@ -75,7 +75,7 @@ For each path in the config, create it from the scaffold at
 
 | Config key | Scaffold source | Notes |
 |---|---|---|
-| `canon` + `invariants.md` | `invariants.md` | Header and instructions only — the body comes from `/sdd:deriving-canon`. |
+| `canon` + `invariants.md` | `invariants.md` | Header and instructions only — the body comes from `/sdd:canon`. |
 | `tasks` | `tasks.md` | |
 | `roadmap` | `roadmap.md` | |
 | `features` | — | Create the empty directory. |
@@ -131,7 +131,7 @@ State plainly:
 - what was created, by path;
 - what was left alone because it already existed;
 - anything you could not infer and guessed at;
-- the next step: `/sdd:deriving-canon` to populate `invariants.md`, which is
+- the next step: `/sdd:canon` to populate `invariants.md`, which is
   empty until it runs.
 
 ## Re-running

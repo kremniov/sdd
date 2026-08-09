@@ -1,9 +1,9 @@
 ---
-name: documenting-subsystems
-description: Use to write or update a subsystem document in the architecture canon — the always-current description of how one part of the system works, which a branch that changed a seam must update in the same PR. Also use when the canon has only invariants and layout and an agent still has to read code to understand a subsystem.
+name: subsystem
+description: Use to write or update an architecture document describing how one part of the system works — its seams, what crosses them, and the order that matters. Required in the same PR when a branch changed a seam a canon document describes, or when no document covers the seam it changed.
 ---
 
-# Documenting a Subsystem
+# Subsystem Documents
 
 The canon has three kinds of file. `invariants.md` holds the rules,
 `layout.md` says where things live, and a **subsystem document** explains how
@@ -17,7 +17,7 @@ Paths come from `.sdd.yml` (`canon:`).
 Reading `.sdd.yml`: one `key: value` per line; the first `:` separates them and
 everything from the first `#` is a comment. Values are used verbatim — no
 unquoting, no variable expansion. If the file is absent, say so and stop — the
-project has not adopted this method (`/sdd:adopting-sdd`). If a key this skill
+project has not adopted this method (`/sdd:setup`). If a key this skill
 needs is absent or its value is empty, name the key and ask; do not fall back to
 a default path, because writing to a guessed location is how a project ends up
 with two task queues.

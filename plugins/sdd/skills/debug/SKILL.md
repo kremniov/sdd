@@ -1,6 +1,6 @@
 ---
-name: systematic-debugging
-description: Use on any bug, test failure or unexpected behaviour, before proposing a fix — find the root cause first, and question the architecture once three fixes have failed.
+name: debug
+description: Use on any bug, test failure or unexpected behaviour, before proposing a fix — find the root cause first, reproduce it in a failing test, and question the architecture once three fixes have failed.
 ---
 
 # Systematic Debugging

@@ -1,9 +1,9 @@
 ---
-name: deriving-canon
-description: Use to establish, amend or audit a project's architecture canon — write down the invariants the code already holds, add one when a merging branch moved a seam, or re-check the list against code that has drifted. Produces invariants.md and layout.md under the canon path.
+name: canon
+description: Use to establish, amend or audit the architectural invariants — write down the rules a codebase already holds, add one when a merging branch moved a seam or changed a checker, or re-check the list against code that has drifted. Ask before integrating any branch.
 ---
 
-# Deriving the Canon
+# The Invariants Canon
 
 Write down the rules this codebase already follows, so later work can link them
 instead of rediscovering them. The canon is **observed, not invented**: an
@@ -15,7 +15,7 @@ Paths come from `.sdd.yml` (`canon:`).
 Reading `.sdd.yml`: one `key: value` per line; the first `:` separates them and
 everything from the first `#` is a comment. Values are used verbatim — no
 unquoting, no variable expansion. If the file is absent, say so and stop — the
-project has not adopted this method (`/sdd:adopting-sdd`). If a key this skill
+project has not adopted this method (`/sdd:setup`). If a key this skill
 needs is absent or its value is empty, name the key and ask; do not fall back to
 a default path, because writing to a guessed location is how a project ends up
 with two task queues.
@@ -126,7 +126,7 @@ Flag separately, never folded into the list:
 
 Fill the body of the `invariants.md` that adoption placed under `canon`, in the
 entry format above. If that file is absent the project has not been adopted —
-run `/sdd:adopting-sdd` rather than creating it here.
+run `/sdd:setup` rather than creating it here.
 
 `layout.md` says where things live: a directory map with one line of purpose
 each, the entry points, and where a newcomer starts reading. Not a file listing

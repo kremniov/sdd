@@ -1,9 +1,9 @@
 ---
-name: managing-tasks
-description: Use when adding, editing, or closing an item in the project's task queue — creating a ticket, logging a feature, bug, tech-debt or todo, updating its status, or moving it to Done.
+name: tasks
+description: Use when adding, editing, or closing an item in the project's task queue — writing a ticket for a feature, bug, tech-debt or chore, allocating its id, updating its status, or collapsing it to Done at merge.
 ---
 
-# Managing Tasks
+# The Task Queue
 
 The task queue is the "what do I pull next" list. Its path and the ticket-id
 prefix are in `.sdd.yml` (`tasks:` and `ticket:`); read them before editing.
@@ -11,7 +11,7 @@ prefix are in `.sdd.yml` (`tasks:` and `ticket:`); read them before editing.
 Reading `.sdd.yml`: one `key: value` per line; the first `:` separates them and
 everything from the first `#` is a comment. Values are used verbatim — no
 unquoting, no variable expansion. If the file is absent, say so and stop — the project has not
-adopted this method (`/sdd:adopting-sdd`). If a key this skill needs is absent
+adopted this method (`/sdd:setup`). If a key this skill needs is absent
 or its value is empty, name the key and ask; do not fall back to a default path,
 because writing to a guessed location is how a project ends up with two task
 queues.
