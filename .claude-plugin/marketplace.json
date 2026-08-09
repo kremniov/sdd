@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "kremnev-sdd",
+  "description": "Spec-driven development sized to the task: a tier table, execution rules, artifact skeletons, and skills to build a project's canon.",
+  "owner": {
+    "name": "Andrey Kremnev",
+    "url": "https://github.com/kremnev"
+  },
+  "metadata": {
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "sdd",
+      "source": "./sdd"
+    }
+  ]
+}

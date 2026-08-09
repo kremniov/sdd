@@ -1,0 +1,8 @@
+# Where this project keeps the artifacts the SDD method uses.
+canon:    docs/architecture/
+tasks:    docs/tasks.md
+roadmap:  docs/roadmap.md
+features: docs/features/
+adr:      docs/adr/
+verify:   ./scripts/check.sh
+ticket:   T
