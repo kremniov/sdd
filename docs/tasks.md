@@ -4,6 +4,20 @@ The "what do I pull next" queue. Format: the `managing-tasks` skill.
 
 ## TODO
 
+#### `[T-5]` Per-package adoption in a monorepo
+
+**Tags:** `[feat]` `[someday]`
+
+**Outcome:** A monorepo can adopt the method per package, each with its own canon and queue, instead of one config at the root.
+
+**Acceptance:**
+
+- [ ] `.sdd.yml` resolution finds the nearest config, not only the repo root
+- [ ] Adoption asks which scope it is installing into when several packages exist
+- [ ] A skill invoked inside a package reads that package's paths
+
+---
+
 #### `[T-2]` Portable structural checker for adopting projects
 
 **Tags:** `[feat]` `[next]`

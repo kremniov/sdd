@@ -75,6 +75,9 @@ for t in sorted(glob.glob('plugins/sdd/templates/_*.md')):
 sys.exit(0 if ok else 1)
 PY
 
+echo ".sdd.yml is well-formed"
+python3 scripts/check_config.py || fail=1
+
 echo "own CLAUDE.md matches the template"
 python3 - <<'PY' || fail=1
 import re, sys

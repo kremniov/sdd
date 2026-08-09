@@ -18,8 +18,9 @@ your own, and say which tier you judged it and why before starting.
 Paths come from `.sdd.yml`: `canon:`, `tasks:`, `features:`, `adr:`, `rules:`.
 Read it first.
 
-Reading `.sdd.yml`: one `key: value` per line, `#` starts a comment unless the
-value is quoted. If the file is absent, say so and stop — the project has not
+Reading `.sdd.yml`: one `key: value` per line; the first `:` separates them and
+everything from the first `#` is a comment. Values are used verbatim — no
+unquoting, no variable expansion. If the file is absent, say so and stop — the project has not
 adopted this method (`/sdd:adopting-sdd`). If a key this skill needs is absent
 or its value is empty, name the key and ask; do not fall back to a default path,
 because writing to a guessed location is how a project ends up with two task

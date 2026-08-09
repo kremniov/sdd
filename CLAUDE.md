@@ -64,8 +64,9 @@ table is empty. What is fixed here is the order, not a cadence: one red run
 before implementing a whole module is fine, and batching is preferred to a cycle
 per assertion.
 
-**Evidence before any completion claim.** Run the verification, read its output,
-and only then say a thing is done, fixed or passing. Name what you ran. A test
+**Evidence before any completion claim.** Run the verification — `./scripts/check.sh`,
+unless the change is narrower and a subset proves it — read its output, and only
+then say a thing is done, fixed or passing. Name what you ran. A test
 suite you did not watch finish, a build you assume still compiles, a behaviour
 you reasoned about but never triggered — none of these support the claim. When
 something fails or was skipped, say so with the output rather than softening it.

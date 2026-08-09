@@ -54,10 +54,14 @@ Rules for the values, all four load-bearing:
   silently. Add the slash yourself if the operator omits it, and say that you
   did.
 - `tasks` and `roadmap` are file paths, not directories.
-- `verify` is a shell command that exits non-zero on failure. Quote it if it
-  contains a `#` or a `:`, which would otherwise be read as a comment or a key.
+- `verify` is a shell command that exits non-zero on failure. A `:` inside it is
+  fine — only the first one separates key from value.
 - `ticket` is the id prefix without a number or separator (`T`, not `T-`).
-  Quote it if it is `#`.
+- **No value may contain a `#`.** Everything from the first `#` is a comment,
+  and quoting does not rescue it — the readers are deliberately simple and do
+  not unquote. A project that numbers tickets `#41` uses a letter prefix here
+  and keeps the `#` in its own prose; a verify command that needs a `#` goes
+  into a script the command calls.
 
 ## 3. Write the config
 
