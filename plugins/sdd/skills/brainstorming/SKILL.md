@@ -7,13 +7,24 @@ description: Use when a tier-2 task is picked up — a new seam, an invariant th
 
 Turn a ticket into a design through dialogue, then write it down.
 
-**Which tasks:** tier 2 in the `CLAUDE.md` table. Tier 1 gets a design paragraph
-in the conversation; tier 0 gets none. Sizing the process to the task is the
-operator's call — if the tier is unclear, ask before starting, not after.
+**Which tasks:** tier 2 in the tier table in the project's rules file (`rules:`
+in `.sdd.yml`, usually `CLAUDE.md`). Tier 1 gets a design paragraph in the
+conversation; tier 0 gets none.
 
-Paths come from `.sdd.yml`: `canon:`, `tasks:`, `features:`, `adr:`. Read it
-first. Without it, the project has not adopted this method — run
-`/sdd:adopting-sdd`.
+When the operator invoked this skill by name, run it — they have already made
+the sizing call. Judge the tier yourself only when you reached this skill on
+your own, and say which tier you judged it and why before starting.
+
+Paths come from `.sdd.yml`: `canon:`, `tasks:`, `features:`, `adr:`, `rules:`.
+Read it first.
+
+Reading `.sdd.yml`: one `key: value` per line, `#` starts a comment unless the
+value is quoted. If the file is absent, say so and stop — the project has not
+adopted this method (`/sdd:adopting-sdd`). If a key this skill needs is absent
+or its value is empty, name the key and ask; do not fall back to a default path,
+because writing to a guessed location is how a project ends up with two task
+queues.
+
 
 ## Process
 
@@ -73,9 +84,20 @@ Tier 2 continues into `<features>/<feature-name>/plan.md`, following
 not contain it. Steps carry a goal, constraints, what they touch, and a runnable
 DoD — not function bodies.
 
+## At merge: the ADR
+
+A decision marked `→ ADR` in the design is written when the work merges, into
+`<adr>/NNNN-<slug>.md`, following `${CLAUDE_PLUGIN_ROOT}/templates/_ADR.md`.
+Numbers are sequential and never reused; check the directory for the highest.
+
+This is the only place the ADR skeleton's location is written down, because
+the rules file cannot name it — the plugin path resolves inside skill text, not in
+a project file. When an ADR is due and this skill is not loaded, invoke it, or
+read the skeleton at the path above.
+
 ## What this is not
 
-Not a template to fill in. If the ticket is unambiguous and the seam already
-exists, say so and go straight to the work — the cost of the cycle is real and
-falls on the operator's attention. The dialogue earns its place when the ticket
-is genuinely open, which is the case tier 2 describes.
+Not a template to fill in. Scale each section to what the ticket actually leaves
+open: two sentences where the answer is obvious, a real argument where it is
+not. The cost of the cycle is real and falls on the operator's attention, so
+spend it on the genuinely open questions rather than on filling headers.

@@ -4,7 +4,7 @@ Canonical list. These rules apply to all work, every feature. Any change that
 violates one is an architectural regression and requires an explicit, documented
 invariant change — open an ADR under `{{adr}}`.
 
-This is the single source of truth for the invariants. `CLAUDE.md` and feature
+This is the single source of truth for the invariants. The rules file and feature
 designs **link here**; they do not restate them.
 
 <!--

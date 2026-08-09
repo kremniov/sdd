@@ -19,7 +19,7 @@ re-reading the codebase. Three lifetimes — don't mix them.
 
 ## New features
 
-Which artifacts a task needs at all is the tier table in `CLAUDE.md`. For tier 2,
+Which artifacts a task needs at all is the tier table in the project's rules file. For tier 2,
 the shape of `design.md` and `plan.md` is the skeletons the `sdd` plugin ships.
 
 **The one added rule:** if a feature changed a seam described in the canon,

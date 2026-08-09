@@ -65,8 +65,10 @@ Then, in the repository you want to adopt it:
 ```
 
 It surveys what your project already has, proposes a `.sdd.yml` mapping, creates
-only what is missing, and adds the rules section to your `CLAUDE.md`. It never
-overwrites a file it did not write.
+only what is missing, and appends the rules section to your `CLAUDE.md` (or
+`AGENTS.md` — whichever you use). It never overwrites or reformats a file it did
+not write: where it would change something, it shows you and asks. Re-running is
+safe — the section it writes is fenced in a marker it recognizes as its own.
 
 Then populate the canon:
 
@@ -93,6 +95,7 @@ features: docs/features/        # per-feature design.md + plan.md
 adr:      docs/adr/             # one decision per file
 verify:   make lint && make test
 ticket:   T                     # ticket id prefix
+rules:    CLAUDE.md             # the file the method's rules live in
 ```
 
 Paths are yours. A project with `documentation/decisions/` keeps that path —
@@ -117,15 +120,18 @@ shape. An ADR tells you what was rejected and at what cost.
 ## What this is not
 
 Not a task tracker — the queue is flat markdown on purpose. Not a CI gate —
-nothing here fails your build. Not stack-specific — no language, build tool or
+nothing here fails your build; `scripts/check.sh` checks this plugin, not your
+project. Not stack-specific — no language, build tool or
 framework is assumed. And not a substitute for your own `CLAUDE.md`: the plugin
 contributes a section, you keep authorship of the file.
 
 ## Checks
 
-`./scripts/check.sh` validates the manifests, the skill frontmatter, that every
-bundled path a skill references exists, and that nothing project-specific leaked
-into the plugin.
+`./scripts/check.sh` validates the manifests and the skill frontmatter, checks
+that every bundled path a skill names exists *and* that every shipped skeleton is
+named by some skill, verifies this repo's own `CLAUDE.md` still matches the
+scaffold it ships, and greps for origin-project vocabulary that would break
+portability.
 
 ## License
 

@@ -42,7 +42,8 @@ something, say so plainly instead of proceeding as if you do.
 ## 4. Fix the cause
 
 - **Reproduce it in a test first**, at the level the bug lives at — the
-  test-first rule in `CLAUDE.md`, where the red run is the reproduction itself.
+  test-first rule in the project's rules file, where the red run is the
+  reproduction itself.
 - **One change.** No "while I'm here" improvements bundled in.
 - **Verify**: the new test passes, nothing else broke, and the original
   behaviour is actually gone. Run the commands and read the output before saying

@@ -3,7 +3,7 @@
 **Ticket:** <ID> · **Design:** [design.md](design.md)
 
 <!--
-Tier 2 only (see the tier table in CLAUDE.md). Saved as <features>/<name>/plan.md,
+Tier 2 only (see the tier table in the project's rules file). Saved as <features>/<name>/plan.md,
 where <features> is the path in .sdd.yml. Written after design.md is settled;
 this file sequences the work, it does not re-decide it.
 
@@ -61,12 +61,14 @@ step introduces or changes.
 
 **DoD:** the command that proves it, and what its output must show. A test name,
 a lint target, a migration that applies and rolls back — something runnable, not
-"works correctly".
+"works correctly". A step whose DoD is the whole suite writes the `verify:`
+command from `.sdd.yml`.
 
 ## Verification
 
-The gate for the branch as a whole: the full command set, and the manual check
-if any (naming who runs it).
+The gate for the branch as a whole: the `verify:` command from `.sdd.yml`, plus
+anything this branch needs beyond it, and the manual check if any (naming who
+runs it).
 
 ## Docs & ADR
 

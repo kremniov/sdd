@@ -10,8 +10,15 @@ them instead of rediscovering them. The canon is **observed, not invented**: an
 invariant here is a rule the code obeys today and that a reviewer would push
 back on breaking.
 
-Paths come from `.sdd.yml` (`canon:`). Without it, run `/sdd:adopting-sdd`
-first.
+Paths come from `.sdd.yml` (`canon:`).
+
+Reading `.sdd.yml`: one `key: value` per line, `#` starts a comment unless the
+value is quoted. If the file is absent, say so and stop — the project has not
+adopted this method (`/sdd:adopting-sdd`). If a key this skill needs is absent
+or its value is empty, name the key and ask; do not fall back to a default path,
+because writing to a guessed location is how a project ends up with two task
+queues.
+
 
 Two outputs, both under `canon`:
 
@@ -62,12 +69,12 @@ A good invariant is **falsifiable and load-bearing**. Test each candidate:
 Prefer eight rules that decide review arguments to thirty that describe the
 code. Restating what the language or framework already enforces is filler.
 
-**Cut to the budget before presenting, not after.** Draft as many candidates as
-the evidence supports, then rank them: mechanically enforced rules first, then
-the ones whose violation would be a bug, then the rest. Everything past fifteen
-comes off the list — and if that hurts, the ones you were reluctant to cut are
-the ones to keep. A canon nobody finishes reading is not consulted in the review
-where it would have mattered.
+**Cut to fifteen before presenting, not after.** Draft as many candidates as the
+evidence supports, then rank them: mechanically enforced rules first, then the
+ones whose violation would be a bug, then the rest. Present at most fifteen. The
+surplus is not discarded silently — list the cut candidates in one line each
+under the proposal, so the operator can pull one back. A canon nobody finishes
+reading is not consulted in the review where it would have mattered.
 
 ## 3. Confirm with the operator
 
@@ -84,10 +91,14 @@ Flag separately, and do not fold into the list:
 
 ## 4. Write the canon
 
-`invariants.md` follows the scaffold at
-`${CLAUDE_PLUGIN_ROOT}/templates/project/invariants.md`: the numbered list, then
-the per-layer table where the codebase has layers. **Numbers are stable** — other
-documents cite them, so append new rules at the end rather than renumbering.
+Write into the `invariants.md` that adoption already placed under `canon` —
+it carries the header and the instructions, and you are filling its body. Keep
+its shape: the numbered list, then the per-layer table where the codebase has
+layers. **Numbers are stable** — other documents cite them, so append new rules
+at the end rather than renumbering.
+
+If that file is absent, the project has not been adopted; run
+`/sdd:adopting-sdd` first rather than creating the file here.
 
 `layout.md` says where things live: a directory map with one line of purpose
 each, the entry points, and where a newcomer should start reading. Not a file

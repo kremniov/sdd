@@ -61,8 +61,40 @@ else
   note OK "no origin-project terms in skills or templates"
 fi
 
+echo "every shipped skeleton is reachable"
+python3 - <<'PY' || fail=1
+import glob, os, sys
+refs = ''.join(open(f).read() for f in glob.glob('plugins/sdd/skills/*/SKILL.md'))
+ok = True
+for t in sorted(glob.glob('plugins/sdd/templates/_*.md')):
+    name = os.path.basename(t)
+    if name in refs:
+        print(f'  OK      {name} is referenced by a skill')
+    else:
+        print(f'  FAIL    {name} ships but no skill names its path'); ok = False
+sys.exit(0 if ok else 1)
+PY
+
+echo "own CLAUDE.md matches the template"
+python3 - <<'PY' || fail=1
+import re, sys
+cfg = {}
+for line in open('.sdd.yml'):
+    line = line.split('#')[0].strip()
+    if ':' in line:
+        k, v = line.split(':', 1); cfg[k.strip()] = v.strip()
+tpl = open('plugins/sdd/templates/project/CLAUDE.section.md').read()
+missing = {k for k in re.findall(r'\{\{(\w+)\}\}', tpl) if k not in cfg}
+if missing:
+    print(f'  FAIL    .sdd.yml lacks keys the scaffold needs: {sorted(missing)}'); sys.exit(1)
+rendered = re.sub(r'\{\{(\w+)\}\}', lambda m: cfg[m.group(1)], tpl)
+if rendered.strip() in open('CLAUDE.md').read():
+    print('  OK      dogfooded section is in sync'); sys.exit(0)
+print('  FAIL    CLAUDE.md has drifted from the scaffold — re-render it'); sys.exit(1)
+PY
+
 echo "section nests"
-if head -1 plugins/sdd/templates/project/CLAUDE.section.md | grep -q '^## '; then
+if grep -m1 '^#' plugins/sdd/templates/project/CLAUDE.section.md | grep -q '^## '; then
   if grep -q '^# ' plugins/sdd/templates/project/CLAUDE.section.md; then
     note FAIL "CLAUDE.section.md has an H1 — it is appended into someone's file"
   else
@@ -91,7 +123,7 @@ sys.exit(0 if ok else 1)
 PY
 
 echo "placeholders"
-stray='{{(canon|tasks|roadmap|features|adr|verify|ticket)}}'
+stray='^[^`]*\{\{(canon|tasks|roadmap|features|adr|verify|ticket|rules)\}\}[^`]*$'
 if grep -rnE "$stray" plugins/sdd/skills >/dev/null 2>&1; then
   grep -rnE "$stray" plugins/sdd/skills | sed 's/^/  /'
   note FAIL "skills must not carry {{placeholders}} — those belong in templates/project/"

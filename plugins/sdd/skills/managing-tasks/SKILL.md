@@ -6,9 +6,15 @@ description: Use when adding, editing, or closing an item in the project's task 
 # Managing Tasks
 
 The task queue is the "what do I pull next" list. Its path and the ticket-id
-prefix are in `.sdd.yml` (`tasks:` and `ticket:`); read them before editing. If
-there is no `.sdd.yml`, the project has not adopted this method — run
-`/sdd:adopting-sdd` first.
+prefix are in `.sdd.yml` (`tasks:` and `ticket:`); read them before editing.
+
+Reading `.sdd.yml`: one `key: value` per line, `#` starts a comment unless the
+value is quoted. If the file is absent, say so and stop — the project has not
+adopted this method (`/sdd:adopting-sdd`). If a key this skill needs is absent
+or its value is empty, name the key and ask; do not fall back to a default path,
+because writing to a guessed location is how a project ends up with two task
+queues.
+
 
 A **ticket** states the outcome and how you'll know it's done — nothing else.
 Reasoning, history, and option-comparisons live in the feature's `design.md`,
@@ -63,13 +69,16 @@ Tags are bracketed and live on the ticket's `**Tags:**` line for grep-filtering
 | status | `[next]` `[in-progress]` `[blocked]` `[someday]` |
 
 **IDs are stable and never reused.** New items take the next free number with the
-prefix from `.sdd.yml` — check the file for the highest in use. A `deps:`
-reference must survive forever, so never renumber.
+prefix from `.sdd.yml`. To find it, grep the whole file — `grep -o '\[T-[0-9]*\]'
+<tasks> | sort -t- -k2 -n | tail -1` — and take one past the highest. Scanning
+only the TODO section is the way duplicates happen: a higher id usually sits in
+Done, collapsed to one line. A `deps:` reference must survive forever, so never
+renumber.
 
 ## Moving to Done
 
 Once the branch is reviewed and about to merge — not before, see the integration
-rule in `CLAUDE.md` — **collapse the ticket to one line** and swap the status tag
+rule in the project's rules file (`rules:` in `.sdd.yml`) — **collapse the ticket to one line** and swap the status tag
 for a ref tag (`[PR #N]` / `[branch-name]` / `[commit-hash]`). Acceptance is
 dropped — git remembers. Keep type/phase/area tags.
 

@@ -1,3 +1,4 @@
+<!-- sdd:method-section -->
 ## Development method
 
 This project runs spec-driven development sized to the task. The paths below are
@@ -104,6 +105,9 @@ moves, a non-obvious trade-off is taken, or the resulting shape will invite
 someone to "fix" it back. The trigger is tier-independent; a one-file Tier 0
 change can earn an ADR and a Tier 2 feature can earn none.
 
+The skeleton ships with the `sdd` plugin; `/sdd:brainstorming` names its path.
+Follow an existing file in `{{adr}}` when one is there.
+
 ### Docs discipline
 
 Before finishing a development branch, if the work changed a seam documented in
@@ -123,14 +127,15 @@ one transaction, why a step runs outside the loop around it. Nothing else.
 
 **Say what the code cannot.** A comment that restates the signature, the
 identifier, or a rule already written in the canon is deletion-safe by
-construction: `// GetByName resolves a skill by name` and `// keeping it narrow
-(invariant #12)` are both the reader looking at the same fact twice. Naming the
-caller ages worst of all — the caller moves and the comment lies.
+construction: "resolves a skill by name" above `resolve_skill_by_name`, or
+"keeping this narrow — see invariant 12" above the thing invariant 12 already
+governs, are both the reader looking at the same fact twice. Naming the caller
+ages worst of all — the caller moves and the comment lies.
 
-**Volume is the symptom.** A block longer than the code under it, or a
-per-method line on every method of an interface, means the comment is describing
-what is visible rather than what is not. A doc line on an exported identifier
-that a reader outside the module genuinely needs is not in that count.
+**Volume is the symptom.** A block longer than the code under it, or one line
+above every member of a type, means the comment is describing what is visible
+rather than what is not. A doc line on a public identifier that a reader outside
+the module genuinely needs is not in that count.
 
 **No history.** No "used to", "instead of", "we removed X" — the commit, the PR
 and the ADR are dated and read in order; a comment is not, so it ages into a
@@ -142,3 +147,5 @@ re-breaking, and one line naming the constraint is the budget.
 
 Test before saving: cover the comment and reread the code. If a competent reader
 does not stumble, delete it.
+
+<!-- /sdd:method-section -->

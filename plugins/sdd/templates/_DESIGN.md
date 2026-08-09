@@ -3,7 +3,7 @@
 **Ticket:** <ID> · **Plan:** [plan.md](plan.md)
 
 <!--
-Tier 2 only (see the tier table in CLAUDE.md). Saved as <features>/<name>/design.md,
+Tier 2 only (see the tier table in the project's rules file). Saved as <features>/<name>/design.md,
 where <features> is the path in .sdd.yml.
 
 Budget ~1300 words. Past 2000 you are probably writing the plan, not the design.

@@ -43,10 +43,21 @@ features: docs/features/
 adr:      docs/adr/
 verify:   make lint && make test
 ticket:   T
+rules:    CLAUDE.md
 ```
 
-Rules for the values: directory paths end in `/`; `verify` is a shell command
-that exits non-zero on failure; `ticket` is the id prefix without a number.
+Rules for the values, all four load-bearing:
+
+- **`canon`, `features` and `adr` must end in `/`.** The scaffold concatenates
+  them with a filename — `{{canon}}invariants.md`. A value without the slash
+  renders as `docs/architectureinvariants.md` into the project's own rules file,
+  silently. Add the slash yourself if the operator omits it, and say that you
+  did.
+- `tasks` and `roadmap` are file paths, not directories.
+- `verify` is a shell command that exits non-zero on failure. Quote it if it
+  contains a `#` or a `:`, which would otherwise be read as a comment or a key.
+- `ticket` is the id prefix without a number or separator (`T`, not `T-`).
+  Quote it if it is `#`.
 
 ## 3. Write the config
 
@@ -81,25 +92,33 @@ leave a placeholder in a written file.
 An empty directory does not survive git. Where you create one, add a
 `.gitkeep`.
 
-## 5. Add the rules to CLAUDE.md
+## 5. Add the rules to the rules file
 
-The rules must live in `CLAUDE.md` rather than only in this skill: they have to
+The rules must live in the project's rules file rather than only in this skill: they have to
 be in context at execution time, and a skill is loaded only when something
 triggers it.
 
-Read `${CLAUDE_PLUGIN_ROOT}/templates/project/CLAUDE.section.md`, substitute the
-placeholders, and:
+The target file is the one recorded as `rules:` in `.sdd.yml` — `CLAUDE.md` by
+default, `AGENTS.md` where the project uses that. Set that key in step 3 from
+what step 1 found, so a later run does not have to re-derive it.
 
-- **No `CLAUDE.md`:** create it with this section, preceded by a one-line title
+Read `${CLAUDE_PLUGIN_ROOT}/templates/project/CLAUDE.section.md` and substitute
+the placeholders. The text is wrapped in `<!-- sdd:method-section -->` markers —
+keep them, they are how a re-run recognizes its own work. Then, in order:
+
+- **The file already contains `<!-- sdd:method-section -->`:** a previous run
+  wrote it. Do not append. Diff the stored section against the freshly rendered
+  one and, if they differ, show the operator the difference and ask — the
+  divergence may be their edit, which you must not discard.
+- **No such file:** create it with this section, preceded by a one-line title
   naming the project.
-- **`CLAUDE.md` exists, no process section:** append the section at the end.
-  Touch nothing above it.
-- **`CLAUDE.md` exists and already describes a process:** do not merge them
-  yourself. Show the operator what the section would add, name the specific
-  conflicts with what is already written, and let them decide. A silently
-  merged process file is worse than two visible ones.
-
-If the project uses `AGENTS.md` instead, write there.
+- **The file exists, no process section:** append the section at the end. Touch
+  nothing above it.
+- **The file exists and already describes a process** — under any heading
+  (`How we work`, `Conventions`, `Workflow`, `Development`): do not merge them
+  yourself. Write the rendered section to `<file>.sdd-section` beside it, show
+  the operator the specific conflicts with what is already written, and let them
+  decide. A silently merged process file is worse than two visible ones.
 
 ## 6. Report
 

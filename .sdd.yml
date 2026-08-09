@@ -6,3 +6,4 @@ features: docs/features/
 adr:      docs/adr/
 verify:   ./scripts/check.sh
 ticket:   T
+rules:    CLAUDE.md
