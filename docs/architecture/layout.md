@@ -15,6 +15,9 @@ plugins/sdd/
                                   {{placeholders}} substituted from .sdd.yml
 docs/
   architecture/                   this canon
+    invariants.md                 the rules
+    layout.md                     this file
+    plugin-mechanics.md           what crosses the plugin/project boundary, when
   adr/                            one decision per file
   features/<name>/                design.md + plan.md, frozen at merge
   tasks.md  roadmap.md
@@ -25,7 +28,8 @@ scripts/check.sh                  the structural gate
 
 `README.md` for what the method is. Then `plugins/sdd/templates/project/CLAUDE.section.md`
 — that file **is** the method, in the form a project receives it. The skills are
-supporting procedures around it.
+supporting procedures around it. Before changing how a skill reaches a project,
+read `plugin-mechanics.md`.
 
 ## The two directories that look alike
 

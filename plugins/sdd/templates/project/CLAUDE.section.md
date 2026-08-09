@@ -122,8 +122,10 @@ Follow an existing file in `{{adr}}` when one is there.
 ### Docs discipline
 
 Before finishing a development branch, if the work changed a seam documented in
-`{{canon}}`, update that file in the same PR. Keep the architecture layer
-current so agents read it instead of re-reading code.
+`{{canon}}`, update that file in the same PR — `/sdd:documenting-subsystems`
+carries the procedure. Keep the architecture layer current so agents read it
+instead of re-reading code. When a branch changed a seam that no document
+covers, that is the trigger to write one, not a reason to skip the step.
 
 Check all three requirements — the canon update, the ADR trigger, and the
 invariant questions above — against the finished diff, before the branch is

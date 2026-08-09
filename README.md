@@ -38,12 +38,13 @@ to test something once it has failed. Evidence before any completion claim. The
 ticket moves to Done *after* the review, as the last commit — because it records
 that the work shipped.
 
-**Five skills:**
+**Six skills:**
 
 | Skill | For |
 |---|---|
 | `adopting-sdd` | Install the method into a repository. Run once. |
-| `deriving-canon` | Read the codebase, write down the invariants it already holds. |
+| `deriving-canon` | Establish, amend or audit the invariants the codebase holds. |
+| `documenting-subsystems` | Write and keep the architecture doc for one part of the system. |
 | `brainstorming` | Turn an ambiguous ticket into an agreed design. Tier 2. |
 | `managing-tasks` | The ticket format for the queue. |
 | `systematic-debugging` | Root cause before fix; three failed fixes means the architecture. |

@@ -11,6 +11,18 @@ re-reading the codebase. Three lifetimes — don't mix them.
 | `{{tasks}}` | evolving | The "what's next" queue — one ticket per actionable item. Format: the `managing-tasks` skill. |
 | `{{features}}<name>/` | frozen at merge | Per-feature `design.md` + `plan.md` (tier 2 only). A dated record of how the feature was reasoned into being; durable consequences are folded into the canon, which is where current truth lives. |
 
+Three more places earn a mention once a project has them. They are conventions,
+not artifacts this method generates:
+
+| Path | Lifetime | Purpose |
+|---|---|---|
+| product analyses | long-lived | What a feature area must do for its users and why — scenarios, requirement axes, where the boundary of the thing is. Written before the technical design and cited from it. The question is "what and for whom"; `design.md` answers "how". |
+| strategy / vision | long-lived | Direction above the roadmap: what the product is becoming. Rarely read during a change, occasionally binding on one — an invariant may require that architecture not close a door named here. |
+| vendored contracts | reference | Pinned third-party specs (an OpenAPI file, a vendor schema) integrated against. Copies for offline reference — not the project's own contracts. |
+
+Anything that fits none of these rows is scratch. Give it one directory, name it
+so nobody mistakes it for canon, and never cite it from a document that is.
+
 ## Start-of-work reading order
 
 1. `{{canon}}invariants.md` — the rules.

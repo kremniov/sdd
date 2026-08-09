@@ -77,6 +77,8 @@ here; the design is what the plan executes, so it settles first.
   Unrelated refactoring stays out.
 - Name which invariants the work touches and which canon documents update in the
   same PR. A design that moves an invariant without saying so is not finished.
+  If the work changes a seam no subsystem document covers, say that the branch
+  will write one (`/sdd:documenting-subsystems`).
 
 ## After the design: the plan
 
