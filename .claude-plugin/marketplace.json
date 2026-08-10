@@ -12,7 +12,7 @@
   "plugins": [
     {
       "name": "sdd",
-      "source": "./sdd"
+      "source": "sdd"
     }
   ]
 }
