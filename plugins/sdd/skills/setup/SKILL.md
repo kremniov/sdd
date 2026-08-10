@@ -27,9 +27,15 @@ Do this before asking anything. Look for, and record the actual paths:
 
 ## 2. Confirm the map
 
-Present what you found as the proposed `.sdd.yml`, with your inference for each
-line and a marker for what is missing. Ask once, as a single message — not one
-question per key.
+Print the proposed `.sdd.yml` as an ordinary message first — the whole file,
+every line, with your inference for each and a marker for what you could not
+find. Only then ask whether it is right.
+
+The operator must be able to read the file at the moment they approve it. A
+question that says "the config above" is worthless when nothing was above it,
+and asking through a question tool hides whatever preceded the prompt: put the
+rendered YAML in the option preview so it sits inside the question itself. Ask
+once, about the whole file — not one question per key.
 
 Prefer what exists over the default. A project with `documentation/adr/` keeps
 that path; do not relocate anyone's docs.
@@ -124,6 +130,31 @@ keep them, they are how a re-run recognizes its own work. Then, in order:
   the operator the specific conflicts with what is already written, and let them
   decide. A silently merged process file is worse than two visible ones.
 
+**When the operator answers that instead: replace what is there.** That
+decision is theirs and it overrides the branch above, but it is still a deletion
+from a file you did not write, so it is bounded. Replace the process section
+only. A rules file that describes a method also carries things that are not the
+method — this project's own conventions, its paths, a rule it earned once and
+wrote down — and those survive any change of methodology; carry them across and
+say which ones you kept. Show what you are removing, in full, before removing
+it. And a method that was itself a recorded decision does not just disappear:
+the superseding ADR is owed in this same change, naming the record it retires.
+
+A replaced method leaves references behind. Its skill paths and command names
+are cited from the project's own docs, and those citations are now dangling —
+find them, propose each fix, and let the operator see the list. Its files stay
+where they are: unreferenced is not the same as unwanted, and deleting someone's
+previous method is not a step this skill takes.
+
+Leaving the section out is a legitimate choice and often the right first one:
+the config and the scaffold alone let someone try the skills against their
+existing process. Name what it costs when you offer it. The skills still run,
+but the rules that make an approved plan run to its end, that put evidence
+before a completion claim, and that send a merge candidate to an independent
+review are only in effect while they are in context — and a skill loads on a
+trigger, long after the code is being written. Until the section lands, what is
+installed is the artifacts, not the method.
+
 ## 6. Report
 
 State plainly:
@@ -131,8 +162,14 @@ State plainly:
 - what was created, by path;
 - what was left alone because it already existed;
 - anything you could not infer and guessed at;
-- the next step: `/sdd:canon` to populate `invariants.md`, which is
-  empty until it runs.
+- whether the rules section landed in the rules file — and if it did not, that
+  the method is not yet in force, and what remains to be decided;
+- what a previous method left behind that nothing references any more, by path,
+  so the operator can decide about it while it is still visible;
+- the next step, which depends on what the canon already holds. An empty
+  `invariants.md` means `/sdd:canon` to establish one. A populated one means
+  `/sdd:canon` in audit mode — this project has rules already, and the question
+  is whether they are still true, not what they should be.
 
 ## Re-running
 

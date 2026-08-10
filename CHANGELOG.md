@@ -4,6 +4,36 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 0.1.1
+
+Everything here came out of the first adoption into a repository that already
+ran a different method.
+
+- `/sdd:setup` prints the proposed `.sdd.yml` before asking to approve it.
+  "Ask once, as a single message" was read as "ask through the question tool",
+  which hid the file the question was about — the operator was approving a
+  config they had not seen.
+- `/sdd:setup` covers replacing an existing process section, which the operator
+  can choose and the skill did not describe: what survives a change of
+  methodology, showing the deletion before making it, the superseding ADR, and
+  the dangling references the previous method leaves in the project's docs.
+- `/sdd:setup` names what taking the config without the rules section costs —
+  the skills run, but the execution rules are not in context while code is
+  written.
+- `/sdd:setup` reports the predecessor's now-unreferenced files, and picks its
+  closing next-step from whether the canon already holds rules.
+- The plugin manifest's `$schema` points at `claude-code-plugin-manifest.json`,
+  which exists. The previous URL 404ed, so no editor was validating the file.
+- `/sdd:canon` audit handles a list inherited from another method: the rules are
+  sound but carry no *Detect* or *On violation*, and the audit proposes those
+  rather than rewriting the rule.
+- `/sdd:canon` audit reports **Drifted** as its own list. It was a note under
+  Held, and a rule whose entry lies is not in the same state as one described
+  correctly — it is the finding an audit exists for.
+- `/sdd:canon` audit routes what it finds that is not an invariant — dead
+  packages, leaks, a declared dependency with no code — to `/sdd:tasks` instead
+  of leaving it in the transcript.
+
 ## 0.1.0
 
 First public release. The method had been running inside a working codebase for

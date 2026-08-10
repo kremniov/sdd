@@ -22,6 +22,10 @@ spellings it exists to enable are respectively rejected and misresolved. This
 cost us a broken release: `0.1.0` shipped with `"source": "sdd"` and could not be
 installed by anyone.
 
+The published JSON Schema agrees with the observed behaviour and not with the
+prose: a string source carries `"pattern": "^\\./.*"` and is described as
+"Path to the plugin root, relative to the marketplace root".
+
 `claude plugin validate` does not close the gap. It checks the schema, not the
 filesystem — it reports `Validation passed` on `"./sdd"`, a source pointing at a
 directory that does not exist.

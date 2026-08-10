@@ -192,10 +192,15 @@ Read the code first, the existing list second — same discipline as bootstrap,
 because reading the list first is how you talk yourself into seeing rules that
 have quietly lapsed.
 
-Report three lists and write nothing without confirmation:
+Report four lists and write nothing without confirmation:
 
-- **Held** — still true. Note where *Detect* has drifted from what the checker
-  now does.
+- **Held** — still true, and described accurately.
+- **Drifted** — the rule holds; its entry does not. A *Detect* naming a checker
+  that has since grown or been replaced, an *On violation* promising an alert
+  that is a log line, a header calling the list hand-checked while three
+  checkers enforce parts of it. This is where an audit pays for itself: a broken
+  rule announces itself the next time the code runs, and a lying entry is
+  believed.
 - **Broken** — the code no longer obeys. State how many violations and whether
   they cluster; a rule broken in one new module is a regression, a rule broken
   in nine is a rule that expired without anyone recording it.
@@ -204,3 +209,20 @@ Report three lists and write nothing without confirmation:
 The operator decides each. A rule the code stopped obeying may mean the code
 regressed, not that the rule expired, and only they can say which — retiring a
 rule that was merely being violated launders a bug into a policy.
+
+A list inherited from another method drifts in a way of its own, and the first
+audit of one is mostly this: the rules are sound but carry no *Detect* and no
+*On violation*, because whatever wrote them did not ask for those. Propose the
+two missing lines per entry and leave the rule itself alone — a canon is a
+review procedure only once each entry says how a violation surfaces and what
+happens then. Where you cannot say how one would be detected, say so; that
+answer is worth more than a plausible sentence, because it is usually the rule
+nobody has been enforcing.
+
+An audit reads the whole codebase, so it also finds things that are not
+invariants: a package with no files, a dependency declared and never used, a
+goroutine that outlives what started it. Keep them out of the four lists — they
+are not rules — and out of the conversation, which ends when the session does.
+Name them in a short section of their own and offer to file them through
+`/sdd:tasks`. This is the only other harvest of a full read of the code, and it
+is thrown away by default.
