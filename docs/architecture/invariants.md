@@ -37,9 +37,10 @@ here**; they do not restate them.
 5. **Nothing from the origin codebase leaks in.** No stack, vendor, or domain
    terms in skills or templates — the method is language-agnostic, and an
    example that is not generic is a bug.
-   *Detect:* `./scripts/check.sh` greps a denylist of origin vocabulary. It
-   catches known leaks only; a new stack term needs a reader.
-   *On violation:* reject, and add the term to the denylist.
+   *Detect:* `./scripts/check.sh` matches skills and templates against a list
+   of ecosystem terms spanning many stacks — a list tuned to one project would
+   itself describe that project. A domain term it does not name needs a reader.
+   *On violation:* reject, and add the term if the list should have had it.
 6. **The canon is observed, never invented.** `deriving-canon` writes only rules
    the code actually holds, and writes nothing when there are none (ADR 0003). A
    speculative invariant is worse than a missing one: it gets cited as if it had
@@ -65,6 +66,13 @@ here**; they do not restate them.
    that ships it. Edit the template, then re-render — never edit `CLAUDE.md`.
    *Detect:* `./scripts/check.sh` fails when the two drift.
    *On violation:* re-render from the template; the template is the source.
+10. **Every catalogue entry resolves to a plugin manifest.** `metadata.pluginRoot`
+    is prepended only to a source without a leading `./`, so the two forms land
+    in different directories and both parse. A manifest no installation can
+    follow is the one defect that reaches every user and no user can work around.
+    *Detect:* `./scripts/check.sh` resolves each `source` and requires
+    `.claude-plugin/plugin.json` under it, naming the same plugin.
+    *On violation:* reject — nothing else in a release matters until this passes.
 
 ## Layout responsibilities
 

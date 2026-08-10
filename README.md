@@ -132,11 +132,12 @@ contributes a section, you keep authorship of the file.
 
 ## Checks
 
-`./scripts/check.sh` validates the manifests and the skill frontmatter, checks
-that every bundled path a skill names exists *and* that every shipped skeleton is
-named by some skill, verifies this repo's own `CLAUDE.md` still matches the
-scaffold it ships, and greps for origin-project vocabulary that would break
-portability.
+`./scripts/check.sh` validates the manifests and the skill frontmatter, resolves
+the marketplace's plugin source to a real plugin manifest, checks that every
+bundled path a skill names exists *and* that every shipped skeleton is named by
+some skill, verifies this repo's own `CLAUDE.md` still matches the scaffold it
+ships, and matches skills and templates against stack vocabulary that would
+break portability.
 
 ## Prior art
 

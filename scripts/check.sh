@@ -14,6 +14,9 @@ for f in .claude-plugin/marketplace.json plugins/sdd/.claude-plugin/plugin.json;
   fi
 done
 
+echo "marketplace sources resolve"
+python3 scripts/check_marketplace.py || fail=1
+
 echo "skills"
 python3 - <<'PY' || fail=1
 import re, os, glob, sys
