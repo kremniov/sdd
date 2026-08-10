@@ -46,20 +46,7 @@ The "what do I pull next" queue. Format: the `managing-tasks` skill.
 
 ---
 
-#### `[T-4]` Publish to GitHub
-
-**Tags:** `[chore]` `[next]`
-
-**Outcome:** The marketplace is installable from a public GitHub repo by someone who is not the author.
-
-**Acceptance:**
-
-- [ ] `/plugin marketplace add <owner>/sdd` works from a clean machine
-- [ ] README install instructions match the published name
-- [ ] A CHANGELOG records 0.1.0
-
----
-
 ## Done
 
+- `[T-4]` `[chore]` `[branch: main]` Publish to GitHub — public at `kremniov/sdd`, marketplace `kremniov`, plugin `sdd` 0.1.0.
 - `[T-1]` `[feat]` `[branch: master]` Extract the method into a portable plugin — five skills, three skeletons, a project scaffold, and a config seam.
