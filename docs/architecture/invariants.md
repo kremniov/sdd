@@ -66,10 +66,11 @@ here**; they do not restate them.
    that ships it. Edit the template, then re-render — never edit `CLAUDE.md`.
    *Detect:* `./scripts/check.sh` fails when the two drift.
    *On violation:* re-render from the template; the template is the source.
-10. **Every catalogue entry resolves to a plugin manifest.** `metadata.pluginRoot`
-    is prepended only to a source without a leading `./`, so the two forms land
-    in different directories and both parse. A manifest no installation can
-    follow is the one defect that reaches every user and no user can work around.
+10. **Every catalogue entry resolves to a plugin manifest.** A source is spelled
+    in full from the marketplace root, `./`-prefixed; `metadata.pluginRoot` is
+    not used (ADR 0008). Schema validation passes on a source that points
+    nowhere, and a manifest no installation can follow is the one defect that
+    reaches every user and that no user can work around.
     *Detect:* `./scripts/check.sh` resolves each `source` and requires
     `.claude-plugin/plugin.json` under it, naming the same plugin.
     *On violation:* reject — nothing else in a release matters until this passes.

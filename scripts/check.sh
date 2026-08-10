@@ -16,6 +16,16 @@ done
 
 echo "marketplace sources resolve"
 python3 scripts/check_marketplace.py || fail=1
+if command -v claude >/dev/null 2>&1; then
+  if claude plugin validate . >/dev/null 2>&1; then
+    note OK "claude plugin validate passes"
+  else
+    claude plugin validate . 2>&1 | sed 's/^/          /'
+    note FAIL "claude plugin validate rejects the manifest"
+  fi
+else
+  note SKIP "claude not on PATH — schema unvalidated"
+fi
 
 echo "skills"
 python3 - <<'PY' || fail=1

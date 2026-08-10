@@ -6,13 +6,10 @@
     "name": "Andrey Kremnev",
     "url": "https://github.com/kremniov"
   },
-  "metadata": {
-    "pluginRoot": "./plugins"
-  },
   "plugins": [
     {
       "name": "sdd",
-      "source": "sdd"
+      "source": "./plugins/sdd"
     }
   ]
 }
