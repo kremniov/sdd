@@ -50,10 +50,13 @@ def baseline():
     """
     if os.environ.get("SDD_BASE"):
         return os.environ["SDD_BASE"]
-    base = git("merge-base", "main", "HEAD")
     head = git("rev-parse", "HEAD")
-    if base and head and base.strip() != head.strip():
-        return base.strip()
+    for trunk in ("main", "origin/main"):
+        base = git("merge-base", trunk, "HEAD")
+        if base and head and base.strip() != head.strip():
+            return base.strip()
+    print("  SKIP    no trunk to measure against — a stamp that stopped moving "
+          "is only caught in uncommitted work (set SDD_BASE)")
     return "HEAD"
 
 
