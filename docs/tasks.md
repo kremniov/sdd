@@ -18,6 +18,23 @@ The "what do I pull next" queue. Format: the `managing-tasks` skill.
 
 ---
 
+#### `[T-6]` Bring an adopted scaffold up to a newer plugin version
+
+**Tags:** `[feat]` `[next]`
+
+**Outcome:** A project that adopted an older version can see what the scaffold has changed since, and take the changes it wants, without a re-render overwriting what it has written into those files.
+
+**Context:** The scaffold is copied into a repository and never read again (ADR 0002 — the opposite of the artifact skeletons on purpose), so a correction here reaches nobody who already adopted. Found when six pre-rename skill names were fixed in the plugin while two of them sat in files already copied into a project. `/sdd:setup` re-run does this for the rules section already, via its sentinel; the other four files have no marker separating the header the plugin owns from the body the project writes.
+
+**Acceptance:**
+
+- [ ] Adoption records which plugin version wrote the scaffold, and a re-run compares against the installed one
+- [ ] Changes are proposed per line, with the operator deciding each; nothing is rewritten wholesale
+- [ ] A file whose body the project owns — `tasks.md` above all — is never a candidate for replacement, only its header
+- [ ] The upgrade is a mode of `/sdd:setup`, not a seventh skill
+
+---
+
 #### `[T-2]` Portable structural checker for adopting projects
 
 **Tags:** `[feat]` `[next]`

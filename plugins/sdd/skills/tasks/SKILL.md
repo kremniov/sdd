@@ -20,7 +20,7 @@ queues.
 A **ticket** states the outcome and how you'll know it's done — nothing else.
 Reasoning, history, and option-comparisons live in the feature's `design.md`,
 written when the task is picked up. A ticket is a pickup contract, not a design
-doc: an agent takes it → runs brainstorming → design → plan.
+doc: an agent takes it → designs → plans → executes.
 
 ## The ticket
 

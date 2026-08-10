@@ -8,7 +8,7 @@ re-reading the codebase. Three lifetimes — don't mix them.
 | `{{canon}}` | **always current** | How the system is built now. Read this first. Updated in the same PR that changes the seam it describes. |
 | `{{adr}}` | append-only | One decision per file (why we chose X). Added when an invariant or a significant trade-off changes. |
 | `{{roadmap}}` | long-lived | Direction: phases and objectives, sequence rather than dates. Updated rarely, when direction shifts. |
-| `{{tasks}}` | evolving | The "what's next" queue — one ticket per actionable item. Format: the `managing-tasks` skill. |
+| `{{tasks}}` | evolving | The "what's next" queue — one ticket per actionable item. Format: `/sdd:tasks`. |
 | `{{features}}<name>/` | frozen at merge | Per-feature `design.md` + `plan.md` (tier 2 only). A dated record of how the feature was reasoned into being; durable consequences are folded into the canon, which is where current truth lives. |
 
 Three more places earn a mention once a project has them. They are conventions,

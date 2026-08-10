@@ -26,9 +26,9 @@ this table takes precedence over any skill's own "applies to every project" gate
 
 | Tier | Scope | Process |
 |---|---|---|
-| **0** | One file, no new seam, no new dependency | No brainstorming, no plan. Code + tests + commit, then close the ticket. |
+| **0** | One file, no new seam, no new dependency | No design cycle, no plan. Code + tests + commit, then close the ticket. |
 | **1** | New file or module, no invariant touched | A design paragraph in the conversation — no `design.md`, no `plan.md`; track steps with the task tool. |
-| **2** | New seam, an invariant changes, or several modules move together | Full cycle: `brainstorming` → `design.md` → `plan.md` → execution. |
+| **2** | New seam, an invariant changes, or several modules move together | Full cycle: `/sdd:design` → `design.md` → `plan.md` → execution. |
 
 Artifacts live one directory per feature: `docs/features/<feature-name>/`, holding
 `design.md` and `plan.md`. Both name their ticket in a `**Ticket:** <ID>` line
@@ -53,7 +53,7 @@ reason to ask whether to start the next. Mirror the steps into the task tool as
 execution starts — one task per step, in order — so progress is readable without
 reading the diff.
 
-`systematic-debugging` applies at every tier, including 0, for any bug — its
+`/sdd:debug` applies at every tier, including 0, for any bug — its
 "3 failed fixes → question the architecture" rule especially.
 
 **A test is only known to test something once it has failed.** Run it and watch
@@ -82,9 +82,9 @@ for a named reason. Never merge on red or pending checks.
 A fresh session on the finished branch, not the one that wrote it: an author's
 self-check is a different procedure and its quality tracks how worn the session
 is. This catches a class of defect no amount of up-front process does — a wrong
-assumption shared by the code and the plan that produced it survives
-brainstorming, design, and the author's own review, because each of them reasons
-from that assumption.
+assumption shared by the code and the plan that produced it survives the design,
+the plan, and the author's own review, because each of them reasons from that
+assumption.
 
 Subagents are not the default — dispatch them only when tasks are genuinely
 parallel and the interfaces between them are settled.

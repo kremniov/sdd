@@ -4,6 +4,15 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 0.1.3
+
+- The tier table told every adopting project to run `brainstorming`, a skill
+  renamed to `/sdd:design` before the first release. Five more pre-rename names
+  survived in the scaffold and the README — including two in files copied into
+  a repository, where a correction here would never have reached them.
+- `./scripts/check.sh` resolves every `/sdd:` reference in shipped text against
+  the skills directory and rejects a retired name. Recorded as invariant 11.
+
 ## 0.1.2
 
 - `/sdd:canon` holds a claim that something is *missing* to the same standard as

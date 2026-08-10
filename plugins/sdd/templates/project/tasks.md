@@ -1,6 +1,6 @@
 # Tasks
 
-The "what do I pull next" queue. Format: the `managing-tasks` skill.
+The "what do I pull next" queue. Format: `/sdd:tasks`.
 
 ## TODO
 

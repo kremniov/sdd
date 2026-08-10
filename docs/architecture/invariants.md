@@ -74,6 +74,16 @@ here**; they do not restate them.
     *Detect:* `./scripts/check.sh` resolves each `source` and requires
     `.claude-plugin/plugin.json` under it, naming the same plugin.
     *On violation:* reject — nothing else in a release matters until this passes.
+11. **Shipped text names only skills that exist, and names them `/sdd:<skill>`.**
+    A rename lands in the directory and the frontmatter together and leaves the
+    prose behind, where the old name reads as an instruction to run something
+    absent from `/skills`. The scaffold is the worst place for one: it is copied
+    into a repository and outlives any correction here.
+    *Detect:* `./scripts/check.sh` resolves every `/sdd:` reference against the
+    skills directory and fails on a retired name. Frozen artifacts under `docs/`
+    quote old names on purpose and are not scanned.
+    *On violation:* reject — and if the name changed, add it to the retired map
+    so the next occurrence is caught rather than read.
 
 ## Layout responsibilities
 

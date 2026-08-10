@@ -51,6 +51,9 @@ for f in sorted(found):
 sys.exit(0 if ok else 1)
 PY
 
+echo "skill references"
+python3 scripts/check_skill_refs.py || fail=1
+
 echo "bundled paths"
 python3 - <<'PY' || fail=1
 import re, os, glob, sys
