@@ -17,6 +17,8 @@ MARKERS = {
     "CLAUDE.section.md": "sdd:method-section",
 }
 DEFAULT = "sdd:scaffold"
+CHANGES = "CHANGES.md"
+BASELINE = (0, 2, 0)
 
 ROOT = Path("plugins/sdd/templates/project")
 CEILING = json.loads(Path("plugins/sdd/.claude-plugin/plugin.json").read_text())["version"]
@@ -66,8 +68,22 @@ def fence(text, name):
     return opens[0], region
 
 
+def logged():
+    """{(version, filename)} — every entry declared in the change log."""
+    entries, version = set(), None
+    for line in (ROOT / CHANGES).read_text().splitlines():
+        if line.startswith("## "):
+            version = line[3:].strip()
+        elif line.startswith("### ") and version:
+            entries.add((version, line[4:].strip()))
+    return entries
+
+
 ok = True
+stamps = {}
 for path in sorted(ROOT.glob("*.md")):
+    if path.name == CHANGES:
+        continue
     name = MARKERS.get(path.name, DEFAULT)
     text = path.read_text()
     result = fence(text, name)
@@ -90,6 +106,23 @@ for path in sorted(ROOT.glob("*.md")):
         ok = False
         continue
 
+    stamps[path.name] = stamp
     print(f"  OK      {path.name} ({name} v{stamp})")
 
+entries = logged()
+for version, filename in sorted(entries):
+    if filename not in stamps:
+        print(f"  FAIL    {CHANGES}: {version} names {filename}, which is not a scaffold file")
+        ok = False
+    elif parse(version) is None or parse(version) > parse(stamps[filename]):
+        print(f"  FAIL    {CHANGES}: {filename} has an entry for {version}, past its v{stamps[filename]}")
+        ok = False
+
+for filename, stamp in sorted(stamps.items()):
+    if parse(stamp) > BASELINE and (stamp, filename) not in entries:
+        print(f"  FAIL    {CHANGES}: nothing describes what changed in {filename} at v{stamp}")
+        ok = False
+
+if ok:
+    print(f"  OK      {CHANGES} accounts for every stamp past v{'.'.join(map(str, BASELINE))}")
 sys.exit(0 if ok else 1)
