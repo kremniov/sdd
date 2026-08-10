@@ -53,13 +53,7 @@ sys.exit(0 if ok else 1)
 PY
 
 echo "portability"
-leak='<stack terms — see scripts/check_portability.py>'
-if grep -rniE "$leak" plugins/sdd/skills plugins/sdd/templates >/dev/null 2>&1; then
-  grep -rniE "$leak" plugins/sdd/skills plugins/sdd/templates | sed 's/^/  /'
-  note FAIL "origin-project terms leaked into the plugin"
-else
-  note OK "no origin-project terms in skills or templates"
-fi
+python3 scripts/check_portability.py || fail=1
 
 echo "every shipped skeleton is reachable"
 python3 - <<'PY' || fail=1

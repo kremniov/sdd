@@ -4,8 +4,8 @@
 
 ## Problem
 
-The spec-driven flow this repo packages was developed inside one codebase and
-is inseparable from it. Its rules live in that project's `CLAUDE.md`, its skills
+The spec-driven flow this repo packages was developed inside one codebase and is
+inseparable from it. Its rules live in that project's `CLAUDE.md`, its skills
 name that project's invariant numbers, and its templates sit at a path only that
 repo has. Adopting it elsewhere today means copying files by hand and editing
 every cross-reference — and the parts most worth copying (the tier table, the
@@ -163,7 +163,7 @@ No runtime, so no unit tests. What proves it works:
 2. **Adoption into a repo that already has docs** — a clone of the origin
    repo. Nothing is overwritten; the config points at what is already
    there.
-3. **Adoption into a repo in another language** — to catch any assumption from
+3. **Adoption into a repo in another language**, to catch any assumption from
    the origin's stack that leaked through.
 4. **`deriving-canon` against the origin repo**, whose real invariants are known:
    does it recover the layering rules from the code alone?

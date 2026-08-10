@@ -23,8 +23,7 @@ run last and are the only gates.
 
 ### Step 1 — The repo is a valid marketplace with an empty plugin
 
-**Goal:** `/plugin marketplace add <local path>` succeeds and lists one
-plugin.
+**Goal:** `/plugin marketplace add <local path>` succeeds and lists one plugin.
 
 **Touches:** `.claude-plugin/marketplace.json`, `plugins/sdd/.claude-plugin/plugin.json`,
 `.gitignore`, `LICENSE`.

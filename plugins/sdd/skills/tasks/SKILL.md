@@ -106,7 +106,8 @@ Each of these is what makes a ticket "watery". Cut it from the ticket:
 > 10,000-row upload dies on a typo in row 3. Noticed while debugging a support
 > ticket last week. **Go with option 2 = per-row outcomes**, not option 1
 > (fail-fast with a better message) — users need the good rows to land, and
-> partial success is what every comparable tool does…
+> partial success is what every comparable tool does. Once it lands we should
+> probably revisit the batch size too, though that is a separate concern…
 
 **Ticket:**
 
