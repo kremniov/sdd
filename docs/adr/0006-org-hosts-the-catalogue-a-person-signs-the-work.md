@@ -5,8 +5,7 @@
 ## Context
 
 Publishing raised a question with no technical answer: release under a personal
-GitHub account, or under the organization account — an organization that exists but has
-no company behind it yet, one member, and zero public repositories.
+GitHub account, or under an organization account with no public presence yet.
 
 The pull in both directions is real. An early developer tool earns trust from a
 named person, not a logo: an empty organization can read as a startup that may
@@ -24,9 +23,9 @@ tier.
 Split hosting from authorship, because they are separate facts and only one of
 them is expensive to change.
 
-- **The organization hosts.** `<account>/claude-plugins` — a catalogue repo,
-  so a second plugin needs no second `marketplace add` from anyone. The
-  marketplace is named the organization account.
+- **The organization hosts** a catalogue repo, so a second plugin needs no
+  second `marketplace add` from anyone, and the marketplace takes the
+  organization's name.
 - **A person signs.** `author` in the plugin manifest, the LICENSE copyright,
   and a short "Who made this" line in the README all name Andrey Kremnev and
   link to the personal account.

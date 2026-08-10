@@ -4,24 +4,20 @@
 
 ## Context
 
-ADR 0006 put the catalogue under the the organization account organization on the
-argument that the marketplace identifier is the expensive thing to move, so it
+ADR 0006 put the catalogue under an organization account on the argument that the marketplace identifier is the expensive thing to move, so it
 should be fixed first. That reasoning weighed the cost of a future move without
 weighing what the name buys on the day of publication.
 
 Two facts settle it, and neither was in evidence when 0006 was written.
 
-**The reach is personal.** There is an existing LinkedIn audience and a wide
-circle of industry contacts from previous projects. the organization account has none of
-that — the company does not exist yet in any form, on paper or otherwise. A
-first release travels through the channels its author already has, and here
-those channels carry a person's name.
+**The reach is personal.** The author has an existing audience and a wide circle
+of industry contacts; a new organization account has neither. A first release
+travels through the channels its author already has, and here those channels
+carry a person's name.
 
-**A later move is expected, not hypothetical.** Placing the repository under
-the company' legal custody is an open question to be decided when the company
-is real. ADR 0006 optimized for avoiding a move that is going to happen anyway;
-that is the wrong thing to optimize, because it pays a cost now to avoid a cost
-that arrives regardless.
+**A later move is possible and cheap.** Moving the repository to an organization
+is a decision for whenever one is worth having. ADR 0006 paid a cost now to
+avoid a move that may happen anyway, which is the wrong thing to optimize.
 
 ## Decision
 
@@ -44,7 +40,7 @@ one is disturbed.
 
 ## Alternatives
 
-- **the organization account** — ADR 0006's choice, superseded above.
+- **An organization account** — ADR 0006's choice, superseded above.
 - **A host-neutral marketplace name** (`sdd-method`) so a transfer changes
   nothing. Rejected again, and for a sharper reason than in 0006: the identifier
   appears in every install and every marketplace listing, and spending that

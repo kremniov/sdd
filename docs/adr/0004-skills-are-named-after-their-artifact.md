@@ -32,8 +32,8 @@ Because the names are short, the frontmatter `description` becomes the only
 selection signal. Each one states its trigger — when to reach for the skill —
 rather than paraphrasing the name.
 
-The marketplace is the organization account, the plugin `sdd`. The long organization name
-appears once, in `marketplace add`; the identifiers seen repeatedly stay short.
+The marketplace takes the account name, the plugin is `sdd`. The account appears
+once, in `marketplace add`; the identifiers seen repeatedly stay short.
 *(The marketplace was later renamed `kremniov` — see [ADR 0007](0007-publish-under-the-personal-account.md).
 The skill names decided here are unaffected.)*
 The repository is a catalogue (`claude-plugins`), not one plugin's repo, so a
@@ -44,7 +44,7 @@ second plugin needs no second `marketplace add` from every user.
 - **Keep the gerunds, fix only the stutter** — leaves two genres in one list.
 - **`rootcause` instead of `debug`** — more precise about the procedure, less
   likely to be found by someone with a failing test.
-- **the organization account as the plugin name too** — repeats a long token at every
+- **The account name as the plugin name too** — repeats a token at every
   invocation to no benefit; the marketplace already carries the identity.
 
 ## Consequences
