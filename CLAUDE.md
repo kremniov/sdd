@@ -45,13 +45,14 @@ event payload may appear, because those are seam decisions; an implementation
 written out ahead of time is a draft made when least is known, and it reaches
 execution looking like an agreed commitment rather than a guess.
 
-**An approved plan authorizes every step in it.** Execution runs to the last
-step and stops only on a red DoD, on a decision the design does not cover, or at
-a step whose heading carries `[gate]` — a check the operator runs by hand. A
-commit boundary between steps is not a checkpoint, and finishing one is not a
-reason to ask whether to start the next. Mirror the steps into the task tool as
-execution starts — one task per step, in order — so progress is readable without
-reading the diff.
+**An approved plan authorizes every step in it, up to a merge-ready branch.**
+Execution runs to the last step and stops only on a red DoD, on a decision the
+design does not cover, or at a step whose heading carries `[gate]` — a check the
+operator runs by hand. A commit boundary between steps is not a checkpoint, and
+finishing one is not a reason to ask whether to start the next. Integration is
+never one of the authorized steps; see the integration rule below. Mirror the
+steps into the task tool as execution starts — one task per step, in order — so
+progress is readable without reading the diff.
 
 `/sdd:debug` applies at every tier, including 0, for any bug — its
 "3 failed fixes → question the architecture" rule especially.
@@ -71,20 +72,30 @@ suite you did not watch finish, a build you assume still compiles, a behaviour
 you reasoned about but never triggered — none of these support the claim. When
 something fails or was skipped, say so with the output rather than softening it.
 
-**Integrating a branch is a decision, not a step.** Before merging: the branch
-is green, the independent review below has passed, and the docs discipline below
-is satisfied. Moving the ticket to Done with a `[PR #N]` ref is then the **last
-commit on the branch** — it records that the work shipped, so it cannot precede
-the review that decides whether it does. Merge preserving history; squash only
-for a named reason. Never merge on red or pending checks.
+**Integrating a branch is the operator's decision, never the agent's.** The
+agent brings the branch to merge-ready — green, docs discipline satisfied,
+independently reviewed — reports that state together with the review's findings,
+and stops there. `git merge`, `gh pr merge`, and a push to the integration
+branch run only after the operator approves *this* branch, in words, with the
+review results already in front of them. Approving a plan and saying "go" at the
+start of execution do not carry that authority: both predate the review that
+integration depends on. Moving the ticket to Done with a `[PR #N]` ref records
+the operator's decision and is therefore the **last commit on the branch**, made
+after that decision, never before it. Merge preserving history; squash only for
+a named reason. Never merge on red or pending checks.
 
 **A merge candidate gets an independent review — at every tier, no exceptions.**
-A fresh session on the finished branch, not the one that wrote it: an author's
-self-check is a different procedure and its quality tracks how worn the session
-is. This catches a class of defect no amount of up-front process does — a wrong
-assumption shared by the code and the plan that produced it survives the design,
-the plan, and the author's own review, because each of them reasons from that
-assumption.
+Independent means the reviewer's entire input is the repository: the branch
+diff, the design, the canon, and nothing authored by the session that wrote the
+code. A review orchestrated from the author's session is the author's
+self-check whatever it spawns — a forked skill continues the author's context
+outright, and even a subagent that starts clean reads a prompt the author
+framed. Run one anyway before handing the branch over; it catches dead tests and
+loose ends cheaply. It does not replace the review, which the operator starts.
+The independent pass catches a class of defect no amount of up-front process
+does — a wrong assumption shared by the code and the plan that produced it
+survives the design, the plan, and the author's own review, because each of them
+reasons from that assumption.
 
 Subagents are not the default — dispatch them only when tasks are genuinely
 parallel and the interfaces between them are settled.

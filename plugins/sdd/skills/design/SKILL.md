@@ -87,6 +87,10 @@ Tier 2 continues into `<features>/<feature-name>/plan.md`, following
 not contain it. Steps carry a goal, constraints, what they touch, and a runnable
 DoD — not function bodies.
 
+The last step leaves a merge-ready branch. Execution's terminal state is that
+branch plus the independent review's findings, handed to the operator, who
+decides whether it integrates — so no step is written for the merge itself.
+
 ## At merge: the ADR
 
 A decision marked `→ ADR` in the design is written when the work merges, into

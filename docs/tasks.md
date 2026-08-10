@@ -35,6 +35,29 @@ The "what do I pull next" queue. Format: `/sdd:tasks`.
 
 ---
 
+#### `[T-8]` Adoption offers permission rules for the integration commands
+
+**Tags:** `[feat]` `[next]`
+
+**Outcome:** A project that adopts the method can have the operator's merge
+decision enforced by a permission prompt, not only by prose an agent may reason
+past.
+
+**Context:** ADR 0010 records why the prose exists and why it is not enough — a
+text rule competes with the agent's own disposition toward autonomy and thins
+out over a long context. `ask` rules on `git merge*`, `git push*` and
+`gh pr merge*` in the project's `.claude/settings.json` make integration a
+dialog the agent cannot skip.
+
+**Acceptance:**
+
+- [ ] `/sdd:setup` proposes the rules and shows their exact JSON before asking
+- [ ] Declining is a first-class answer; adoption completes either way
+- [ ] An existing `permissions` block is extended, never replaced, and a rule
+      already present is not duplicated
+- [ ] The final report says whether the rules landed
+
+---
 
 #### `[T-2]` Portable structural checker for adopting projects
 
