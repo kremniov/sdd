@@ -1,6 +1,6 @@
 # ADR 0011 — Compare scaffold versions, not scaffold text
 
-**Status:** accepted · **Date:** 2026-08-10 · **PR:** —
+**Status:** accepted · **Date:** 2026-08-10 · **PR:** #1
 
 ## Context
 

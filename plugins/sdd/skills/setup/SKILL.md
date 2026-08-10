@@ -122,13 +122,18 @@ opener and the version on the template's:
   not by itself anything to report.
 - **The project is behind** — read
   `${CLAUDE_PLUGIN_ROOT}/templates/project/CHANGES.md` and take the entries for
-  that file between the two versions. Put each one to the operator on its own,
-  in its own terms; on a yes, edit their region to carry what the entry
-  describes, keeping their wording, their ids, their references. An entry whose
-  substance their text already states needs no edit and no question — say it was
-  already satisfied. Advance the stamp to the template's only once every entry
-  in the range is carried or already true; a declined entry leaves the stamp
-  where it is, so the next run asks again.
+  that file above the project's version and up to the template's — the project's
+  own version is excluded, the template's included, because the project already
+  holds what its stamp names. Put each one to the operator on its own, in its
+  own terms; on a yes, edit their region to carry what the entry describes,
+  keeping their wording, their ids, their references. An entry whose substance
+  their text already states needs no edit and no question — say it was already
+  satisfied. Then set the stamp to the highest version whose entries were *all*
+  carried or already true, which is the template's when nothing was declined.
+  Stopping at the last complete version keeps the re-offer to what was actually
+  refused; leaving the stamp at the bottom would re-offer accepted entries too,
+  and they would then be filtered by an agent's judgement about what the text
+  already says rather than by a recorded fact.
 - **The project is ahead** — an older plugin is installed over a newer
   adoption. Report it and leave the file alone. Downgrading someone's guidance
   is not something to do quietly.

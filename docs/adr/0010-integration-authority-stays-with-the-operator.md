@@ -1,6 +1,6 @@
 # ADR 0010 — Integration authority stays with the operator, and independence is defined by input
 
-**Status:** accepted · **Date:** 2026-08-10 · **PR:** —
+**Status:** accepted · **Date:** 2026-08-10 · **PR:** #1
 
 ## Context
 

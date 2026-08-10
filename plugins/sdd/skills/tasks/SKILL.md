@@ -84,6 +84,9 @@ rules file (`rules:` in `.sdd.yml`) — **collapse the ticket to one line** and 
 for a ref tag (`[PR #N]` / `[branch-name]` / `[commit-hash]`). Acceptance is
 dropped — git remembers. Keep type/phase/area tags.
 
+The same commit fills the `PR:` field of any ADR the branch wrote and left as a
+dash. It is the last chance: nothing after it is on the branch.
+
 ```markdown
 - `[T-40]` `[feat]` `[launch]` `[api]` `[PR #91]` Title — one-sentence result.
 ```

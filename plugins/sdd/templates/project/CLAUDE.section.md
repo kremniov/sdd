@@ -80,9 +80,10 @@ after that decision, never before it. Merge preserving history; squash only for
 a named reason. Never merge on red or pending checks.
 
 **A merge candidate gets an independent review — at every tier, no exceptions.**
-Independent means the reviewer's entire input is the repository: the branch
-diff, the design, the canon, and nothing authored by the session that wrote the
-code. A review orchestrated from the author's session is the author's
+Independent means the reviewer's input is the committed artifacts and nothing
+else — the branch diff, the design, the canon — with no prompt, briefing or
+summary from the session that wrote the code. The author's conversation is not
+input. A review orchestrated from the author's session is the author's
 self-check whatever it spawns — a forked skill continues the author's context
 outright, and even a subagent that starts clean reads a prompt the author
 framed. Run one anyway before handing the branch over; it catches dead tests and

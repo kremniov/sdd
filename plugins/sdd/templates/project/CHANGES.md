@@ -47,7 +47,8 @@ approves, not after the review.
 the finished branch" was satisfiable from inside the author's own session — a
 forked review continues the author's context outright, and even a subagent that
 starts clean reads a prompt the author framed. The requirement is that the
-reviewer's entire input is the repository and nothing authored by the session
-that wrote the code, and that the operator starts that session. An author-side
-review is still worth running before handing the branch over; it does not
-replace this one.
+reviewer's input is the committed artifacts and nothing else — no prompt,
+briefing or summary from the session that wrote the code, whose conversation is
+not input — and that the operator starts that session. An author-side review is
+still worth running before handing the branch over; it does not replace this
+one.

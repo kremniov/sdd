@@ -49,8 +49,16 @@ out over a long context. `ask` rules on `git merge*`, `git push*` and
 `gh pr merge*` in the project's `.claude/settings.json` make integration a
 dialog the agent cannot skip.
 
+The trade-off to settle first: prefix matching does not see the target branch,
+so `git push*` catches pushing a feature branch too — which the agent is
+supposed to do, before the review, to open the PR at all. Either accept the
+friction, since `ask` is a prompt and not a refusal, or reach for a hook that
+inspects the refspec. Decide it in the ticket rather than mid-implementation.
+
 **Acceptance:**
 
+- [ ] The feature-branch push question is settled one way and the reason is
+      written down
 - [ ] `/sdd:setup` proposes the rules and shows their exact JSON before asking
 - [ ] Declining is a first-class answer; adoption completes either way
 - [ ] An existing `permissions` block is extended, never replaced, and a rule

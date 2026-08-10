@@ -97,6 +97,11 @@ A decision marked `→ ADR` in the design is written when the work merges, into
 `<adr>/NNNN-<slug>.md`, following `${CLAUDE_PLUGIN_ROOT}/templates/_ADR.md`.
 Numbers are sequential and never reused; check the directory for the highest.
 
+Its `PR:` field is filled as soon as the number exists, and at the latest in the
+commit that moves the ticket to Done. That commit is the backstop because it is
+the only one that certainly runs after the number is known; nothing else on the
+branch comes back for it, which is how ADRs end up shipping with a dash.
+
 This is the only place the ADR skeleton's location is written down, because
 the rules file cannot name it — the plugin path resolves inside skill text, not in
 a project file. When an ADR is due and this skill is not loaded, invoke it, or

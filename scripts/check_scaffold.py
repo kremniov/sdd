@@ -101,6 +101,7 @@ def logged(text):
 
 ok = True
 stamps = {}
+broken = set()
 BASE = baseline()
 for path in sorted(ROOT.glob("*.md")):
     if path.name == CHANGES:
@@ -111,12 +112,14 @@ for path in sorted(ROOT.glob("*.md")):
 
     if isinstance(result, str):
         print(f"  FAIL    {path.name}: {result}")
+        broken.add(path.name)
         ok = False
         continue
 
     stamp, region = result
     if parse(stamp) > parse(CEILING):
         print(f"  FAIL    {path.name}: stamped v{stamp}, ahead of the plugin's own {CEILING}")
+        broken.add(path.name)
         ok = False
         continue
 
@@ -124,6 +127,7 @@ for path in sorted(ROOT.glob("*.md")):
     was = fence(before, name) if before is not None else None
     if isinstance(was, tuple) and was[1] != region and was[0] == stamp:
         print(f"  FAIL    {path.name}: the fenced region changed and v{stamp} did not move")
+        broken.add(path.name)
         ok = False
         continue
 
@@ -132,6 +136,8 @@ for path in sorted(ROOT.glob("*.md")):
 
 entries = logged((ROOT / CHANGES).read_text())
 for version, filename in sorted(entries):
+    if filename in broken:
+        continue  # already failed above; "not a scaffold file" would misname the cause
     if filename not in stamps:
         print(f"  FAIL    {CHANGES}: {version} names {filename}, which is not a scaffold file")
         ok = False
