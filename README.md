@@ -59,7 +59,7 @@ the plugin, so a fix to a skeleton reaches every project that installed it.
 ## Install
 
 ```
-/plugin marketplace add kremniov/claude-plugins
+/plugin marketplace add kremniov/sdd
 /plugin install sdd@kremniov
 ```
 

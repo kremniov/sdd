@@ -25,15 +25,22 @@ that arrives regardless.
 
 ## Decision
 
-Publish from `kremniov/claude-plugins`. The marketplace is named `kremniov`;
+Publish from `kremniov/sdd`. The marketplace is named `kremniov`;
 `author`, the LICENSE copyright and the README sign-off name Andrey Kremnev.
 
 The marketplace identifier carries the author's name rather than a host's. That
 survives a transfer intact: after a move to an organization the name still
 states who wrote it, which stays true no matter who holds the repository.
 
-Still a catalogue repo (`claude-plugins`, not `sdd`), for the reason 0006 gave —
-a second plugin should not cost every user a second `marketplace add`.
+The repository is named after the product, not after what it structurally is.
+It does hold a marketplace (a repo cannot be both a plugin and its own
+marketplace, so the plugin sits in `plugins/sdd/`) — but `github.com/kremniov/sdd`
+is the link that gets shared and remembered, and `/sdd:` is already how every
+skill is invoked. ADR 0004 and 0006 preferred a catalogue name to spare a future
+second plugin its own `marketplace add`; that is the same error as 0006's,
+paying a cost now against a scenario that may never arrive. If a second plugin
+appears, it gets its own repository and marketplace then, and nobody using this
+one is disturbed.
 
 ## Alternatives
 
