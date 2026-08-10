@@ -36,8 +36,12 @@ read `plugin-mechanics.md`.
 `templates/` holds skeletons the model reads while writing an artifact in
 someone's project. `templates/project/` holds files that get written into the
 project once, at adoption, with placeholders substituted. Nothing under
-`templates/project/` is ever read after adoption; nothing under `templates/`
-directly is ever copied.
+`templates/` directly is ever copied.
+
+A scaffold file is read once more after that, and only to compare: each carries
+a `<!-- sdd:scaffold -->` fence around the part the plugin wrote, and a re-run
+of `/sdd:setup` diffs that region against the current template so a project can
+take a correction without losing what it wrote below (ADR 0009).
 
 ## Adding a skill
 

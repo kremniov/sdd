@@ -2,8 +2,8 @@
 
 A rename reaches the directories and the frontmatter in one edit and leaves the
 prose behind, where a stale name is an instruction to run something absent from
-`/skills`. Frozen artifacts under `docs/` quote the old names on purpose and are
-not scanned.
+`/skills`. The canon is scanned too — it claims to be always current. Frozen
+artifacts and decision records quote the old names on purpose and are not.
 """
 
 import re
@@ -19,7 +19,11 @@ RETIRED = {
 }
 
 skills = {p.name for p in Path("plugins/sdd/skills").iterdir() if p.is_dir()}
-scanned = sorted(Path("plugins/sdd").rglob("*.md")) + [Path("README.md"), Path("CLAUDE.md")]
+scanned = (
+    sorted(Path("plugins/sdd").rglob("*.md"))
+    + sorted(Path("docs/architecture").glob("*.md"))
+    + [Path("README.md"), Path("CLAUDE.md")]
+)
 
 ok = True
 for path in scanned:

@@ -1,3 +1,4 @@
+<!-- sdd:scaffold -->
 # Architectural invariants
 
 Canonical list. These rules apply to all work, every feature. Any change that
@@ -28,6 +29,7 @@ implying a rigour that is absent.
 Numbers are stable: other documents cite them. Append, never renumber. A retired
 rule keeps its number, struck through, naming the ADR that retired it.
 -->
+<!-- /sdd:scaffold -->
 
 1. **<Name>.** <What must hold.>
    *Detect:* <command, grep, or review question>

@@ -4,6 +4,21 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 0.2.0
+
+A correction to the scaffold can now reach a project that already adopted.
+
+- Each scaffold file carries a `<!-- sdd:scaffold -->` fence around the region
+  the plugin authored. A re-run of `/sdd:setup` renders the template, compares
+  only that region, and offers the difference. The queue, the phases and the
+  rules below the fence are never read, diffed or written (ADR 0009).
+- A project adopted before the fence existed is asked once where the boundary
+  goes, never guessed at — the first adopting project had already hand-edited
+  the file a guess would have had to match.
+- `./scripts/check.sh` rejects a scaffold file whose fence is missing,
+  unclosed, inverted, duplicated or empty, and now scans `docs/architecture/`
+  for retired skill names — it was carrying five.
+
 ## 0.1.3
 
 - The tier table told every adopting project to run `brainstorming`, a skill

@@ -109,6 +109,9 @@ if rendered.strip() in open('CLAUDE.md').read():
 print('  FAIL    CLAUDE.md has drifted from the scaffold — re-render it'); sys.exit(1)
 PY
 
+echo "scaffold fences"
+python3 scripts/check_scaffold.py || fail=1
+
 echo "section nests"
 if grep -m1 '^#' plugins/sdd/templates/project/CLAUDE.section.md | grep -q '^## '; then
   if grep -q '^# ' plugins/sdd/templates/project/CLAUDE.section.md; then

@@ -1,3 +1,4 @@
+<!-- sdd:scaffold -->
 # Roadmap
 
 Strategic and long-lived. Phases and objectives — **not** a task list (that is
@@ -6,6 +7,7 @@ Strategic and long-lived. Phases and objectives — **not** a task list (that is
 A roadmap item is an objective with a gate: what becomes possible when the phase
 closes, and how you know it closed. Items become tickets in the queue when they
 are picked up; the roadmap itself does not track their status.
+<!-- /sdd:scaffold -->
 
 ---
 

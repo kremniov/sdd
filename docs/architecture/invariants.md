@@ -17,9 +17,13 @@ here**; they do not restate them.
    `_ADR.md` are read in place from `${CLAUDE_PLUGIN_ROOT}/templates/`; nothing
    copies them into a project (ADR 0002). The project *scaffold* under
    `templates/project/` is the opposite by design — written into the repo once,
-   at adoption.
-   *Detect:* `./scripts/check.sh` — every referenced path must exist, and every
-   shipped skeleton must be named by some skill.
+   at adoption, and thereafter owned by the project. It is read again only to
+   compare: the plugin's half of each scaffold file is fenced, and a re-run of
+   `/sdd:setup` offers what has changed inside that fence (ADR 0009). It is
+   never read to overwrite.
+   *Detect:* `./scripts/check.sh` — every referenced path must exist, every
+   shipped skeleton must be named by some skill, and every scaffold file must
+   carry exactly one well-formed fence.
    *On violation:* reject.
 3. **Adoption is additive.** No skill overwrites or reformats a file it did not
    write in this run. Where it would change something that exists, it reports
@@ -41,7 +45,7 @@ here**; they do not restate them.
    of ecosystem terms spanning many stacks — a list tuned to one project would
    itself describe that project. A domain term it does not name needs a reader.
    *On violation:* reject, and add the term if the list should have had it.
-6. **The canon is observed, never invented.** `deriving-canon` writes only rules
+6. **The canon is observed, never invented.** `/sdd:canon` writes only rules
    the code actually holds, and writes nothing when there are none (ADR 0003). A
    speculative invariant is worse than a missing one: it gets cited as if it had
    been checked.
@@ -50,7 +54,7 @@ here**; they do not restate them.
    softening its wording.
 7. **Skills state what to do, not how not to disobey.** No anti-rationalization
    tables, no red-flag blocks, no "regardless of perceived simplicity" gates.
-   One exception: the "three failed fixes" rule in `systematic-debugging`, kept
+   One exception: the "three failed fixes" rule in `/sdd:debug`, kept
    because that failure mode was observed rather than imagined.
    *Detect:* a table of excuses, or a paragraph arguing against skipping the
    step it just described.
@@ -80,8 +84,8 @@ here**; they do not restate them.
     absent from `/skills`. The scaffold is the worst place for one: it is copied
     into a repository and outlives any correction here.
     *Detect:* `./scripts/check.sh` resolves every `/sdd:` reference against the
-    skills directory and fails on a retired name. Frozen artifacts under `docs/`
-    quote old names on purpose and are not scanned.
+    skills directory and fails on a retired name. The canon is scanned; frozen
+    artifacts and decision records quote old names on purpose and are not.
     *On violation:* reject — and if the name changed, add it to the retired map
     so the next occurrence is caught rather than read.
 
@@ -93,5 +97,5 @@ here**; they do not restate them.
 | Plugin manifest | `plugins/sdd/.claude-plugin/` | name, version, metadata | anything a skill reads at runtime |
 | Skills | `plugins/sdd/skills/<name>/` | one job each, config-driven | hardcode a project path, or carry `{{placeholders}}` |
 | Templates | `plugins/sdd/templates/` | artifact skeletons | reference the origin project |
-| Project scaffold | `plugins/sdd/templates/project/` | what adoption writes into a repo | be read at any time other than adoption |
+| Project scaffold | `plugins/sdd/templates/project/` | what adoption writes into a repo, fenced where the plugin's half ends | be read to overwrite; outside adoption it is read only to diff a fenced region |
 | Checks | `scripts/` | the structural gate | require a language runtime beyond python3 |
