@@ -3,7 +3,7 @@
 This repository ships the method it uses. Changes here are dogfooded before
 they are published.
 
-<!-- sdd:method-section -->
+<!-- sdd:method-section v0.3.0 -->
 ## Development method
 
 This project runs spec-driven development sized to the task. The paths below are

@@ -1,4 +1,4 @@
-<!-- sdd:scaffold -->
+<!-- sdd:scaffold v0.2.0 -->
 # Tasks
 
 The "what do I pull next" queue. Format: `/sdd:tasks`.

@@ -1,4 +1,4 @@
-<!-- sdd:scaffold -->
+<!-- sdd:scaffold v0.2.0 -->
 # Docs guide
 
 Organized so an agent can load *how the system is now* cheaply, without
