@@ -1,4 +1,4 @@
-<!-- sdd:scaffold -->
+<!-- sdd:scaffold v0.2.0 -->
 # Roadmap
 
 Strategic and long-lived. Phases and objectives — **not** a task list (that is

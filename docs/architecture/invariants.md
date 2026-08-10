@@ -18,12 +18,17 @@ here**; they do not restate them.
    copies them into a project (ADR 0002). The project *scaffold* under
    `templates/project/` is the opposite by design — written into the repo once,
    at adoption, and thereafter owned by the project. It is read again only to
-   compare: the plugin's half of each scaffold file is fenced, and a re-run of
-   `/sdd:setup` offers what has changed inside that fence (ADR 0009). It is
-   never read to overwrite.
+   compare, and the comparison is between version stamps, never between texts:
+   the plugin's half of each scaffold file is fenced (ADR 0009) and the fence
+   carries the version its region last changed in, so a re-run offers the
+   changes described in `templates/project/CHANGES.md` between that version and
+   the project's, and offers nothing at all when the stamps match (ADR 0011). It
+   is never read to overwrite.
    *Detect:* `./scripts/check.sh` — every referenced path must exist, every
    shipped skeleton must be named by some skill, and every scaffold file must
-   carry exactly one well-formed fence.
+   carry exactly one well-formed fence, stamped with a version that is not ahead
+   of the plugin's, that moves whenever the region does, and that the change log
+   accounts for.
    *On violation:* reject.
 3. **Adoption is additive.** No skill overwrites or reformats a file it did not
    write in this run. Where it would change something that exists, it reports
@@ -97,5 +102,5 @@ here**; they do not restate them.
 | Plugin manifest | `plugins/sdd/.claude-plugin/` | name, version, metadata | anything a skill reads at runtime |
 | Skills | `plugins/sdd/skills/<name>/` | one job each, config-driven | hardcode a project path, or carry `{{placeholders}}` |
 | Templates | `plugins/sdd/templates/` | artifact skeletons | reference the origin project |
-| Project scaffold | `plugins/sdd/templates/project/` | what adoption writes into a repo, fenced where the plugin's half ends | be read to overwrite; outside adoption it is read only to diff a fenced region |
+| Project scaffold | `plugins/sdd/templates/project/` | what adoption writes into a repo, fenced and version-stamped where the plugin's half ends; `CHANGES.md` says what each version changed and ships to no project | be read to overwrite; outside adoption it is read only to compare stamps and carry a described change |
 | Checks | `scripts/` | the structural gate | require a language runtime beyond python3 |

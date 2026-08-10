@@ -1,4 +1,4 @@
-<!-- sdd:scaffold -->
+<!-- sdd:scaffold v0.2.0 -->
 # Architectural invariants
 
 Canonical list. These rules apply to all work, every feature. Any change that

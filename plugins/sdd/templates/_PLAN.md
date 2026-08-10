@@ -11,6 +11,10 @@ this file sequences the work, it does not re-decide it.
 red DoD, on a decision the design does not cover, or at a step marked `[gate]` —
 a check the operator runs by hand. Anything else is a step, not a question.
 
+**A plan ends at a merge-ready branch.** Integration is not a step — do not
+write one. The operator merges, after the independent review, and no approval
+given here reaches that far.
+
 **Mirror the steps into the task tool** at the start of execution: one task per
 step, in order, marked in-progress when it starts and completed when its DoD is
 green. The plan is the contract; the task list is where its progress is readable

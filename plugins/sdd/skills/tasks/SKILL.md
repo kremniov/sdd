@@ -78,10 +78,14 @@ renumber.
 
 ## Moving to Done
 
-Once the branch is reviewed and about to merge — not before, see the integration
-rule in the project's rules file (`rules:` in `.sdd.yml`) — **collapse the ticket to one line** and swap the status tag
+Once the operator has approved integration — the Done move records that
+decision, so it cannot precede it; see the integration rule in the project's
+rules file (`rules:` in `.sdd.yml`) — **collapse the ticket to one line** and swap the status tag
 for a ref tag (`[PR #N]` / `[branch-name]` / `[commit-hash]`). Acceptance is
 dropped — git remembers. Keep type/phase/area tags.
+
+The same commit fills the `PR:` field of any ADR the branch wrote and left as a
+dash. It is the last chance: nothing after it is on the branch.
 
 ```markdown
 - `[T-40]` `[feat]` `[launch]` `[api]` `[PR #91]` Title — one-sentence result.
