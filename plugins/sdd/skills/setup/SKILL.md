@@ -97,37 +97,54 @@ the guide is a convenience, and no project needs it badly enough to have its
 front page displaced.
 
 Substitute every `{{key}}` placeholder with the value from `.sdd.yml`. Do not
-leave a placeholder in a written file. Keep the `<!-- sdd:scaffold -->` markers
-exactly as the template carries them — they are what a later run compares
-against, and a file written without them cannot be updated.
+leave a placeholder in a written file. Keep the marker lines exactly as the
+template carries them, version and all — `<!-- sdd:scaffold v0.3.0 -->` — they
+are what a later run compares against, and a file written without them cannot be
+updated.
 
 An empty directory does not survive git. Where you create one, add a
 `.gitkeep`.
 
 **When the file is already there.** Each of these files is two things: guidance
 this plugin wrote, and a body the project wrote — its queue, its phases, its
-rules. The plugin's half is fenced between `<!-- sdd:scaffold -->` and
-`<!-- /sdd:scaffold -->`, which is what makes an update possible without
-touching the rest. Render the template, find the fence, and act on what you
-find:
+rules. The plugin's half is fenced, which is what makes an update possible
+without touching the rest, and the opening marker carries the version whose
+guidance is in there.
 
-- **Identical** — say nothing about that file. A re-run against a current
-  project reports "nothing to carry", not a paragraph of agreement per file.
-- **Different** — show the diff of the fenced region and ask. On a yes, replace
-  what is between the markers and nothing else. Say plainly that a yes discards
-  whatever is in there now, because an edit the project made inside the fence
-  looks exactly like a stale region from here.
+**Compare the stamps, never the text.** Read the version on the project's
+opener and the version on the template's:
+
+- **Equal** — the region is current. Say nothing about that file, whatever its
+  wording. A project that rewrote the guidance in its own terms, with its own
+  ticket ids and cross-references, is not behind, and a difference in text is
+  not by itself anything to report.
+- **The project is behind** — read
+  `${CLAUDE_PLUGIN_ROOT}/templates/project/CHANGES.md` and take the entries for
+  that file between the two versions. Put each one to the operator on its own,
+  in its own terms; on a yes, edit their region to carry what the entry
+  describes, keeping their wording, their ids, their references. An entry whose
+  substance their text already states needs no edit and no question — say it was
+  already satisfied. Advance the stamp to the template's only once every entry
+  in the range is carried or already true; a declined entry leaves the stamp
+  where it is, so the next run asks again.
+- **The project is ahead** — an older plugin is installed over a newer
+  adoption. Report it and leave the file alone. Downgrading someone's guidance
+  is not something to do quietly.
+- **No version on the fence** — the project adopted while the markers were bare.
+  The lower bound is `v0.2.0`, the version that introduced them; that is a fact,
+  not a guess, so proceed from it without asking.
 - **No fence at all** — the project adopted before the markers existed. Do not
   derive the boundary by matching text against the template: a header edited by
   hand will not match, and that is precisely where a wrong guess costs most.
   Show the region you would fence, ask once, and place the markers on a yes.
-- **Fence malformed** — opened and not closed, closed before opened, or more
-  than one pair. Report the file and the line; change nothing. A broken marker
-  in someone's `tasks.md` must not cost them their queue.
+- **Fence malformed** — opened and not closed, closed before opened, more than
+  one pair, or a version that is not `N.N.N`. Report the file and the line;
+  change nothing. A broken marker in someone's `tasks.md` must not cost them
+  their queue.
 
-Never widen the region. If the rendered template would replace a fence with an
-empty one, refuse and report — replacing a region with nothing is never the
-intent.
+Never widen the region, and never replace one wholesale. What a re-run offers is
+a described change, applied to what is there — the full text of the current
+template is the answer to a question nobody asked.
 
 ## 5. Add the rules to the rules file
 
@@ -140,13 +157,15 @@ default, `AGENTS.md` where the project uses that. Set that key in step 3 from
 what step 1 found, so a later run does not have to re-derive it.
 
 Read `${CLAUDE_PLUGIN_ROOT}/templates/project/CLAUDE.section.md` and substitute
-the placeholders. The text is wrapped in `<!-- sdd:method-section -->` markers —
-keep them, they are how a re-run recognizes its own work. Then, in order:
+the placeholders. The text is wrapped in `<!-- sdd:method-section vN.N.N -->`
+markers — keep them, version included; they are how a re-run recognizes its own
+work and knows which version's rules are in force. Then, in order:
 
-- **The file already contains `<!-- sdd:method-section -->`:** a previous run
-  wrote it. Do not append. Diff the stored section against the freshly rendered
-  one and, if they differ, show the operator the difference and ask — the
-  divergence may be their edit, which you must not discard.
+- **The file already contains a `sdd:method-section` marker:** a previous run
+  wrote it. Do not append, and do not diff it against the rendered text. Compare
+  the stamps and carry the described changes, exactly as in step 4 — this
+  section is the one an adopting project is most likely to have adapted, and it
+  is the one where an overwrite costs the most.
 - **No such file:** create it with this section, preceded by a one-line title
   naming the project.
 - **The file exists, no process section:** append the section at the end. Touch
@@ -188,9 +207,11 @@ State plainly:
 
 - what was created, by path;
 - what was left alone because it already existed;
-- what the scaffold has changed since this project adopted: carried, declined,
-  or left because the file has no fence. Nothing to carry is worth one line, not
-  silence — the operator asked, and "already current" is the answer;
+- what the scaffold has changed since this project adopted, by version: which
+  described changes were carried, which were declined and will be offered again,
+  which were already satisfied by the project's own wording, and which files
+  were left alone because they have no fence. Nothing to carry is worth one
+  line, not silence — the operator asked, and "already current" is the answer;
 - anything you could not infer and guessed at;
 - whether the rules section landed in the rules file — and if it did not, that
   the method is not yet in force, and what remains to be decided;
@@ -205,4 +226,6 @@ State plainly:
 
 Safe. A second run re-surveys, reports what is now present, and creates only
 what is still missing. It never rewrites a file it finds — including one an
-earlier run of itself wrote, which by then may have been edited by hand.
+earlier run of itself wrote, which by then may have been edited by hand. The
+one thing it changes in an existing file is a described change carried inside a
+fence, on a yes, into the wording that is already there.
