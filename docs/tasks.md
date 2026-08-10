@@ -18,20 +18,20 @@ The "what do I pull next" queue. Format: `/sdd:tasks`.
 
 ---
 
-#### `[T-7]` A fenced region the project rewrote must not be offered for replacement
+#### `[T-9]` Run the stamp comparison against a real prior adoption
 
-**Tags:** `[fix]` `[next]`
+**Tags:** `[chore]` `[next]`
 
-**Outcome:** A re-run tells a project what changed in the template since, rather than offering to overwrite the wording that project chose.
+**Outcome:** The carry is known to work in the field, not only against the checkers.
 
-**Context:** Found by the T-6 gate. The first upgraded project had rewritten the plugin's guidance in its own terms — its own ticket-id convention, its own cross-references — and the fence now holds that text. The skill's `Different` branch cannot tell "this region is stale" from "this project customized it", so the next re-run will offer to replace prose that is deliberate. The design assumed a fenced region equals the rendered template; that assumption is false the moment a project edits inside the fence, which is the normal case for anyone who adopted before the fence existed.
+**Context:** T-7's fourth acceptance criterion, unmet at merge — plan step 5 is a `[gate]` and the branch shipped without it. Everything mechanical is enforced by `check_scaffold.py`; what no checker reaches is whether an agent, handed a `CHANGES.md` entry and a region worded in the project's own terms, edits the wording instead of replacing it. The first re-run also exercises the v0.2.0 baseline path, since the adopting project's fences predate the stamp.
 
 **Acceptance:**
 
-- [ ] A region that differs from the template is not, by itself, grounds to propose replacing it
-- [ ] What the re-run offers is what changed in the template between two versions, not the template's current full text
-- [ ] Adoption records the version it wrote, so "between two versions" has a lower bound (the alternative rejected in ADR 0009 — rejected as a *replacement* for the fence, not as a companion to it)
-- [ ] Verified against a project whose fenced region is its own prose: the correction lands, the wording survives
+- [ ] `/sdd:setup` re-run against the project whose fenced regions hold its own prose
+- [ ] The 0.3.0 integration change lands; that project's wording, ids and cross-references survive
+- [ ] Stamps advance only on files where a carry happened, and nothing below a closing marker moves
+- [ ] What the run got wrong, if anything, is filed rather than fixed in place
 
 ---
 
@@ -97,6 +97,7 @@ inspects the refspec. Decide it in the ticket rather than mid-implementation.
 
 ## Done
 
+- `[T-7]` `[fix]` `[PR #1]` Compare fence stamps instead of fenced text — the version on the marker, `CHANGES.md` as described changes, ADR 0011. Merged with the field gate outstanding; that is T-9.
 - `[T-6]` `[feat]` `[branch: feat/scaffold-upgrade]` Bring an adopted scaffold up to a newer plugin version — the fence, the gate that enforces it, ADR 0009. Gate run against a real prior adoption; the defect it surfaced is T-7.
 - `[T-4]` `[chore]` `[branch: main]` Publish to GitHub — public at `kremniov/sdd`, marketplace `kremniov`, plugin `sdd` 0.1.0.
 - `[T-1]` `[feat]` `[branch: master]` Extract the method into a portable plugin — five skills, three skeletons, a project scaffold, and a config seam.
