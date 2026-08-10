@@ -59,8 +59,8 @@ the plugin, so a fix to a skeleton reaches every project that installed it.
 ## Install
 
 ```
-/plugin marketplace add <account>/claude-plugins
-/plugin install sdd@<account>
+/plugin marketplace add kremniov/claude-plugins
+/plugin install sdd@kremniov
 ```
 
 Then, in the repository you want to adopt it:
@@ -171,7 +171,7 @@ thinking started there, and pretending otherwise would be poor manners.
 
 ## Who made this
 
-Built by [Andrey Kremnev](https://github.com/kremnev). The method was developed
+Built by [Andrey Kremnev](https://github.com/kremniov). The method was developed
 and run for months on a production codebase before any of it was
 extracted here — every rule in it survived contact with a real codebase, and the
 ones that did not are the reason the tier table exists.

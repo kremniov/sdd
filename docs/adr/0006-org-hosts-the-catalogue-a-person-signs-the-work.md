@@ -1,6 +1,6 @@
 # ADR 0006 — The organization hosts the catalogue; a person signs the work
 
-**Status:** accepted · **Date:** 2026-08-09
+**Status:** superseded by [ADR 0007](0007-publish-under-the-personal-account.md) · **Date:** 2026-08-09
 
 ## Context
 

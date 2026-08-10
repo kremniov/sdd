@@ -34,6 +34,8 @@ rather than paraphrasing the name.
 
 The marketplace is the organization account, the plugin `sdd`. The long organization name
 appears once, in `marketplace add`; the identifiers seen repeatedly stay short.
+*(The marketplace was later renamed `kremniov` — see [ADR 0007](0007-publish-under-the-personal-account.md).
+The skill names decided here are unaffected.)*
 The repository is a catalogue (`claude-plugins`), not one plugin's repo, so a
 second plugin needs no second `marketplace add` from every user.
 
