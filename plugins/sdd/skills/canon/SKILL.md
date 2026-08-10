@@ -10,6 +10,16 @@ instead of rediscovering them. The canon is **observed, not invented**: an
 invariant is a rule the code obeys today and that a reviewer would push back on
 breaking.
 
+**A claim that something is missing is held to the same standard, and it is the
+one that becomes work.** A gap recorded in an entry turns into a ticket, and the
+ticket gets worked before anyone re-checks the claim behind it. Locate the place
+the thing would be and show it is not there, naming the file and line you
+looked at — so a reader can disagree with your evidence instead of your
+conclusion. Beware the shapes that read as absence and are not: a call needs no
+import when both sides sit in one package, a name can arrive by embedding or
+generation, and a grep for the wrong spelling comes back empty either way.
+Where you cannot find the place it would be, that is what to write down.
+
 Paths come from `.sdd.yml` (`canon:`).
 
 Reading `.sdd.yml`: one `key: value` per line; the first `:` separates them and
@@ -191,6 +201,10 @@ unwritten.
 Read the code first, the existing list second — same discipline as bootstrap,
 because reading the list first is how you talk yourself into seeing rules that
 have quietly lapsed.
+
+Where an entry's *Detect* is runnable, run it and report what it printed. That
+is the cheapest evidence in the whole procedure and the only kind an operator
+can check without re-reading the code behind you.
 
 Report four lists and write nothing without confirmation:
 

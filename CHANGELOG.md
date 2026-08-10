@@ -4,6 +4,17 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 0.1.2
+
+- `/sdd:canon` holds a claim that something is *missing* to the same standard as
+  a claim that a rule holds. An audit recorded a gap that did not exist — it
+  read an absent import as an absent call, though both sides sat in one package
+  — and the false gap became a canon entry, then a ticket, then someone's
+  afternoon. A hole must now be located: the file and line where the thing would
+  be, shown not to have it.
+- `/sdd:canon` audit runs each entry's *Detect* where it is runnable and reports
+  what it printed.
+
 ## 0.1.1
 
 Everything here came out of the first adoption into a repository that already
