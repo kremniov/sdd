@@ -74,7 +74,7 @@ Rules for the values, all four load-bearing:
 Write `.sdd.yml` at the repo root. If one already exists, show the diff you
 propose and change nothing without a yes.
 
-## 4. Create only what is missing
+## 4. Create what is missing, and offer what has moved
 
 For each path in the config, create it from the scaffold at
 `${CLAUDE_PLUGIN_ROOT}/templates/project/` **only if nothing is there**:
@@ -97,10 +97,37 @@ the guide is a convenience, and no project needs it badly enough to have its
 front page displaced.
 
 Substitute every `{{key}}` placeholder with the value from `.sdd.yml`. Do not
-leave a placeholder in a written file.
+leave a placeholder in a written file. Keep the `<!-- sdd:scaffold -->` markers
+exactly as the template carries them — they are what a later run compares
+against, and a file written without them cannot be updated.
 
 An empty directory does not survive git. Where you create one, add a
 `.gitkeep`.
+
+**When the file is already there.** Each of these files is two things: guidance
+this plugin wrote, and a body the project wrote — its queue, its phases, its
+rules. The plugin's half is fenced between `<!-- sdd:scaffold -->` and
+`<!-- /sdd:scaffold -->`, which is what makes an update possible without
+touching the rest. Render the template, find the fence, and act on what you
+find:
+
+- **Identical** — say nothing about that file. A re-run against a current
+  project reports "nothing to carry", not a paragraph of agreement per file.
+- **Different** — show the diff of the fenced region and ask. On a yes, replace
+  what is between the markers and nothing else. Say plainly that a yes discards
+  whatever is in there now, because an edit the project made inside the fence
+  looks exactly like a stale region from here.
+- **No fence at all** — the project adopted before the markers existed. Do not
+  derive the boundary by matching text against the template: a header edited by
+  hand will not match, and that is precisely where a wrong guess costs most.
+  Show the region you would fence, ask once, and place the markers on a yes.
+- **Fence malformed** — opened and not closed, closed before opened, or more
+  than one pair. Report the file and the line; change nothing. A broken marker
+  in someone's `tasks.md` must not cost them their queue.
+
+Never widen the region. If the rendered template would replace a fence with an
+empty one, refuse and report — replacing a region with nothing is never the
+intent.
 
 ## 5. Add the rules to the rules file
 
@@ -161,6 +188,9 @@ State plainly:
 
 - what was created, by path;
 - what was left alone because it already existed;
+- what the scaffold has changed since this project adopted: carried, declined,
+  or left because the file has no fence. Nothing to carry is worth one line, not
+  silence — the operator asked, and "already current" is the answer;
 - anything you could not infer and guessed at;
 - whether the rules section landed in the rules file — and if it did not, that
   the method is not yet in force, and what remains to be decided;
