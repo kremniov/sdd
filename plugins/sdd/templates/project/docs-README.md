@@ -1,3 +1,4 @@
+<!-- sdd:scaffold -->
 # Docs guide
 
 Organized so an agent can load *how the system is now* cheaply, without
@@ -37,3 +38,4 @@ the shape of `design.md` and `plan.md` is the skeletons the `sdd` plugin ships.
 **The one added rule:** if a feature changed a seam described in the canon,
 update that file in the same PR. Otherwise the architecture layer drifts and
 agents fall back to re-reading code — which this structure exists to prevent.
+<!-- /sdd:scaffold -->

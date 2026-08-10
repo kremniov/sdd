@@ -1,6 +1,8 @@
+<!-- sdd:scaffold -->
 # Tasks
 
 The "what do I pull next" queue. Format: `/sdd:tasks`.
+<!-- /sdd:scaffold -->
 
 ## TODO
 
