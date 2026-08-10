@@ -1,6 +1,6 @@
 # Tasks
 
-The "what do I pull next" queue. Format: the `managing-tasks` skill.
+The "what do I pull next" queue. Format: `/sdd:tasks`.
 
 ## TODO
 
@@ -18,22 +18,23 @@ The "what do I pull next" queue. Format: the `managing-tasks` skill.
 
 ---
 
-#### `[T-6]` Bring an adopted scaffold up to a newer plugin version
+#### `[T-7]` A fenced region the project rewrote must not be offered for replacement
 
-**Tags:** `[feat]` `[next]`
+**Tags:** `[fix]` `[next]`
 
-**Outcome:** A project that adopted an older version can see what the scaffold has changed since, and take the changes it wants, without a re-render overwriting what it has written into those files.
+**Outcome:** A re-run tells a project what changed in the template since, rather than offering to overwrite the wording that project chose.
 
-**Context:** The scaffold is copied into a repository and never read again (ADR 0002 — the opposite of the artifact skeletons on purpose), so a correction here reaches nobody who already adopted. Found when six pre-rename skill names were fixed in the plugin while two of them sat in files already copied into a project. `/sdd:setup` re-run does this for the rules section already, via its sentinel; the other four files have no marker separating the header the plugin owns from the body the project writes.
+**Context:** Found by the T-6 gate. The first upgraded project had rewritten the plugin's guidance in its own terms — its own ticket-id convention, its own cross-references — and the fence now holds that text. The skill's `Different` branch cannot tell "this region is stale" from "this project customized it", so the next re-run will offer to replace prose that is deliberate. The design assumed a fenced region equals the rendered template; that assumption is false the moment a project edits inside the fence, which is the normal case for anyone who adopted before the fence existed.
 
 **Acceptance:**
 
-- [ ] Adoption records which plugin version wrote the scaffold, and a re-run compares against the installed one
-- [ ] Changes are proposed per line, with the operator deciding each; nothing is rewritten wholesale
-- [ ] A file whose body the project owns — `tasks.md` above all — is never a candidate for replacement, only its header
-- [ ] The upgrade is a mode of `/sdd:setup`, not a seventh skill
+- [ ] A region that differs from the template is not, by itself, grounds to propose replacing it
+- [ ] What the re-run offers is what changed in the template between two versions, not the template's current full text
+- [ ] Adoption records the version it wrote, so "between two versions" has a lower bound (the alternative rejected in ADR 0009 — rejected as a *replacement* for the fence, not as a companion to it)
+- [ ] Verified against a project whose fenced region is its own prose: the correction lands, the wording survives
 
 ---
+
 
 #### `[T-2]` Portable structural checker for adopting projects
 
@@ -65,5 +66,6 @@ The "what do I pull next" queue. Format: the `managing-tasks` skill.
 
 ## Done
 
+- `[T-6]` `[feat]` `[branch: feat/scaffold-upgrade]` Bring an adopted scaffold up to a newer plugin version — the fence, the gate that enforces it, ADR 0009. Gate run against a real prior adoption; the defect it surfaced is T-7.
 - `[T-4]` `[chore]` `[branch: main]` Publish to GitHub — public at `kremniov/sdd`, marketplace `kremniov`, plugin `sdd` 0.1.0.
 - `[T-1]` `[feat]` `[branch: master]` Extract the method into a portable plugin — five skills, three skeletons, a project scaffold, and a config seam.

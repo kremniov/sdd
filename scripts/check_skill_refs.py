@@ -21,6 +21,7 @@ RETIRED = {
 skills = {p.name for p in Path("plugins/sdd/skills").iterdir() if p.is_dir()}
 scanned = (
     sorted(Path("plugins/sdd").rglob("*.md"))
+    + sorted(Path("docs").glob("*.md"))
     + sorted(Path("docs/architecture").glob("*.md"))
     + [Path("README.md"), Path("CLAUDE.md")]
 )

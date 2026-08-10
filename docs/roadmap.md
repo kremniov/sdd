@@ -21,7 +21,7 @@ the operator can run a tier-2 feature end to end without reading this repo.
 has drifted from its own canon.
 
 - A portable checker expressed in the adopting project's terms (T-2)
-- `deriving-canon` re-run reports drift as three lists: held, broken, undocumented
+- `/sdd:canon` re-run reports drift as four lists: held, drifted, broken, undocumented
 - Invariants carry an explicit "enforced by" or "convention" marker
 
 ## Phase 3 — Shared
