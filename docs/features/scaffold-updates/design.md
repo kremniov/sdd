@@ -124,10 +124,15 @@ described a change it did not ship.
 
 `check_scaffold.py` grows three cases: every opener carries a parsable version,
 no version exceeds the plugin's own, and every version named in `CHANGES.md`
-matches the stamp of the file it names. A fourth check compares each fenced
-region against `HEAD` and fails when the region changed without its stamp
+matches the stamp of the file it names. A fourth compares each fenced region
+against the branch point and fails when the region changed without its stamp
 advancing — the one failure mode that produces silence downstream rather than
-an error.
+an error. A stamp fails to move in a commit, so the comparison has to reach back
+past the commits on the branch; against `HEAD` it would see only uncommitted
+work and be inert on the clean checkout a gate runs on. A fifth holds the change
+log append-only: a project upgrades from wherever it stands, so an entry stays
+reachable long after its stamp has been passed, and deleting it strands everyone
+still behind it.
 
 Behaviour lands where a checker cannot reach: against the project whose fenced
 regions hold its own prose. The carry must land and the wording must survive.

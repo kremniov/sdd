@@ -100,7 +100,9 @@ Substitute every `{{key}}` placeholder with the value from `.sdd.yml`. Do not
 leave a placeholder in a written file. Keep the marker lines exactly as the
 template carries them, version and all — `<!-- sdd:scaffold v0.3.0 -->` — they
 are what a later run compares against, and a file written without them cannot be
-updated.
+updated. This is the rule for a file *this run creates*, whose content is the
+current template. A marker placed around text that was already there is stamped
+by the missing-fence rule below instead.
 
 An empty directory does not survive git. Where you create one, add a
 `.gitkeep`.
@@ -136,7 +138,12 @@ opener and the version on the template's:
 - **No fence at all** — the project adopted before the markers existed. Do not
   derive the boundary by matching text against the template: a header edited by
   hand will not match, and that is precisely where a wrong guess costs most.
-  Show the region you would fence, ask once, and place the markers on a yes.
+  Show the region you would fence, ask once, and place the markers on a yes —
+  **stamped `v0.2.0`, never the template's version.** What you fenced is text
+  written before any of this existed; stamping it with the current version
+  declares it up to date and silences every change since, permanently. The
+  baseline puts the file in the *behind* branch above, where the entries it
+  never received are offered.
 - **Fence malformed** — opened and not closed, closed before opened, more than
   one pair, or a version that is not `N.N.N`. Report the file and the line;
   change nothing. A broken marker in someone's `tasks.md` must not cost them

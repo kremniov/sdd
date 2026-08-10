@@ -54,10 +54,15 @@ behind, so it is offered again.
 ## Consequences
 
 Invariant 2 now requires a stamped fence and states that the comparison is
-stamp-first. `check_scaffold.py` enforces four things: a parsable version on
+stamp-first. `check_scaffold.py` enforces five things: a parsable version on
 every opener, no version ahead of the plugin's own, a stamp that moves whenever
-its region changes against `HEAD`, and a change-log entry for every stamp past
-the `v0.2.0` baseline.
+its region changes against the branch point, a change-log entry for every stamp
+past the `v0.2.0` baseline, and no entry ever removed.
+
+The last two both follow from where a project upgrades *from*. It is wherever
+that project stands, not the last release — so an entry describing a change at
+`v0.3.0` is still the thing a `v0.2.0` project needs after the file has moved on
+to `v0.5.0`, and the log only ever grows.
 
 The cost lands on this repository, not on adopters: changing a word inside a
 fence now obliges a version bump and a written entry saying what changed and

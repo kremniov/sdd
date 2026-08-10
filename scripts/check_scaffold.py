@@ -8,6 +8,7 @@ produces silence, and the project keeps a stale copy nobody is told about.
 """
 
 import json
+import os
 import re
 import subprocess
 import sys
@@ -30,16 +31,35 @@ def parse(version):
     return tuple(int(n) for n in version.split("."))
 
 
-def committed(path):
-    """The file's content at HEAD, or None outside a git tree / before its first commit."""
+def git(*args):
     try:
-        out = subprocess.run(
-            ["git", "show", f"HEAD:{path.as_posix()}"],
-            capture_output=True, text=True, check=False,
-        )
+        out = subprocess.run(["git", *args], capture_output=True, text=True, check=False)
     except OSError:
         return None
     return out.stdout if out.returncode == 0 else None
+
+
+def baseline():
+    """The revision this branch is measured against.
+
+    A stamp fails to move in a commit, so comparing against `HEAD` sees only
+    uncommitted work and is inert on the clean checkout a gate runs on. The
+    branch point is the earliest revision that still contains the whole branch.
+    `SDD_BASE` overrides it, for a repository whose trunk is not `main` and for
+    exercising the check itself.
+    """
+    if os.environ.get("SDD_BASE"):
+        return os.environ["SDD_BASE"]
+    base = git("merge-base", "main", "HEAD")
+    head = git("rev-parse", "HEAD")
+    if base and head and base.strip() != head.strip():
+        return base.strip()
+    return "HEAD"
+
+
+def committed(rev, path):
+    """The file at `rev`, or None outside a git tree / before the file existed."""
+    return git("show", f"{rev}:{path.as_posix()}")
 
 
 def fence(text, name):
@@ -68,10 +88,10 @@ def fence(text, name):
     return opens[0], region
 
 
-def logged():
+def logged(text):
     """{(version, filename)} — every entry declared in the change log."""
     entries, version = set(), None
-    for line in (ROOT / CHANGES).read_text().splitlines():
+    for line in text.splitlines():
         if line.startswith("## "):
             version = line[3:].strip()
         elif line.startswith("### ") and version:
@@ -81,6 +101,7 @@ def logged():
 
 ok = True
 stamps = {}
+BASE = baseline()
 for path in sorted(ROOT.glob("*.md")):
     if path.name == CHANGES:
         continue
@@ -99,7 +120,7 @@ for path in sorted(ROOT.glob("*.md")):
         ok = False
         continue
 
-    before = committed(path)
+    before = committed(BASE, path)
     was = fence(before, name) if before is not None else None
     if isinstance(was, tuple) and was[1] != region and was[0] == stamp:
         print(f"  FAIL    {path.name}: the fenced region changed and v{stamp} did not move")
@@ -109,7 +130,7 @@ for path in sorted(ROOT.glob("*.md")):
     stamps[path.name] = stamp
     print(f"  OK      {path.name} ({name} v{stamp})")
 
-entries = logged()
+entries = logged((ROOT / CHANGES).read_text())
 for version, filename in sorted(entries):
     if filename not in stamps:
         print(f"  FAIL    {CHANGES}: {version} names {filename}, which is not a scaffold file")
@@ -122,6 +143,13 @@ for filename, stamp in sorted(stamps.items()):
     if parse(stamp) > BASELINE and (stamp, filename) not in entries:
         print(f"  FAIL    {CHANGES}: nothing describes what changed in {filename} at v{stamp}")
         ok = False
+
+# A project upgrades from wherever it stands, not from the last release, so an
+# entry stays reachable long after the stamp it describes has been passed.
+gone = logged(committed(BASE, ROOT / CHANGES) or "") - entries
+for version, filename in sorted(gone):
+    print(f"  FAIL    {CHANGES}: the {version} entry for {filename} was removed — entries are append-only")
+    ok = False
 
 if ok:
     print(f"  OK      {CHANGES} accounts for every stamp past v{'.'.join(map(str, BASELINE))}")
