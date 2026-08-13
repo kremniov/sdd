@@ -15,9 +15,8 @@ recorded in `.sdd.yml`; the skills read them from there.
 
 ### Sizing the work
 
-The design cycle costs roughly the same regardless of task size, while its
-payoff scales with how ambiguous the task is. Size the process to the task —
-this table takes precedence over any skill's own "applies to every project" gate.
+Size the process to the task. This table takes precedence over any skill's own
+"applies to every project" gate.
 
 | Tier | Scope | Process |
 |---|---|---|
@@ -31,37 +30,31 @@ service — is a single decision touching many packages, and stays tier 0 or 1
 however wide the diff reads. What raises the tier is a question left open by
 whatever set the work going — a ticket, a bug report, the operator's word: a
 boundary that did not exist, a rule that stops holding, or two choices that have
-to come out consistent in more than one place. A file
-count is not one of the signals; it is available from the diff, which is the
-only reason it gets used. Whoever disputes a tier — a reviewer included — names
-the seam or the decision that was missed, and the burden of the design cycle
-falls on whoever claims the higher tier.
+to come out consistent in more than one place. A file count is not one of the
+signals. Whoever disputes a tier — a reviewer included — names the seam or the
+decision that was missed, and the burden of the design cycle falls on whoever
+claims the higher tier.
 
 ### Design and plan
 
 Artifacts live one directory per feature: `{{features}}<feature-name>/`, holding
-`design.md` and `plan.md`. Both name their ticket in a `**Ticket:** <ID>` line
-under the H1 — the directory is named after the feature, so that line is the
-only thing making the artifact resolvable back to the queue. These artifacts are
-committed and kept, frozen at merge; later tickets cite them. What is true *now*
-lives in `{{canon}}`: read the canon for the current shape, a `design.md` to
-recover why it took that shape.
+`design.md` and `plan.md`, each naming its ticket in a `**Ticket:** <ID>` line
+under the H1. These artifacts are committed and kept, frozen at merge; later
+tickets cite them. What is true *now* lives in `{{canon}}`: read the canon for
+the current shape, a `design.md` to recover why it took that shape.
 
 **A plan sequences the work; it does not contain the work.** A step carries a
 goal, the constraints it must hold, what it touches, and the command that proves
 it — not the function bodies. Exported signatures, schema, an API fragment or an
-event payload may appear, because those are seam decisions; an implementation
-written out ahead of time is a draft made when least is known, and it reaches
-execution looking like an agreed commitment rather than a guess.
+event payload may appear, because those are seam decisions.
 
 **An approved plan authorizes every step in it, up to a merge-ready branch.**
 Execution runs to the last step and stops only on a red DoD, on a decision the
 design does not cover, or at a step whose heading carries `[gate]` — a check the
 operator runs by hand. A commit boundary between steps is not a checkpoint, and
 finishing one is not a reason to ask whether to start the next. Integration is
-never one of the authorized steps; see the integration rule below. Mirror the
-steps into the task tool as execution starts — one task per step, in order — so
-progress is readable without reading the diff.
+never one of the authorized steps; see the handing-over rules below. Mirror the
+steps into the task tool as execution starts — one task per step, in order.
 
 ### Execution
 
@@ -70,11 +63,9 @@ progress is readable without reading the diff.
 
 **A test is only known to test something once it has failed.** Run it and watch
 it go red — for the reason you intend — before writing the code that makes it
-pass. Green looks the same whether the code is right or the assertion never ran:
-a mock swallowed the call, the field checked is not the field written, the case
-table is empty. What is fixed here is the order, not a cadence: one red run
-before implementing a whole module is fine, and batching is preferred to a cycle
-per assertion.
+pass. What is fixed here is the order, not a cadence: one red run before
+implementing a whole module is fine, and batching is preferred to a cycle per
+assertion.
 
 **Evidence before any completion claim.** Run the verification — `{{verify}}`,
 unless the change is narrower and a subset proves it — read its output, and only
@@ -86,54 +77,40 @@ something fails or was skipped, say so with the output rather than softening it.
 Subagents are not the default — dispatch them only when tasks are genuinely
 parallel and the interfaces between them are settled.
 
-Invoke a skill when the task is plainly the one it covers. A per-turn check of
-every available skill against questions like "what does this file do" is a tax
-with no return.
+Invoke a skill when the task is plainly the one it covers, not as a per-turn
+check of every available skill against questions like "what does this file do".
 
 ### Handing over
 
 **Integrating a branch is the operator's decision, never the agent's.** The
 agent brings the branch to merge-ready — green, docs discipline satisfied,
-independently reviewed — reports that state together with the review's findings,
-and stops there. That list is what the agent owes before handing over, not a
-verdict anyone computes afterwards. Where the branch falls short of it the
-agent's move is to finish the work; where it cannot — an artifact that would now
-be written after the fact, a tier someone disputes — it says so in the report and
-hands the branch over anyway, because pricing a gap in the method is the
-operator's call and holding the branch back takes that call away from them.
-`git merge`, `gh pr merge`, and a push to the integration
-branch run only after the operator approves *this* branch, in words, with the
-review results already in front of them. Approving a plan and saying "go" at the
-start of execution do not carry that authority: both predate the review that
-integration depends on. Moving the ticket to Done with a `[PR #N]` ref records
-the operator's decision and is therefore the **last commit on the branch**, made
-after that decision, never before it. Merge preserving history; squash only for
-a named reason. Never merge on red or pending checks.
+independently reviewed — and stops there, reporting that state together with the
+review's findings. That list is what the agent owes before handing over, not a
+verdict anyone computes afterwards: short of it, finish the work; where that is
+no longer possible — an artifact that would now be written after the fact, a tier
+under dispute — report the gap and hand the branch over anyway.
+
+`git merge`, `gh pr merge` and a push to the integration branch run only after
+the operator approves *this* branch, in words, with the review results already in
+front of them. An approved plan, and a "go" at the start of execution, are not
+that approval. Moving the ticket to Done with a `[PR #N]` ref records the
+decision, and is therefore the **last commit on the branch**. Merge preserving
+history; squash only for a named reason. Never merge on red or pending checks.
 
 **A merge candidate gets an independent review — at every tier, no exceptions.**
-Independent means the reviewer's input is the committed artifacts and nothing
-else — the branch diff, the design, the canon — with no prompt, briefing or
-summary from the session that wrote the code. The author's conversation is not
-input. A review orchestrated from the author's session is the author's
-self-check whatever it spawns — a forked skill continues the author's context
-outright, and even a subagent that starts clean reads a prompt the author
-framed. Run one anyway before handing the branch over; it catches dead tests and
-loose ends cheaply. It does not replace the review, which the operator starts.
-The independent pass catches a class of defect no amount of up-front process
-does — a wrong assumption shared by the code and the plan that produced it
-survives the design, the plan, and the author's own review, because each of them
-reasons from that assumption.
+Independent is a property of the reviewer's input: the committed artifacts and
+nothing else — the branch diff, the design, the canon. A prompt, briefing or
+summary from the session that wrote the code disqualifies it, the author's
+conversation is not input, and a review orchestrated from the author's session is
+that session's self-check whatever it spawns. The operator starts the one that
+counts; run your own before handing the branch over, which does not replace it.
 
-**A review reports two kinds of finding, on two scales.** A defect — something
-that is wrong now or breaks under an input the code will see — carries the
-severity, and the highest one is the review's headline. A deviation from this
-method — a missing `design.md`, a tier the reviewer would have judged higher, a
-canon file not updated — is a *process* finding: it gets no severity level, it
-is addressed to the operator, and it is never a merge verdict, because the
-reviewer does not hold the integration decision either. Name what is missing and
-what it would have caught, and leave the call. Ranked on the defect scale, a
-process finding inverts the report: the single red line ends up being about a
-markdown file, above the bugs that run.
+**A review reports on two scales.** A defect — wrong now, or wrong under an input
+the code will see — carries the severity, and the highest is the review's
+headline. A deviation from this method — a missing `design.md`, a tier the
+reviewer would have judged higher, a canon file not updated — is a *process*
+finding: no severity, addressed to the operator, never a merge verdict. Name what
+is missing and what it would have caught, and leave the call.
 
 ### Architectural invariants
 
