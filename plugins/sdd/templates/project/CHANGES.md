@@ -36,6 +36,14 @@ that must come out consistent in more than one place. A file count is named as
 not being a signal, and a tier dispute has to name the seam or the decision that
 was missed, with the burden on whoever claims the higher tier.
 
+**All three rows now read in the same terms, not just the third.** Tiers 0 and 1
+were scoped by file shape — "one file" and "a new file or module" — so a change
+that edits several existing files without adding a module or a seam matched no
+row at all, and the paragraph above could not place it. Tier 0 is now nothing
+left to decide, the ticket already naming the change; tier 1 is one decision to
+settle, with a new module, a new dependency or a choice between two shapes as
+examples of such a decision rather than as the criterion.
+
 **A review now has two scales, and process findings sit on the second.** The
 guidance told a reviewer that a merge candidate has docs discipline satisfied
 and said nothing about reporting a shortfall, so a missing `design.md` arrived

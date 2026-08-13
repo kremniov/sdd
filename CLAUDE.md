@@ -26,8 +26,8 @@ this table takes precedence over any skill's own "applies to every project" gate
 
 | Tier | Scope | Process |
 |---|---|---|
-| **0** | One file, no new seam, no new dependency | No design cycle, no plan. Code + tests + commit, then close the ticket. |
-| **1** | New file or module, no invariant touched | A design paragraph in the conversation — no `design.md`, no `plan.md`; track steps with the task tool. |
+| **0** | Nothing left to decide — the ticket already names the change, no new seam, no new dependency | No design cycle, no plan. Code + tests + commit, then close the ticket. |
+| **1** | One decision to settle — where a new module sits, which dependency to take, which of two shapes to use — no invariant touched | A design paragraph in the conversation — no `design.md`, no `plan.md`; track steps with the task tool. |
 | **2** | New seam, an invariant changes, or several decisions have to be agreed together | Full cycle: `/sdd:design` → `design.md` → `plan.md` → execution. |
 
 **The tier follows the decisions, not the diff.** One call threaded down through
