@@ -1,4 +1,4 @@
-<!-- sdd:method-section v0.4.0 -->
+<!-- sdd:method-section v0.5.0 -->
 ## Development method
 
 This project runs spec-driven development sized to the task. The paths below are
