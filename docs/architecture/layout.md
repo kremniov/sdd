@@ -13,6 +13,8 @@ plugins/sdd/
     _DESIGN.md _PLAN.md _ADR.md   artifact skeletons, read via ${CLAUDE_PLUGIN_ROOT}
     project/                      what adoption writes INTO a repo, with
                                   {{placeholders}} substituted from .sdd.yml
+      CHANGES.md                  what each version changed; read by a re-run,
+                                  written into no project
 docs/
   architecture/                   this canon
     invariants.md                 the rules
@@ -39,9 +41,11 @@ project once, at adoption, with placeholders substituted. Nothing under
 `templates/` directly is ever copied.
 
 A scaffold file is read once more after that, and only to compare: each carries
-a `<!-- sdd:scaffold -->` fence around the part the plugin wrote, and a re-run
-of `/sdd:setup` diffs that region against the current template so a project can
-take a correction without losing what it wrote below (ADR 0009).
+a `<!-- sdd:scaffold vN.N.N -->` fence around the part the plugin wrote, stamped
+with the version its region last changed in. A re-run of `/sdd:setup` compares
+that stamp against the template's and offers the entries `CHANGES.md` records in
+between, so a project takes a correction into its own wording and keeps what it
+wrote below (ADR 0009, ADR 0011; invariant 2).
 
 ## Adding a skill
 
