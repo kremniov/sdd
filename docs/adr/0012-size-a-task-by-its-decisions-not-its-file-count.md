@@ -24,8 +24,9 @@ buy, whatever its diff looks like.
 ## Decision
 
 All three rows are scoped by what has to be decided. Tier 0 is nothing left to
-decide, the ticket already naming the change; tier 1 is one decision to settle;
-tier 2's third signal reads "several decisions have to be agreed together". The tier
+decide, whatever set the work going having settled it — the method requires no
+ticket for every change; tier 1 is one decision to settle; tier 2's third signal
+reads "several decisions have to be agreed together". The tier
 follows the decisions, not the diff: one call crossing every layer it has to
 cross is one decision touching many packages. What raises the tier is a question
 the ticket does not already answer — a boundary that did not exist, a rule that

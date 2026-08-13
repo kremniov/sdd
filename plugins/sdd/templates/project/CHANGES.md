@@ -40,9 +40,10 @@ was missed, with the burden on whoever claims the higher tier.
 were scoped by file shape — "one file" and "a new file or module" — so a change
 that edits several existing files without adding a module or a seam matched no
 row at all, and the paragraph above could not place it. Tier 0 is now nothing
-left to decide, the ticket already naming the change; tier 1 is one decision to
-settle, with a new module, a new dependency or a choice between two shapes as
-examples of such a decision rather than as the criterion.
+left to decide — what to change already settled, by whatever set the work going,
+since the method does not require a ticket for every change; tier 1 is one
+decision to settle, with a new module, a new dependency or a choice between two
+shapes as examples of such a decision rather than as the criterion.
 
 **A review now has two scales, and process findings sit on the second.** The
 guidance told a reviewer that a merge candidate has docs discipline satisfied

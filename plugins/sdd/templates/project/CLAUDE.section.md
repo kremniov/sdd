@@ -21,16 +21,17 @@ this table takes precedence over any skill's own "applies to every project" gate
 
 | Tier | Scope | Process |
 |---|---|---|
-| **0** | Nothing left to decide — the ticket already names the change, no new seam, no new dependency | No design cycle, no plan. Code + tests + commit, then close the ticket. |
+| **0** | Nothing left to decide — what to change is already settled, no new seam, no new dependency | No design cycle, no plan. Code + tests + commit, then close the ticket. |
 | **1** | One decision to settle — where a new module sits, which dependency to take, which of two shapes to use — no invariant touched | A design paragraph in the conversation — no `design.md`, no `plan.md`; track steps with the task tool. |
 | **2** | New seam, an invariant changes, or several decisions have to be agreed together | Full cycle: `/sdd:design` → `design.md` → `plan.md` → execution. |
 
 **The tier follows the decisions, not the diff.** One call threaded down through
 the layers it has to cross — interface, handler, domain, storage, fake,
 service — is a single decision touching many packages, and stays tier 0 or 1
-however wide the diff reads. What raises the tier is a question the ticket does
-not already answer: a boundary that did not exist, a rule that stops holding, or
-two choices that have to come out consistent in more than one place. A file
+however wide the diff reads. What raises the tier is a question left open by
+whatever set the work going — a ticket, a bug report, the operator's word: a
+boundary that did not exist, a rule that stops holding, or two choices that have
+to come out consistent in more than one place. A file
 count is not one of the signals; it is available from the diff, which is the
 only reason it gets used. Whoever disputes a tier — a reviewer included — names
 the seam or the decision that was missed, and the burden of the design cycle
