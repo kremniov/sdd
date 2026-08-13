@@ -26,9 +26,14 @@ without the prose that accumulated around them.
 **Non-goals.** No rule is dropped, weakened, or re-litigated — this is an
 editorial pass, not a review of the method. Nothing moves into a skill:
 invariant 4 requires execution-time rules to be in the rules file, and a skill
-loads on a trigger. The `Comments`, `Architectural invariants`, `Significant
-decisions` and `Docs discipline` subsections keep their content; only their
-position may change. `README.md`'s condensed table is not the subject.
+loads on a trigger. `README.md`'s condensed table is not the subject.
+
+The `Comments`, `Architectural invariants`, `Significant decisions` and `Docs
+discipline` subsections were initially held out of the editorial pass. Reversed
+during execution, on the operator's decision: the invariant this work amends
+applies to all shipped text, so exempting four subsections would have merged a
+canon rule that this repository's own scaffold breaks. Their rules are held
+fixed; only their justifications go.
 
 ## Decisions
 

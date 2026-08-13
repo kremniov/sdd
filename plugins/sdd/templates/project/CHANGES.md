@@ -43,7 +43,9 @@ produced it — is every clause naming what does *not* satisfy a rule: a commit
 boundary is not a checkpoint, an approved plan and a "go" are not the operator's
 approval, the author's conversation is not input, a suite you did not watch
 finish is not evidence. The test for a sentence is whether removing it changes
-what someone may do.
+what someone may do. It was applied to the whole section, the standing
+subsections on invariants, decisions, docs discipline and comments included, so
+that no part of the shipped text is exempt from the rule it states.
 
 **A rule that gets disobeyed is reworded, not annotated.** When a rule fails to
 hold, sharpen its wording until the wrong reading is unavailable; do not add

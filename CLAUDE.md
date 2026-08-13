@@ -121,16 +121,14 @@ is missing and what it would have caught, and leave the call.
 
 See `docs/architecture/invariants.md` — the canonical list. These rules apply to all
 work; other documents link there rather than restating them. Each entry carries
-how a violation is detected and what happens when one is found, so the list is
-readable as a review procedure and not only as prose.
+how a violation is detected and what happens when one is found.
 
 The list grows one line at a time, on the branch that earned the line. Before
 integrating, ask the four questions in `/sdd:canon` against the
 finished diff: did a listed rule stop being true, did this branch establish one,
-did a checker change, did an exception move? Most branches answer no to all
-four — that is the expected answer, not a failure to look. A rule that moves or
-retires needs an ADR; a rule merely being written down for the first time does
-not.
+did a checker change, did an exception move? Answering no to all four is the
+expected result, not a failure to look. A rule that moves or retires needs an
+ADR; a rule merely being written down for the first time does not.
 
 ### Significant decisions
 
@@ -139,11 +137,9 @@ before reworking a seam it governs.
 
 An ADR is written in the PR that merges the work, alongside the canon update
 below — the architecture doc records what is now true, the ADR why it was
-chosen. Not at design time: before the code exists a decision is still an
-intention. Write one when the decision outlives the feature — an invariant
-moves, a non-obvious trade-off is taken, or the resulting shape will invite
-someone to "fix" it back. The trigger is tier-independent; a one-file Tier 0
-change can earn an ADR and a Tier 2 feature can earn none.
+chosen. Not at design time. Write one when the decision outlives the feature —
+an invariant moves, a non-obvious trade-off is taken, or the resulting shape
+will invite someone to "fix" it back. The trigger is tier-independent.
 
 The skeleton ships with the `sdd` plugin; `/sdd:design` names its path.
 Follow an existing file in `docs/adr/` when one is there.
@@ -152,16 +148,12 @@ Follow an existing file in `docs/adr/` when one is there.
 
 Before finishing a development branch, if the work changed a seam documented in
 `docs/architecture/`, update that file in the same PR — `/sdd:subsystem`
-carries the procedure. Keep the architecture layer current so agents read it
-instead of re-reading code. When a branch changed a seam that no document
+carries the procedure. When a branch changed a seam that no document
 covers, that is the trigger to write one, not a reason to skip the step.
 
 Check all three requirements — the canon update, the ADR trigger, and the
 invariant questions above — against the finished diff, before the branch is
-integrated. None of them follows from how the work was planned: a branch that
-ran the full design cycle can still land without the ADR its own decision
-earned, and a design that promised to move an invariant does not always turn out
-to have moved it.
+integrated. None of them follows from how the work was planned.
 
 ### Comments
 
@@ -173,17 +165,14 @@ one transaction, why a step runs outside the loop around it. Nothing else.
 identifier, or a rule already written in the canon is deletion-safe by
 construction: "resolves a skill by name" above `resolve_skill_by_name`, or
 "keeping this narrow — see invariant 12" above the thing invariant 12 already
-governs, are both the reader looking at the same fact twice. Naming the caller
-ages worst of all — the caller moves and the comment lies.
+governs. Never name the caller.
 
 **Volume is the symptom.** A block longer than the code under it, or one line
-above every member of a type, means the comment is describing what is visible
-rather than what is not. A doc line on a public identifier that a reader outside
-the module genuinely needs is not in that count.
+above every member of a type. A doc line on a public identifier that a reader
+outside the module genuinely needs is not in that count.
 
-**No history.** No "used to", "instead of", "we removed X" — the commit, the PR
-and the ADR are dated and read in order; a comment is not, so it ages into a
-state the reader has to reconstruct.
+**No history.** No "used to", "instead of", "we removed X" — that belongs to the
+commit, the PR and the ADR.
 
 **The default for any edit, review fix included, is no new comment.** A fix does
 not entitle its line to one. Add one only where the corrected shape invites
