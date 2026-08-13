@@ -4,6 +4,23 @@ The "what do I pull next" queue. Format: `/sdd:tasks`.
 
 ## TODO
 
+#### `[T-10]` A reviewer sizes by seam and cannot block on a missing artifact
+
+**Tags:** `[bug]` `[in-progress]`
+
+**Outcome:** An external reviewer reading only the rules file sizes a change by the seams it opens, and reports a methodology gap as a process finding the operator rules on rather than as a defect that blocks the merge.
+
+**Context:** Found in the field, on two consecutive tier-1 PRs reviewed by `codex review` with no briefing from the author. Both drew the same single P1 — no `design.md`/`plan.md`, therefore not merge-ready — and no functional finding at all. The tier's third signal read "several modules move together", which is the only one of the three settleable from `git diff` alone; in a layered codebase one read threaded from handler to storage crosses six or seven packages with no new boundary. Having derived tier 2 from the file count, the reviewer then reasoned as if the tier were given.
+
+**Acceptance:**
+
+- [ ] The tier's third signal names decisions to be agreed, not modules touched, and the rules say a tier dispute is argued from the seam
+- [ ] Defects and methodology deviations are reported on separate scales, and a process finding carries no severity and no merge verdict
+- [ ] `CHANGES.md` describes both changes so a project that reworded the section can carry them
+- [ ] The tier wording is consistent across the scaffold, `/sdd:design`'s description and the README
+
+---
+
 #### `[T-5]` Per-package adoption in a monorepo
 
 **Tags:** `[feat]` `[someday]`

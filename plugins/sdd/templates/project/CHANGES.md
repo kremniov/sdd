@@ -19,6 +19,33 @@ A version whose release changed no scaffold file gets no section. A file whose
 region changes gets its stamp moved to that version and an entry here, in the
 same commit — the gate fails otherwise.
 
+## 0.4.0
+
+### CLAUDE.section.md
+
+**The tier's third signal stopped naming modules.** It read "several modules
+move together", and of the three signals it was the only one a reader could
+settle from `git diff` alone — so it won over the two that need judgement, and
+any change threaded down through a layered architecture counted as tier 2. It
+now names several decisions that have to be agreed together. A paragraph under
+the table says the tier follows the decisions rather than the diff: one call
+crossing interface, handler, domain, storage, fake and service is one decision
+touching many packages; what raises the tier is a question the ticket does not
+answer — a boundary that did not exist, a rule that stops holding, two choices
+that must come out consistent in more than one place. A file count is named as
+not being a signal, and a tier dispute has to name the seam or the decision that
+was missed, with the burden on whoever claims the higher tier.
+
+**A review now has two scales, and process findings sit on the second.** The
+guidance told a reviewer that a merge candidate has docs discipline satisfied
+and said nothing about reporting a shortfall, so a missing `design.md` arrived
+carrying a defect's severity and a "not merge-ready" verdict — ranked above the
+bugs found in the same pass. Defects keep the severity scale. A deviation from
+the method — a missing artifact, a tier the reviewer would have judged higher, a
+canon file not updated — is a process finding with no severity level, addressed
+to the operator, and never a merge verdict, on the same ground the integration
+rule already stands on: the reviewer does not hold that decision either.
+
 ## 0.3.0
 
 ### CLAUDE.section.md
