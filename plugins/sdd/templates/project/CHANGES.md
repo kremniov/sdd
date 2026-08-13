@@ -55,6 +55,16 @@ canon file not updated — is a process finding with no severity level, addresse
 to the operator, and never a merge verdict, on the same ground the integration
 rule already stands on: the reviewer does not hold that decision either.
 
+**Merge-ready is a list the agent owes, not one a reader scores.** With the two
+scales in place the old wording still contradicted them: merge-ready was defined
+as green, docs discipline satisfied and independently reviewed, so anyone holding
+that list could compute "not merge-ready" from a methodology gap — the verdict
+the new rule forbids. The list is now named as what the agent owes before handing
+over. Falling short of it means finishing the work; where that is no longer
+possible — an artifact that would be written after the fact, a tier under
+dispute — the agent reports the gap and hands the branch over regardless, since
+holding it back takes the operator's call away from them.
+
 ## 0.3.0
 
 ### CLAUDE.section.md

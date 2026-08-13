@@ -87,7 +87,13 @@ something fails or was skipped, say so with the output rather than softening it.
 **Integrating a branch is the operator's decision, never the agent's.** The
 agent brings the branch to merge-ready — green, docs discipline satisfied,
 independently reviewed — reports that state together with the review's findings,
-and stops there. `git merge`, `gh pr merge`, and a push to the integration
+and stops there. That list is what the agent owes before handing over, not a
+verdict anyone computes afterwards. Where the branch falls short of it the
+agent's move is to finish the work; where it cannot — an artifact that would now
+be written after the fact, a tier someone disputes — it says so in the report and
+hands the branch over anyway, because pricing a gap in the method is the
+operator's call and holding the branch back takes that call away from them.
+`git merge`, `gh pr merge`, and a push to the integration
 branch run only after the operator approves *this* branch, in words, with the
 review results already in front of them. Approving a plan and saying "go" at the
 start of execution do not carry that authority: both predate the review that

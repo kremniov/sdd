@@ -32,6 +32,12 @@ judged higher, a canon file not updated — is a *process* finding: no severity
 level, addressed to the operator, never a merge verdict. The reviewer names what
 is missing and what it would have caught, and leaves the call.
 
+The criteria that define a merge-ready branch move with it. They are what the
+agent owes before handing over, not a score anyone computes afterwards —
+otherwise the same methodology gap that may not be a verdict is still one, read
+off the list. An agent short of them finishes the work; where it cannot, it
+reports the gap and hands the branch over regardless.
+
 ## Alternatives
 
 - **Keep one scale, cap process findings at the lowest severity.** Still ranks
