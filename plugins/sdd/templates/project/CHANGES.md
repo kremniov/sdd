@@ -19,6 +19,52 @@ A version whose release changed no scaffold file gets no section. A file whose
 region changes gets its stamp moved to that version and an entry here, in the
 same commit — the gate fails otherwise.
 
+## 0.4.0
+
+### CLAUDE.section.md
+
+**The tier's third signal stopped naming modules.** It read "several modules
+move together", and of the three signals it was the only one a reader could
+settle from `git diff` alone — so it won over the two that need judgement, and
+any change threaded down through a layered architecture counted as tier 2. It
+now names several decisions that have to be agreed together. A paragraph under
+the table says the tier follows the decisions rather than the diff: one call
+crossing interface, handler, domain, storage, fake and service is one decision
+touching many packages; what raises the tier is a question the ticket does not
+answer — a boundary that did not exist, a rule that stops holding, two choices
+that must come out consistent in more than one place. A file count is named as
+not being a signal, and a tier dispute has to name the seam or the decision that
+was missed, with the burden on whoever claims the higher tier.
+
+**All three rows now read in the same terms, not just the third.** Tiers 0 and 1
+were scoped by file shape — "one file" and "a new file or module" — so a change
+that edits several existing files without adding a module or a seam matched no
+row at all, and the paragraph above could not place it. Tier 0 is now nothing
+left to decide — what to change already settled, by whatever set the work going,
+since the method does not require a ticket for every change; tier 1 is one
+decision to settle, with a new module, a new dependency or a choice between two
+shapes as examples of such a decision rather than as the criterion.
+
+**A review now has two scales, and process findings sit on the second.** The
+guidance told a reviewer that a merge candidate has docs discipline satisfied
+and said nothing about reporting a shortfall, so a missing `design.md` arrived
+carrying a defect's severity and a "not merge-ready" verdict — ranked above the
+bugs found in the same pass. Defects keep the severity scale. A deviation from
+the method — a missing artifact, a tier the reviewer would have judged higher, a
+canon file not updated — is a process finding with no severity level, addressed
+to the operator, and never a merge verdict, on the same ground the integration
+rule already stands on: the reviewer does not hold that decision either.
+
+**Merge-ready is a list the agent owes, not one a reader scores.** With the two
+scales in place the old wording still contradicted them: merge-ready was defined
+as green, docs discipline satisfied and independently reviewed, so anyone holding
+that list could compute "not merge-ready" from a methodology gap — the verdict
+the new rule forbids. The list is now named as what the agent owes before handing
+over. Falling short of it means finishing the work; where that is no longer
+possible — an artifact that would be written after the fact, a tier under
+dispute — the agent reports the gap and hands the branch over regardless, since
+holding it back takes the operator's call away from them.
+
 ## 0.3.0
 
 ### CLAUDE.section.md

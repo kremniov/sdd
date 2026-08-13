@@ -1,4 +1,4 @@
-<!-- sdd:method-section v0.3.0 -->
+<!-- sdd:method-section v0.4.0 -->
 ## Development method
 
 This project runs spec-driven development sized to the task. The paths below are
@@ -21,9 +21,21 @@ this table takes precedence over any skill's own "applies to every project" gate
 
 | Tier | Scope | Process |
 |---|---|---|
-| **0** | One file, no new seam, no new dependency | No design cycle, no plan. Code + tests + commit, then close the ticket. |
-| **1** | New file or module, no invariant touched | A design paragraph in the conversation — no `design.md`, no `plan.md`; track steps with the task tool. |
-| **2** | New seam, an invariant changes, or several modules move together | Full cycle: `/sdd:design` → `design.md` → `plan.md` → execution. |
+| **0** | Nothing left to decide — what to change is already settled, no new seam, no new dependency | No design cycle, no plan. Code + tests + commit, then close the ticket. |
+| **1** | One decision to settle — where a new module sits, which dependency to take, which of two shapes to use — no invariant touched | A design paragraph in the conversation — no `design.md`, no `plan.md`; track steps with the task tool. |
+| **2** | New seam, an invariant changes, or several decisions have to be agreed together | Full cycle: `/sdd:design` → `design.md` → `plan.md` → execution. |
+
+**The tier follows the decisions, not the diff.** One call threaded down through
+the layers it has to cross — interface, handler, domain, storage, fake,
+service — is a single decision touching many packages, and stays tier 0 or 1
+however wide the diff reads. What raises the tier is a question left open by
+whatever set the work going — a ticket, a bug report, the operator's word: a
+boundary that did not exist, a rule that stops holding, or two choices that have
+to come out consistent in more than one place. A file
+count is not one of the signals; it is available from the diff, which is the
+only reason it gets used. Whoever disputes a tier — a reviewer included — names
+the seam or the decision that was missed, and the burden of the design cycle
+falls on whoever claims the higher tier.
 
 Artifacts live one directory per feature: `{{features}}<feature-name>/`, holding
 `design.md` and `plan.md`. Both name their ticket in a `**Ticket:** <ID>` line
@@ -70,7 +82,13 @@ something fails or was skipped, say so with the output rather than softening it.
 **Integrating a branch is the operator's decision, never the agent's.** The
 agent brings the branch to merge-ready — green, docs discipline satisfied,
 independently reviewed — reports that state together with the review's findings,
-and stops there. `git merge`, `gh pr merge`, and a push to the integration
+and stops there. That list is what the agent owes before handing over, not a
+verdict anyone computes afterwards. Where the branch falls short of it the
+agent's move is to finish the work; where it cannot — an artifact that would now
+be written after the fact, a tier someone disputes — it says so in the report and
+hands the branch over anyway, because pricing a gap in the method is the
+operator's call and holding the branch back takes that call away from them.
+`git merge`, `gh pr merge`, and a push to the integration
 branch run only after the operator approves *this* branch, in words, with the
 review results already in front of them. Approving a plan and saying "go" at the
 start of execution do not carry that authority: both predate the review that
@@ -92,6 +110,17 @@ The independent pass catches a class of defect no amount of up-front process
 does — a wrong assumption shared by the code and the plan that produced it
 survives the design, the plan, and the author's own review, because each of them
 reasons from that assumption.
+
+**A review reports two kinds of finding, on two scales.** A defect — something
+that is wrong now or breaks under an input the code will see — carries the
+severity, and the highest one is the review's headline. A deviation from this
+method — a missing `design.md`, a tier the reviewer would have judged higher, a
+canon file not updated — is a *process* finding: it gets no severity level, it
+is addressed to the operator, and it is never a merge verdict, because the
+reviewer does not hold the integration decision either. Name what is missing and
+what it would have caught, and leave the call. Ranked on the defect scale, a
+process finding inverts the report: the single red line ends up being about a
+markdown file, above the bugs that run.
 
 Subagents are not the default — dispatch them only when tasks are genuinely
 parallel and the interfaces between them are settled.

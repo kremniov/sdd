@@ -1,6 +1,6 @@
 ---
 name: design
-description: Use when a tier-2 task is picked up — a new seam, an invariant that moves, or several modules moving together — to turn an ambiguous ticket into an agreed design before any code, then into a plan that sequences the work. Produces design.md and plan.md.
+description: Use when a tier-2 task is picked up — a new seam, an invariant that moves, or several decisions that have to be agreed together — to turn an ambiguous ticket into an agreed design before any code, then into a plan that sequences the work. Produces design.md and plan.md.
 ---
 
 # Design and Plan

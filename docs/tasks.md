@@ -4,6 +4,23 @@ The "what do I pull next" queue. Format: `/sdd:tasks`.
 
 ## TODO
 
+#### `[T-11]` Give the rules section somewhere for growth to go
+
+**Tags:** `[debt]` `[next]`
+
+**Outcome:** The scaffold's method section states the same rules in fewer words, arranged so a new rule has a home other than `### Process tiers`.
+
+**Context:** Measured at 2115 words after T-10, up from 1718 — 23% growth from one field fix. `### Process tiers` holds 1351 of those words and long ago stopped being about tiers: tiers, plan rules, the test-first rule, evidence, integration, review, subagents and when to invoke a skill all live under it, because nothing else claims them. The heaviest cluster is integration (221 w), independent review (161 w) and the two scales (135 w) — 24% of the section stating one principle about who holds which decision, from three sides, each paragraph earned by a separate incident. Every rule is load-bearing; the arrangement is not.
+
+**Acceptance:**
+
+- [ ] No rule currently in the section is dropped, weakened, or moved into a skill
+- [ ] The three authority paragraphs are one account of who decides what, materially shorter than the 517 words they replace
+- [ ] Headings partition the section so a new rule has an obvious home that is not the tier table's
+- [ ] The stamp moves and `CHANGES.md` describes the result as guidance, so a project that reworded the section can carry it rather than take the new text
+
+---
+
 #### `[T-5]` Per-package adoption in a monorepo
 
 **Tags:** `[feat]` `[someday]`
@@ -97,6 +114,7 @@ inspects the refspec. Decide it in the ticket rather than mid-implementation.
 
 ## Done
 
+- `[T-10]` `[bug]` `[PR #2]` A reviewer sizes by seam and cannot block on a missing artifact — the tier's signals name decisions instead of modules, and a methodology gap is reported to the operator rather than ranked with the defects.
 - `[T-7]` `[fix]` `[PR #1]` Compare fence stamps instead of fenced text — the version on the marker, `CHANGES.md` as described changes, ADR 0011. Merged with the field gate outstanding; that is T-9.
 - `[T-6]` `[feat]` `[branch: feat/scaffold-upgrade]` Bring an adopted scaffold up to a newer plugin version — the fence, the gate that enforces it, ADR 0009. Gate run against a real prior adoption; the defect it surfaced is T-7.
 - `[T-4]` `[chore]` `[branch: main]` Publish to GitHub — public at `kremniov/sdd`, marketplace `kremniov`, plugin `sdd` 0.1.0.

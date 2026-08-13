@@ -31,9 +31,9 @@ matched tickets.
 
 | Tier | Scope | Process |
 |---|---|---|
-| 0 | One file, no new seam | Code + tests + commit. |
-| 1 | New file or module, no invariant touched | A design paragraph in the conversation. |
-| 2 | New seam, an invariant moves, several modules together | `/sdd:design` → `design.md` → `plan.md` → execution. |
+| 0 | Nothing left to decide, no new seam | Code + tests + commit. |
+| 1 | One decision to settle, no invariant touched | A design paragraph in the conversation. |
+| 2 | New seam, an invariant moves, several decisions agreed together | `/sdd:design` → `design.md` → `plan.md` → execution. |
 
 **Execution rules** that make the process finish. An approved plan authorizes
 every step in it, so execution runs to the end and pauses only at a step marked
