@@ -1,6 +1,6 @@
 # ADR 0012 — Size a task by the decisions it forces, not the files it touches
 
-**Status:** accepted · **Date:** 2026-08-13 · **PR:** —
+**Status:** accepted · **Date:** 2026-08-13 · **PR:** #2
 
 ## Context
 

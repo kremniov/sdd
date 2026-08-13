@@ -1,6 +1,6 @@
 # ADR 0013 — A process finding carries no severity and no merge verdict
 
-**Status:** accepted · **Date:** 2026-08-13 · **PR:** —
+**Status:** accepted · **Date:** 2026-08-13 · **PR:** #2
 
 ## Context
 
