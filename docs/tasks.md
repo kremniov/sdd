@@ -19,6 +19,8 @@ The "what do I pull next" queue. Format: `/sdd:tasks`.
 - [ ] Headings partition the section so a new rule has an obvious home that is not the tier table's
 - [ ] The stamp moves and `CHANGES.md` describes the result as guidance, so a project that reworded the section can carry it rather than take the new text
 
+**Pointers:** blocks: T-9
+
 ---
 
 #### `[T-5]` Per-package adoption in a monorepo
@@ -43,12 +45,16 @@ The "what do I pull next" queue. Format: `/sdd:tasks`.
 
 **Context:** T-7's fourth acceptance criterion, unmet at merge — plan step 5 is a `[gate]` and the branch shipped without it. Everything mechanical is enforced by `check_scaffold.py`; what no checker reaches is whether an agent, handed a `CHANGES.md` entry and a region worded in the project's own terms, edits the wording instead of replacing it. The first re-run also exercises the v0.2.0 baseline path, since the adopting project's fences predate the stamp.
 
+Runs after T-11, which rewrites the region this would carry — carrying it twice means the second run overwrites what the first just placed.
+
 **Acceptance:**
 
 - [ ] `/sdd:setup` re-run against the project whose fenced regions hold its own prose
-- [ ] The 0.3.0 integration change lands; that project's wording, ids and cross-references survive
+- [ ] Every entry from v0.2.0 to the current stamp lands; that project's wording, ids and cross-references survive
 - [ ] Stamps advance only on files where a carry happened, and nothing below a closing marker moves
 - [ ] What the run got wrong, if anything, is filed rather than fixed in place
+
+**Pointers:** deps: T-11
 
 ---
 
