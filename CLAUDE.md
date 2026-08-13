@@ -18,7 +18,7 @@ recorded in `.sdd.yml`; the skills read them from there.
 | Decision records | `docs/adr/` |
 | Verification command | `./scripts/check.sh` |
 
-### Process tiers
+### Sizing the work
 
 The design cycle costs roughly the same regardless of task size, while its
 payoff scales with how ambiguous the task is. Size the process to the task —
@@ -41,6 +41,8 @@ count is not one of the signals; it is available from the diff, which is the
 only reason it gets used. Whoever disputes a tier — a reviewer included — names
 the seam or the decision that was missed, and the burden of the design cycle
 falls on whoever claims the higher tier.
+
+### Design and plan
 
 Artifacts live one directory per feature: `docs/features/<feature-name>/`, holding
 `design.md` and `plan.md`. Both name their ticket in a `**Ticket:** <ID>` line
@@ -66,6 +68,8 @@ never one of the authorized steps; see the integration rule below. Mirror the
 steps into the task tool as execution starts — one task per step, in order — so
 progress is readable without reading the diff.
 
+### Execution
+
 `/sdd:debug` applies at every tier, including 0, for any bug — its
 "3 failed fixes → question the architecture" rule especially.
 
@@ -83,6 +87,15 @@ then say a thing is done, fixed or passing. Name what you ran. A test
 suite you did not watch finish, a build you assume still compiles, a behaviour
 you reasoned about but never triggered — none of these support the claim. When
 something fails or was skipped, say so with the output rather than softening it.
+
+Subagents are not the default — dispatch them only when tasks are genuinely
+parallel and the interfaces between them are settled.
+
+Invoke a skill when the task is plainly the one it covers. A per-turn check of
+every available skill against questions like "what does this file do" is a tax
+with no return.
+
+### Handing over
 
 **Integrating a branch is the operator's decision, never the agent's.** The
 agent brings the branch to merge-ready — green, docs discipline satisfied,
@@ -126,13 +139,6 @@ reviewer does not hold the integration decision either. Name what is missing and
 what it would have caught, and leave the call. Ranked on the defect scale, a
 process finding inverts the report: the single red line ends up being about a
 markdown file, above the bugs that run.
-
-Subagents are not the default — dispatch them only when tasks are genuinely
-parallel and the interfaces between them are settled.
-
-Invoke a skill when the task is plainly the one it covers. A per-turn check of
-every available skill against questions like "what does this file do" is a tax
-with no return.
 
 ### Architectural invariants
 
