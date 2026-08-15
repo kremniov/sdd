@@ -101,6 +101,7 @@ inspects the refspec. Decide it in the ticket rather than mid-implementation.
 
 ## Done
 
+- `[T-12]` `[bug]` `[PR #4]` Handing over names the skill that shapes the Done line — the one rule requiring an artifact edit without a pointer to the skill owning it. Stamp v0.5.1.
 - `[T-11]` `[debt]` `[PR #3]` Give the rules section somewhere for growth to go — partitioned by phase of work, the authority triad in one account, and a rule ships without its justification. 2115 → 1687 words with all 82 rules kept. ADR 0014, ADR 0015.
 - `[T-10]` `[bug]` `[PR #2]` A reviewer sizes by seam and cannot block on a missing artifact — the tier's signals name decisions instead of modules, and a methodology gap is reported to the operator rather than ranked with the defects.
 - `[T-7]` `[fix]` `[PR #1]` Compare fence stamps instead of fenced text — the version on the marker, `CHANGES.md` as described changes, ADR 0011. Merged with the field gate outstanding; that is T-9.

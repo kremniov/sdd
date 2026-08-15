@@ -4,6 +4,14 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 0.5.1
+
+- The handing-over rule names `/sdd:tasks` as what shapes the Done line. It
+  stated when the ticket moves and what ref it carries, but not where the
+  collapse format is written, so an agent closing a ticket reconstructed it by
+  reading the queue's existing entries — the one rule in the section requiring
+  an artifact edit without a pointer to the skill that owns it.
+
 ## 0.2.0
 
 A correction to the scaffold can now reach a project that already adopted.

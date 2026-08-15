@@ -3,7 +3,7 @@
 This repository ships the method it uses. Changes here are dogfooded before
 they are published.
 
-<!-- sdd:method-section v0.5.0 -->
+<!-- sdd:method-section v0.5.1 -->
 ## Development method
 
 This project runs spec-driven development sized to the task. The paths below are
@@ -98,10 +98,11 @@ under dispute — report the gap and hand the branch over anyway.
 `git merge`, `gh pr merge` and a push to the integration branch run only after
 the operator approves *this* branch, in words, with the review results already in
 front of them. An approved plan, and a "go" at the start of execution, are not
-that approval. Moving the ticket to Done with a `[PR #N]` ref records that
-decision, so it is made after the operator's word and never before it, and is
-therefore the **last commit on the branch**. Merge preserving
-history; squash only for a named reason. Never merge on red or pending checks.
+that approval. Moving the ticket to Done with a `[PR #N]` ref — collapsed as
+`/sdd:tasks` describes — records that decision, so it is made after the
+operator's word and never before it, and is therefore the **last commit on the
+branch**. Merge preserving history; squash only for a named reason. Never merge
+on red or pending checks.
 
 **A merge candidate gets an independent review — at every tier, no exceptions.**
 Independent is a property of the reviewer's input: the committed artifacts and
