@@ -4,23 +4,6 @@ The "what do I pull next" queue. Format: `/sdd:tasks`.
 
 ## TODO
 
-#### `[T-11]` Give the rules section somewhere for growth to go
-
-**Tags:** `[debt]` `[next]`
-
-**Outcome:** The scaffold's method section states the same rules in fewer words, arranged so a new rule has a home other than `### Process tiers`.
-
-**Context:** Measured at 2115 words after T-10, up from 1718 — 23% growth from one field fix. `### Process tiers` holds 1351 of those words and long ago stopped being about tiers: tiers, plan rules, the test-first rule, evidence, integration, review, subagents and when to invoke a skill all live under it, because nothing else claims them. The heaviest cluster is integration (221 w), independent review (161 w) and the two scales (135 w) — 24% of the section stating one principle about who holds which decision, from three sides, each paragraph earned by a separate incident. Every rule is load-bearing; the arrangement is not.
-
-**Acceptance:**
-
-- [ ] No rule currently in the section is dropped, weakened, or moved into a skill
-- [ ] The three authority paragraphs are one account of who decides what, materially shorter than the 517 words they replace
-- [ ] Headings partition the section so a new rule has an obvious home that is not the tier table's
-- [ ] The stamp moves and `CHANGES.md` describes the result as guidance, so a project that reworded the section can carry it rather than take the new text
-
----
-
 #### `[T-5]` Per-package adoption in a monorepo
 
 **Tags:** `[feat]` `[someday]`
@@ -43,12 +26,16 @@ The "what do I pull next" queue. Format: `/sdd:tasks`.
 
 **Context:** T-7's fourth acceptance criterion, unmet at merge — plan step 5 is a `[gate]` and the branch shipped without it. Everything mechanical is enforced by `check_scaffold.py`; what no checker reaches is whether an agent, handed a `CHANGES.md` entry and a region worded in the project's own terms, edits the wording instead of replacing it. The first re-run also exercises the v0.2.0 baseline path, since the adopting project's fences predate the stamp.
 
+Runs after T-11, which rewrites the region this would carry — carrying it twice means the second run overwrites what the first just placed.
+
 **Acceptance:**
 
 - [ ] `/sdd:setup` re-run against the project whose fenced regions hold its own prose
-- [ ] The 0.3.0 integration change lands; that project's wording, ids and cross-references survive
+- [ ] Every entry from v0.2.0 to the current stamp lands; that project's wording, ids and cross-references survive
 - [ ] Stamps advance only on files where a carry happened, and nothing below a closing marker moves
 - [ ] What the run got wrong, if anything, is filed rather than fixed in place
+
+**Pointers:** deps: T-11
 
 ---
 
@@ -114,6 +101,7 @@ inspects the refspec. Decide it in the ticket rather than mid-implementation.
 
 ## Done
 
+- `[T-11]` `[debt]` `[PR #3]` Give the rules section somewhere for growth to go — partitioned by phase of work, the authority triad in one account, and a rule ships without its justification. 2115 → 1687 words with all 82 rules kept. ADR 0014, ADR 0015.
 - `[T-10]` `[bug]` `[PR #2]` A reviewer sizes by seam and cannot block on a missing artifact — the tier's signals name decisions instead of modules, and a methodology gap is reported to the operator rather than ranked with the defects.
 - `[T-7]` `[fix]` `[PR #1]` Compare fence stamps instead of fenced text — the version on the marker, `CHANGES.md` as described changes, ADR 0011. Merged with the field gate outstanding; that is T-9.
 - `[T-6]` `[feat]` `[branch: feat/scaffold-upgrade]` Bring an adopted scaffold up to a newer plugin version — the fence, the gate that enforces it, ADR 0009. Gate run against a real prior adoption; the defect it surfaced is T-7.

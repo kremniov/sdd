@@ -57,12 +57,20 @@ here**; they do not restate them.
    *Detect:* every entry must name the code that holds it.
    *On violation:* strike the entry — an unfounded rule is not fixed by
    softening its wording.
-7. **Skills state what to do, not how not to disobey.** No anti-rationalization
-   tables, no red-flag blocks, no "regardless of perceived simplicity" gates.
-   One exception: the "three failed fixes" rule in `/sdd:debug`, kept
-   because that failure mode was observed rather than imagined.
-   *Detect:* a table of excuses, or a paragraph arguing against skipping the
-   step it just described.
+7. **Shipped text states what to do, not why to do it.** Skills, templates and
+   the project scaffold carry rules; they do not carry the argument for a rule,
+   nor anti-rationalization tables, red-flag blocks or "regardless of perceived
+   simplicity" gates (ADR 0015). A clause naming what does *not* satisfy a rule
+   is part of the rule and stays. When a rule is disobeyed it gets reworded, not
+   annotated. One exception: the "three failed fixes" rule in `/sdd:debug`, a
+   threshold rather than an argument, kept because that failure mode was
+   observed rather than imagined. `templates/project/CHANGES.md` is not shipped
+   text and is outside this rule: it reaches no project, and an entry that
+   dropped what the guidance replaced would leave an instruction to overwrite,
+   which is the failure ADR 0011 exists to end.
+   *Detect:* delete the sentence and ask whether anything someone may do
+   changed. If nothing did, it was justification. A table of excuses or a
+   paragraph arguing against skipping the step above it needs no test.
    *On violation:* cut it — the instruction is the product, and padding it
    with compliance prose is what this method exists to avoid.
 8. **Invariant numbers are stable.** Documents cite them. Append; never

@@ -19,6 +19,42 @@ A version whose release changed no scaffold file gets no section. A file whose
 region changes gets its stamp moved to that version and an entry here, in the
 same commit — the gate fails otherwise.
 
+## 0.5.0
+
+### CLAUDE.section.md
+
+**The section is partitioned by phase of work.** `### Process tiers` had become
+where a rule landed when no heading claimed it — tiers, artifact locations, plan
+rules, the test-first rule, evidence, integration, review, subagents and skill
+invocation all sat under it, 64% of the section. It is replaced by four
+headings — sizing the work, design and plan, execution, handing over — and every
+rule moves under the phase in which it applies. A project that has reordered or
+renamed these rules keeps its own arrangement; what to carry is the principle
+that a rule's home is the phase it governs, so that the next rule added has an
+obvious place and no heading becomes the default sink.
+
+**A rule ships without its justification.** Prose explaining why a rule exists no
+longer travels with it: the cost-versus-ambiguity argument for sizing, the
+account of why an implementation written early reads as a commitment, the list of
+ways a green test can be empty, the mechanism by which a forked review inherits
+its author's context, the reason a process finding ranked as a defect inverts a
+report. What stays — stated as a rule, not as an account of the incident that
+produced it — is every clause naming what does *not* satisfy a rule: a commit
+boundary is not a checkpoint, an approved plan and a "go" are not the operator's
+approval, the author's conversation is not input, a suite you did not watch
+finish is not evidence. The test for a sentence is whether removing it changes
+what someone may do. It was applied to the whole section, the standing
+subsections on invariants, decisions, docs discipline and comments included, so
+that no part of the shipped text is exempt from the rule it states.
+
+**A rule that gets disobeyed is reworded, not annotated.** When a rule fails to
+hold, sharpen its wording until the wrong reading is unavailable; do not add
+prose arguing for it. The three paragraphs on integration, review and finding
+severity had accumulated 517 words stating one principle from three sides, each
+addition made after an incident, and in each case what actually closed the hole
+was the rewording rather than the argument beside it. They are now one account of
+who decides what, in 345 words, with every rule kept.
+
 ## 0.4.0
 
 ### CLAUDE.section.md
