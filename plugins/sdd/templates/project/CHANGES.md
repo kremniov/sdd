@@ -19,6 +19,18 @@ A version whose release changed no scaffold file gets no section. A file whose
 region changes gets its stamp moved to that version and an entry here, in the
 same commit — the gate fails otherwise.
 
+## 0.5.1
+
+### CLAUDE.section.md
+
+**Closing a ticket names the skill that defines the format.** Handing over stated
+when the Done move happens and what ref it carries, but not where its shape is
+written, so an agent reaching that step reconstructed the format by reading the
+queue's existing Done entries. The rule now points at `/sdd:tasks`, as the
+neighbouring sections already point at `/sdd:canon`, `/sdd:subsystem` and
+`/sdd:design` for the artifacts they govern. A project that renamed the skill or
+keeps the collapse format elsewhere carries the pointer to wherever that is.
+
 ## 0.5.0
 
 ### CLAUDE.section.md

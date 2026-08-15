@@ -4,6 +4,19 @@ The "what do I pull next" queue. Format: `/sdd:tasks`.
 
 ## TODO
 
+#### `[T-12]` Handing over names the skill that shapes the Done line
+
+**Tags:** `[bug]` `[in-progress]`
+
+**Outcome:** An agent closing a ticket at merge takes the Done format from `/sdd:tasks` instead of reconstructing it from the queue's existing entries.
+
+**Acceptance:**
+
+- [ ] The handing-over rule names the skill that defines the collapse, as the neighbouring rules name theirs
+- [ ] The stamp moves and `CHANGES.md` carries the change, so an adopted project is offered it
+
+---
+
 #### `[T-5]` Per-package adoption in a monorepo
 
 **Tags:** `[feat]` `[someday]`
