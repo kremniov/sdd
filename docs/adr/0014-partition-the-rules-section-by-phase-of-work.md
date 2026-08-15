@@ -1,6 +1,6 @@
 # ADR 0014 — Partition the rules section by phase of work
 
-**Status:** accepted · **Date:** 2026-08-13 · **PR:** —
+**Status:** accepted · **Date:** 2026-08-13 · **PR:** #3
 
 ## Context
 

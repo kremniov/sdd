@@ -64,7 +64,10 @@ here**; they do not restate them.
    is part of the rule and stays. When a rule is disobeyed it gets reworded, not
    annotated. One exception: the "three failed fixes" rule in `/sdd:debug`, a
    threshold rather than an argument, kept because that failure mode was
-   observed rather than imagined.
+   observed rather than imagined. `templates/project/CHANGES.md` is not shipped
+   text and is outside this rule: it reaches no project, and an entry that
+   dropped what the guidance replaced would leave an instruction to overwrite,
+   which is the failure ADR 0011 exists to end.
    *Detect:* delete the sentence and ask whether anything someone may do
    changed. If nothing did, it was justification. A table of excuses or a
    paragraph arguing against skipping the step above it needs no test.

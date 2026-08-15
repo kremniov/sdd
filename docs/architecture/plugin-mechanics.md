@@ -18,7 +18,7 @@ that is each skill's own text.
 |---|---|---|
 | Skill invocation | `templates/_DESIGN.md`, `_PLAN.md`, `_ADR.md` | `${CLAUDE_PLUGIN_ROOT}`, substituted into skill text before the model sees it |
 | Adoption, once | `templates/project/*` | the skill, which substitutes `{{placeholders}}` from `.sdd.yml` and writes the result into the repo |
-| Re-run, to compare | `templates/project/*` | the skill, which diffs the rendered fence against the one in the project's copy |
+| Re-run, to compare | `templates/project/*` | the skill, which compares the version stamped on the template's fence against the project's |
 | Every session | the project's rules file and canon | the project, as ordinary files |
 
 The distinction between the first two rows is the one that gets broken. Both are
@@ -29,12 +29,14 @@ on the project owns it.
 
 The second and third rows are the same files read for opposite purposes, and the
 difference is what keeps the copy safe. At adoption the template is the source
-and produces the file. At a re-run it is only a comparand: the plugin's half of
-each scaffold file sits between `<!-- sdd:scaffold -->` markers, and a re-run
-renders the template, diffs that region, and proposes the difference. Everything
-outside the fence is the project's — its queue, its phases, its rules — and is
-not read, not diffed, and not written. Nothing is replaced without an answer
-(ADR 0009).
+and produces the file. At a re-run it is not a source at all: the plugin's half
+of each scaffold file sits between `<!-- sdd:scaffold vN.N.N -->` markers, and
+the re-run compares the two stamps, never the two texts. Where the project is
+behind, it offers what `CHANGES.md` records between the two versions, one entry
+at a time, to be carried into the project's own wording; where the stamps match
+it offers nothing. Everything outside the fence is the project's — its queue,
+its phases, its rules — and is not read, not compared, and not written. Nothing
+is replaced without an answer (ADR 0009, ADR 0011).
 
 ## What must never cross
 

@@ -1,6 +1,6 @@
 # ADR 0015 — A rule ships without its justification, and a disobeyed rule is reworded
 
-**Status:** accepted · **Date:** 2026-08-13 · **PR:** —
+**Status:** accepted · **Date:** 2026-08-13 · **PR:** #3
 
 ## Context
 
@@ -58,3 +58,10 @@ of them. Rules become harder to write — a rule that cannot be stated without i
 justification is not yet stated as a rule — which is the intended cost. Invariant
 7 changes scope and cites this record; its `/sdd:debug` threshold exception
 survives, being a rule and not an argument.
+
+The scaffold's change log is outside the rule, and the invariant says so. An
+entry there exists to describe what the guidance now requires *and what it
+replaced*, which is what lets a carry find its target in a project that worded
+the rule differently; strip that and the entry becomes an instruction to
+overwrite (ADR 0011). The boundary needs stating because the file sits in
+`templates/project/` beside text the rule does govern.
