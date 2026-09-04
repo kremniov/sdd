@@ -4,6 +4,42 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.0.0
+
+The method moves out of your `CLAUDE.md` and into a skill, and every rule is
+rewritten in a plain register.
+
+- **The resident rules drop from 1693 words to 268.** What stays is what must
+  hold in a session where nobody invoked a skill: the user integrates the
+  branch, evidence precedes a completion claim, a test is watched failing first,
+  the comments rules, and a line naming the skill to invoke (ADR 0018).
+- **`/sdd:work` carries the method.** The gate table, the tier table, the closed
+  list of blockers, the review rules and the handing-over rules. Invoke it when
+  a task starts.
+- **Four gates are the frame; the tier says how many a task passes** (ADR 0017).
+  Tier 0 passes G1 and G4, so a task with nothing left to decide still gets your
+  word before the code.
+- **G4 ends with "push the branch, open the pull request, and stop".** The rule
+  that was missing: agents were bringing branches to merge-ready and leaving
+  them unpushed, so there was nothing to review.
+- **A design reads the roadmap.** Acceptance criteria are a check, not a
+  specification, and the product logic lives in the roadmap.
+- **`/sdd:design` splits into `/sdd:design` and `/sdd:plan`** (ADR 0019), one
+  artifact each, with gate G2 between them.
+- **`/sdd:canon` runs the falsifiability filter before the amend questions**, and
+  states that four times no is the expected answer. It gains `lessons.md`, the
+  one canon file that carries dates.
+- **The party who directs the work is the user, not the operator** (ADR 0016).
+  Accepted decision records and frozen feature designs keep the old word.
+- **The register is measured** (ADR 0021, invariant 12). `check_register.py`
+  fails the build on a file past 2.5 negations per 100 words, past its word
+  budget, or nested past H3. The corpus averaged 4.0 before this release.
+- **`.sdd.yml` gains `notes:`** — where a brainstorm writes its decisions, out
+  of git.
+- **Adoption can retire the old rules section** (ADR 0020). A project on the
+  `sdd:method-section` fence is shown the whole region, told what replaces it,
+  and asked once. A decline changes nothing and is offered again.
+
 ## 0.5.1
 
 - The handing-over rule names `/sdd:tasks` as what shapes the Done line. It

@@ -27,13 +27,22 @@ matched tickets.
 
 ## What you get
 
-**A tier table** that decides how much process a task gets:
+**Four gates** where you read, decide and approve, and the agent stops:
 
-| Tier | Scope | Process |
+| Gate | What you approve | What the agent does next |
 |---|---|---|
-| 0 | Nothing left to decide, no new seam | Code + tests + commit. |
-| 1 | One decision to settle, no invariant touched | A design paragraph in the conversation. |
-| 2 | New seam, an invariant moves, several decisions agreed together | `/sdd:design` → `design.md` → `plan.md` → execution. |
+| G1 | The tier, and the decisions of the brainstorm | Designs, or starts the code |
+| G2 | The design | Commits it, writes the plan |
+| G3 | The plan | Commits it, runs every step |
+| G4 | The pull request | You merge |
+
+**A tier table** that decides how many gates a task passes:
+
+| Tier | Scope | Gates |
+|---|---|---|
+| 0 | Nothing left to decide, no new seam | G1, G4 |
+| 1 | One decision to settle, no invariant touched | G1, G2 as a paragraph, G4 |
+| 2 | New seam, an invariant moves, several decisions agreed together | all four, with `design.md` and `plan.md` |
 
 **Execution rules** that make the process finish. An approved plan authorizes
 every step in it, so execution runs to the end and pauses only at a step marked
@@ -42,16 +51,23 @@ to test something once it has failed. Evidence before any completion claim. The
 ticket moves to Done *after* the review, as the last commit — because it records
 that the work shipped.
 
-**Six skills**, named after what they work on:
+**Eight skills**, named after what they work on:
 
 | Skill | For |
 |---|---|
+| `/sdd:work` | Run a task from pickup to a pull request. Invoked first; carries the gates, the tiers, the blockers and the handing-over rules. |
 | `/sdd:setup` | Install the method into a repository. Run once. |
-| `/sdd:canon` | Establish, amend or audit the architectural invariants. |
+| `/sdd:canon` | Establish, amend or audit the architectural canon. |
 | `/sdd:subsystem` | Write and keep the architecture doc for one part of the system. |
-| `/sdd:design` | Turn an ambiguous ticket into an agreed design, then a plan. Tier 2. |
+| `/sdd:design` | Turn an ambiguous ticket into an agreed design. Tier 2. |
+| `/sdd:plan` | Sequence an agreed design into ordered, checkable steps. Tier 2. |
 | `/sdd:tasks` | The ticket format for the queue. |
 | `/sdd:debug` | Root cause before fix; three failed fixes means the architecture. |
+
+**About 270 words in your `CLAUDE.md`** — what must hold in a session where
+nobody invoked a skill. The method itself lives in `/sdd:work`, so the rules
+that are needed at one moment of one task stop competing for context in every
+other session.
 
 **Three artifact skeletons** — `_DESIGN.md`, `_PLAN.md`, `_ADR.md` — read from
 the plugin, so a fix to a skeleton reaches every project that installed it.
@@ -98,6 +114,7 @@ tasks:    docs/tasks.md         # the "what's next" queue
 roadmap:  docs/roadmap.md       # direction: sequence, not dates
 features: docs/features/        # per-feature design.md + plan.md
 adr:      docs/adr/             # one decision per file
+notes:    docs/notes/           # working notes, kept out of git
 verify:   make lint && make test
 ticket:   T                     # ticket id prefix
 rules:    CLAUDE.md             # the file the method's rules live in
@@ -138,6 +155,10 @@ bundled path a skill names exists *and* that every shipped skeleton is named by
 some skill, verifies this repo's own `CLAUDE.md` still matches the scaffold it
 ships, and matches skills and templates against stack vocabulary that would
 break portability.
+
+It also measures the register of every shipped file: at most 2.5 negations per
+100 words, 1200 words for a `SKILL.md`, 400 for the rules section, and no
+heading past H3. The corpus this replaced measured 4.0.
 
 ## Prior art
 
