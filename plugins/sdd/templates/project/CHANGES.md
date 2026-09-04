@@ -19,6 +19,31 @@ A version whose release changed no scaffold file gets no section. A file whose
 region changes gets its stamp moved to that version and an entry here, in the
 same commit — the gate fails otherwise.
 
+## 1.0.0
+
+### CLAUDE.section.md
+
+**The section keeps only the rules that hold with no skill loaded, and the rest
+move to `/sdd:work`.** What stays is five things: the user integrates the branch
+and the agent stops at the pull request; evidence is shown and named before any
+completion claim; a test is watched failing before the code that passes it; the
+comments rules; and a line telling the agent to invoke the skill. What leaves is
+the tier table, the paths table, the artifact locations, the plan rules, the two
+review scales, and the invariant, decision-record and docs triggers — all of it
+now in `/sdd:work`, which is invoked when a task starts. A project that reworded
+these rules keeps its own wording for the five that stay and deletes the rest,
+leaving a pointer to the skill.
+
+**The fence is named `sdd:rules`.** The old `sdd:method-section` marker names a
+region that no longer describes what the plugin ships, so `/sdd:setup` offers to
+retire it and writes the new fence only once that is settled. A project that
+declines keeps the v0.x rules, and no second method section is ever written.
+
+**Two rules are new.** The handing-over rule now names the pull request: the
+branch is pushed and the pull request opened before the agent stops, so the user
+has something to review. And the sizing call is surfaced at every tier, so a
+task with nothing left to decide still gets the user's word before the code.
+
 ## 0.5.1
 
 ### CLAUDE.section.md
