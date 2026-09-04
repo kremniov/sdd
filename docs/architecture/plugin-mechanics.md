@@ -4,7 +4,7 @@ How the plugin reaches a project, and when each kind of file is read. This is
 the seam the whole method rests on: get the timing wrong and a skill points at a
 path the model cannot resolve.
 
-Governed by invariants 1, 2 and 4.
+Governed by invariants 1, 2, 3 and 4.
 
 ## Responsibility
 
@@ -12,13 +12,14 @@ This document covers what crosses the boundary between the plugin and an
 adopting repository, and in what order. It does not cover what the skills say —
 that is each skill's own text.
 
-## The three read moments
+## The read moments
 
 | Read at | What | Resolved by |
 |---|---|---|
 | Skill invocation | `templates/_DESIGN.md`, `_PLAN.md`, `_ADR.md` | `${CLAUDE_PLUGIN_ROOT}`, substituted into skill text before the model sees it |
 | Adoption, once | `templates/project/*` | the skill, which substitutes `{{placeholders}}` from `.sdd.yml` and writes the result into the repo |
 | Re-run, to compare | `templates/project/*` | the skill, which compares the version stamped on the template's fence against the project's |
+| Skill invocation, on demand | `skills/<name>/*.md` beside a `SKILL.md` | `${CLAUDE_PLUGIN_ROOT}`, named by the skill that needs them |
 | Every session | the project's rules file and canon | the project, as ordinary files |
 
 The distinction between the first two rows is the one that gets broken. Both are
@@ -38,12 +39,18 @@ it offers nothing. Everything outside the fence is the project's — its queue,
 its phases, its rules — and is not read, not compared, and not written. Nothing
 is replaced without an answer (ADR 0009, ADR 0011).
 
+A major version may replace a region rather than describe a change to it. That
+path is bounded: the region is shown in full, what replaces it is named, and it
+goes on one explicit yes, carrying across whatever in it was the project's own.
+A decline leaves the region alone and writes no new fence, so one file never
+holds two method sections (ADR 0020, invariant 3).
+
 ## What must never cross
 
 **`${CLAUDE_PLUGIN_ROOT}` never appears in a file written into the project.** It
 is substituted into *skill text* at invocation; a project file containing it is
 a literal string the model cannot resolve. This is why the rules section cannot
-name the ADR skeleton's path and instead names the skill that can.
+name the ADR skeleton's path, and why `/sdd:work` names it instead.
 
 **A project path never appears in a skill's instructions.** Skills read
 locations from `.sdd.yml`. The illustrative config block in `/sdd:setup` is
@@ -56,7 +63,8 @@ not an instruction and is the one exemption.
 2. Scaffold files are written only where nothing exists. Adoption is additive by
    invariant 3, so an existing file always wins over the scaffold.
 3. The rules section is appended **last**, because it renders paths from the
-   config written in step 1.
+   config written in step 1, and because an existing `sdd:method-section` has to
+   be settled before an `sdd:rules` fence is written (ADR 0020).
 4. `/sdd:canon` runs after adoption, never before: it fills the body of an
    `invariants.md` that adoption placed. It does not create the file.
 

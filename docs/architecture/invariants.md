@@ -23,26 +23,34 @@ here**; they do not restate them.
    carries the version its region last changed in, so a re-run offers the
    changes described in `templates/project/CHANGES.md` between that version and
    the project's, and offers nothing at all when the stamps match (ADR 0011). It
-   is never read to overwrite.
+   is never read to overwrite. One region is retired rather than carried: a
+   fence this plugin wrote, whose region a major version replaces, is shown in
+   full and removed on the user's explicit yes (ADR 0020).
    *Detect:* `./scripts/check.sh` — every referenced path must exist, every
    shipped skeleton must be named by some skill, and every scaffold file must
    carry exactly one well-formed fence, stamped with a version that is not ahead
    of the plugin's, that moves whenever the region does, and that the change log
    accounts for.
    *On violation:* reject.
-3. **Adoption is additive.** No skill overwrites or reformats a file it did not
-   write in this run. Where it would change something that exists, it reports
-   and asks. A method that rearranges someone's repository on first contact does
-   not get a second run.
+3. **Adoption is additive, with one bounded exception.** No skill overwrites or
+   reformats a file it did not write in this run. Where it would change
+   something that exists, it reports and asks. A method that rearranges
+   someone's repository on first contact does not get a second run. The
+   exception is a fence this plugin wrote in an earlier version, whose whole
+   region a major version replaces: it is shown in full, what replaces it is
+   named, and it goes on one explicit yes, carrying across whatever in it was
+   the project's own (ADR 0020). Nothing else is ever deleted.
    *Detect:* run adoption against a repo with existing docs; `git status` must
    show additions only.
    *On violation:* reject — this is the rule that makes the plugin safe to try.
-4. **Execution-time rules live in the project's rules file.** Not in a skeleton
-   comment, which does not survive into the generated artifact, and not only in
-   a skill, which loads on a trigger (ADR 0002).
-   *Detect:* ask when the rule must be in context. If the answer is "while
-   writing code", it belongs in `CLAUDE.section.md`.
-   *On violation:* move the rule; leave a pointer where it was.
+4. **A rule holds where it is loaded.** The project's rules file carries what
+   must hold in a session where nobody invoked a skill; `/sdd:work` carries the
+   rest (ADR 0018). A skeleton comment carries neither, because it does not
+   survive into the generated artifact (ADR 0002). Each rule has one home, and
+   the resident file names the skill rather than summarising it.
+   *Detect:* ask whether the rule still has to hold with no skill loaded. Yes
+   means `CLAUDE.section.md`; no means the skill.
+   *On violation:* move the rule, and leave a pointer where it was.
 5. **Nothing from the origin codebase leaks in.** No stack, vendor, or domain
    terms in skills or templates — the method is language-agnostic, and an
    example that is not generic is a bug.
@@ -101,6 +109,17 @@ here**; they do not restate them.
     artifacts and decision records quote old names on purpose and are not.
     *On violation:* reject — and if the name changed, add it to the retired map
     so the next occurrence is caught rather than read.
+
+12. **Shipped text is measured, not judged.** Every file the plugin ships obeys
+    a length, a heading depth and a negation density (ADR 0021). Density counts
+    *not / never / no / only / without / rather than* per 100 words of prose: at
+    most 2.5 for any shipped file, and 2.0 for the always-loaded rules section.
+    A `SKILL.md` holds at most 1200 words, the rules section 400, and no heading
+    in a skill or a skeleton goes past H3. A file that outgrows its budget is
+    rewritten or split into a reference file beside it.
+    *Detect:* `./scripts/check.sh` — `check_register.py` reports each file.
+    *On violation:* reject. Nothing is allowlisted, because an exemption is how
+    the corpus reached 4.0 in the first place.
 
 ## Layout responsibilities
 
