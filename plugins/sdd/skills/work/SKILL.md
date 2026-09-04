@@ -59,7 +59,7 @@ outside git. Stop when no open question is left. This is G1.
 
 ### Design and plan
 
-Tier 2 runs `/sdd:design`, then writes the plan. Tier 1 states a design
+Tier 2 runs `/sdd:design`, then `/sdd:plan`. Tier 1 states a design
 paragraph in the conversation. Tier 0 writes neither.
 
 ### Execution
