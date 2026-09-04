@@ -99,6 +99,8 @@ for line in open('.sdd.yml'):
     line = line.split('#')[0].strip()
     if ':' in line:
         k, v = line.split(':', 1); cfg[k.strip()] = v.strip()
+if '<!-- sdd:dogfooding-paused -->' in open('CLAUDE.md').read():
+    print('  SKIP    dogfooding paused — invariant 9 is not in force'); sys.exit(0)
 tpl = open('plugins/sdd/templates/project/CLAUDE.section.md').read()
 missing = {k for k in re.findall(r'\{\{(\w+)\}\}', tpl) if k not in cfg}
 if missing:
