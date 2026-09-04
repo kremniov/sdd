@@ -1,31 +1,25 @@
 ---
 name: tasks
-description: Use when adding, editing, or closing an item in the project's task queue — writing a ticket for a feature, bug, tech-debt or chore, allocating its id, updating its status, or collapsing it to Done at merge.
+description: Use when adding, editing or closing an item in the project's task queue — writing a ticket for a feature, bug, tech-debt or chore, allocating its id, updating its status, or collapsing it to Done at merge.
 ---
 
-# The Task Queue
+# The task queue
 
-The task queue is the "what do I pull next" list. Its path and the ticket-id
-prefix are in `.sdd.yml` (`tasks:` and `ticket:`); read them before editing.
+The queue is the "what do I pull next" list. Its path and the ticket-id prefix
+come from `.sdd.yml` (`tasks:` and `ticket:`). One `key: value` per line;
+everything from the first `#` is a comment; values are used verbatim. If the file
+is absent, say so and stop — the project has not adopted this method
+(`/sdd:setup`). If a key this skill needs is absent or empty, name the key and
+ask.
 
-Reading `.sdd.yml`: one `key: value` per line; the first `:` separates them and
-everything from the first `#` is a comment. Values are used verbatim — no
-unquoting, no variable expansion. If the file is absent, say so and stop — the project has not
-adopted this method (`/sdd:setup`). If a key this skill needs is absent
-or its value is empty, name the key and ask; do not fall back to a default path,
-because writing to a guessed location is how a project ends up with two task
-queues.
-
-
-A **ticket** states the outcome and how you'll know it's done — nothing else.
-Reasoning, history, and option-comparisons live in the feature's `design.md`,
-written when the task is picked up. A ticket is a pickup contract, not a design
-doc: an agent takes it → designs → plans → executes.
+A ticket states the outcome and how anyone knows it is done. It is a pickup
+contract: an agent takes it, designs, plans, then executes. Reasoning, history
+and option comparisons belong to the feature's `design.md`, written at pickup.
 
 ## The ticket
 
-Write exactly these slots, in this order. Omit optional lines when they have no
-real content — never pad.
+Write exactly these slots, in this order. Drop an optional line that has no real
+content.
 
 ```markdown
 #### `[T-40]` Short imperative title
@@ -39,72 +33,73 @@ real content — never pad.
 - [ ] A checkable criterion (an observable end-state, not a step)
 - [ ] …2–5 total
 
-**Pointers:** deps: T-38 · design: <path> · code: <path>   ← only real ones, whole line optional
+**Pointers:** deps: T-38 · design: <path> · code: <path>
 
 ---
 ```
 
-- **Heading** — `#### ` + the `` `[ID]` `` + a short imperative title. Tags go on
-  their own `**Tags:**` line below, not inline.
-- **Outcome** — the end-state in one sentence, not the motivation.
-- **Acceptance** — 2–5 boxes. Each is something you can tick by observing the
-  result. If you can't check it, it's not acceptance — it's a wish or a step.
-- **`---`** — a thematic break closes each ticket and separates it from the next.
+| Slot | What closes it |
+|---|---|
+| Heading | `#### `, the `` `[ID]` ``, and a short imperative title |
+| Tags | Their own line, below the heading |
+| Outcome | The end-state in one sentence. The motivation stays out |
+| Acceptance | Two to five boxes, each one tickable by observing the result |
+| Pointers | Real references only. The whole line is optional |
+| `---` | A thematic break closes each ticket |
 
-**Blank lines are mandatory** between the heading, each `**Label:**` paragraph,
-and around the `- [ ]` list — CommonMark otherwise glues `**Pointers:**` into the
-acceptance list. Keep the blank line **before** `**Pointers:**` (it closes the
-acceptance list) and blank lines around the trailing `---`.
+Blank lines are mandatory between the heading, each `**Label:**` paragraph, and
+around the `- [ ]` list. CommonMark otherwise glues `**Pointers:**` into the
+acceptance list. Keep the blank line before `**Pointers:**` and around the
+trailing `---`.
 
-## Tags and IDs
+## Tags and ids
 
-Tags are bracketed and live on the ticket's `**Tags:**` line for grep-filtering
-(`grep '\[api\]'`; add `-B2` to pull in the heading). Order:
-**type · phase · area · status**.
+Tags are bracketed and live on the `**Tags:**` line, so `grep '\[api\]'` filters
+the queue; `-B2` pulls in the heading. Order them **type · phase · area ·
+status**.
 
 | Group | Values |
 |---|---|
 | type | `[feat]` `[bug]` `[debt]` `[chore]` |
 | phase | project-specific — the roadmap's phase names |
-| area | project-specific — one per subsystem, added as needed; cross-cutting → several |
+| area | project-specific — one per subsystem, several where the work is cross-cutting |
 | status | `[next]` `[in-progress]` `[blocked]` `[someday]` |
 
-**IDs are stable and never reused.** New items take the next free number with the
-prefix from `.sdd.yml`. To find it, grep the whole file — `grep -o '\[T-[0-9]*\]'
-<tasks> | sort -t- -k2 -n | tail -1` — and take one past the highest. Scanning
-only the TODO section is the way duplicates happen: a higher id usually sits in
-Done, collapsed to one line. A `deps:` reference must survive forever, so never
-renumber.
+Ids are stable and reused never. A new item takes the next free number with the
+prefix from `.sdd.yml`. Grep the whole file to find it —
+`grep -o '\[T-[0-9]*\]' <tasks> | sort -t- -k2 -n | tail -1` — and take one past
+the highest. Scanning the TODO section alone is how duplicates happen: a higher
+id usually sits in Done, collapsed to one line. A `deps:` reference has to
+survive forever, so renumber nothing.
 
 ## Moving to Done
 
-Once the operator has approved integration — the Done move records that
-decision, so it cannot precede it; see the integration rule in the project's
-rules file (`rules:` in `.sdd.yml`) — **collapse the ticket to one line** and swap the status tag
-for a ref tag (`[PR #N]` / `[branch-name]` / `[commit-hash]`). Acceptance is
-dropped — git remembers. Keep type/phase/area tags.
+The Done move records the user's approval to integrate, so it comes after that
+word and never before it. `/sdd:work` carries the rule.
 
-The same commit fills the `PR:` field of any ADR the branch wrote and left as a
-dash. It is the last chance: nothing after it is on the branch.
+Collapse the ticket to one line and swap the status tag for a ref tag —
+`[PR #N]`, `[branch-name]` or `[commit-hash]`. Acceptance is dropped, because git
+remembers. Keep the type, phase and area tags.
 
 ```markdown
 - `[T-40]` `[feat]` `[launch]` `[api]` `[PR #91]` Title — one-sentence result.
 ```
 
-## Leave out — and where it goes instead
+That same commit fills the `PR:` field of any ADR the branch left as a dash. It
+is the last chance: nothing after it lands on the branch.
 
-Each of these is what makes a ticket "watery". Cut it from the ticket:
+## What a ticket leaves out
 
-| Don't put in the ticket | Put it here instead |
+| Out of the ticket | Where it goes |
 |---|---|
-| Why / motivation / rationale | the feature's `design.md` |
-| History ("found during X", "as we discussed") | nowhere — git and the PR carry it |
-| Option comparisons, "go with approach 2" | `design.md`, decided at pickup |
+| Why, motivation, rationale | the feature's `design.md` |
+| History — "found during X", "as we discussed" | git and the pull request carry it |
+| Option comparisons | `design.md`, decided at pickup |
 | Implementation narrative | the plan, at pickup |
 
-## Example: before → after
+## Example
 
-**Watery:**
+Watery:
 
 > …the importer rejects the whole file when one row fails validation, so a
 > 10,000-row upload dies on a typo in row 3. Noticed while debugging a support
@@ -113,31 +108,29 @@ Each of these is what makes a ticket "watery". Cut it from the ticket:
 > partial success is what every comparable tool does. Once it lands we should
 > probably revisit the batch size too, though that is a separate concern…
 
-**Ticket:**
+Ticket:
 
 ```markdown
 #### `[T-39]` Partial success on bulk import
 
 **Tags:** `[feat]` `[import]` `[next]`
 
-**Outcome:** A bulk import applies every valid row and reports the rejected ones, instead of failing the whole file.
+**Outcome:** A bulk import applies every valid row and reports the rejected ones.
 
 **Acceptance:**
 
 - [ ] Valid rows are committed when others fail validation
 - [ ] The response lists each rejected row with its reason
-- [ ] A file where every row fails still returns a non-2xx status
+- [ ] A file where every row fails returns a non-2xx status
 
 **Pointers:** deps: T-38
 
 ---
 ```
 
-## Self-check before saving
+## Before saving
 
-- Could every sentence be ticked or pointed to? If a line only explains *why*,
-  delete it.
-- Is each acceptance box observable (an end-state), not a verb ("investigate",
-  "consider")?
-- New item: did you take the next free number and confirm it's unused?
-- Done: collapsed to one line with a ref tag?
+- Every sentence is tickable or a pointer. A line that only explains why is cut.
+- Every acceptance box is an observable end-state, not a verb like "investigate".
+- A new item carries the next free number, confirmed unused.
+- A Done item is one line with a ref tag.
