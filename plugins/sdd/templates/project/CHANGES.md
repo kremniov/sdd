@@ -107,7 +107,7 @@ ways a green test can be empty, the mechanism by which a forked review inherits
 its author's context, the reason a process finding ranked as a defect inverts a
 report. What stays — stated as a rule, not as an account of the incident that
 produced it — is every clause naming what does *not* satisfy a rule: a commit
-boundary is not a checkpoint, an approved plan and a "go" are not the operator's
+boundary is not a checkpoint, an approved plan and a "go" are not the user's
 approval, the author's conversation is not input, a suite you did not watch
 finish is not evidence. The test for a sentence is whether removing it changes
 what someone may do. It was applied to the whole section, the standing
@@ -155,7 +155,7 @@ carrying a defect's severity and a "not merge-ready" verdict — ranked above th
 bugs found in the same pass. Defects keep the severity scale. A deviation from
 the method — a missing artifact, a tier the reviewer would have judged higher, a
 canon file not updated — is a process finding with no severity level, addressed
-to the operator, and never a merge verdict, on the same ground the integration
+to the user, and never a merge verdict, on the same ground the integration
 rule already stands on: the reviewer does not hold that decision either.
 
 **Merge-ready is a list the agent owes, not one a reader scores.** With the two
@@ -166,19 +166,19 @@ the new rule forbids. The list is now named as what the agent owes before handin
 over. Falling short of it means finishing the work; where that is no longer
 possible — an artifact that would be written after the fact, a tier under
 dispute — the agent reports the gap and hands the branch over regardless, since
-holding it back takes the operator's call away from them.
+holding it back takes the user's call away from them.
 
 ## 0.3.0
 
 ### CLAUDE.section.md
 
-**Integration became the operator's decision, explicitly.** The rule previously
+**Integration became the user's decision, explicitly.** The rule previously
 said "integrating a branch is a decision, not a step" and listed the criteria —
 green, reviewed, docs discipline satisfied — without naming who decides. An
 agent holding all the criteria read that as a procedure to execute, and merged.
 The guidance now has to say: the agent's authority ends at a merge-ready branch,
 which it reports together with the review's findings; `git merge`, `gh pr merge`
-and a push to the integration branch wait for the operator's word on that
+and a push to the integration branch wait for the user's word on that
 specific branch, given after the review results exist. Approving a plan and
 saying "go" at the start of execution are named as *not* carrying that
 authority, because both come before the review.
@@ -189,7 +189,7 @@ never one of the authorized steps. Without the bound, an authorized last step
 that closes the ticket carries the merge along with it.
 
 **The Done commit records a decision instead of anticipating one.** It is still
-the last commit on the branch; what changed is that it comes after the operator
+the last commit on the branch; what changed is that it comes after the user
 approves, not after the review.
 
 **Independence is now a property of the reviewer's input.** "A fresh session on
@@ -198,6 +198,6 @@ forked review continues the author's context outright, and even a subagent that
 starts clean reads a prompt the author framed. The requirement is that the
 reviewer's input is the committed artifacts and nothing else — no prompt,
 briefing or summary from the session that wrote the code, whose conversation is
-not input — and that the operator starts that session. An author-side review is
+not input — and that the user starts that session. An author-side review is
 still worth running before handing the branch over; it does not replace this
 one.

@@ -17,7 +17,7 @@ Neither is a criticism of the discipline itself; see Prior art below for what
 this is built on. It is an argument that the discipline needs a dial.
 
 This one starts from that premise. The design cycle is expensive and
-worth it exactly when the task is genuinely ambiguous; the operator's attention
+worth it exactly when the task is genuinely ambiguous; the user's attention
 is the scarce resource; and the rules that actually earn their place are few
 enough to state without a catalogue of ways to disobey them.
 
@@ -155,7 +155,7 @@ anti-rationalization — tables of excuses, red-flag blocks, gates that fire on
 every project regardless of size. Running it on a real codebase, we measured the
 cost: three small tickets, each done twice — once with the full cycle, once
 without — in separate worktrees and separate sessions. The full cycle took 18
-round-trips of the operator's attention against 3, and about 1000 lines of
+round-trips of the user's attention against 3, and about 1000 lines of
 process artifact per ticket, with no difference in the result that would repay
 it. A blind reviewer comparing the diffs still preferred the planned arm every
 time, for a different reason each time.

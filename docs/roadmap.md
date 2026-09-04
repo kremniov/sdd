@@ -8,7 +8,7 @@ Direction for this plugin. Sequence, not dates. Not a task list — that is
 ## Phase 1 — Portable  *(current)*
 
 **Objective:** the method installs into a repository that has never seen it, and
-the operator can run a tier-2 feature end to end without reading this repo.
+the user can run a tier-2 feature end to end without reading this repo.
 
 - The plugin installs and its skills resolve their own bundled files
 - Adoption reads an existing docs layout instead of imposing one

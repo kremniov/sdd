@@ -54,6 +54,15 @@ PY
 echo "skill references"
 python3 scripts/check_skill_refs.py || fail=1
 
+echo "vocabulary"
+targets=(plugins README.md CLAUDE.md docs/architecture docs/roadmap.md docs/tasks.md)
+if grep -rniE '\boperators?\b' --include='*.md' "${targets[@]}" >/dev/null 2>&1; then
+  grep -rniE '\boperators?\b' --include='*.md' "${targets[@]}" | sed 's/^/  /'
+  note FAIL "the party directing the work is the user (ADR 0016)"
+else
+  note OK "no 'operator' outside the decision records and the frozen designs"
+fi
+
 echo "bundled paths"
 python3 - <<'PY' || fail=1
 import re, os, glob, sys
