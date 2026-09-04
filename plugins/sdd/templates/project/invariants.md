@@ -1,33 +1,33 @@
-<!-- sdd:scaffold v0.2.0 -->
+<!-- sdd:scaffold v1.0.0 -->
 # Architectural invariants
 
-Canonical list. These rules apply to all work, every feature. Any change that
-violates one is an architectural regression and requires an explicit, documented
-invariant change — open an ADR under `{{adr}}`.
+The canonical list. These rules govern all work in this repository. A change that
+violates one is an architectural regression and needs a documented invariant
+change — an ADR under `{{adr}}`.
 
-This is the single source of truth for the invariants. The rules file and feature
-designs **link here**; they do not restate them.
+This file is the single source of truth. The rules file and the feature designs
+link here; each rule is stated once.
 
 <!--
-Populate and extend this list with `/sdd:canon` — it establishes the
-list from the codebase, adds a line when a merging branch earns one, and audits
-the list against code that has drifted.
+`/sdd:canon` maintains this list. It establishes the list from the codebase, adds
+a line when a merging branch earns one, and audits the list against code that has
+drifted.
 
-An invariant is a rule the code obeys today and that a reviewer would push back
-on breaking — not an aspiration. Each entry carries three parts:
+An invariant is a rule the code obeys today and that a reviewer pushes back on
+breaking. Each entry carries three parts:
 
     N. **Short name.** What must hold, phrased so a reviewer can decide whether
        a diff violates it.
        *Detect:* a command, a grep, or the question a reviewer asks.
        *On violation:* reject, or open an ADR to move the rule.
 
-The detection note belongs on the rule, never in a summary at the foot of the
-file — a footer drifts the first time a checker grows, and nothing catches it.
-A rule whose *Detect* is only a question is a convention; say so rather than
-implying a rigour that is absent.
+The detection note lives on the rule. In a footer it drifts the first time a
+checker grows, and the drift is silent. A rule whose *Detect* is a question is a
+convention; say so, so the entry claims the rigour it has.
 
-Numbers are stable: other documents cite them. Append, never renumber. A retired
-rule keeps its number, struck through, naming the ADR that retired it.
+Numbers are stable, because other documents cite them. Append them; renumber
+none. A retired rule keeps its number, struck through, naming the ADR that
+retired it.
 -->
 <!-- /sdd:scaffold -->
 
@@ -37,8 +37,8 @@ rule keeps its number, struck through, naming the ADR that retired it.
 
 ## Per-layer responsibilities
 
-Where the codebase has layers, state what each owns and what it must not do —
-the "must not" column is what makes the table usable in review.
+Where the codebase has layers, state what each one owns and what it must keep
+out. The "must NOT" column is what makes the table usable in review.
 
 | Layer | Location | Owns | Must NOT |
 |---|---|---|---|

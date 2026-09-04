@@ -1,12 +1,15 @@
-<!-- sdd:scaffold v0.2.0 -->
+<!-- sdd:scaffold v1.0.0 -->
 # Roadmap
 
-Strategic and long-lived. Phases and objectives — **not** a task list (that is
-`{{tasks}}`). Sequence, not dates. Updated rarely, when direction shifts.
+Strategic and long-lived. Phases and objectives, in sequence. Dates and tasks
+stay out; the queue is `{{tasks}}`. Updated rarely, when the direction shifts.
 
 A roadmap item is an objective with a gate: what becomes possible when the phase
-closes, and how you know it closed. Items become tickets in the queue when they
-are picked up; the roadmap itself does not track their status.
+closes, and how anyone knows it closed. An item becomes a ticket in the queue at
+pickup, and the roadmap leaves its status to the queue.
+
+The design of a feature reads this file: it carries the product logic that a
+ticket's acceptance criteria only check.
 <!-- /sdd:scaffold -->
 
 ---
@@ -15,7 +18,7 @@ are picked up; the roadmap itself does not track their status.
 
 **Objective:** one sentence — what is true when this phase is done.
 
-- <a capability, not a task>
+- <a capability, rather than a task>
 - <another>
 
 ## Phase 2 — <name>

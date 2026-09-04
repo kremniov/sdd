@@ -21,6 +21,36 @@ same commit — the gate fails otherwise.
 
 ## 1.0.0
 
+### lessons.md
+
+**New file.** The canon gains a third file beside `invariants.md` and
+`layout.md`. It carries what the work taught and a rule would have missed: a
+runtime constraint of the stack, the real shape a dependency returns, a command
+that behaves unlike its documentation. One dated line each, written on the branch
+that learned it. It is the one canon file that carries dates. A project that
+already keeps such notes points this file at them instead.
+
+### invariants.md
+
+**The guidance says the same rules in a plainer register.** Nothing about the
+entry format, the stability of numbers or the detection note changed. A project
+that reworded this header keeps its wording.
+
+### roadmap.md
+
+**The roadmap is named as an input to a design.** It carries the product logic
+that a ticket's acceptance criteria only check, so the design of a feature reads
+it alongside the ticket and the canon. A project whose roadmap header says this
+already needs no edit.
+
+### docs-README.md
+
+**The guide points at `/sdd:work` for the tier table**, which left the project's
+rules file at v1.0.0. It gains a row for the working-notes directory that
+`.sdd.yml` now records as `notes:`, and the start-of-work reading order gains
+`lessons.md`. A project that keeps its own reading order adds the lessons file
+to it.
+
 ### CLAUDE.section.md
 
 **The section keeps only the rules that hold with no skill loaded, and the rest
