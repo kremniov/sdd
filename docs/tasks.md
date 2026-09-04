@@ -4,6 +4,38 @@ The "what do I pull next" queue. Format: `/sdd:tasks`.
 
 ## TODO
 
+#### `[T-13]` Decide whether adoption offers an output style
+
+**Tags:** `[feat]` `[next]`
+
+**Outcome:** The claim that Claude Code ships a built-in `Concise` style and reads `outputStyle` from project settings is verified, and `/sdd:setup` either offers it or the idea is closed.
+
+**Context:** Left out of the v1.0.0 rewrite as unverified. Two secondary sources claim it; neither was checked against the product.
+
+**Acceptance:**
+
+- [ ] The behaviour is confirmed or refuted against the product, and the evidence is written down
+- [ ] If it exists, adoption offers the setting and says what it costs
+- [ ] If it does not, this ticket closes with the finding recorded
+
+---
+
+#### `[T-14]` An eval corpus for the register
+
+**Tags:** `[chore]` `[someday]`
+
+**Outcome:** A change to shipped text can be judged by what it does to an agent, not only by what `check_register.py` measures.
+
+**Context:** Invariant 12 measures length, depth and negation density. None of the three says whether a rewrite made a rule easier to follow, and the five field behaviours the v1.0.0 rewrite answered were found by reading pull requests one at a time.
+
+**Acceptance:**
+
+- [ ] A set of tasks that exercise the gates, the blockers and the handing-over rule
+- [ ] Each one records what an agent did, so two versions of a rule can be compared
+- [ ] The corpus lives where a change to the plugin can run against it
+
+---
+
 #### `[T-5]` Per-package adoption in a monorepo
 
 **Tags:** `[feat]` `[someday]`
