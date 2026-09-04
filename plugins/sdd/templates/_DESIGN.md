@@ -3,48 +3,61 @@
 **Ticket:** <ID> · **Plan:** [plan.md](plan.md)
 
 <!--
-Tier 2 only (see the tier table in the project's rules file). Saved as <features>/<name>/design.md,
-where <features> is the path in .sdd.yml.
+Tier 2 only. Saved as <features>/<name>/design.md, where <features> is the path
+in .sdd.yml.
 
-Budget ~1300 words. Past 2000 you are probably writing the plan, not the design.
+Budgets: 1300 words, hard stop 2000. Twelve headings. One sentence of rationale
+per decision.
 
-Drop a section that is empty; do not rename one. Keep the headers below verbatim
-so the corpus stays greppable.
+Keep the headers below verbatim, so the corpus stays greppable. Drop a section
+that has no content; rename none.
 
-Not in a design: restating the architecture canon (link it), pseudocode of the
-implementation, or a rejected approach written out at more than one line.
+Out of a design: the architecture canon, which gets a link; pseudocode of the
+implementation; and a rejected approach written past one line.
 -->
 
 ## Problem
 
-What breaks or is missing now. Observable, not aspirational.
+What breaks or is missing now. Observable, not aspirational. Closes at three to
+six sentences, or at a table of the observed behaviours and their causes.
 
 ## Goal / Non-goals
 
-What this change makes true, and the adjacent things it explicitly does not do.
+What this change makes true, and the adjacent things it leaves alone. Closes at
+two lists of three to six lines.
 
 ## Decisions
 
-The locked choices, one line each with the rejected alternative and why. This is
-the section future-you comes back for.
+One line per locked choice: the choice, the alternative it beat, and the cost
+that decided it. Closes at five to twelve lines. Mark a decision `→ ADR` where it
+outlives the feature; the merging pull request writes the record.
 
-Mark a decision `→ ADR` when it outlives the feature — an invariant moves, a
-non-obvious trade-off is taken, or the resulting shape will invite someone to
-"fix" it back. Marked lines get promoted to the ADR directory in the merging PR;
-this file is frozen after merge and cannot carry them.
+Watery:
+
+> We looked at several ways of handling partial failures and, after some
+> discussion of what comparable tools do and what users would expect, decided
+> that per-row outcomes are probably the better fit here, although fail-fast with
+> a clearer message also has something going for it and may be worth revisiting.
+
+Tight:
+
+> Per-row outcomes, over fail-fast with a better message: a 10,000-row upload has
+> to survive one bad row.
 
 ## Architecture
 
-Seams touched, new packages, data model and flow when there is one.
+The seams touched, the packages added, the data model, and the flow through it.
+Closes at one numbered path end to end, plus a line per seam.
 
 ## Invariants & docs
 
-Which invariants this touches, and which architecture docs update in the same PR.
+The invariants this work touches, and the canon documents that update in the same
+pull request. Closes at one line each.
 
 ## Error handling
 
-Failure modes and what happens on each.
+Each failure mode and what happens on it. Closes at a two-column table.
 
 ## Testing
 
-What proves it works, and at which level.
+What proves it works, and at which level. Closes at one line per level.
