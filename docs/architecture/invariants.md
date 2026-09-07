@@ -112,8 +112,11 @@ here**; they do not restate them.
     *On violation:* reject — and if the name changed, add it to the retired map
     so the next occurrence is caught rather than read.
 
-12. **Shipped text is measured, not judged.** Every file the plugin ships obeys
-    a length, a heading depth and a negation density (ADR 0021). Density counts
+12. **Shipped text is measured, not judged.** The register is ASD-STE100,
+    simplified technical English: one fact or one rule per sentence, active
+    voice, present tense. Every file the plugin ships obeys a length, a heading
+    depth and a negation density (ADR 0021), and the three numbers detect drift
+    from that register. Density counts
     *not / never / no / only / without / rather than* per 100 words of prose: at
     most 2.5 for any shipped file, and 2.0 for the always-loaded rules section.
     A `SKILL.md` holds at most 1200 words, the rules section 400, and no heading

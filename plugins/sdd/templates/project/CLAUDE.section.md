@@ -24,6 +24,13 @@ Where something fails or was skipped, say so and show the output.
 Run the test and watch it fail, for the reason you intend, before you write the
 code that makes it pass.
 
+### Writing
+
+Documents and code comments use ASD-STE100, simplified technical English: one
+fact or one rule per sentence, active voice, present tense. A sentence carrying
+two rules splits into two. State the rule; leave the argument for it to the
+decision record.
+
 ### Comments
 
 A comment carries the constraint that gives the code its current shape. Say what

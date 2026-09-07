@@ -156,8 +156,10 @@ some skill, verifies this repo's own `CLAUDE.md` still matches the scaffold it
 ships, and matches skills and templates against stack vocabulary that would
 break portability.
 
-It also measures the register of every shipped file: at most 2.5 negations per
-100 words, 1200 words for a `SKILL.md`, 400 for the rules section, and no
+It also measures the register of every shipped file. The register is ASD-STE100,
+simplified technical English: one fact or one rule per sentence, active voice,
+present tense. The budgets that detect drift from it are at most 2.5 negations
+per 100 words, 1200 words for a `SKILL.md`, 400 for the rules section, and no
 heading past H3. The corpus this replaced measured 4.0.
 
 ## Prior art

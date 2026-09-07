@@ -57,11 +57,12 @@ to it.
 move to `/sdd:work`.** What stays is five things: the user integrates the branch
 and the agent stops at the pull request; evidence is shown and named before any
 completion claim; a test is watched failing before the code that passes it; the
-comments rules; and a line telling the agent to invoke the skill. What leaves is
+writing register; the comments rules; and a line telling the agent to invoke the
+skill. What leaves is
 the tier table, the paths table, the artifact locations, the plan rules, the two
 review scales, and the invariant, decision-record and docs triggers — all of it
 now in `/sdd:work`, which is invoked when a task starts. A project that reworded
-these rules keeps its own wording for the five that stay and deletes the rest,
+these rules keeps its own wording for the six that stay and deletes the rest,
 leaving a pointer to the skill.
 
 **The fence is named `sdd:rules`.** The old `sdd:method-section` marker names a
@@ -69,10 +70,13 @@ region that no longer describes what the plugin ships, so `/sdd:setup` offers to
 retire it and writes the new fence only once that is settled. A project that
 declines keeps the v0.x rules, and no second method section is ever written.
 
-**Two rules are new.** The handing-over rule now names the pull request: the
+**Three rules are new.** The handing-over rule now names the pull request: the
 branch is pushed and the pull request opened before the agent stops, so the user
-has something to review. And the sizing call is surfaced at every tier, so a
-task with nothing left to decide still gets the user's word before the code.
+has something to review. The sizing call is surfaced at every tier, so a task
+with nothing left to decide still gets the user's word before the code. And the
+register of every document the session writes is named: ASD-STE100, simplified
+technical English, one fact or one rule per sentence. A project that already
+states a house style for its documents keeps it.
 
 ## 0.5.1
 

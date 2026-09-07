@@ -23,6 +23,11 @@ method produces, so the register copies itself into the artifacts.
 
 ## Decision
 
+The target register is ASD-STE100, simplified technical English: one fact or one
+rule per sentence, active voice, present tense. It is what a rewrite aims at, and
+the numbers below are how drift from it is caught. The rules section names the
+register, so an agent writing any document in an adopting project has the model.
+
 `scripts/check_register.py` measures every shipped file and `./scripts/check.sh`
 fails on a breach.
 
