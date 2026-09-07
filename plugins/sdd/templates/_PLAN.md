@@ -50,9 +50,9 @@ Tight:
 
 > **Goal:** a failing row leaves the other rows imported.
 > **Constraints:** invariant 4; the per-row outcome decision in design.md.
-> **Touches:** `importer/rows.go` — `Import(rows) ([]Outcome, error)`.
-> **DoD:** `go test ./importer -run TestPartialFailure` passes; the whole suite
-> is green.
+> **Touches:** the importer's row loop — `import(rows)` returns one outcome per
+> row.
+> **DoD:** the partial-failure test passes; the `verify:` command is green.
 
 ## Verification
 

@@ -67,7 +67,8 @@ each candidate against all four:
   value.
 - Breaking it is a bug rather than a surprise.
 - It stands on its own, and follows from no rule already listed.
-- The language, the framework or a linter leaves it unenforced.
+- The language or the framework leaves it unenforced. A rule that a project's
+  own checker enforces stays eligible: that checker is its *Detect* line.
 
 A candidate that fails one of the four is dropped here, before anyone reads it.
 

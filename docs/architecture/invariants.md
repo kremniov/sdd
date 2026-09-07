@@ -56,7 +56,9 @@ here**; they do not restate them.
    example that is not generic is a bug.
    *Detect:* `./scripts/check.sh` matches skills and templates against a list
    of ecosystem terms spanning many stacks — a list tuned to one project would
-   itself describe that project. A domain term it does not name needs a reader.
+   itself describe that project. It also matches two shapes that name a stack
+   without spelling it: a source file extension, and a build tool invoked as a
+   command. A domain term it does not name needs a reader.
    *On violation:* reject, and add the term if the list should have had it.
 6. **The canon is observed, never invented.** `/sdd:canon` writes only rules
    the code actually holds, and writes nothing when there are none (ADR 0003). A
