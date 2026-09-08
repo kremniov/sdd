@@ -1,137 +1,133 @@
 ---
 name: work
-description: Use at the start of any development task — a ticket, a bug report, a chore, a rewrite — to size it, run its gates, and take it to a pull request. Carries the gate table, the tier table, the closed list of blockers, the review rules and the handing-over rules. Invoke it before the first edit.
+description: Run an implementation task from research and approval through committed steps and a pull request. Also resume approved work or integrate a reviewed PR on explicit permission.
 ---
 
-# Working a task
+# Work
 
-This skill runs a task from pickup to a pull request. Invoke it first. The other
-skills write the artifacts it calls for.
+## Inputs and route
 
-Paths come from `.sdd.yml`: `tasks:`, `roadmap:`, `canon:`, `features:`, `adr:`,
-`notes:`, `verify:`, `ticket:`. One `key: value` per line; everything from the
-first `#` is a comment; values are used verbatim. If the file is absent, say so
-and stop — the project has not adopted this method (`/sdd:setup`). If a key this
-skill needs is absent or empty, name the key and ask.
+Read the request and `.sdd.yml`. Use its `tasks`, `roadmap`, `canon`, `features`,
+`adr`, `notes`, `verify` and `ticket` values when needed. Parse one key and value
+per line at the first colon; strip comments from the first `#`. If configuration
+is absent, offer `/sdd:setup`. Ask for a required missing value before dependent
+work. A direct request can replace a ticket.
 
-## Gates
+Select the requested result before starting an implementation workflow:
 
-A gate is a point where the user reads, decides and approves. Pass a gate on the
-user's word, never on your own.
+| Request | Action |
+|---|---|
+| Implement a change | Follow the stages below |
+| Diagnose a bug | Use `/sdd:debug`, then approve the proposed change |
+| Review or audit | Report findings; fixes require a separate instruction |
+| Maintain the queue | Use `/sdd:tasks`; leave implementation unstarted |
+| Adopt or update the method | Use `/sdd:setup` |
+| Explain or investigate | Return evidence and open questions |
+| Resume or merge | Read Status or Integration below |
 
-| Gate | What the user approves | What you do next |
+For changes, use a working branch. Use a worktree when isolation is needed or
+requested. Preserve existing user changes.
+
+## Research and approval
+
+Read the request, relevant product requirements, roadmap, canon, decisions and
+code. Read history when it helps explain a constraint. Resolve available facts
+before asking. When acceptance conflicts with requirements or architecture,
+show the disagreement and recommend a resolution. Code shows current behavior;
+a document can also state an obligation that broken code fails to meet.
+
+Group related material questions in rounds. Recommend a choice and state the
+relevant costs of real alternatives. Record dated decisions in
+`<notes>/<task>-decisions.md`. Reopen agreed choices on new evidence.
+
+| Tier | Decision scope | Approval before implementation |
 |---|---|---|
-| G1 | The tier, and the decisions of the brainstorm | Write the design, state the design paragraph, or start the code |
-| G2 | The design | Commit the design, write the plan |
-| G3 | The plan | Commit the plan, run every step in order |
-| G4 | The pull request | The user merges |
+| 0 | No material decision remains | G1: exact change, scope, assumptions and verification |
+| 1 | One material decision | G1 and G2 together: recommended solution, scope, assumptions and verification |
+| 2 | A new boundary, invariant change or related decisions | G1 decisions, G2 design, G3 plan |
 
-## Sizing
+Name the decision that justifies the tier; file count does not set it. Wait for
+approval of the concrete proposal, including at tier 0. A currently unused port
+can belong to a stopped service; state what the check establishes when proposing
+its replacement. The request alone does not approve values you selected.
 
-| Tier | Scope | Gates | Artifacts |
-|---|---|---|---|
-| 0 | Nothing left to decide | G1, G4 | none |
-| 1 | One decision to settle | G1, G2, G4 | a design paragraph in the conversation |
-| 2 | A new seam, an invariant that moves, or several decisions that must agree together | G1, G2, G3, G4 | a design and a plan under `features:` |
+Tier 1 needs one combined approval. Tier 2 runs `/sdd:design` after G1 and
+`/sdd:plan` after G2. Approval persists within its scope across commits and
+context compaction. G3 authorizes every planned step through a reviewable PR.
 
-The tier follows the decisions, not the diff. One call threaded through six
-layers is one decision that touches many packages. A file count is not a signal.
-Whoever claims the higher tier names the seam or the decision that was missed.
+## Execute
 
-Say the tier and wait for the user's word. This is G1, and it runs at every tier.
+For each step: implement, verify, commit, continue. A step can contain several
+commits. Commit all changes from a completed step before starting the next.
+Independent review is not a prerequisite for intermediate commits. Use English
+Conventional Commits with a subject naming the change and a body stating its reason.
 
-## Phases
+For behavior checked by a test, observe its intended failure before the fix.
+For other changes, use a structural check, build, worked example or manual check.
+Run relevant checks and required `verify` checks before committing. Read their
+completed output. Repeat checks after relevant changes or for unresolved concerns.
+Report commands, outcomes and omissions; limit claims to the evidence obtained.
 
-### Brainstorm
+Update affected subsystem documents in the same PR (`/sdd:subsystem`). Check
+invariants, detectors and exceptions with `/sdd:canon`. No invariant change is
+normal. Write durable decisions in `adr` using
+`${CLAUDE_PLUGIN_ROOT}/templates/_ADR.md`: invariant changes, significant trade-offs
+or choices whose reasons will be hard to recover. Update design and remaining
+plan after agreed changes; routine corrections need no ADR.
 
-Read four things first: the ticket in the queue, the roadmap, the canon, and the
-decision records that govern the seam. Read the recent commits in the modules
-involved. Arrive at the first question knowing what the repository does today.
+## Stop conditions
 
-The ticket's acceptance criteria are a check, not a specification. The product
-logic is in the roadmap and the architectural logic is in the canon. Where they
-and the acceptance criteria disagree, name the disagreement and ask.
+Pause dependent work and ask when:
 
-Collect the open questions. Group them. Ask them in rounds, and one round is one
-message. After each round, write the decisions to
-`<notes>/<feature>-decisions.md`, one line each with its date. That directory is
-outside git. Stop when no open question is left. This is G1.
+- different readings materially change the requested work;
+- new evidence changes an agreed contract, decision or scope;
+- an external party must decide or agree;
+- a necessary action exceeds the permission given;
+- necessary access or information is missing;
+- a planned point of human participation is reached.
 
-### Design and plan
+State evidence, effect and a recommended next action. Continue independent,
+authorized work while awaiting the answer. Choose names, file placement, test
+structure and formatting within agreed constraints. A commit boundary requires
+no approval. Progress reports do not ask permission to continue.
 
-Tier 2 runs `/sdd:design`, then `/sdd:plan`. Tier 1 states a design
-paragraph in the conversation. Tier 0 writes neither.
+## Handover and review
 
-### Execution
+Complete code and documents, run final checks and review the branch yourself.
+Verify and commit corrections. Confirm that the checked state matches the
+committed state. Push, open the PR, report the result and stop before integration.
+Describe the problem, resulting behavior, verification and limitations in the PR.
 
-Take the steps in order and finish one before the next.
+Independent review is required at every tier, including documents. The user
+starts it; its depth follows risk and the change. Inputs are the review request,
+committed artifacts, diff and primary requirements. Exclude author-session
+reasoning as the basis for conclusions. Author-side checks do not replace it.
 
-Run the test and watch it fail, for the reason you intend, before you write the
-code that makes it pass.
+Report behavioral defects with severity and concrete evidence. Report process
+deviations separately, without defect severity or an integration verdict: name
+what is missing and which check lacks a basis. Apply requested fixes on the same
+branch and verify them. Return material decision changes to the user.
 
-Run `verify:` before each commit and read its output. One step is one commit:
-Conventional Commits, English, an imperative subject, and a body that says why.
+## Integration
 
-An approved plan authorizes every step in it, up to a merge-ready branch. A
-commit boundary is a commit boundary and nothing else. Stop at a blocker, or at
-a step whose heading carries `[gate]`.
+G4 is the user's explicit permission to integrate the specific PR, after review.
+On permission such as "merge this PR":
 
-`/sdd:debug` applies to any bug, at every tier.
+1. Close its ticket through `/sdd:tasks`, if one exists. Fill missing ADR PR
+   references in the same final branch commit.
+2. Run required checks and push that commit.
+3. Merge subject to the project's required checks and report the actual result.
 
-### Handing over
-
-Do these six in order before the branch leaves your hands:
-
-1. Run `verify:` and read the output.
-2. Ask the four canon questions against the finished diff (`/sdd:canon`).
-3. Write an ADR for each decision marked `→ ADR`, from
-   `${CLAUDE_PLUGIN_ROOT}/templates/_ADR.md` into `adr:`.
-4. Update the canon document for each seam the branch changed
-   (`/sdd:subsystem`). A changed seam that no document covers earns a new one.
-5. Review the branch yourself against the committed artifacts.
-6. Push the branch, open the pull request, and stop.
-
-Then report the state of the branch and the findings of your own review.
-
-The user runs the independent review against the pull request and merges.
-`git merge`, `gh pr merge` and a push to the integration branch belong to the
-user, at every tier and on every branch. An approved plan is a different thing
-from an approved merge.
-
-Move the ticket to Done once the user approves the merge (`/sdd:tasks`). That
-commit is the last one on the branch, and it fills any ADR `PR:` field still
-holding a dash.
-
-## Blockers
-
-Stop and ask when one of these is true:
-
-1. Two readings of the request lead to materially different work.
-2. The code or a dependency contradicts the design.
-3. The change needs a contract that a party outside this repository must agree.
-4. A step touches a system in a way that is irreversible.
-5. A credential or an access right is missing.
-
-Carry on through: naming, file layout, test structure, library choice inside the
-agreed stack, formatting, and the end of a commit.
-
-## Review
-
-A merge candidate gets an independent review at every tier.
-
-Independent is a property of the reviewer's input: the committed artifacts, the
-branch diff, the design and the canon. A briefing, prompt or summary from the
-session that wrote the code disqualifies the review, and a review started from
-that session is that session's self-check.
-
-A review reports on two scales. A defect — wrong now, or wrong under an input the
-code will see — carries a severity, and the highest severity is the headline. A
-deviation from this method carries none. Name what is missing and what it would
-have caught, address it to the user, and leave the call there.
+Do not ask again for method permission to run the merge command. Implementation
+approval is not merge permission. A failed merge remains a reported blocker;
+the Done entry on the working branch records approval, not a completed merge.
 
 ## Status
 
-Keep one record in memory for this branch: the ticket, the tier, the branch
-name, the gate that is passed, the current step, and the last decision with its
-date. Update it at each gate and at each step. After a context compaction, read
-it and invoke this skill again.
+Keep `<notes>/<task>-status.md` outside Git. Record branch, task, tier, approved
+decisions, passed gates, current step, check results and open questions. Link
+the decision log and artifacts. Update after approvals and completed steps.
+
+After a break or handoff, read status and current-stage instructions, check Git
+state, and continue unfinished work. Reconcile conflicting evidence before
+repeating a finished step. Store status rather than copies of method rules.
