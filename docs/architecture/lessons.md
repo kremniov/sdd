@@ -1,18 +1,10 @@
-<!-- sdd:scaffold v1.0.0 -->
+<!-- sdd:scaffold v1.1.0 -->
 # Lessons
 
-What the work taught and a rule would have missed: a runtime constraint of the
-stack, the real shape a dependency returns, a command that behaves unlike its
-documentation.
-
-One line each, newest first, with its date and the ADR where there is one. Add a
-line on the branch that learned it (`/sdd:canon`).
-
-This is the one canon file that carries dates. `invariants.md` and `layout.md`
-state what is true now.
-
-A lesson that hardens into a rule earns an invariant, and its line then names
-that number.
+Record verified observations useful in later project work. Each entry includes
+a date, the observation and an evidence or ADR reference where available.
+Add newest entries first. Use `/sdd:canon` when an observation becomes a candidate
+rule; link the invariant if it is accepted. Omit general advice and duplicate rules.
 <!-- /sdd:scaffold -->
 
 - **2026-09-04** — `check_scaffold.py` rejects a fence stamped ahead of
