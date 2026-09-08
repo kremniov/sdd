@@ -1,0 +1,10 @@
+{
+  "fixture": "verify-frequency",
+  "skills": [
+    "work"
+  ],
+  "resident": true,
+  "prompt": "Execute the approved design and plan in docs/features/docs/. The complete implementation scope and G3 plan are approved. There is no ticket. Use the repository checks and report evidence.",
+  "expectations": "tests/scenarios/verification-frequency.md",
+  "limitations": "Initial plan only; no follow-up change or skill discovery."
+}

@@ -1,0 +1,19 @@
+{
+  "branch": "feature/docs",
+  "provenance": "Recovered first commit ca48bc7ade14c20a5ab631626bf5395047ec2a4c; corrected literal backslash-n escapes to match the approved newline content.",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        ".gitignore": "docs/notes/\nverify-runs.jsonl\n",
+        ".sdd.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: python3 verify.py\nticket: T\nrules: CLAUDE.md\n",
+        "docs/architecture/invariants.md": "# Invariants\nNo new or changed invariants for these independent document additions.\n",
+        "docs/features/docs/design.md": "# Approved design\nAdd alpha.md containing alpha, beta.md containing beta, gamma.md containing gamma, each with one newline. No other content changes.\n",
+        "docs/features/docs/plan.md": "# Approved plan (G3)\nStep 1: add alpha.md and beta.md, in separate commits. Check each file by reading its exact text; check both before completing the step.\nStep 2: add gamma.md, check its exact text and commit.\nAfter all documents, run configured verify. No canon changes or ADRs are needed.\n",
+        "docs/roadmap.md": "# Roadmap\nThree small documents for a workflow fixture.\n",
+        "verify.py": "from pathlib import Path\nimport json\nfiles=sorted(p for name in ['alpha','beta','gamma'] if (p:=Path(name+'.md')).exists())\nwith Path('verify-runs.jsonl').open('a') as f:f.write(json.dumps([p.name for p in files])+'\\n')\nfor p in files:assert p.read_text()==p.stem+'\\n',p\nprint('All existing fixture documents have expected content:', ', '.join(p.name for p in files))\n"
+      },
+      "executable": []
+    }
+  ]
+}

@@ -29,3 +29,6 @@ For commit scenarios, inspect tool-event order as well as Git history: separate
 commits made after all edits do not prove step-by-step execution. Verify status
 files after completed steps. Response-only probes cannot establish file changes,
 commits or actual merge behavior; label their conclusions accordingly.
+
+Reusable starting repositories and the local CLI runner are in
+[`tests/behavior/`](../behavior/README.md). Preparation alone is not an agent run.

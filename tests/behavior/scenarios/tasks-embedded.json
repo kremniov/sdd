@@ -1,0 +1,11 @@
+{
+  "fixture": "tasks-embedded",
+  "skills": [
+    "work",
+    "tasks"
+  ],
+  "resident": true,
+  "prompt": "Use /sdd:tasks to add the already approved T-1 ticket: title Add export; type feat, status next; Outcome: Users can export records. Acceptance: The export contains all selected records. This exact edit and verification by reading the queue and running true are approved. This queue edit is part of the current approved implementation step on feature/current. A separate documentation change in that step is still assigned to another contributor; complete only your queue operation and report its state.",
+  "expectations": "tests/scenarios/standalone-branch-handover.md",
+  "limitations": "Explicit instruction injection; does not test skill discovery. No remote or hosted PR operations."
+}

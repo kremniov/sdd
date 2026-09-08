@@ -175,3 +175,37 @@ deduplication. Existing lesson entries and migration history were preserved.
 No Claude Code sessions or behavioral evaluations were run for this batch, as
 requested. The previously recorded evidence limits remain; behavioral testing
 is deferred until after these text corrections.
+
+## Reusable behavioral inputs (2026-09-08)
+
+Added `tests/behavior/`: 16 baseline fixtures, ten scenario records (nine
+executable and one blocked), and a preparation/explicit-execution runner. Nine
+baselines came from first Git commits; seven were reconstructed from historical
+harness inputs because their repositories had no commits. Historical adoption
+walkthrough fixtures remain preparation-only. Criteria stay in `tests/scenarios/`.
+
+Each preparation creates an independent temporary repository and preserves its
+inputs and candidate plugin snapshot under ignored `docs/stuff/eval-runs/`.
+Execution requires an explicit flag and local Claude subscription authentication.
+The runner supplies instructions explicitly and supports one prompt; it does not
+close discovery, continuation or actual merge coverage gaps.
+
+Offline checks: four new unit tests passed (all baseline trees, isolation,
+ordered history/file modes, scenario references, and verifier positive/negative
+content). A CLI preparation of port-files succeeded without starting Claude.
+`SDD_BASE=cb12b7f ./scripts/check.sh` passed, including 14 unit tests.
+No model sessions were run. The execution and timeout paths have not been
+validated with a live Claude process.
+
+The verification-frequency input now uses real newlines instead of literal
+backslash-n escapes. The ticket-status baseline is preserved but its scenario
+is blocked pending concrete preparation/export inputs. These fixture repairs
+are not evidence of a change in agent behavior.
+
+A cheap background agent checked the runner as an author-side check. Its
+preflight evidence finding was corrected: inputs and commands are saved before
+authentication, and preflight stderr is retained without storing the auth profile.
+This check does not replace independent method review.
+A local CLI stub then simulated an authentication failure; inputs, commands,
+preflight stderr and the final repository archive were all retained. The stub
+did not invoke Claude Code or a model.

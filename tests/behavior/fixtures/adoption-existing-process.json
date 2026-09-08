@@ -1,0 +1,13 @@
+{
+  "branch": "master",
+  "provenance": "Reconstructed input from original harness; repository has no baseline commit.",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        "CLAUDE.md": "# Project rules\n\nUse the existing delivery process.\nProject constraint: reserve port 8000 for offline tests.\n"
+      },
+      "executable": []
+    }
+  ]
+}

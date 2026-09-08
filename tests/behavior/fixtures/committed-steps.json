@@ -1,0 +1,18 @@
+{
+  "branch": "master",
+  "provenance": "Recovered first commit a7d45bf8a3822a7b2b9a77b3e71efb7d1da0d6c0",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        ".gitignore": "docs/notes/\n",
+        ".sdd.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: true\nticket: T\nrules: CLAUDE.md\n",
+        "docs/architecture/invariants.md": "# Invariants\nNo invariant changes are required for these independent text fixtures.\n",
+        "docs/features/sample/design.md": "# Agreed design\nCreate alpha.txt with alpha, beta.txt with beta and gamma.txt with gamma, each on its own line.\n",
+        "docs/features/sample/plan.md": "# Approved plan\n\n## Step 1\nCreate alpha.txt containing alpha. Check with Read and true. Commit before step 2.\n\n## Step 2\nCreate beta.txt containing beta. Check with Read and true. Commit before step 3.\n\n## Step 3\nCreate gamma.txt containing gamma. Check with Read and true. Commit, then report.\n",
+        "docs/roadmap.md": "# Roadmap\nExercise a sequence of verified document changes.\n"
+      },
+      "executable": []
+    }
+  ]
+}

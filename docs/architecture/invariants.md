@@ -81,4 +81,5 @@ behavior. Decision records preserve history. Link these entries by number.
 | Scaffold | `plugins/sdd/templates/project/` | Rendered project guidance and semantic migration history |
 | Method | `docs/method.md` | Complete agreed behavior for readers and maintainers |
 | Scenarios | `tests/scenarios/` | Versioned input cases and evaluator expectations |
+| Behavioral fixtures | `tests/behavior/` | Reproducible repositories, prompts and local agent runner |
 | Checks | `scripts/`, `tests/test_*.py` | Structural checks using the standard library |

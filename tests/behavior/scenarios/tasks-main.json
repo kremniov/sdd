@@ -1,0 +1,11 @@
+{
+  "fixture": "tasks-main",
+  "skills": [
+    "work",
+    "tasks"
+  ],
+  "resident": true,
+  "prompt": "Use /sdd:tasks to add the already approved T-1 ticket: title Add export; type feat, status next; Outcome: Users can export records. Acceptance: The export contains all selected records. Pointers and Context omitted. This exact queue edit and verification by reading the queue and running true are approved. Complete the queue operation.",
+  "expectations": "tests/scenarios/standalone-branch-handover.md",
+  "limitations": "Explicit instruction injection; does not test skill discovery. No remote or hosted PR operations."
+}
