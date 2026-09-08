@@ -1,139 +1,95 @@
 ---
 name: setup
-description: Use to install this spec-driven method into a repository — survey the existing docs layout, write .sdd.yml, create the missing scaffold, and put the resident rules into CLAUDE.md or AGENTS.md. Run once per project, and safe to re-run.
+description: Adopt or update SDD by mapping project paths, proposing exact scaffold changes and preserving existing project instructions.
 ---
 
-# Setting up
+# Setup
 
-Install the method into this repository. Adoption is additive: overwrite no file
-you did not write, and reformat none that already exists. Report anything you
-would have changed, and let the user decide.
+## Survey
 
-## 1. Survey what is here
+Read the request, root rules files, docs layout, verification configuration,
+ticket conventions and any existing `.sdd.yml`. Record actual paths before
+asking. Inspect existing content and managed markers before writing files.
 
-Do this before asking anything, and record the actual paths.
+Prefer existing project locations. Show the complete proposed config and the
+concrete file changes together for approval. Present process conflicts before
+replacing instructions. Approval of paths alone is not approval to replace a
+process. Apply an already approved proposal without asking again.
 
-- `CLAUDE.md` or `AGENTS.md` at the root, and whether it already describes a
-  development process.
-- A docs directory, and anything inside it resembling architecture notes, a
-  decision log, a task list, a roadmap, or per-feature specs.
-- The verification command. Read `Makefile`, `package.json` scripts, `justfile`,
-  `Taskfile.yml`, the CI workflows. What does this project run to know it is
-  green?
-- The ticket-id convention already in use. Grep issues, branch names and commit
-  messages for a prefix such as `T-`, `ABC-` or `#`.
-- Whether the repository has a git history worth reading. A fresh `git init` and
-  a five-year-old codebase need different treatment in step 5.
+## Configuration
 
-## 2. Confirm the map
+Use one unquoted `key: value` per line. The first colon separates the key; the
+first `#` starts a comment. Values cannot contain `#` and quotes are not removed.
+Directory values end in `/`. `ticket` is the prefix alone, without a trailing
+hyphen. `verify` is a command that exits non-zero when a required check fails.
 
-Print the proposed `.sdd.yml` as an ordinary message first — the whole file,
-every line, with your inference for each key and a marker on what you could not
-find. Then ask whether it is right, once, about the whole file.
-
-The user has to be able to read the file at the moment they approve it. Put the
-rendered YAML inside the question itself, in the option preview.
-
-Prefer what exists over the default. A project with `documentation/adr/` keeps
-that path.
+Example locations, replaced with the project's own:
 
 ```yaml
-# .sdd.yml — where this project keeps the artifacts the method uses.
-canon:    docs/architecture/
-tasks:    docs/tasks.md
-roadmap:  docs/roadmap.md
+canon: docs/architecture/
+tasks: docs/tasks.md
+roadmap: docs/roadmap.md
 features: docs/features/
-adr:      docs/adr/
-notes:    docs/notes/
-verify:   make lint && make test
-ticket:   T
-rules:    CLAUDE.md
+adr: docs/adr/
+notes: docs/notes/
+verify: make lint && make test
+ticket: T
+rules: CLAUDE.md
 ```
 
-| Key | Rule |
+Explain inferred values and ask for required unknowns. Show the notes storage
+policy and proposed ignore entry. Notes must stay outside Git; do not create a
+tracked placeholder there. If the selected directory already contains tracked
+files, propose a separate untracked location rather than untracking user files.
+
+After approval, write `.sdd.yml`. For an existing config, show the exact diff
+before applying it. Keep unrelated keys and project content.
+
+## Scaffold
+
+Read `${CLAUDE_PLUGIN_ROOT}/templates/project/`. Create files only where absent.
+Substitute config values for placeholders and retain the template's markers and
+version. Do not copy `CHANGES.md` into the project.
+
+| Destination | Source |
 |---|---|
-| `canon`, `features`, `adr`, `notes` | End in `/`. The scaffold concatenates them with a filename, so `docs/architecture` renders as `docs/architectureinvariants.md` into the project's own rules file, silently. Add the slash yourself and say that you did |
-| `tasks`, `roadmap` | File paths |
-| `verify` | A shell command that exits non-zero on failure. A `:` inside it is fine; only the first one separates key from value |
-| `ticket` | The id prefix alone — `T`, never `T-` |
-| any | No `#`. Everything from the first one is a comment, and quoting rescues nothing: the readers are deliberately simple. A project that numbers tickets `#41` uses a letter prefix here |
+| `canon` + `invariants.md` | `invariants.md` |
+| `canon` + `lessons.md` | `lessons.md` |
+| `tasks` | `tasks.md` |
+| `roadmap` | `roadmap.md` |
+| Parent of `canon`, if not the repository root and no README exists | `docs-README.md` |
+| `features`, `adr` | Create missing directories; use a tracked placeholder if needed |
+| `notes` | Create the ignored directory with the approved ignore rule |
 
-`notes` holds working notes that stay out of git: the decisions log a brainstorm
-writes, and prompts. Propose the matching `.gitignore` line, show it, and write
-it on a yes.
+For existing managed files, read
+`${CLAUDE_PLUGIN_ROOT}/skills/setup/reference.md` and follow its version procedure.
+Preserve everything outside the managed region. Ask about unknown or ambiguous
+boundaries before editing that file.
 
-## 3. Write the config
+## Resident rules
 
-Write `.sdd.yml` at the repository root. Where one exists, show the diff you
-propose and change nothing without a yes.
+Read `${CLAUDE_PLUGIN_ROOT}/templates/project/CLAUDE.section.md` and render it
+using the config. The destination is `rules`.
 
-## 4. Create what is missing
-
-For each path in the config, create it from
-`${CLAUDE_PLUGIN_ROOT}/templates/project/` **where nothing is there**.
-
-| Config key | Scaffold source | Notes |
-|---|---|---|
-| `canon` + `invariants.md` | `invariants.md` | Header only. `/sdd:canon` writes the body |
-| `canon` + `lessons.md` | `lessons.md` | Header only |
-| `tasks` | `tasks.md` | |
-| `roadmap` | `roadmap.md` | |
-| `features`, `adr`, `notes` | — | Create the empty directory with a `.gitkeep`, because git drops an empty one |
-| docs guide | `docs-README.md` | Goes in the parent directory of `canon`. Two refusals, both absolute: never the repository root, and never where a README exists. Where the parent of `canon` is the root, skip the file and say so |
-
-Substitute every `{{key}}` with the value from `.sdd.yml`, and leave no
-placeholder in a written file. Keep the marker lines exactly as the template
-carries them, version included. They are what a later run compares against, and a
-file written without them can never be updated.
-
-**Where the file is already there**, compare the version stamps and carry the
-described changes. `${CLAUDE_PLUGIN_ROOT}/skills/setup/reference.md` holds that
-procedure and every branch of it.
-
-## 5. Put the rules in the rules file
-
-The target is the file recorded as `rules:` in `.sdd.yml`. Read
-`${CLAUDE_PLUGIN_ROOT}/templates/project/CLAUDE.section.md`, substitute the
-placeholders, and keep the `<!-- sdd:rules vN.N.N -->` markers.
-
-These rules hold in a session where nobody invoked a skill, which is why they are
-resident. The rest of the method is in `/sdd:work`.
-
-| What you find | What you do |
+| Existing state | Action |
 |---|---|
-| An `sdd:rules` fence | A previous run wrote it. Compare stamps and carry the described changes — `reference.md` |
-| An `sdd:method-section` fence | The v0.x rules. Retire them — `reference.md` |
-| No such file | Create it with this section, under a one-line title naming the project |
-| The file exists with no process section | Append the section at the end. Touch nothing above it |
-| The file exists and describes a process | Write the rendered section to `<file>.sdd-section` beside it, show the specific conflicts, and let the user decide. Two visible process files beat one silently merged |
+| No rules file | Create a project title and the approved section |
+| File without a process or managed section | Append the approved section; preserve existing content |
+| Managed section | Follow the version procedure in `reference.md` |
+| Old `sdd:method-section` | Follow the retirement procedure in `reference.md` |
+| Different existing process | Show conflicts and write the proposal to `<rules>.sdd-section` if approved; let the user choose integration |
 
-Leaving the section out is a legitimate first choice, and often the right one:
-the config and the scaffold alone let someone try the skills against their
-existing process. Say what it costs. The rules that keep integration with the
-user, that put evidence before a completion claim, and that make a test fail
-first are in force only while they are in context. Until the section lands, what
-is installed is the artifacts.
+Check malformed or duplicate markers before selecting a row. Keep one active
+method section. A user can adopt config and scaffold while leaving resident
+rules pending. Report that limited state and the unresolved process choice.
 
-## 6. Report
+## Verify and report
 
-State plainly:
+Check rendered paths, unresolved placeholders, marker pairs, version stamps and
+ignored notes. Compare changes with the approved proposal and confirm existing
+project content is preserved. Report created, changed, skipped, declined and
+pending items. Re-running should leave satisfied entries alone.
 
-- what was created, by path;
-- what was left alone because it existed;
-- what the scaffold changed since this project adopted, by version: which
-  described changes were carried, which were declined and get offered again,
-  which the project's own wording already satisfied, and which files have no
-  fence. Nothing to carry is worth one line;
-- anything you could not infer and guessed at;
-- whether the rules section landed, and if it did not, that the method is not in
-  force and what remains to be decided;
-- what a previous method left behind that nothing references, by path;
-- the next step. An empty `invariants.md` means `/sdd:canon` to establish one. A
-  populated one means `/sdd:canon` in audit mode.
-
-## Re-running
-
-Safe. A second run re-surveys, reports what is now present, and creates only what
-is still missing. It rewrites no file it finds, including one an earlier run of
-itself wrote. The one thing it changes inside an existing file is a described
-change, carried inside a fence, on a yes.
+For an empty invariant list, offer `/sdd:canon` to establish it. For an existing
+list, offer its audit mode. Identify obsolete references and propose corrections;
+an unreferenced file remains the user's file.

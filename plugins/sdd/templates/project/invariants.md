@@ -1,45 +1,20 @@
-<!-- sdd:scaffold v1.0.0 -->
+<!-- sdd:scaffold v1.1.0 -->
 # Architectural invariants
 
-The canonical list. These rules govern all work in this repository. A change that
-violates one is an architectural regression and needs a documented invariant
-change — an ADR under `{{adr}}`.
+Use `/sdd:canon` to establish, amend or audit this list. Record current rules
+supported by evidence and accepted obligations. Each rule states its scope,
+detector and response to a violation. Label manual detection as manual.
 
-This file is the single source of truth. The rules file and the feature designs
-link here; each rule is stated once.
+Preserve numbers. Append new entries. Keep retired numbers, struck through and
+linked to their ADR under `{{adr}}`. Agree changes and retirement with the user.
+A code violation does not by itself authorize changing the rule.
 
-<!--
-`/sdd:canon` maintains this list. It establishes the list from the codebase, adds
-a line when a merging branch earns one, and audits the list against code that has
-drifted.
+Entry format:
 
-An invariant is a rule the code obeys today and that a reviewer pushes back on
-breaking. Each entry carries three parts:
+    N. **Name.** Rule and scope.
+       *Detect:* command or explicitly manual review question.
+       *On violation:* reject, or agree a rule change and record its ADR.
 
-    N. **Short name.** What must hold, phrased so a reviewer can decide whether
-       a diff violates it.
-       *Detect:* a command, a grep, or the question a reviewer asks.
-       *On violation:* reject, or open an ADR to move the rule.
-
-The detection note lives on the rule. In a footer it drifts the first time a
-checker grows, and the drift is silent. A rule whose *Detect* is a question is a
-convention; say so, so the entry claims the rigour it has.
-
-Numbers are stable, because other documents cite them. Append them; renumber
-none. A retired rule keeps its number, struck through, naming the ADR that
-retired it.
--->
+Link rules from other documents rather than restating them. Keep proposals
+outside the current list until confirmed. An empty list is a valid initial state.
 <!-- /sdd:scaffold -->
-
-1. **<Name>.** <What must hold.>
-   *Detect:* <command, grep, or review question>
-   *On violation:* <reject | ADR to move the rule>
-
-## Per-layer responsibilities
-
-Where the codebase has layers, state what each one owns and what it must keep
-out. The "must NOT" column is what makes the table usable in review.
-
-| Layer | Location | Owns | Must NOT |
-|---|---|---|---|
-| | | | |

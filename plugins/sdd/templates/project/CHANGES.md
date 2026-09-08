@@ -19,6 +19,50 @@ A version whose release changed no scaffold file gets no section. A file whose
 region changes gets its stamp moved to that version and an entry here, in the
 same commit — the gate fails otherwise.
 
+## 1.1.0
+
+### CLAUDE.section.md
+
+Route implementation, resume and integration to work; route specialized requests
+to their skill. Replace the user-only merge execution wording with explicit
+permission followed by agent execution. Keep implementation approval separate
+from integration approval. Use evidence scoped to completed checks. Replace
+mandatory test-first for every edit with the work skill's behavior-specific
+verification rule. Use direct writing and useful comments without rhetorical
+explanations. Preserve project-specific requirements.
+
+### tasks.md
+
+Use the queue skill for context, IDs and status. Done records explicit
+integration permission in the final branch commit and reaches the main branch
+with the work. Existing tickets and completed entries remain unchanged.
+
+### roadmap.md
+
+Keep objectives and ordering in the roadmap and actionable status in the queue.
+Link detailed product constraints that a phase summary cannot supply. Preserve
+the project's objectives and references.
+
+### invariants.md
+
+Require evidence and accepted obligations, concrete detection and explicit manual
+detector labels. A violation does not authorize retirement. Keep stable numbers,
+agreed changes and ADR references. Remove speculative starter entries while
+preserving the project's actual rules and responsibility tables.
+
+### lessons.md
+
+Record verified observations with dates and evidence where available. Avoid
+copying general advice or existing rules; link an invariant when a lesson becomes
+one. Preserve existing project observations.
+
+### docs-README.md
+
+Describe current canon, historical designs and plans, and ignored working status.
+Read requirements alongside the request; use code to investigate discrepancies.
+Route process selection through work and permit direct requests without tickets.
+Keep existing project paths and relevant document categories.
+
 ## 1.0.0
 
 ### lessons.md

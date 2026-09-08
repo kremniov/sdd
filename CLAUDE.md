@@ -1,52 +1,36 @@
 # SDD plugin
 
-This repository ships the method it uses. Changes here are dogfooded before they
-are published.
+This repository uses the method it ships.
 
-<!-- sdd:rules v1.0.0 -->
+<!-- sdd:rules v1.1.0 -->
 ## Development method
 
-This project runs spec-driven development. `/sdd:work` carries the method: the
-gates, the tier table, the blockers, the review and the handing-over rules.
-Invoke it when a task starts. The paths every skill reads are in `.sdd.yml`.
+Use `/sdd:work` for implementation, resuming work and authorized integration.
+Use the skill that matches a specialized request: `/sdd:design`, `/sdd:plan`,
+`/sdd:debug`, `/sdd:tasks`, `/sdd:canon`, `/sdd:subsystem` or `/sdd:setup`.
+A review or explanation does not authorize changes. Project paths and the
+verification command are in `.sdd.yml`.
 
-The rules below hold in every session, whether a skill is loaded or not.
+### Integration
 
-### Handing over
-
-The user integrates the branch. Bring the branch to merge-ready, push it, open
-the pull request, and stop. `git merge`, `gh pr merge` and a push to the
-integration branch are the user's decision, on every branch and at every tier.
+The user decides integration. Prepare and push the verified branch, open its
+PR and stop. After the user's explicit permission to merge that PR, follow
+`/sdd:work` Integration and execute the merge. Approval of implementation is
+not permission to merge or push to the integration branch.
 
 ### Evidence
 
-Run `./scripts/check.sh`, read its output, and then say that a thing is done, fixed or
-passing. Name what you ran. A suite you did not watch finish is not evidence.
-Where something fails or was skipped, say so and show the output.
-
-### Tests
-
-Run the test and watch it fail, for the reason you intend, before you write the
-code that makes it pass.
+Run the relevant checks and required `./scripts/check.sh` checks. Read completed output
+before claiming success. Name commands, outcomes and skipped checks. Limit
+claims to the behavior actually verified.
 
 ### Writing
 
-Documents and code comments use ASD-STE100, simplified technical English: one
-fact or one rule per sentence, active voice, present tense. A sentence carrying
-two rules splits into two. State the rule; leave the argument for it to the
-decision record.
+Use ASD-STE100 as a readability reference: direct sentences, consistent terms
+and an explicit actor. Keep conditions and prohibitions precise. Include a
+reason when needed to choose the correct action; keep other decision history
+in ADRs. Remove rhetoric and repeated instructions.
 
-### Comments
-
-A comment carries the constraint that gives the code its current shape. Say what
-the code cannot: a comment that restates the signature or the identifier is
-deletion-safe. Keep history out — "used to", "instead of", "we removed X" belong
-to the commit, the pull request and the decision record. The default for any
-edit, a review fix included, is no new comment. Test before saving: cover the
-comment and reread the code. Delete it if a competent reader reads on.
-
-### Skills
-
-Invoke `/sdd:work` when a task starts. Invoke another skill when the task is
-plainly the one it covers.
+Code comments explain constraints left unclear by the implementation. Remove
+comments that restate code. Record change history in commits and ADRs.
 <!-- /sdd:rules -->

@@ -1,56 +1,50 @@
-# Carrying a scaffold change
+# Update managed guidance
 
-Each scaffold file is two things: guidance this plugin wrote, and a body the
-project wrote — its queue, its phases, its rules. The plugin's half is fenced,
-and the opening marker carries the version whose guidance is inside.
+Read this for existing scaffold files or a legacy rules section. Templates mark
+the plugin-owned guidance; project content outside those markers is preserved.
+Use `sdd:rules` for the current rules section and `sdd:scaffold` for other files.
 
-## Compare the stamps, never the text
+## Versions and boundaries
 
-Read the version on the project's opener and the version on the template's.
+Check marker count, order and version syntax before editing a file. Report
+missing ends, duplicate pairs, reversed markers and invalid versions with a file
+and location. Ask the user to resolve the boundary; leave that file unchanged.
+A rules file with both current and legacy sections also requires resolution.
 
-| Stamps | What you do |
+| State | Action |
 |---|---|
-| Equal | The region is current, whatever its wording. Say nothing about that file. A project that rewrote the guidance in its own terms, with its own ticket ids and cross-references, is current |
-| The project is behind | Read `${CLAUDE_PLUGIN_ROOT}/templates/project/CHANGES.md`. Take the entries for that file above the project's version and up to the template's — the project already holds what its own stamp names. Put each entry to the user on its own, in its own terms. On a yes, edit their region to carry what the entry describes, keeping their wording, their ids and their references. An entry their text already states is satisfied: say so and move on. Then set the stamp to the highest version whose entries were all carried or already true |
-| The project is ahead | An older plugin is installed over a newer adoption. Report it and leave the file alone |
-| No version on the fence | The project adopted while the markers were bare. The lower bound is `v0.2.0`, the version that introduced them. That is a fact, so proceed from it |
-| No fence at all | The project adopted before the markers existed. Show the region you would fence and ask once. Place the markers on a yes, stamped `v0.2.0`. Today's version would declare the file up to date and silence every change since. Derive the boundary by asking: matching text against the template fails on a hand-edited header, which is where a wrong guess costs most |
-| Malformed | Opened and not closed, closed before opened, more than one pair, or a version that is not `N.N.N`. Report the file and the line, and change nothing. A broken marker in someone's `tasks.md` puts their queue at risk |
+| Project and template stamps match | Leave the region unchanged |
+| Project stamp is older | Apply described changes below |
+| Project stamp is newer | Report the older installed plugin and leave the file unchanged |
+| A valid old fence has no stamp | Use the documented baseline `v0.2.0` |
+| No fence | Show the proposed boundary and ask; add markers on approval at `v0.2.0`, then assess updates |
+| Unknown version history | Report the missing migration basis and ask before editing |
 
-Keep the region exactly where it is. What a re-run offers is a described change,
-applied to the text that is there. The full text of the current template answers
-a question nobody asked.
+Read `${CLAUDE_PLUGIN_ROOT}/templates/project/CHANGES.md` for entries after the
+project's stamp and through the template's stamp. For each entry, show the exact
+proposed semantic edit in the project's wording. Preserve project-specific
+rules, IDs and links. Apply it after approval. An entry already satisfied by the
+project text needs no edit. A declined entry remains unapplied.
 
-Stopping at the last complete version keeps the re-offer to what was actually
-refused. Leaving the stamp at the bottom would re-offer accepted entries too, and
-they would then be filtered by an agent's judgement about what the text already
-says rather than by a recorded fact.
+Advance the stamp to the highest contiguous version whose entries for that file
+are all applied or already satisfied. If nothing is satisfied past the current
+stamp, leave it. On re-run, re-offer declined changes; recognize already applied
+entries by their meaning when a later accepted edit could not advance the stamp.
+Do not replace the region with the current template to implement an update.
 
-## Retiring the v0.x rules section
+## Retire the legacy rules section
 
-A project adopted before v1.0.0 carries an `<!-- sdd:method-section -->` fence.
-That region holds the whole method: the tier table, the artifact locations, the
-plan rules, the review scales, and the invariant, decision-record and docs
-triggers. Version 1.0.0 keeps five rules resident and moves the rest into
-`/sdd:work`, so the region is replaced rather than updated.
+For a valid `sdd:method-section` region:
 
-This is the one deletion adoption makes, and it is bounded:
+1. Show the complete old region and complete proposed `sdd:rules` replacement.
+   Carry project-specific constraints and references into the proposal.
+2. Explain that execution rules are now in `/sdd:work` and identify actual
+   conflicts between the old rules and the installed skills.
+3. Ask for the replacement once. On approval, replace only that region and
+   retain project additions. On decline, preserve the old region and its stamp;
+   leave the new fence unwritten.
+4. Report whether the replacement applied. A declined migration leaves old
+   resident rules with newer skills; report that conflict and re-offer later.
 
-1. Show the whole region, in full, before touching it.
-2. Say what replaces it: the rendered `sdd:rules` section, plus `/sdd:work` for
-   everything else.
-3. Ask once.
-4. On a yes, replace that region and nothing else. A rules file that describes a
-   method also carries things that are not the method — this project's own
-   conventions, its paths, a rule it earned once and wrote down. Carry those
-   across into the new region and say which lines you kept.
-5. On anything else, leave the region alone and leave the `sdd:rules` fence unwritten.
-   Report that the project runs the v0.x rules while the installed skills expect
-   the v1 frame, and offer the question again on the next run.
-
-Two method sections in one file are never written.
-
-A replaced method leaves references behind. Its skill paths and command names are
-cited from the project's own docs, and those citations now dangle. Find them,
-propose each fix, and show the user the list. The files stay where they are:
-unreferenced is a different thing from unwanted.
+Do not create a second active method section. Propose fixes for obsolete links
+separately. Existing project files are not deleted as part of reference cleanup.

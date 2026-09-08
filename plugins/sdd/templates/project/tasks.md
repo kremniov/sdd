@@ -1,24 +1,11 @@
-<!-- sdd:scaffold v0.2.0 -->
+<!-- sdd:scaffold v1.1.0 -->
 # Tasks
 
-The "what do I pull next" queue. Format: `/sdd:tasks`.
+Use `/sdd:tasks` for stable IDs, necessary context, acceptance and status.
+Close a ticket after explicit integration permission, in the final branch
+commit. Its Done entry reaches the main branch with the change.
 <!-- /sdd:scaffold -->
 
 ## TODO
 
-#### `[{{ticket}}-1]` <Short imperative title>
-
-**Tags:** `[feat]` `[next]`
-
-**Outcome:** One sentence — what becomes true when this is done.
-
-**Acceptance:**
-
-- [ ] A checkable criterion (an observable end-state, not a step)
-- [ ] …2–5 total
-
----
-
 ## Done
-
-<!-- Collapsed to one line each, newest first. -->
