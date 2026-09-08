@@ -14,15 +14,20 @@ Read the request and `.sdd.yml` values `tasks` and `ticket`. Split each line at
 the first colon and remove comments from the first `#`. If configuration is
 absent, offer `/sdd:setup`. Ask for required missing values.
 
-Read the whole queue before choosing an ID. Use one above its highest allocated
-ID, including completed entries. Never reuse or renumber IDs. Preserve valid
-dependency references. A request to file a task does not authorize implementation.
+Read the whole queue, including completed entries, before choosing an ID. Follow
+project ID conventions; for a new queue, use the configured prefix and increasing
+numbers. Never reuse or renumber IDs. Preserve valid dependency references. A request to file a task does not authorize implementation.
 Use `/sdd:work` for approval of proposed edits and for integration timing.
 
 ## Write a ticket
 
-Use this shape with the configured prefix. Keep blank lines between fields and
-around lists. Omit Context or Pointers when they add nothing needed for pickup.
+Preserve an existing queue's fields, structure, labels and ID conventions,
+including completed entries. Map method states to project statuses. If required
+content or a state has no unambiguous representation, propose a concrete addition
+and agree it before changing the format.
+
+For a new queue, use the following shape and tag conventions. Keep blank lines
+between fields and around lists. Omit Context or Pointers when unnecessary.
 
 ```markdown
 #### `[T-40]` Add a recovery export
@@ -49,11 +54,12 @@ when omitting it would change the task. Link primary requirements, dependencies
 and existing code. There is no minimum criterion count. Leave execution steps
 for a plan and unsettled implementation choices for discussion at pickup.
 
-Order tags by type, phase, area and status. Use `[feat]`, `[bug]`, `[debt]` or
+For a new queue, order tags by type, phase, area and status. Use `[feat]`, `[bug]`, `[debt]` or
 `[chore]` for type; use project phase and area names. Status is `[next]`,
 `[in-progress]`, `[blocked]` or `[someday]`.
 
-Set `[in-progress]` when execution starts or resumes. Use `[blocked]` when an
+Use the project status equivalent to `[in-progress]` when execution starts or
+resumes, and to `[blocked]` when an
 obstacle prevents continuing the task and no independent authorized work remains.
 A blocked part alone does not block the whole ticket. Keep details in working
 notes; those notes do not replace the queue status. Leave Done to integration.
@@ -62,9 +68,10 @@ Update an existing ticket; these transitions do not require creating one.
 ## Close a ticket
 
 Close after explicit permission to integrate its branch, before merge, as part
-of `/sdd:work` Integration. Collapse the entry to one line in Done, newest first.
-Keep ID, type, phase, area, result and a change reference. Drop acceptance and
-replace the status tag with the reference.
+of `/sdd:work` Integration. Preserve the project's completed-entry format,
+retaining the ID, result and a change reference. For a queue using this skill's
+format, collapse the entry to one line in Done, newest first. Keep type, phase
+and area; drop acceptance and replace the status tag with the reference.
 
 ```markdown
 - `[T-40]` `[feat]` `[PR #91]` Add a recovery export — produces a consistent snapshot.

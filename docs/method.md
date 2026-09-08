@@ -255,6 +255,11 @@ requirements, dependencies and code. Ticket creation need not settle the
 implementation. Criteria scale with the outcome; execution order belongs in a
 plan when one is required.
 
+Preserve an existing queue's fields, structure, labels, ID conventions and
+completed-entry format. Map method states to project statuses. If required
+content or a state cannot be expressed unambiguously, propose a concrete addition
+and agree it before changing the format. Use the skill's format for a new queue.
+
 Check the whole queue, including completed entries, before allocating an ID.
 Never reuse IDs. For an existing ticket, set in-progress when execution starts
 or resumes. Set blocked when an obstacle prevents continuing the task and no
