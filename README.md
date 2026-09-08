@@ -72,8 +72,8 @@ without minimum decision or sentence counts.
 
 `./scripts/check.sh` validates the plugin's structure, references, configuration,
 scaffold versions, rendered rules and instruction budgets. Skills are limited
-to 1200 words and resident rules to 400, including examples. Skill and skeleton
-structure stops at H3. Negation frequency is advisory. Counts do not prove
+to 1200 words and resident rules to 400, including examples. Skill, resident and
+skeleton structure stops at H3. Negation frequency is advisory. Counts do not prove
 instruction clarity or agent behavior.
 
 [Behavior scenarios](tests/scenarios/README.md) define inputs and expected actions.

@@ -156,3 +156,22 @@ reviewed textually only. No hosted PR or merge was executed.
 Evidence: ignored docs/stuff/eval-runs/ticket-status/.
 Structural checks (SDD_BASE=d01b507), 10 checker tests, work/tasks validators
 and diff whitespace checks passed. Scenario: ticket-status-transitions.md.
+
+## Review corrections: remaining text edits (2026-09-08)
+
+The user approved eight separate commits: preserve queue conventions; prioritize
+tier 2; define working-note storage and status timing; require approval of changed
+decisions; distinguish invariant wording edits from rule changes; shorten the
+CHANGES introduction; adopt the current lessons introduction; finish editorial
+cleanup. Russian working documents were updated outside Git.
+
+Validation is limited to author-side text review and local structural checks.
+`SDD_BASE=2e59e19 ./scripts/check.sh` passed, including the 10 checker tests.
+All eight skill frontmatter validators and `git diff --check` passed. Work uses
+1199 words against its 1200-word limit. Editorial skill reflow was checked for
+word preservation, apart from the approved breaks clarification and tasks
+deduplication. Existing lesson entries and migration history were preserved.
+
+No Claude Code sessions or behavioral evaluations were run for this batch, as
+requested. The previously recorded evidence limits remain; behavioral testing
+is deferred until after these text corrections.

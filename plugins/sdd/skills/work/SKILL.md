@@ -2,16 +2,15 @@
 name: work
 description: Run an implementation task from research and approval through committed steps and a pull request. Also resume approved work or integrate a reviewed PR on explicit permission.
 ---
-
-# Work
+ # Work
 
 ## Inputs and route
 
-Read the request and `.sdd.yml`. Use its `tasks`, `roadmap`, `canon`, `features`,
-`adr`, `notes`, `verify` and `ticket` values when needed. Parse one key and value
-per line at the first colon; strip comments from the first `#`. If configuration
-is absent, offer `/sdd:setup`. Ask for a required missing value before dependent
-work. A direct request can replace a ticket.
+Read the request and `.sdd.yml`. Use its `tasks`, `roadmap`, `canon`,
+`features`, `adr`, `notes`, `verify` and `ticket` values when needed. Parse one
+key and value per line at the first colon; strip comments from the first `#`. If
+configuration is absent, offer `/sdd:setup`. Ask for a required missing value
+before dependent work. A direct request can replace a ticket.
 
 Select the requested result before starting an implementation workflow:
 
@@ -42,10 +41,11 @@ design does not authorize implementing its subject.
 
 ## Research and approval
 
-Read relevant requirements, roadmap, canon, decisions and code. Read history when it helps explain a constraint. Resolve available facts
-before asking. When acceptance conflicts with requirements or architecture,
-show the disagreement and recommend a resolution. Code shows current behavior;
-a document can also state an obligation that broken code fails to meet.
+Read relevant requirements, roadmap, canon, decisions and code. Read history
+when it helps explain a constraint. Resolve available facts before asking. When
+acceptance conflicts with requirements or architecture, show the disagreement
+and recommend a resolution. Code shows current behavior; a document can also
+state an obligation that broken code fails to meet.
 
 Group related material questions in rounds. Recommend a choice and state the
 relevant costs of real alternatives. Record dated decisions in
@@ -62,9 +62,9 @@ approval of the concrete proposal, including at tier 0. A currently unused port
 can belong to a stopped service; state what the check establishes when proposing
 its replacement. The request alone does not approve values you selected.
 
-Tier 2 runs `/sdd:design` after G1 and
-`/sdd:plan` after G2. Approval persists within its scope across commits and
-context compaction. G3 authorizes every planned step through a reviewable PR.
+Tier 2 runs `/sdd:design` after G1 and `/sdd:plan` after G2. Approval persists
+within its scope across commits, breaks and context compaction. G3 authorizes
+every planned step through a reviewable PR.
 
 ## Execute
 
@@ -76,8 +76,8 @@ continue. Several commits per step are allowed; independent review need not
 precede them. Use English Conventional Commits with a subject naming the change
 and a body stating its reason.
 
-For behavior checked by a test, observe its intended failure before the fix.
-For other changes, use a structural check, build, worked example or manual check.
+For behavior checked by a test, observe its intended failure before the fix. For
+other changes, use a structural check, build, worked example or manual check.
 Check each change before committing and each step's result before finishing it.
 Run `verify` after all code and document changes. Repeat checks after relevant
 changes or unresolved concerns. Read completed output; report commands, outcomes
@@ -86,9 +86,9 @@ and omissions, limiting claims to evidence.
 Update affected subsystem documents in the same PR (`/sdd:subsystem`). Check
 invariants, detectors and exceptions with `/sdd:canon`. No invariant change is
 normal. Write durable decisions in `adr` using
-`${CLAUDE_PLUGIN_ROOT}/templates/_ADR.md`: invariant changes, significant trade-offs
-or choices whose reasons will be hard to recover. Update design and remaining
-plan after agreed changes; routine corrections need no ADR.
+`${CLAUDE_PLUGIN_ROOT}/templates/_ADR.md`: invariant changes, significant
+trade-offs or choices whose reasons will be hard to recover. Update design and
+remaining plan after agreed changes; routine corrections need no ADR.
 
 ## Stop conditions
 
@@ -110,8 +110,9 @@ no approval. Progress reports do not ask permission to continue.
 
 Complete code and documents, run final checks and review the branch yourself.
 Verify and commit corrections. Confirm that the checked state matches the
-committed state. Push, open the PR, report the result and stop before integration.
-Describe the problem, resulting behavior, verification and limitations in the PR.
+committed state. Push, open the PR, report the result and stop before
+integration. Describe the problem, resulting behavior, verification and
+limitations in the PR.
 
 Independent review is required at every tier, including documents. The user
 starts it; its depth follows risk and the change. Inputs are the review request,
@@ -123,10 +124,11 @@ deviations separately, without defect severity or an integration verdict: name
 what is missing and which check lacks a basis.
 
 Verify, commit and push requested fixes on the same branch. Report resolved and
-remaining findings and their verification. The user starts any repeat independent
-review. Without integration permission, stop before merge. Conditional permission
-such as "fix these findings and merge" authorizes Integration below once its
-conditions are met. Return changed decisions or scope to the user.
+remaining findings and their verification. The user starts any repeat
+independent review. Without integration permission, stop before merge.
+Conditional permission such as "fix these findings and merge" authorizes
+Integration below once its conditions are met. Return changed decisions or scope
+to the user.
 
 ## Integration
 
@@ -147,16 +149,15 @@ If merge fails, report the cause and branch state. Permission persists within
 its scope: resolve technical blockers, verify and retry when ready. Missing
 access or changed decisions or scope trigger Stop conditions above. If repairs
 are needed after the final commit, preserve history and append verified repair
-commits. Do not rewrite published history or add an empty final commit solely
-to keep Done last.
+commits. Do not rewrite published history or add an empty final commit solely to
+keep Done last.
 
 ## Status
 
 Create `<notes>/<task>-status.md` at first approval; keep outside Git. Record
-branch, task, tier, approved
-decisions, passed gates, current step, check results and open questions. Link
-decisions and artifacts. Update after approvals, completed steps and before
-handoff; mark unfinished work.
+branch, task, tier, approved decisions, passed gates, current step, check
+results and open questions. Link decisions and artifacts. Update after
+approvals, completed steps and before handoff; mark unfinished work.
 
 After a break or handoff, read status and current-stage instructions, check Git
 state, and continue unfinished work. Reconcile conflicting evidence before

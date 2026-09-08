@@ -2,25 +2,24 @@
 name: debug
 description: Investigate a bug or failed check, test causal hypotheses and verify an approved fix. Stop a series after three failed fixes to discuss the evidence.
 ---
-
-# Debug
+ # Debug
 
 For files intended for Git, follow `/sdd:work` Branch and completion before
 editing and when handing over the result.
 
 ## Scope
 
-Read the request, observed failure, relevant code, checks and recent changes.
-If the request is diagnosis only, return findings without implementing a fix.
-For a requested fix, use `/sdd:work` to approve the concrete change before editing
+Read the request, observed failure, relevant code, checks and recent changes. If
+the request is diagnosis only, return findings without implementing a fix. For a
+requested fix, use `/sdd:work` to approve the concrete change before editing
 project files. Investigation does not require an implementation decision first.
 
 ## Investigate
 
 Reproduce the failure or collect observations that can distinguish its cause.
 Read the full error and trace the incorrect value through relevant boundaries.
-Compare with a working path where one exists. Collect temporary diagnostics in
-a disposable environment; project instrumentation is a proposed change.
+Compare with a working path where one exists. Collect temporary diagnostics in a
+disposable environment; project instrumentation is a proposed change.
 
 State a hypothesis and the evidence for it. Choose the smallest experiment that
 can distinguish it from alternatives. Evaluate the result before the next

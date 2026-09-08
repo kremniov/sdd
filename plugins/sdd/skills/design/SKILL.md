@@ -2,27 +2,28 @@
 name: design
 description: Write a complete tier-2 design from approved discussion decisions and submit it for G2 approval.
 ---
-
-# Design
+ # Design
 
 For files intended for Git, follow `/sdd:work` Branch and completion before
 editing and when handing over the result.
 
 ## Inputs
 
-Use `/sdd:work` for scope, approval and stop conditions. Begin after G1.
-Read `.sdd.yml` for `features`, `notes`, `tasks`, `roadmap`, `canon` and `adr`.
-Split each line at its first colon and remove comments from the first `#`.
-If configuration is absent, offer `/sdd:setup`. Ask for required missing values.
+Use `/sdd:work` for scope, approval and stop conditions. Begin after G1. Read
+`.sdd.yml` for `features`, `notes`, `tasks`, `roadmap`, `canon` and `adr`. Split
+each line at its first colon and remove comments from the first `#`. If
+configuration is absent, offer `/sdd:setup`. Ask for required missing values.
 
 Read the approved `<notes>/<task>-decisions.md`, the request or ticket, relevant
-product requirements, roadmap, canon, ADRs and code. A task without a ticket uses
-the request. If approved decisions are missing from the log, recover them from
-the conversation and record them; ask about decisions that cannot be recovered.
+product requirements, roadmap, canon, ADRs and code. A task without a ticket
+uses the request. If approved decisions are missing from the log, recover them
+from the conversation and record them; ask about decisions that cannot be
+recovered.
 
 Identify disagreements between acceptance, requirements, constraints and code.
 Present new evidence that changes an agreed decision to the user before relying
-on the change. Keep settled choices unless that evidence requires reopening them.
+on the change. Keep settled choices unless that evidence requires reopening
+them.
 
 ## Write and submit
 
@@ -48,6 +49,6 @@ as separate work.
 
 Aim for at most 1300 words, with a 2000-word ceiling and at most 12 headings.
 These are upper bounds, not content targets. State a choice and its decisive
-constraint briefly. Include additional evidence when needed to assess it.
-There is no minimum sentence or decision count. Keep detailed existing contracts
-at their source and link them.
+constraint briefly. Include additional evidence when needed to assess it. There
+is no minimum sentence or decision count. Keep detailed existing contracts at
+their source and link them.

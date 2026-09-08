@@ -2,8 +2,7 @@
 name: setup
 description: Adopt or update SDD by mapping project paths, proposing exact scaffold changes and preserving existing project instructions.
 ---
-
-# Setup
+ # Setup
 
 For files intended for Git, follow `/sdd:work` Branch and completion before
 editing and when handing over the result.
@@ -22,9 +21,10 @@ process. Apply an already approved proposal without asking again.
 ## Configuration
 
 Use one unquoted `key: value` per line. The first colon separates the key; the
-first `#` starts a comment. Values cannot contain `#` and quotes are not removed.
-Directory values end in `/`. `ticket` is the prefix alone, without a trailing
-hyphen. `verify` is a command that exits non-zero when a required check fails.
+first `#` starts a comment. Values cannot contain `#` and quotes are not
+removed. Directory values end in `/`. `ticket` is the prefix alone, without a
+trailing hyphen. `verify` is a command that exits non-zero when a required check
+fails.
 
 Example locations, replaced with the project's own:
 
@@ -65,9 +65,9 @@ version. Do not copy `CHANGES.md` into the project.
 | `notes` | Create the ignored directory with the approved ignore rule |
 
 For existing managed files, read
-`${CLAUDE_PLUGIN_ROOT}/skills/setup/reference.md` and follow its version procedure.
-Preserve everything outside the managed region. Ask about unknown or ambiguous
-boundaries before editing that file.
+`${CLAUDE_PLUGIN_ROOT}/skills/setup/reference.md` and follow its version
+procedure. Preserve everything outside the managed region. Ask about unknown or
+ambiguous boundaries before editing that file.
 
 ## Resident rules
 
@@ -94,5 +94,5 @@ project content is preserved. Report created, changed, skipped, declined and
 pending items. Re-running should leave satisfied entries alone.
 
 For an empty invariant list, offer `/sdd:canon` to establish it. For an existing
-list, offer its audit mode. Identify obsolete references and propose corrections;
-an unreferenced file remains the user's file.
+list, offer its audit mode. Identify obsolete references and propose
+corrections; an unreferenced file remains the user's file.

@@ -291,8 +291,8 @@ and unresolved conflicts. Re-running must not duplicate completed changes.
 ## Resuming work
 
 Create one status file per task at the first approval in the configured notes
-directory. Keep working notes outside Git. Record the
-branch, task, tier, approved decisions, passed gates, current step, check results
+directory. Keep working notes outside Git. Record the branch, task, tier,
+approved decisions, passed gates, current step, check results
 and open questions. Link artifacts and the decision log. Update status after
 approvals, after checking and committing a completed step, and before handoff.
 Record unfinished work within the current step; a commit alone does not mark

@@ -2,8 +2,7 @@
 name: plan
 description: Sequence an approved tier-2 design into verifiable implementation steps and submit the plan for G3 approval.
 ---
-
-# Plan
+ # Plan
 
 For files intended for Git, follow `/sdd:work` Branch and completion before
 editing and when handing over the result.
@@ -12,12 +11,12 @@ editing and when handing over the result.
 
 Begin after G2 with the approved, committed design. `/sdd:work` owns execution,
 stop conditions and integration. Read `features` and `verify` from `.sdd.yml`.
-Split each line at the first colon and remove comments from the first `#`.
-If configuration is absent, offer `/sdd:setup`. Ask for required missing values.
+Split each line at the first colon and remove comments from the first `#`. If
+configuration is absent, offer `/sdd:setup`. Ask for required missing values.
 
-Read the design and `${CLAUDE_PLUGIN_ROOT}/templates/_PLAN.md` in place.
-Return a new material decision to the user and update the design before planning
-its implementation.
+Read the design and `${CLAUDE_PLUGIN_ROOT}/templates/_PLAN.md` in place. Return
+a new material decision to the user and update the design before planning its
+implementation.
 
 ## Write and submit
 
@@ -35,8 +34,8 @@ before the next step; `/sdd:work` enforces that execution sequence.
 
 Ship behavior and its tests in the same step. Link contracts from the design.
 Include enough interface detail to locate the work; leave function bodies out.
-Name likely blockers from `/sdd:work`. Mark a required human action with `[gate]`
-and state what the user must provide. A commit boundary is not a gate.
+Name likely blockers from `/sdd:work`. Mark a required human action with
+`[gate]` and state what the user must provide. A commit boundary is not a gate.
 
 Put branch-wide verification after all code and document changes. Use the
 configured `verify` command and name any additional checks. Identify required

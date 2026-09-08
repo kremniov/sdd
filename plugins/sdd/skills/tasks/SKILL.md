@@ -2,8 +2,7 @@
 name: tasks
 description: Add, clarify or close entries in the project queue, preserving context, stable IDs and the agreed integration status.
 ---
-
-# Tasks
+ # Tasks
 
 For files intended for Git, follow `/sdd:work` Branch and completion before
 editing and when handing over the result.
@@ -15,16 +14,17 @@ the first colon and remove comments from the first `#`. If configuration is
 absent, offer `/sdd:setup`. Ask for required missing values.
 
 Read the whole queue, including completed entries, before choosing an ID. Follow
-project ID conventions; for a new queue, use the configured prefix and increasing
-numbers. Never reuse or renumber IDs. Preserve valid dependency references. A request to file a task does not authorize implementation.
-Use `/sdd:work` for approval of proposed edits and for integration timing.
+project ID conventions; for a new queue, use the configured prefix and
+increasing numbers. Never reuse or renumber IDs. Preserve valid dependency
+references. A request to file a task does not authorize implementation. Use
+`/sdd:work` for approval of proposed edits and for integration timing.
 
 ## Write a ticket
 
 Preserve an existing queue's fields, structure, labels and ID conventions,
 including completed entries. Map method states to project statuses. If required
-content or a state has no unambiguous representation, propose a concrete addition
-and agree it before changing the format.
+content or a state has no unambiguous representation, propose a concrete
+addition and agree it before changing the format.
 
 For a new queue, use the following shape and tag conventions. Keep blank lines
 between fields and around lists. Omit Context or Pointers when unnecessary.
@@ -54,16 +54,16 @@ when omitting it would change the task. Link primary requirements, dependencies
 and existing code. There is no minimum criterion count. Leave execution steps
 for a plan and unsettled implementation choices for discussion at pickup.
 
-For a new queue, order tags by type, phase, area and status. Use `[feat]`, `[bug]`, `[debt]` or
-`[chore]` for type; use project phase and area names. Status is `[next]`,
-`[in-progress]`, `[blocked]` or `[someday]`.
+For a new queue, order tags by type, phase, area and status. Use `[feat]`,
+`[bug]`, `[debt]` or `[chore]` for type; use project phase and area names.
+Status is `[next]`, `[in-progress]`, `[blocked]` or `[someday]`.
 
 Use the project status equivalent to `[in-progress]` when execution starts or
-resumes, and to `[blocked]` when an
-obstacle prevents continuing the task and no independent authorized work remains.
-A blocked part alone does not block the whole ticket. Keep details in working
-notes; those notes do not replace the queue status. Leave Done to integration.
-Update an existing ticket; these transitions do not require creating one.
+resumes, and to `[blocked]` when an obstacle prevents continuing the task and no
+independent authorized work remains. A blocked part alone does not block the
+whole ticket. Keep details in working notes; those notes do not replace the
+queue status. Leave Done to integration. Update an existing ticket; these
+transitions do not require creating one.
 
 ## Close a ticket
 
@@ -81,11 +81,12 @@ Use a PR, branch or commit reference that exists. In the same final branch
 commit, fill missing PR references in its ADRs. Done on the branch records
 integration approval; report actual merge separately. Do not close on plan
 approval or merely because implementation checks passed. Resolve known merge
-blockers before this commit. If merge later fails, follow `/sdd:work` Integration:
-verified repair commits may follow Done; preserve the published history.
+blockers before this commit. If merge later fails, follow `/sdd:work`
+Integration: verified repair commits may follow Done; preserve the published
+history.
 
 ## Check the edit
 
 Check IDs against the full queue, retain necessary context and real references,
-and inspect the rendered Markdown structure. A completed entry must identify
-its result and change. Report what changed without starting the queued work.
+and inspect the rendered Markdown structure. A completed entry must identify its
+result and change. Report what changed.
