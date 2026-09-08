@@ -4,6 +4,12 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.1.4
+
+- Check each committed change and completed step with appropriate checks; run
+  the full required suite after all changes, repeating it when relevant changes
+  or unresolved concerns require it rather than for every intermediate commit.
+
 ## 1.1.3
 
 - Resolve known integration blockers before the final ticket commit. Preserve

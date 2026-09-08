@@ -119,3 +119,21 @@ Done was checked textually only. Evidence: ignored
 `docs/stuff/eval-runs/failed-merge-recovery/`.
 Structural checks (SDD_BASE=b94cc50), 10 checker tests, work/tasks validators and
 diff whitespace checks passed. Scenario: failed-merge-recovery.md.
+
+## Review correction: verification frequency (2026-09-08)
+
+The user approved removing mandatory full verify before each intermediate
+commit. Affected changes and completed steps retain their checks; full verify
+runs after all changes and repeats for relevant changes or unresolved concerns.
+
+Observed in installed subscription Claude Code (Opus medium): an approved
+two-step document plan produced three separate commits, each after content
+inspection. The first step completed before the second began. Full verify ran
+once, after all three files existed, and passed. Tool order, invocation log and
+Git history were inspected. No remote/PR operation was available. A later
+relevant-change case was checked textually only. The evaluated paragraph was
+then shortened without changing conditions to fit the skill budget; final
+wording received semantic review and structural validation.
+Evidence: ignored docs/stuff/eval-runs/verification-frequency/.
+Structural checks (SDD_BASE=143a39c), 10 checker tests, the work validator and
+diff whitespace checks passed. Scenario: verification-frequency.md.

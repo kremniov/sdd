@@ -76,9 +76,10 @@ Conventional Commits with a subject naming the change and a body stating its rea
 
 For behavior checked by a test, observe its intended failure before the fix.
 For other changes, use a structural check, build, worked example or manual check.
-Run relevant checks and required `verify` checks before committing. Read their
-completed output. Repeat checks after relevant changes or for unresolved concerns.
-Report commands, outcomes and omissions; limit claims to the evidence obtained.
+Check each change before committing and each step's result before finishing it.
+Run `verify` after all code and document changes. Repeat checks after relevant
+changes or unresolved concerns. Read completed output; report commands, outcomes
+and omissions, limiting claims to evidence.
 
 Update affected subsystem documents in the same PR (`/sdd:subsystem`). Check
 invariants, detectors and exceptions with `/sdd:canon`. No invariant change is

@@ -176,8 +176,10 @@ After three failed fixes, stop the series and present the attempts, evidence
 and options to the user. Reconsidering the architecture is an option; the count
 does not establish the cause.
 
-Run the checks needed for the change and the project's required checks. Repeat
-a check after a relevant change or while a concern remains unresolved. Report
+Check the affected change before committing and the step's result before
+finishing it. Run the project's required checks after all code and document
+changes. A commit alone does not require the full suite again. Repeat a check
+after a relevant change or while a concern remains unresolved. Report
 commands, results and omissions. A partial check supports a partial claim.
 
 ## Canon, ADRs and lessons
