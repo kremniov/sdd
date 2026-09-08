@@ -57,8 +57,8 @@ context compaction. G3 authorizes every planned step through a reviewable PR.
 
 ## Execute
 
-For each step: implement, verify, commit, continue. A step can contain several
-commits. Commit all changes from a completed step before starting the next.
+For each step: implement, verify, commit, update the Status record below, then
+continue. A step can contain several commits. Commit all changes from a completed step before starting the next.
 Independent review is not a prerequisite for intermediate commits. Use English
 Conventional Commits with a subject naming the change and a body stating its reason.
 
