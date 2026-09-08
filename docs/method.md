@@ -160,9 +160,9 @@ State the evidence, effect and recommended action. Continue independent,
 authorized work while awaiting an answer. Choose naming, file placement, test
 structure and formatting within the agreed constraints yourself.
 
-Update the design and remaining plan after an agreed decision changes. Record a
-durable architectural choice in an ADR. A typo correction or reordering of
-independent steps does not require an ADR.
+After approval of a changed decision, update the design and remaining plan.
+Record a durable architectural choice in an ADR. A typo correction or reordering
+of independent steps does not require an ADR.
 
 ## Verification and diagnosis
 
