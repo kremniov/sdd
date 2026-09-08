@@ -145,7 +145,7 @@ branch after all changes, including documentation.
 ## Execution and stops
 
 Run the approved scope to completion. For each step: implement, verify, commit,
-continue. Progress reports do not request permission to continue.
+update status, continue. Progress reports do not request permission to continue.
 
 Pause dependent work and ask when:
 
@@ -279,7 +279,7 @@ Survey documents, active instructions, ticket conventions and verification.
 Show the path configuration and concrete changes. Preserve the project's
 structure unless the user chooses otherwise. Create missing files and apply
 approved changes. Present process conflicts before replacing instructions.
-Choose the working-notes location and storage policy explicitly.
+Choose the working-notes location explicitly and keep working notes outside Git.
 
 Compare managed-section versions on updates. Carry changes by meaning while
 preserving project additions. Equal versions require no change. Report ambiguous
@@ -289,9 +289,13 @@ and unresolved conflicts. Re-running must not duplicate completed changes.
 
 ## Resuming work
 
-Keep one status file per task in the configured notes directory. Record the
+Create one status file per task at the first approval in the configured notes
+directory. Keep working notes outside Git. Record the
 branch, task, tier, approved decisions, passed gates, current step, check results
-and open questions. Link artifacts and the decision log.
+and open questions. Link artifacts and the decision log. Update status after
+approvals, after checking and committing a completed step, and before handoff.
+Record unfinished work within the current step; a commit alone does not mark
+the step complete.
 
 After a break, read the status and current-stage instructions, check the branch
 state and continue unfinished work. Do not copy method rules into status. Use

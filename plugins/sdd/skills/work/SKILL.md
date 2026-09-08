@@ -42,8 +42,7 @@ design does not authorize implementing its subject.
 
 ## Research and approval
 
-Read the request, relevant product requirements, roadmap, canon, decisions and
-code. Read history when it helps explain a constraint. Resolve available facts
+Read relevant requirements, roadmap, canon, decisions and code. Read history when it helps explain a constraint. Resolve available facts
 before asking. When acceptance conflicts with requirements or architecture,
 show the disagreement and recommend a resolution. Code shows current behavior;
 a document can also state an obligation that broken code fails to meet.
@@ -153,9 +152,11 @@ to keep Done last.
 
 ## Status
 
-Keep `<notes>/<task>-status.md` outside Git. Record branch, task, tier, approved
+Create `<notes>/<task>-status.md` at first approval; keep outside Git. Record
+branch, task, tier, approved
 decisions, passed gates, current step, check results and open questions. Link
-the decision log and artifacts. Update after approvals and completed steps.
+decisions and artifacts. Update after approvals, completed steps and before
+handoff; mark unfinished work.
 
 After a break or handoff, read status and current-stage instructions, check Git
 state, and continue unfinished work. Reconcile conflicting evidence before
