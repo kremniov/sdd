@@ -137,3 +137,22 @@ wording received semantic review and structural validation.
 Evidence: ignored docs/stuff/eval-runs/verification-frequency/.
 Structural checks (SDD_BASE=143a39c), 10 checker tests, the work validator and
 diff whitespace checks passed. Scenario: verification-frequency.md.
+
+## Review correction: ticket execution status (2026-09-08)
+
+The user approved existing-ticket updates at execution start, blocking and
+resumption. Work calls tasks; tasks distinguishes a blocked part from a blocked
+whole task. Notes do not replace queue status; no ticket is required for direct
+work and Done remains tied to integration.
+
+Validation was delegated to a cheaper background agent (gpt-5.6-luna), using
+installed subscription Claude Code Sonnet medium for the fixture. One observed
+session changed next to blocked on missing access and committed the queue edit.
+It also disputed missing preparation artifacts in the fixture, so this is only
+evidence of a blocked update, not a complete lifecycle pass. The resume attempt
+hung without evidence and was interrupted. Start/resume transitions, independent
+continuation, no-ticket work, Done gating and step-order preservation were
+reviewed textually only. No hosted PR or merge was executed.
+Evidence: ignored docs/stuff/eval-runs/ticket-status/.
+Structural checks (SDD_BASE=d01b507), 10 checker tests, work/tasks validators
+and diff whitespace checks passed. Scenario: ticket-status-transitions.md.

@@ -51,7 +51,13 @@ for a plan and unsettled implementation choices for discussion at pickup.
 
 Order tags by type, phase, area and status. Use `[feat]`, `[bug]`, `[debt]` or
 `[chore]` for type; use project phase and area names. Status is `[next]`,
-`[in-progress]`, `[blocked]` or `[someday]`. Change status to reflect actual work.
+`[in-progress]`, `[blocked]` or `[someday]`.
+
+Set `[in-progress]` when execution starts or resumes. Use `[blocked]` when an
+obstacle prevents continuing the task and no independent authorized work remains.
+A blocked part alone does not block the whole ticket. Keep details in working
+notes; those notes do not replace the queue status. Leave Done to integration.
+Update an existing ticket; these transitions do not require creating one.
 
 ## Close a ticket
 

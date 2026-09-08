@@ -256,9 +256,13 @@ implementation. Criteria scale with the outcome; execution order belongs in a
 plan when one is required.
 
 Check the whole queue, including completed entries, before allocating an ID.
-Never reuse IDs. Status reflects the actual stage, with Done recording the
-integration approval as described above. A completed entry keeps the result and
-a reference to the change.
+Never reuse IDs. For an existing ticket, set in-progress when execution starts
+or resumes. Set blocked when an obstacle prevents continuing the task and no
+independent authorized work remains. A blocked part alone does not block the
+whole ticket. Working notes retain details but do not replace the queue status.
+These transitions do not require creating a ticket. Done records integration
+approval as described above. A completed entry keeps the result and change
+reference.
 
 ## Adoption and updates
 

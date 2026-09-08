@@ -4,6 +4,12 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.1.5
+
+- Update an existing ticket when execution starts, blocks or resumes. Keep the
+  ticket in progress while independent authorized work can continue; working
+  notes retain details without replacing queue status.
+
 ## 1.1.4
 
 - Check each committed change and completed step with appropriate checks; run
