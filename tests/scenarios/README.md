@@ -24,3 +24,8 @@ replace the independent review started by the user.
 Track missing actions, unnecessary approval requests, invented decisions,
 retained context, artifact completeness and loaded instruction size. Keep the
 same fixture and messages when comparing revisions.
+
+For commit scenarios, inspect tool-event order as well as Git history: separate
+commits made after all edits do not prove step-by-step execution. Verify status
+files after completed steps. Response-only probes cannot establish file changes,
+commits or actual merge behavior; label their conclusions accordingly.
