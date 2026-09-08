@@ -22,7 +22,8 @@ has drifted from its own canon.
 
 - A portable checker expressed in the adopting project's terms (T-2)
 - `/sdd:canon` re-run reports drift as four lists: held, drifted, broken, undocumented
-- Invariants carry an explicit "enforced by" or "convention" marker
+- Invariants identify runnable detectors or explicitly manual checks
+- Method behavior is evaluated with versioned scenarios and classified evidence
 
 ## Phase 3 — Shared
 

@@ -83,6 +83,9 @@ python3 scripts/check_portability.py || fail=1
 echo "register"
 python3 scripts/check_register.py || fail=1
 
+echo "checker tests"
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_*.py' || fail=1
+
 echo "every shipped skeleton is reachable"
 python3 - <<'PY' || fail=1
 import glob, os, sys

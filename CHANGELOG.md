@@ -4,6 +4,19 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.1.0
+
+- Rewrite the skills and scaffold from the agreed method in `docs/method.md`.
+- Require a concrete tier-0 proposal and combine tier-1 scope and design approval.
+- Commit each verified plan step before the next; allow several commits per step.
+- Execute merge on the user's explicit permission after the final ticket commit.
+- Preserve ticket context and approved design inputs. Remove minimum content quotas.
+- Treat widespread invariant violations and failed-fix counts as evidence to
+  investigate, not proof that architecture must change.
+- Make negation frequency advisory, count examples in size budgets and report
+  reference volume. Add checker tests and versioned behavioral scenarios.
+- Preserve project additions in scaffold updates and keep task status in ignored notes.
+
 ## 1.0.0
 
 The method moves out of your `CLAUDE.md` and into a skill, and every rule is
