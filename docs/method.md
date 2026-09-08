@@ -221,8 +221,13 @@ Self-review does not replace independent review.
 
 Behavioral defects carry severity and evidence. Report process deviations
 separately: what is absent and which check lacks its required basis. They carry
-no defect severity. The user decides integration. Apply requested fixes on the
-same branch and verify them. Return changed material decisions to the user.
+no defect severity. The user decides integration.
+
+Verify, commit and push requested fixes on the same branch. Report resolved and
+remaining findings and their verification. The user starts any repeat independent
+review. Stop before merge without integration permission. If the user already
+authorized "fix these findings and merge", proceed to integration once the stated
+conditions are met. Return changes to agreed decisions or scope to the user.
 
 After explicit permission such as "merge this PR", close the ticket in the last
 branch commit, fill missing ADR PR references and push. Then merge subject to

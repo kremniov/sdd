@@ -84,3 +84,20 @@ custom integration-branch name. The fixture command true does no functional
 checking. Evidence: ignored docs/stuff/eval-runs/standalone-branch-handover/.
 Structural checks (SDD_BASE=fe0bd84), 10 checker tests, all eight skill validators
 and diff whitespace checks passed. Scenario: standalone-branch-handover.md.
+
+## Review correction: fixing reviewed work (2026-09-08)
+
+The user approved a Tier 1 clarification: verify, commit and push requested fixes,
+report findings and checks, and preserve scoped conditional merge permission.
+Repeat independent review remains user-started.
+
+Three response-only probes in installed subscription Claude Code (Opus medium)
+recognized the expected next action: fix-only stops before integration;
+fix-and-merge proceeds without another approval; an explicit repeat-review
+condition waits. Work and tasks were supplied with completed fix state and no
+tools. These probes do not prove edits, commits, pushes or merges. The merge
+answer used an illustrative ticket result, so ticket-content preservation was
+not established. A changed-scope case was checked textually only.
+Evidence: ignored docs/stuff/eval-runs/review-fix-handover/.
+Structural checks (SDD_BASE=34d746b), 10 checker tests, the work skill validator
+and diff whitespace checks passed. Scenario: review-fix-handover.md.

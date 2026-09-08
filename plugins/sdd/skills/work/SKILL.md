@@ -117,8 +117,13 @@ reasoning as the basis for conclusions. Author-side checks do not replace it.
 
 Report behavioral defects with severity and concrete evidence. Report process
 deviations separately, without defect severity or an integration verdict: name
-what is missing and which check lacks a basis. Apply requested fixes on the same
-branch and verify them. Return material decision changes to the user.
+what is missing and which check lacks a basis.
+
+Verify, commit and push requested fixes on the same branch. Report resolved and
+remaining findings and their verification. The user starts any repeat independent
+review. Without integration permission, stop before merge. Conditional permission
+such as "fix these findings and merge" authorizes Integration below once its
+conditions are met. Return changed decisions or scope to the user.
 
 ## Integration
 

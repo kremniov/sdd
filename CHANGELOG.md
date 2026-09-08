@@ -4,6 +4,11 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.1.2
+
+- Verify, commit, push and report review fixes on the same branch. Keep repeat
+  review user-started and honor conditional merge permission within its scope.
+
 ## 1.1.1
 
 - Check the branch before edits and keep direct commits and pushes off integration
