@@ -194,7 +194,8 @@ Repetition alone does not establish an invariant.
 
 Each invariant states the rule, how a violation is detected and what to do.
 Label a manual check as manual. Preserve numbers. Agree changes or retirement
-with the user and record them in an ADR.
+with the user and record them in an ADR. Wording edits that preserve the rule's
+meaning do not require an ADR.
 
 On a changed branch, check affected claims, new required rules, changed checks
 and exceptions. No canon change is a normal result. To establish a canon,

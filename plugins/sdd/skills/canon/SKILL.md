@@ -44,7 +44,8 @@ language or framework. A project checker can enforce an eligible rule.
 Verify that Detect covers the claimed rule. A manual detector is labeled manual;
 a passing narrow checker does not prove a broader claim. Preserve numbers.
 Append new entries; retain a retired entry's number, struck through and linked
-to its ADR. A changed or retired rule requires agreement and an ADR.
+to its ADR. A changed or retired rule requires agreement and an ADR. Wording
+edits that preserve the rule's meaning do not require an ADR.
 
 ## Amend
 
