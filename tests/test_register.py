@@ -49,6 +49,21 @@ class RegisterChecks(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("audit.md", result.stdout)
 
+    def test_resident_budget_includes_examples(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "project" / "CLAUDE.section.md"
+            path.parent.mkdir()
+            path.write_text("## Rules\n```text\n" + "word " * 401 + "\n```\n")
+            result = subprocess.run([sys.executable, str(CHECKER), str(path)],
+                                    capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0, result.stdout)
+
+    def test_empty_directory_is_not_success(self):
+        with tempfile.TemporaryDirectory() as folder:
+            result = subprocess.run([sys.executable, str(CHECKER), folder],
+                                    capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0, result.stdout)
+
     def test_missing_input_fails(self):
         result = subprocess.run([sys.executable, str(CHECKER), "/missing/sdd/skill.md"],
                                 capture_output=True, text=True)
