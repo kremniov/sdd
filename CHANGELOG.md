@@ -4,6 +4,13 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.1.1
+
+- Check the branch before edits and keep direct commits and pushes off integration
+  branches, including standalone document, queue and setup operations.
+- Hand over standalone changes through a PR; operations within approved work
+  share its step and PR.
+
 ## 1.1.0
 
 - Rewrite the skills and scaffold from the agreed method in `docs/method.md`.

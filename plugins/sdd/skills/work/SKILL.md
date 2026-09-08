@@ -25,8 +25,20 @@ Select the requested result before starting an implementation workflow:
 | Explain or investigate | Return evidence and open questions |
 | Resume or merge | Read Status or Integration below |
 
-For changes, use a working branch. Use a worktree when isolation is needed or
-requested. Preserve existing user changes.
+## Branch and completion
+
+Before editing files intended for Git, identify the current and integration
+branches from project conventions and Git state. On an integration branch
+(`main`, `master` or the project equivalent), create a working branch first.
+Commit and push only to working branches. Integrate through a PR merge after
+explicit user permission. Use a worktree when isolation is needed or requested.
+Preserve existing user changes.
+
+Apply this rule to standalone document, queue and setup operations too. Verify
+and commit their changes, then use Handover and review below. Within ongoing
+approved work, include them in that work's step and PR instead of opening a
+separate PR. Ignored working notes need no commit or PR. Creating a ticket or
+design does not authorize implementing its subject.
 
 ## Research and approval
 

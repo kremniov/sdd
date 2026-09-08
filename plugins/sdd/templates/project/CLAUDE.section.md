@@ -1,4 +1,4 @@
-<!-- sdd:rules v1.1.0 -->
+<!-- sdd:rules v1.1.1 -->
 ## Development method
 
 Use `/sdd:work` for implementation, resuming work and authorized integration.
@@ -8,6 +8,12 @@ A review or explanation does not authorize changes. Project paths and the
 verification command are in `.sdd.yml`.
 
 ### Integration
+
+Before editing files for Git, check the branch. On `main`, `master` or another
+integration branch, create a working branch first. Commit and push only to
+working branches; integrate through an explicitly authorized PR merge. This
+also applies to standalone document, queue and setup operations. Follow
+`/sdd:work` Branch and completion for their handover.
 
 The user decides integration. Prepare and push the verified branch, open its
 PR and stop. After the user's explicit permission to merge that PR, follow

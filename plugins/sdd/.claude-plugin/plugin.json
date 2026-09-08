@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "sdd",
   "displayName": "Spec-Driven Development",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Research, concrete approvals, committed implementation steps and user-authorized integration, with skills for design, verification and architectural records.",
   "author": {
     "name": "Andrey Kremnev",

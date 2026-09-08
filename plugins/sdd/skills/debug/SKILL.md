@@ -5,6 +5,9 @@ description: Investigate a bug or failed check, test causal hypotheses and verif
 
 # Debug
 
+For files intended for Git, follow `/sdd:work` Branch and completion before
+editing and when handing over the result.
+
 ## Scope
 
 Read the request, observed failure, relevant code, checks and recent changes.

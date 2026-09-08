@@ -63,3 +63,24 @@ are in `tests/scenarios/`.
 These checks were performed from the author session. They do not replace the
 independent review started by the user. Full agent-run coverage of all 18 cases,
 real-project migration and actual hosted-PR integration have not been performed.
+
+## Review correction: standalone branch handover (2026-09-08)
+
+The user approved one Tier 1 correction: before editing files intended for Git,
+leave an integration branch; commit and push only to working branches and hand
+over standalone changes by PR. Embedded operations share the ongoing work.
+
+Observed in disposable repositories with installed subscription Claude Code,
+Opus medium: tasks from main and setup from master switched branches before
+file edits and left integration refs unchanged. Each verified and committed on
+its working branch, then reported unavailable remote/PR hosting. An embedded
+queue operation stayed in the current working branch and left the parent step
+unfinished, with no separate PR. Event order and final refs were inspected.
+Some compound shell commands were denied; permitted tool retries completed.
+
+These runs supplied resident, work and the selected skill explicitly. They do
+not prove automatic skill discovery, hosted push/PR/merge, or behavior with a
+custom integration-branch name. The fixture command true does no functional
+checking. Evidence: ignored docs/stuff/eval-runs/standalone-branch-handover/.
+Structural checks (SDD_BASE=fe0bd84), 10 checker tests, all eight skill validators
+and diff whitespace checks passed. Scenario: standalone-branch-handover.md.

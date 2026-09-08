@@ -19,6 +19,17 @@ A version whose release changed no scaffold file gets no section. A file whose
 region changes gets its stamp moved to that version and an entry here, in the
 same commit — the gate fails otherwise.
 
+## 1.1.1
+
+### CLAUDE.section.md
+
+Check the branch before editing files intended for Git. Create a working branch
+when on main, master or another integration branch. Commit and push only to
+working branches; integrate through a PR merge after explicit user permission.
+Apply the same branch and handover rules to standalone documents, queue edits
+and setup. Operations within approved work share its step and PR; ignored notes
+need neither. Preserve project branch conventions and other requirements.
+
 ## 1.1.0
 
 ### CLAUDE.section.md

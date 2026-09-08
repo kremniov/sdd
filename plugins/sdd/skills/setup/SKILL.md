@@ -5,6 +5,9 @@ description: Adopt or update SDD by mapping project paths, proposing exact scaff
 
 # Setup
 
+For files intended for Git, follow `/sdd:work` Branch and completion before
+editing and when handing over the result.
+
 ## Survey
 
 Read the request, root rules files, docs layout, verification configuration,

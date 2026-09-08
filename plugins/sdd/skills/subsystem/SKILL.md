@@ -5,6 +5,9 @@ description: Describe a subsystem's contracts and interactions, or update that d
 
 # Subsystem document
 
+For files intended for Git, follow `/sdd:work` Branch and completion before
+editing and when handing over the result.
+
 ## Inputs
 
 Read the request and `canon` from `.sdd.yml`. Split each line at the first colon

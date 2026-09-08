@@ -5,6 +5,9 @@ description: Write a complete tier-2 design from approved discussion decisions a
 
 # Design
 
+For files intended for Git, follow `/sdd:work` Branch and completion before
+editing and when handing over the result.
+
 ## Inputs
 
 Use `/sdd:work` for scope, approval and stop conditions. Begin after G1.
@@ -34,7 +37,8 @@ on the change. Keep settled choices unless that evidence requires reopening them
 5. Present the complete document at G2. Discuss it section by section only when
    the user requests that process. Apply feedback and wait for approval.
 6. Commit the approved design. Continue with `/sdd:plan` when the task includes
-   that phase. An explicit request for design alone ends with this artifact.
+   that phase. For design alone, hand over the approved artifact through
+   `/sdd:work`; leave implementation unstarted.
 
 Use current project patterns within agreed constraints. Include a local
 structural correction when the change requires it; propose unrelated refactoring

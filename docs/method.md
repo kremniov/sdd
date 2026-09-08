@@ -52,8 +52,18 @@ the canon describes the current system and ADRs preserve decision history.
 | Adopt or update SDD | Survey, propose exact changes, apply agreed changes, verify |
 | Explain or investigate | Evidence and open questions; artifacts as needed |
 
-Use a working branch for changes. Use a separate worktree when isolation is
-needed or requested. Preserve the user's existing changes.
+Before editing files intended for Git, check the current branch and identify
+the integration branch from project conventions and Git state. If on `main`,
+`master` or another integration branch, create a working branch first. Commit
+and push only to working branches. Changes enter an integration branch through
+a PR merge after explicit user permission. Use a separate worktree when
+isolation is needed or requested. Preserve the user's existing changes.
+
+Standalone operations that change files intended for Git also end with
+verification, commits and PR handover. This includes documents, queue edits and
+method setup. Operations within ongoing approved work use that work's step and
+PR. Ignored working notes need no commit or PR. Preparing a ticket or design
+does not authorize implementing its subject.
 
 ## Tiers and approvals
 

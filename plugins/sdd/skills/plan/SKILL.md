@@ -5,6 +5,9 @@ description: Sequence an approved tier-2 design into verifiable implementation s
 
 # Plan
 
+For files intended for Git, follow `/sdd:work` Branch and completion before
+editing and when handing over the result.
+
 ## Inputs
 
 Begin after G2 with the approved, committed design. `/sdd:work` owns execution,
@@ -41,7 +44,8 @@ canon updates and ADRs so they are complete before the final check.
 
 Read the finished plan for missing dependencies, vague checks and decisions that
 belong in the design. Present the whole plan at G3. After approval, commit it
-and continue through `/sdd:work` if execution is in scope.
+and continue through `/sdd:work` if execution is in scope. Otherwise hand over
+the approved plan through `/sdd:work` without starting implementation.
 
 ## Content budget
 
