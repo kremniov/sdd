@@ -56,14 +56,14 @@ relevant costs of real alternatives. Record dated decisions in
 |---|---|---|
 | 0 | No material decision remains | G1: exact change, scope, assumptions and verification |
 | 1 | One material decision | G1 and G2 together: recommended solution, scope, assumptions and verification |
-| 2 | A new boundary, invariant change or related decisions | G1 decisions, G2 design, G3 plan |
+| 2 | A new boundary, invariant change or multiple interdependent decisions | G1 decisions, G2 design, G3 plan |
 
-Name the decision that justifies the tier; file count does not set it. Wait for
+Tier 2 takes precedence. Justify the tier by decisions, not file count. Wait for
 approval of the concrete proposal, including at tier 0. A currently unused port
 can belong to a stopped service; state what the check establishes when proposing
 its replacement. The request alone does not approve values you selected.
 
-Tier 1 needs one combined approval. Tier 2 runs `/sdd:design` after G1 and
+Tier 2 runs `/sdd:design` after G1 and
 `/sdd:plan` after G2. Approval persists within its scope across commits and
 context compaction. G3 authorizes every planned step through a reviewable PR.
 

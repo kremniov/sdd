@@ -75,7 +75,11 @@ Reassess when new evidence changes the work.
 |---|---|---|
 | 0 | No material decision remains | Exact change, scope, assumptions and verification; wait for approval |
 | 1 | One material decision | Recommended solution, scope, assumptions and verification in one message |
-| 2 | A new component boundary, an invariant change, or related decisions | Agreed decisions, design and plan |
+| 2 | A new component boundary, an invariant change, or multiple interdependent decisions | Agreed decisions, design and plan |
+
+Tier 2 takes precedence even when a boundary or invariant change involves only
+one material decision. Interdependent decisions constrain one another; sharing
+a topic alone does not make them interdependent.
 
 | Gate | User approves | Agent proceeds to |
 |---|---|---|
