@@ -229,13 +229,21 @@ review. Stop before merge without integration permission. If the user already
 authorized "fix these findings and merge", proceed to integration once the stated
 conditions are met. Return changes to agreed decisions or scope to the user.
 
-After explicit permission such as "merge this PR", close the ticket in the last
-branch commit, fill missing ADR PR references and push. Then merge subject to
-required project checks and report the result. The method requires no second
-permission for the merge command. Skip ticket closure if there is no ticket.
-Done on the working branch records integration approval; it reaches the main
-branch with the change. Confirm actual merge separately. Report a failed merge
-and the remaining branch state.
+After explicit permission such as "merge this PR", resolve known integration
+blockers and run available checks before the final commit. Close the ticket in
+that commit, fill missing ADR PR references, run required checks and push. Then
+merge subject to required project checks and report the result. The method
+requires no second permission for the merge command. Skip ticket closure if
+there is no ticket. Done on the working branch records integration approval;
+it reaches the integration branch with the change. Confirm actual merge separately.
+
+If merge fails, report the cause and branch state. Permission remains valid
+within its approved scope. Resolve technical blockers, verify and retry when
+ready; stop dependent work for missing access or changes to agreed decisions or
+scope. If repairs become necessary after the final commit, preserve history and
+append verified repair commits. This is an exception to Done being last: do not
+rewrite published history or add an empty final commit solely to restore that
+order.
 
 ## Queue
 

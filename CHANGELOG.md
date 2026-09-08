@@ -4,6 +4,12 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.1.3
+
+- Resolve known integration blockers before the final ticket commit. Preserve
+  scoped merge permission after failure and allow verified repair commits after
+  Done without rewriting published history just to restore commit order.
+
 ## 1.1.2
 
 - Verify, commit, push and report review fixes on the same branch. Keep repeat

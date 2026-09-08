@@ -101,3 +101,21 @@ not established. A changed-scope case was checked textually only.
 Evidence: ignored docs/stuff/eval-runs/review-fix-handover/.
 Structural checks (SDD_BASE=34d746b), 10 checker tests, the work skill validator
 and diff whitespace checks passed. Scenario: review-fix-handover.md.
+
+## Review correction: failed merge recovery (2026-09-08)
+
+The user approved resolving known blockers before the final commit, retaining
+scoped permission after failure and allowing verified repair commits after Done
+without rewriting published history solely for order.
+
+Three response-only probes in installed subscription Claude Code (Opus medium)
+selected retry after service recovery, verified repair commits and retry for a
+mechanical path correction, and discussion for a contract conflict. Published
+history was preserved in all proposed actions. The service-recovery answer also
+added an overly broad stop condition for future content errors; the explicit
+mechanical-repair case continued correctly. Multi-turn consistency is unproven.
+No tools, edits, commits, push or merge were executed. Initial preparation before
+Done was checked textually only. Evidence: ignored
+`docs/stuff/eval-runs/failed-merge-recovery/`.
+Structural checks (SDD_BASE=b94cc50), 10 checker tests, work/tasks validators and
+diff whitespace checks passed. Scenario: failed-merge-recovery.md.

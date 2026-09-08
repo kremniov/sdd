@@ -130,14 +130,22 @@ conditions are met. Return changed decisions or scope to the user.
 G4 is the user's explicit permission to integrate the specific PR, after review.
 On permission such as "merge this PR":
 
-1. Close its ticket through `/sdd:tasks`, if one exists. Fill missing ADR PR
+1. Resolve known integration blockers and run available checks before the final
+   commit. Return changes to agreed decisions or scope to the user.
+2. Close its ticket through `/sdd:tasks`, if one exists. Fill missing ADR PR
    references in the same final branch commit.
-2. Run required checks and push that commit.
-3. Merge subject to the project's required checks and report the actual result.
+3. Run required checks, push and merge subject to required project checks.
+   Report the actual result.
 
 Do not ask again for method permission to run the merge command. Implementation
-approval is not merge permission. A failed merge remains a reported blocker;
-the Done entry on the working branch records approval, not a completed merge.
+approval is not merge permission. Done records approval, not a completed merge.
+
+If merge fails, report the cause and branch state. Permission persists within
+its scope: resolve technical blockers, verify and retry when ready. Missing
+access or changed decisions or scope trigger Stop conditions above. If repairs
+are needed after the final commit, preserve history and append verified repair
+commits. Do not rewrite published history or add an empty final commit solely
+to keep Done last.
 
 ## Status
 

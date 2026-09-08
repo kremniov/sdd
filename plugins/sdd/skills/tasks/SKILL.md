@@ -67,7 +67,9 @@ replace the status tag with the reference.
 Use a PR, branch or commit reference that exists. In the same final branch
 commit, fill missing PR references in its ADRs. Done on the branch records
 integration approval; report actual merge separately. Do not close on plan
-approval or merely because implementation checks passed.
+approval or merely because implementation checks passed. Resolve known merge
+blockers before this commit. If merge later fails, follow `/sdd:work` Integration:
+verified repair commits may follow Done; preserve the published history.
 
 ## Check the edit
 

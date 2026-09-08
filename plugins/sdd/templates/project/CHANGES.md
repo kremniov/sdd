@@ -19,6 +19,15 @@ A version whose release changed no scaffold file gets no section. A file whose
 region changes gets its stamp moved to that version and an entry here, in the
 same commit — the gate fails otherwise.
 
+## 1.1.3
+
+### tasks.md
+
+Keep Done in the final integration-preparation commit. If a later merge failure
+requires repairs, allow verified repair commits after Done and preserve
+published history. Use work for recovery and scoped permission. Preserve
+existing queue entries and project additions.
+
 ## 1.1.1
 
 ### CLAUDE.section.md
