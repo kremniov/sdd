@@ -1,79 +1,49 @@
 ---
 name: design
-description: Use on a tier-2 task, after gate G1, to turn the agreed decisions into design.md — the problem, the locked choices, the seams touched, the failure modes and what proves the work. Ends at gate G2, where the user reads it.
+description: Write a complete tier-2 design from approved discussion decisions and submit it for G2 approval.
 ---
 
-# The design
-
-`design.md` states what gets built and why it takes that shape. `/sdd:work`
-carries the gates, the tiers and the blockers. This skill writes one artifact.
-
-Tier 2 writes this file. Tier 1 states a design paragraph in the conversation.
-Tier 0 writes neither.
-
-Paths come from `.sdd.yml`: `features:`, `canon:`, `adr:`, `roadmap:`, `tasks:`.
-One `key: value` per line; everything from the first `#` is a comment; values are
-used verbatim. If the file is absent, say so and stop — the project has not
-adopted this method (`/sdd:setup`). If a key this skill needs is absent or empty,
-name the key and ask.
+# Design
 
 ## Inputs
 
-Read all five before the first sentence.
+Use `/sdd:work` for scope, approval and stop conditions. Begin after G1.
+Read `.sdd.yml` for `features`, `notes`, `tasks`, `roadmap`, `canon` and `adr`.
+Split each line at its first colon and remove comments from the first `#`.
+If configuration is absent, offer `/sdd:setup`. Ask for required missing values.
 
-| Input | What it settles |
-|---|---|
-| The ticket in `tasks:` | The outcome, and how it gets checked |
-| The roadmap | The product logic, and the phase this work belongs to |
-| `invariants.md` and the subsystem document for the area | The rules the work must hold |
-| The decision records that govern the seam | Why the current shape is what it is |
-| The recent commits in the modules involved | What the code does today |
+Read the approved `<notes>/<task>-decisions.md`, the request or ticket, relevant
+product requirements, roadmap, canon, ADRs and code. A task without a ticket uses
+the request. If approved decisions are missing from the log, recover them from
+the conversation and record them; ask about decisions that cannot be recovered.
 
-Acceptance criteria are a check, not a specification. The product logic lives in
-the roadmap and the architectural logic lives in the canon. Where either
-disagrees with the acceptance criteria, name the disagreement and ask.
+Identify disagreements between acceptance, requirements, constraints and code.
+Present new evidence that changes an agreed decision to the user before relying
+on the change. Keep settled choices unless that evidence requires reopening them.
 
-## Writing it
+## Write and submit
 
-1. Propose two or three approaches. Lead with your recommendation. Give each one
-   line of cost. Strip from every approach what the ticket leaves out, and name
-   anything else worth doing as a separate ticket.
-2. Present the design one section at a time, each scaled to what is open. Check
-   after each section that it still looks right.
-3. Write `<features>/<feature-name>/design.md` from
-   `${CLAUDE_PLUGIN_ROOT}/templates/_DESIGN.md`. Read the skeleton in place.
-4. Mark a decision `→ ADR` where it outlives the feature. `/sdd:work` writes
-   those records at handing over.
-5. Read the written design once and fix inline: placeholders, sections that
-   contradict each other, a requirement that reads two ways, and scope past one
-   plan.
-6. Ask the user to read it. This is G2, and changes come back here.
+1. Read `${CLAUDE_PLUGIN_ROOT}/templates/_DESIGN.md` in place.
+2. Write `<features>/<task>/design.md`. State the observed problem, required
+   result, scope, decisions, contracts, interactions, failures and verification.
+3. Link governing invariants and existing contracts. Name documents that need
+   updates. Mark durable decisions `→ ADR`; `/sdd:work` records them with the work.
+4. Check for missing decisions, conflicting sections and scope beyond the
+   request. Retain a detail when deleting it leaves a material choice open or
+   prevents verification. Omit empty sections.
+5. Present the complete document at G2. Discuss it section by section only when
+   the user requests that process. Apply feedback and wait for approval.
+6. Commit the approved design. Continue with `/sdd:plan` when the task includes
+   that phase. An explicit request for design alone ends with this artifact.
 
-## In an existing codebase
+Use current project patterns within agreed constraints. Include a local
+structural correction when the change requires it; propose unrelated refactoring
+as separate work.
 
-Follow the patterns the code already holds. Link the canon: a rule stated in two
-files becomes two rules that drift.
+## Content budget
 
-Give each unit one purpose, one interface and its own tests. A consumer that has
-to read the internals has met a boundary in the wrong place.
-
-Where code in the path of the work has a real problem — a file past its purpose,
-a tangled responsibility — put the targeted fix in the design. Unrelated
-refactoring is a separate ticket.
-
-Name the invariants the work touches and the canon documents that update in the
-same pull request. A branch that changes a seam no document covers writes one
-(`/sdd:subsystem`).
-
-## Budgets
-
-| Measure | Budget |
-|---|---|
-| Words | 1300, hard stop 2000 |
-| Headings | 12 |
-| Rationale | one sentence per decision |
-
-Scale each section to what the ticket leaves open: two sentences where the answer
-is plain, a real argument where it is not. The cost of the cycle falls on the
-user's attention, so spend it on the open questions and leave the settled
-headers short.
+Aim for at most 1300 words, with a 2000-word ceiling and at most 12 headings.
+These are upper bounds, not content targets. State a choice and its decisive
+constraint briefly. Include additional evidence when needed to assess it.
+There is no minimum sentence or decision count. Keep detailed existing contracts
+at their source and link them.

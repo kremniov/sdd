@@ -1,68 +1,50 @@
 ---
 name: plan
-description: Use after gate G2 on a tier-2 task, to sequence an agreed design into plan.md — ordered steps, each with a goal, its constraints, what it touches, and a runnable definition of done. Ends at gate G3, where the user approves it.
+description: Sequence an approved tier-2 design into verifiable implementation steps and submit the plan for G3 approval.
 ---
 
-# The plan
+# Plan
 
-`plan.md` sequences the work. It does not contain the work. `/sdd:work` carries
-the gates, the blockers and the handing-over rules.
+## Inputs
 
-Write it once `design.md` is settled and committed. Tier 2 only.
+Begin after G2 with the approved, committed design. `/sdd:work` owns execution,
+stop conditions and integration. Read `features` and `verify` from `.sdd.yml`.
+Split each line at the first colon and remove comments from the first `#`.
+If configuration is absent, offer `/sdd:setup`. Ask for required missing values.
 
-Paths come from `.sdd.yml`: `features:` and `verify:`. One `key: value` per line;
-everything from the first `#` is a comment; values are used verbatim. If the file
-is absent, say so and stop — the project has not adopted this method
-(`/sdd:setup`). If a key this skill needs is absent or empty, name the key and
-ask.
+Read the design and `${CLAUDE_PLUGIN_ROOT}/templates/_PLAN.md` in place.
+Return a new material decision to the user and update the design before planning
+its implementation.
 
-## Writing it
+## Write and submit
 
-1. Read the committed `design.md`. The plan executes it and re-decides nothing.
-2. Write `<features>/<feature-name>/plan.md` from
-   `${CLAUDE_PLUGIN_ROOT}/templates/_PLAN.md`. Read the skeleton in place.
-3. Make one step one commit, or one tight group of commits. Order the steps and
-   say what forces the order.
-4. Ship each module with its tests in the same step.
-5. Name the blockers this work is likely to meet, from the list in `/sdd:work`.
-6. Ask the user to read it. This is G3.
+Write `<features>/<task>/plan.md`. Explain dependencies that determine the order
+and identify independent steps. Each step ends in a coherent, checkable result.
+A step can contain several commits. Its changes must be verified and committed
+before the next step; `/sdd:work` enforces that execution sequence.
 
-## What a step carries
-
-| Part | Content |
+| Field | Content |
 |---|---|
-| Goal | The observable change, in one sentence |
-| Constraints | The invariants and design decisions this step holds, linked |
-| Touches | Packages and files, with the signatures or schema it introduces |
-| DoD | A command, and what its output must show |
+| Result | Observable change |
+| Constraints | Links to design decisions and governing rules |
+| Touches | Affected components and files |
+| Check | Command and expected output, or manual procedure, expected observation and person who runs it |
 
-A definition of done is runnable. A test name, a lint target, a migration that
-applies and rolls back — something a machine decides. A step whose DoD is the
-whole suite writes the `verify:` command.
+Ship behavior and its tests in the same step. Link contracts from the design.
+Include enough interface detail to locate the work; leave function bodies out.
+Name likely blockers from `/sdd:work`. Mark a required human action with `[gate]`
+and state what the user must provide. A commit boundary is not a gate.
 
-A step carries exported signatures and types, schema, an API fragment, an event
-payload shape, or a config key, because each of those is a seam decision. Keep
-one where deleting it leaves a question about a seam open. Cut one that only
-saves typing.
+Put branch-wide verification after all code and document changes. Use the
+configured `verify` command and name any additional checks. Identify required
+canon updates and ADRs so they are complete before the final check.
 
-A step carries no function bodies. It names what becomes true, under which
-constraints, and how that gets checked.
+Read the finished plan for missing dependencies, vague checks and decisions that
+belong in the design. Present the whole plan at G3. After approval, commit it
+and continue through `/sdd:work` if execution is in scope.
 
-## Gates inside a plan
+## Content budget
 
-A commit boundary is a commit boundary. Append `[gate]` to the heading of a step
-that genuinely needs the user's hands, and that step alone pauses.
-
-## The last step
-
-The last step leaves a merge-ready branch. Integration is never a step, and
-approval given at G3 reaches nowhere near it. `/sdd:work` carries what happens
-from there.
-
-## Budgets
-
-| Measure | Budget |
-|---|---|
-| Length | one screen per step; 400 lines for the file |
-| Headings | one per step |
-| Rationale | the Order section, and nowhere else |
+Use at most 400 lines as the planning budget. Keep each step brief enough to
+assess its result and verification together. Explain ordering in the Order
+section and link decision rationale from the design. Empty sections are omitted.

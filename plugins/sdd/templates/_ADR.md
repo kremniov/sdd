@@ -1,35 +1,27 @@
-# ADR <NNNN> — <the decision, as a statement>
+# ADR <NNNN> — <decision>
 
-**Status:** accepted · **Date:** <YYYY-MM-DD> · **PR:** #<N>
+**Status:** accepted · **Date:** <YYYY-MM-DD> · **PR:** <#N or —>
 
 <!--
-One decision per file. Written in the PR that merges the work, not at design
-time — before the code exists a decision is still an intention.
-
-Write one when the decision outlives the feature: an invariant moves, a
-non-obvious trade-off is taken, or the resulting shape will invite someone to
-"fix" it back. The trigger is tier-independent — a one-file change can earn an
-ADR and a large feature can earn none.
-
-An ADR says why. The architecture canon says what is true now. Neither restates
-the other.
+Write under the configured adr directory with the implementation of a durable
+decision: an invariant change, significant trade-off or choice whose reason is
+hard to recover. Routine corrections need no ADR. Preserve historical records.
 -->
 
 ## Context
 
-The forces in play when this was decided: what the system looked like, what was
-being asked of it, and the constraint that made the obvious choice wrong.
+State the problem and constraints that required a decision.
 
 ## Decision
 
-What was chosen, stated as a rule someone can apply. One paragraph.
+State the agreed choice and where it applies.
 
 ## Alternatives
 
-What else was considered and the specific reason it lost. One line each. An
-alternative with no stated cost was not really considered.
+List relevant alternatives and the cost that ruled each out. Omit this section
+when there was no meaningful alternative.
 
 ## Consequences
 
-What this makes easy, what it makes hard, and what now has to hold. Name the
-invariant or canon document that changed, if any.
+State the resulting obligations and trade-offs. Link changed invariants and
+subsystem documents. Keep current system details in those documents.

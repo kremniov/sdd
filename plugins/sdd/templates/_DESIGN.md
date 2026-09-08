@@ -1,63 +1,42 @@
 # <Feature> — design
 
-**Ticket:** <ID> · **Plan:** [plan.md](plan.md)
+**Source:** <ticket or user request reference>
 
 <!--
-Tier 2 only. Saved as <features>/<name>/design.md, where <features> is the path
-in .sdd.yml.
-
-Budgets: 1300 words, hard stop 2000. Twelve headings. One sentence of rationale
-per decision.
-
-Keep the headers below verbatim, so the corpus stays greppable. Drop a section
-that has no content; rename none.
-
-Out of a design: the architecture canon, which gets a link; pseudocode of the
-implementation; and a rejected approach written past one line.
+Write under the configured features directory. Keep applicable headings below;
+omit empty sections. Aim for at most 1300 words, ceiling 2000, at most 12 headings.
+There is no minimum content count. Replace this guidance with the actual design.
+Link existing contracts and invariants rather than duplicating them.
 -->
 
-## Problem
+## Problem and goal
 
-What breaks or is missing now. Observable, not aspirational. Closes at three to
-six sentences, or at a table of the observed behaviours and their causes.
+Describe the observed problem and required result. End when the reader can tell
+what must change and how the outcome serves the request.
 
-## Goal / Non-goals
+## Scope
 
-What this change makes true, and the adjacent things it leaves alone. Closes at
-two lists of three to six lines.
+State included work. Name adjacent work only where it could be included by mistake.
 
 ## Decisions
 
-One line per locked choice: the choice, the alternative it beat, and the cost
-that decided it. Closes at five to twelve lines. Mark a decision `→ ADR` where it
-outlives the feature; the merging pull request writes the record.
+State each agreed choice and its decisive constraint. Mark a durable choice
+`→ ADR`. Include rejected alternatives when their cost explains the choice.
 
-Watery:
+Example: preserve valid import rows when another row fails. A rejected row must
+not discard the valid portion of the upload.
 
-> We looked at several ways of handling partial failures and, after some
-> discussion of what comparable tools do and what users would expect, decided
-> that per-row outcomes are probably the better fit here, although fail-fast with
-> a clearer message also has something going for it and may be worth revisiting.
+## Structure and contracts
 
-Tight:
+Describe changed boundaries, inputs, outputs, data and interactions. State
+ordering when it affects correctness. Link unchanged contracts.
 
-> Per-row outcomes, over fail-fast with a better message: a 10,000-row upload has
-> to survive one bad row.
+## Failures and transition
 
-## Architecture
+Describe failure handling and recovery. Include compatibility and rollout when
+the change affects them. Omit topics outside the change.
 
-The seams touched, the packages added, the data model, and the flow through it.
-Closes at one numbered path end to end, plus a line per seam.
+## Verification and documents
 
-## Invariants & docs
-
-The invariants this work touches, and the canon documents that update in the same
-pull request. Closes at one line each.
-
-## Error handling
-
-Each failure mode and what happens on it. Closes at a two-column table.
-
-## Testing
-
-What proves it works, and at which level. Closes at one line per level.
+State how to prove the result and relevant failure behavior. Name the affected
+invariants, subsystem documents and durable decisions to record.

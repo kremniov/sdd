@@ -1,65 +1,48 @@
 # <Feature> — plan
 
-**Ticket:** <ID> · **Design:** [design.md](design.md)
+**Design:** [design.md](design.md)
 
 <!--
-Tier 2 only. Saved as <features>/<name>/plan.md, next to the design it executes.
-
-Budgets: one screen per step, 400 lines for the file. One heading per step.
-Rationale belongs in Order and nowhere else.
-
-Keep the headers below verbatim, so the corpus stays greppable.
-
-Approving this plan authorizes every step in it, up to a merge-ready branch.
-Integration is never a step. /sdd:work carries the rules for both.
+Write beside the approved design. Keep applicable headings; omit empty sections.
+Budget: at most 400 lines. Replace guidance and examples with the actual plan.
 -->
 
 ## Scope
 
-What ships when the last step is green, and the design it executes. Name what is
-left for a follow-up ticket. Closes at one paragraph.
+State the result delivered by this plan and link the agreed design.
 
 ## Order
 
-What forces this sequence — the dependency, the checker, the migration that has
-to land before the code that reads it. Say which steps are independent. Closes at
-one paragraph.
+Explain dependencies that determine the sequence. Identify independent steps.
 
 ## Steps
 
-### Step N — <what becomes true>
+### Step N — <observable result>
 
-**Goal:** the observable change, in one sentence.
+**Result:** <what becomes true>
 
-**Constraints:** the invariants and design decisions this step holds. Link them.
-One line each.
+**Constraints:** <links to agreed decisions and rules>
 
-**Touches:** packages and files, with the exported signatures or schema this step
-introduces.
+**Touches:** <components and files>
 
-**DoD:** the command that proves it, and what its output must show.
+**Check:** <command and expected result, or manual procedure, observation and owner>
 
-Watery:
+<!--
+Example: import valid rows despite rejected rows.
+Constraints: the agreed per-row outcome contract in design.md.
+Touches: the importer and result presentation.
+Check: mixed-validity input imports valid rows and lists each rejected row with
+its reason; required project checks pass.
 
-> Refactor the importer so that it handles rows more gracefully, add the
-> necessary tests, and make sure everything still works as expected afterwards.
-> This is the biggest step and it will probably need care around the existing
-> batching logic, which we should look at while we are in there.
+A step can contain several commits. Commit the verified result before the next
+step. Mark a required human action [gate] and specify what is needed.
+-->
 
-Tight:
+## Final verification
 
-> **Goal:** a failing row leaves the other rows imported.
-> **Constraints:** invariant 4; the per-row outcome decision in design.md.
-> **Touches:** the importer's row loop — `import(rows)` returns one outcome per
-> row.
-> **DoD:** the partial-failure test passes; the `verify:` command is green.
+Run the configured verify command after code and document changes. State any
+additional checks and who runs manual verification.
 
-## Verification
+## Documents and decisions
 
-The gate for the branch as a whole: the `verify:` command, anything this branch
-needs beyond it, and the manual check if there is one, naming who runs it.
-
-## Docs & ADR
-
-Which canon documents update in the same pull request, and which design decisions
-marked `→ ADR` need a record written before the merge.
+Link the canon updates and ADRs required in this PR. Assign them to steps above.
