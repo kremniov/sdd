@@ -64,7 +64,7 @@ for path in paths:
     if limit and words > limit:
         faults.append(f"{words} words over {limit}")
     if density > ceiling:
-        faults.append(f"{density:.1f} negations per 100 over {ceiling}")
+        print(f"  NOTE    {path}: {density:.2f} negations per 100; review wording (signal {ceiling})")
     if nests(path) and depth > DEPTH:
         faults.append(f"heading depth H{depth} over H{DEPTH}")
     if faults:

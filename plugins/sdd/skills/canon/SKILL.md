@@ -1,105 +1,70 @@
 ---
 name: canon
-description: Use to establish, amend or audit the architectural canon — the invariants a codebase already holds, the layout, and the dated lessons a project learned. Ask the four amend questions against the finished diff before any branch is handed over.
+description: Establish, amend or audit architectural invariants and the system map, and record verified project lessons.
 ---
 
-# The canon
+# Canon
 
-The canon holds three files under `canon:`.
+## Inputs and mode
 
-| File | Holds |
-|---|---|
-| `invariants.md` | The rules the code obeys today, numbered |
-| `layout.md` | Where things live, and where a newcomer starts reading |
-| `lessons.md` | Dated lessons, one line each |
+Read the request and `.sdd.yml` values `canon`, `adr` and `tasks` as needed.
+Split each line at the first colon and remove comments from the first `#`.
+If configuration is absent, offer `/sdd:setup`. Ask for required missing values.
 
-The canon is observed, never invented. An invariant is a rule the code obeys
-today and that a reviewer pushes back on breaking.
+The canon directory holds `invariants.md`, `layout.md`, `lessons.md` and
+subsystem documents. Code supplies evidence of behavior; requirements and
+accepted decisions also supply obligations. Investigate disagreements before
+changing either. Cite concrete evidence for claims, including absence.
 
-A claim that something is absent meets the same standard as a claim that
-something holds, and it is the one that becomes work. Name the file and the line
-you looked at, so a reader can disagree with your evidence rather than with your
-conclusion.
+| Mode | When | Procedure |
+|---|---|---|
+| Establish | The invariant list is empty | Read `${CLAUDE_PLUGIN_ROOT}/skills/canon/bootstrap.md` |
+| Amend | Assess a changed branch | Use Amend below |
+| Audit | The user requests a recheck or suspects stale rules | Read `${CLAUDE_PLUGIN_ROOT}/skills/canon/audit.md` |
 
-Paths come from `.sdd.yml` (`canon:`, `adr:`, `tasks:`). One `key: value` per
-line; everything from the first `#` is a comment; values are used verbatim. If
-the file is absent, say so and stop — the project has not adopted this method
-(`/sdd:setup`). If a key this skill needs is absent or empty, name the key and
-ask.
+State the mode. A review or audit reports first; changes need approval. An
+existing approval for the exact canon change remains valid.
 
-## Which mode
-
-| Mode | When | Cost | Procedure |
-|---|---|---|---|
-| Amend | A branch about to merge moved a seam | Minutes. Reads one diff | Below |
-| Bootstrap | `invariants.md` holds no rules yet | Hours. Reads the codebase | `${CLAUDE_PLUGIN_ROOT}/skills/canon/bootstrap.md` |
-| Audit | The canon is suspected stale | Hours. Reads the codebase against the list | `${CLAUDE_PLUGIN_ROOT}/skills/canon/audit.md` |
-
-Pick the mode from the state: an empty list means bootstrap, a diff in hand means
-amend, and an explicit request to re-check means audit. Say which mode you are in
-before you start. Amend is the common case by an order of magnitude.
-
-## The entry format
+## Invariant format
 
 ```markdown
-7. **Short name.** What must hold, stated so a reviewer can decide whether a
-   diff violates it. One to three sentences.
-   *Detect:* how a violation surfaces — a command, a grep, a review question.
-   *On violation:* what happens — reject, or open an ADR to move the rule.
+7. **Short name.** The rule and its scope.
+   *Detect:* a runnable check, or an explicitly manual review question.
+   *On violation:* reject the change, or agree a rule change and record an ADR.
 ```
 
-Write *Detect* as something runnable where a checker exists, and as the question
-a reviewer asks where none does. A rule whose *Detect* is a question is a
-convention; say so. The enforcement note lives on the rule, never in a footer.
+A candidate must have a concrete possible violation and a material consequence.
+Require evidence that it is a current rule. Repetition alone is insufficient.
+Exclude generic values, duplicates and guarantees already enforced by the
+language or framework. A project checker can enforce an eligible rule.
 
-Numbers are stable. Other documents cite them. Append them; renumber none. A
-retired rule keeps its number, struck through, naming the ADR that retired it.
+Verify that Detect covers the claimed rule. A manual detector is labeled manual;
+a passing narrow checker does not prove a broader claim. Preserve numbers.
+Append new entries; retain a retired entry's number, struck through and linked
+to its ADR. A changed or retired rule requires agreement and an ADR.
 
 ## Amend
 
-This runs against a finished branch, on the diff that landed. Read the diff.
-Read neither the design nor the plan: what landed is the evidence.
+Read the branch diff, relevant current code, rules and agreed decisions.
+Check four questions:
 
-**1. Filter first.** A candidate invariant is falsifiable and load-bearing. Test
-each candidate against all four:
+- Does an existing rule stop holding?
+- Does the change establish a required rule that passes the candidate filter?
+- Does a detector change its coverage?
+- Does an exception change the rule's scope?
 
-- Point at a diff that violates it. A candidate that survives every diff is a
-  value.
-- Breaking it is a bug rather than a surprise.
-- It stands on its own, and follows from no rule already listed.
-- The language or the framework leaves it unenforced. A rule that a project's
-  own checker enforces stays eligible: that checker is its *Detect* line.
+No change is a normal result. State the evidence briefly and finish when all
+four answers are no. Otherwise present the exact proposed edit and its basis.
+Distinguish a code violation from a proposed rule change; the user decides which
+to correct. Write approved changes in the same PR as the affected behavior.
+An already agreed design decision need not be approved again.
 
-A candidate that fails one of the four is dropped here, before anyone reads it.
-
-**2. Then ask the four questions.**
-
-| Question | What it means |
-|---|---|
-| Did a listed rule stop being true? | The diff is the exception. Either the diff is wrong or the rule moved, and the user decides which. This branch alone can retire a rule, and it needs an ADR |
-| Did the diff establish a load-bearing rule? | A new seam whose point is that callers stay off it; a constraint whose breach reintroduces the bug this branch fixed |
-| Did a checker change? | A new lint rule or CI step either enforces a listed entry, whose *Detect* updates, or enforces something unlisted |
-| Did an exception list change? | Narrowing or widening an exemption changes the rule as surely as rewording it |
-
-Four times no is the expected answer and the common one. Most branches earn no
-line. Say "no invariant moved" and stop there.
-
-**3. Propose the exact text** in the entry format, as a diff against the file,
-with one line saying what the branch did to earn it.
-
-**4. Write it once the user agrees**, in the same commit as the code or the ADR
-it belongs to. An entry that moves or retires a rule needs an ADR in the same
-pull request. An entry recording a rule the code already followed needs none.
+Use `/sdd:subsystem` for interaction changes and update `layout.md` when the map
+changes. Record a durable decision using `/sdd:work` and its ADR template.
 
 ## Lessons
 
-`lessons.md` carries what the work taught and a rule would have missed: a runtime
-constraint of the stack, the real shape a dependency returns, a command that
-behaves unlike its documentation. One line, dated, on the branch that learned it.
-Name the ADR where there is one.
-
-This is the one canon file that carries dates. The other two state what is true
-now.
-
-A lesson that hardens into a rule earns an invariant, and its line then names
-that number.
+Record verified project observations in `lessons.md`: runtime constraints,
+observed dependency behavior or a command's unexpected effect. Use one dated
+entry with evidence or an ADR link where available. Omit general advice and
+copies of invariants. If a lesson becomes an agreed invariant, link its number.
