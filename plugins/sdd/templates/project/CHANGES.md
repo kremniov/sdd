@@ -1,23 +1,17 @@
 # Scaffold changes
 
-What changed inside the plugin's half of each scaffold file, one section per
-version. This file is never written into a project; `/sdd:setup` reads it.
+`/sdd:setup` reads this file when updating managed sections. Keep it in the plugin.
 
-A re-run compares the version stamped on a project's fence with the one stamped
-on the template's, and where the project is behind, it carries the entries in
-between. It carries what they *describe*, into the project's own wording — a
-project that phrased the same guidance in its own terms, with its own ticket ids
-and cross-references, is not stale, and the template's current text is not the
-answer for it.
+Compare the project section's version with the template's. If the project is
+behind, apply the intervening entries by meaning. Preserve project wording,
+additions, ticket IDs and references. Different wording alone requires no update.
 
-So an entry states what the guidance now requires and what it replaced, in prose
-that can be applied to text worded differently. No diffs and no quoted template
-lines: both are instructions to overwrite, which is the failure this file
-exists to end.
+Each entry states the new requirement and what it replaces. Write instructions
+that apply to differently worded project text. Omit diffs and quoted template
+lines.
 
-A version whose release changed no scaffold file gets no section. A file whose
-region changes gets its stamp moved to that version and an entry here, in the
-same commit — the gate fails otherwise.
+When a managed template region changes, update its version stamp and add an entry
+under that version in the same commit. Omit versions with no scaffold changes.
 
 ## 1.1.3
 
