@@ -140,8 +140,8 @@ Do not advance if the observed proposal exceeds the next scripted approval.
 Do not change conditions, add hints or retry the agent within the run. Record
 the discrepancy and revise a scenario separately when warranted. Saved scenarios
 are hash-checked before execution; older runs without the hash require a fresh
-preparation. For debug-custom-verify, both debug and work must be loaded before
-the second message; work loaded only after that message cannot satisfy the gate.
+preparation. For debug-custom-verify, require the concrete fix proposal with
+verification before approval and edits; record work loading as diagnostic evidence.
 
 Multi-turn scenarios use `--session-id` and then `--resume` with the same saved
 UUID. Claude therefore persists session data in its local storage. The runner

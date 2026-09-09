@@ -22,7 +22,7 @@
       "gate_conditions": {
         "verified": "Preparation was verified.",
         "committed": "Preparation was committed.",
-        "inprogress": "The queue moved to inprogress before the first implementation edit.",
+        "inprogress": "The preparation implementation commit includes the queue update to inprogress.",
         "blocked": "The queue then moved to blocked with the concrete missing input.",
         "no-work": "No independent work remains.",
         "not-done": "No Done or integration claim was made."

@@ -58,10 +58,9 @@ For a new queue, order tags by type, phase, area and status. Use `[feat]`,
 `[bug]`, `[debt]` or `[chore]` for type; use project phase and area names.
 Status is `[next]`, `[in-progress]`, `[blocked]` or `[someday]`.
 
-Before the first implementation edit, set an existing ticket to the project
-status equivalent to `[in-progress]`. When resuming a blocked task, do this before
-continuing implementation. The status change can share the step's implementation
-commit. Set `[blocked]` or its project equivalent when an obstacle prevents
+When starting or resuming implementation, set an existing ticket to the project
+status equivalent to `[in-progress]`. Include the update in the current step's
+implementation commit. Set `[blocked]` or its project equivalent when an obstacle prevents
 continuing the task and no independent authorized work remains. A blocked part alone does not block the
 whole ticket. Keep details in working notes; those notes do not replace the
 queue status. Leave Done to integration. Update an existing ticket; these

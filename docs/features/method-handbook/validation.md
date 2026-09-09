@@ -390,3 +390,23 @@ sdd-behavior-307icek7, sdd-behavior-7hufq65r, sdd-behavior-yk7fls_m,
 and sdd-behavior-soo8qugu. No target retries, added hints, method changes or source
 PR integration were performed. The queue's external review is a scripted fact;
 the merge simulator does not establish hosted PR behavior.
+
+
+## Bounded simplification (2026-09-09)
+
+User approved simplifying process requirements rather than expanding instructions
+for every observed deviation. Work now requires status for multi-step work and
+before pausing or handing off unfinished work; a single-step task completed in
+the current session needs no separate file. Existing ticket progress belongs in
+the current implementation-step commit, without prescribing file edit order.
+Both method handbooks and current scenario expectations are aligned.
+
+The debug scenario requires reproduction, a concrete proposal with assumptions
+and verification, and approval before edits. Loading work before the approval
+message is diagnostic evidence, not a continuation condition. The debug skill
+itself is unchanged. Branch protection, concrete approval, intermediate commits,
+verification, independent review and integration permission remain in force.
+
+Plugin 1.1.10. Validation is local only; no behavioral reruns were performed.
+Prior findings and the evaluator protocol violation remain historical results
+under their saved criteria and are not retroactively reclassified as passes.

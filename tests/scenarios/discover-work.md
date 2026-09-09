@@ -20,3 +20,6 @@ call. Failed checks are logged too. Keep the verifier unchanged and the log
 outside Git; a verbal success claim is not evidence of execution.
 The verifier checks matching valid port references; the evaluator separately
 checks the user-approved value, so the verifier does not disclose a future port.
+
+A completed single-step operation needs no separate status note. If the agent
+pauses or hands off unfinished work, require its state to be saved.

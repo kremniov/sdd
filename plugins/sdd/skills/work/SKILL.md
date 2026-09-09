@@ -62,16 +62,13 @@ approval of the concrete proposal, including at tier 0. A currently unused port
 can belong to a stopped service; state what the check establishes when proposing
 its replacement. The request alone does not approve values you selected.
 
-At first approval, create `<notes>/<task>-status.md` outside Git, before edits.
-
 Tier 2 runs `/sdd:design` after G1 and `/sdd:plan` after G2. Approval persists
 within its scope across commits, breaks and context compaction. G3 authorizes
 every planned step through a reviewable PR.
 
 ## Execute
 
-Use `/sdd:tasks` for existing tickets before starting or resuming implementation
-edits, and when blocked.
+Update existing tickets through `/sdd:tasks` during implementation and when blocked.
 
 For each step: implement, verify, commit all its changes, update Status, then
 continue. Several commits per step are allowed; independent review need not
@@ -156,10 +153,12 @@ published history or add an empty final commit to keep Done last.
 
 ## Status
 
-Record branch, task, tier, approved decisions, passed gates, current step,
-check results and open questions. Link decisions and artifacts. Update after
-approvals, completed steps and before handoff; mark unfinished work.
+For multi-step work, keep `<notes>/<task>-status.md` outside Git. Save unfinished
+work before a pause or handoff. Single-step work completed this session needs no status file.
+
+Record branch, task, tier, approvals, completed and remaining steps, checks
+and questions. Link decisions and artifacts; update after approvals and steps.
 
 After a break or handoff, read status and current-stage instructions, check Git
 state, and continue unfinished work. Reconcile conflicting evidence before
-repeating a finished step. Store status rather than copies of method rules.
+repeating a finished step. Do not copy method rules.

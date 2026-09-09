@@ -27,3 +27,6 @@ is not sufficient. For Closed, require the supplied change reference in Result a
 synthetic source and export records; it stays separate from the working branch.
 The verifier logs the resolved commit and fails if the branch is absent.
 The target must preserve that branch and must not perform the external integration.
+
+A completed single-step operation needs no separate status note. If the agent
+pauses or hands off unfinished work, require its state to be saved.

@@ -93,9 +93,6 @@ concrete proposal. A request to solve a problem does not confirm values or
 constraints the agent selected independently. A port that has no listener now
 may still belong to a stopped service. State that limit when proposing it.
 
-At first approval, create one status file per task in the configured notes
-directory before editing project files.
-
 Approval remains valid for the agreed scope and decision across commits, breaks
 and context compaction. Implementation approval does not authorize integration.
 
@@ -271,9 +268,9 @@ content or a state cannot be expressed unambiguously, propose a concrete additio
 and agree it before changing the format. Use the skill's format for a new queue.
 
 Check the whole queue, including completed entries, before allocating an ID.
-Never reuse IDs. Before the first implementation edit, set an existing ticket
-to in-progress. When resuming a blocked task, do this before continuing
-implementation. The status change can share the step's implementation commit.
+Never reuse IDs. When starting or resuming implementation, set an existing
+ticket to in-progress. Include the update in the current step's implementation
+commit.
 Set blocked when an obstacle prevents continuing the task and no
 independent authorized work remains. A blocked part alone does not block the
 whole ticket. Working notes retain details but do not replace the queue status.
@@ -297,7 +294,9 @@ and unresolved conflicts. Re-running must not duplicate completed changes.
 
 ## Resuming work
 
-Keep working notes outside Git. Record the branch, task, tier,
+For multi-step work, keep a status file in the configured notes directory outside
+Git. Save unfinished work before a pause or handoff. A single-step task completed
+in the current session needs no status file. Record the branch, task, tier,
 approved decisions, passed gates, current step, check results
 and open questions. Link artifacts and the decision log. Update status after
 approvals, after checking and committing a completed step, and before handoff.
