@@ -104,8 +104,8 @@ it changes or is lost from context.
 
 Resolve questions from available project evidence before asking the user. A
 material question changes behavior, a contract, scope, an architectural
-constraint or significant cost. Group related questions in one round. Recommend
-a solution and state the relevant cost of real alternatives. Reopen an agreed
+constraint or significant cost. Ask one question at a time, preferably through
+`AskUserQuestion` when available. Recommend a solution and state the relevant cost of real alternatives. Reopen an agreed
 decision when new evidence requires it.
 
 Record dated decisions in the working log. Present the resulting decisions for

@@ -47,8 +47,8 @@ acceptance conflicts with requirements or architecture, show the disagreement
 and recommend a resolution. Code shows current behavior; a document can also
 state an obligation that broken code fails to meet.
 
-Group related material questions in rounds. Recommend a choice and state the
-relevant costs of real alternatives. Record dated decisions in
+Ask one question at a time, preferably through `AskUserQuestion` when available.
+Recommend a choice and explain material trade-offs. Record dated decisions in
 `<notes>/<task>-decisions.md`. Reopen agreed choices on new evidence.
 
 | Tier | Decision scope | Approval before implementation |
