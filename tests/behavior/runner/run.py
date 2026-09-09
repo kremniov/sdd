@@ -174,6 +174,27 @@ def run_turn(repo, bundle, scenario, meta, turn, number, destination):
     return meta['state'] == 'finished'
 
 
+def validate_gate(turn, report, session_id, number):
+    conditions = turn.get('gate_conditions')
+    if not isinstance(conditions, dict) or not conditions:
+        raise ValueError('Scenario needs explicit gate_conditions; prepare a fresh run')
+    if report.get('session_id') != session_id or report.get('turn') != number:
+        raise ValueError('Gate report belongs to another session or turn')
+    checks = report.get('checks')
+    if not isinstance(checks, list) or any(not isinstance(c, dict) for c in checks):
+        raise ValueError('Gate report needs a checks list')
+    ids = [c.get('id') for c in checks]
+    if len(ids) != len(conditions) or any(ids.count(key) != 1 for key in conditions):
+        raise ValueError('Report every gate condition exactly once')
+    for check in checks:
+        evidence = check.get('evidence')
+        if check.get('status') != 'passed':
+            raise ValueError(f"Gate condition did not pass: {check['id']}")
+        if not isinstance(evidence, list) or not evidence or any(
+                not isinstance(item, str) or not item.strip() for item in evidence):
+            raise ValueError(f"Concrete evidence is required: {check['id']}")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('name', nargs='?', help='Scenario name, or fixture name with --fixture-only')
@@ -183,6 +204,7 @@ def main():
     parser.add_argument('--timeout', type=int, default=300)
     parser.add_argument('--continue-run', type=Path, help='Existing evidence directory; uses its saved inputs')
     parser.add_argument('--turn', type=int, default=1)
+    parser.add_argument('--gate-report', type=Path, help='Per-condition evaluator report JSON')
     parser.add_argument('--approve-gate', action='store_true', help='Evaluator checked the previous turn against the gate')
     args = parser.parse_args()
     if args.timeout <= 0 or args.turn < 1:
@@ -202,8 +224,8 @@ def main():
         expected = meta.get('completed_turn', 0) + 1
         if args.turn != expected:
             parser.error(f'Next turn is {expected}')
-        if args.turn > 1 and not args.approve_gate:
-            parser.error('Inspect the gate and previous evidence, then use --approve-gate')
+        if args.execute and meta.get('scenario_sha256') != hashlib.sha256((evidence / 'scenario.json').read_bytes()).hexdigest():
+            parser.error('Saved scenario changed or has no integrity hash; prepare a fresh run')
         hashes = {str(p.relative_to(root / 'plugin')): hashlib.sha256(p.read_bytes()).hexdigest()
                   for p in sorted((root / 'plugin').rglob('*')) if p.is_file()}
         if hashes != meta['plugin_sha256']:
@@ -241,6 +263,8 @@ def main():
                 'plugin_sha256': hashes, 'baseline': git(repo, 'rev-parse', 'HEAD'),
                 'model_requested': args.model, 'effort': 'medium', 'mode': (scenario or {}).get('mode', 'explicit'),
                 'timeout_seconds': args.timeout, 'session_id': str(uuid.uuid4()), 'completed_turn': 0}
+        if scenario:
+            meta['scenario_sha256'] = hashlib.sha256((evidence / 'scenario.json').read_bytes()).hexdigest()
         save(evidence / 'metadata.json', meta)
         shutil.copyfile(Path(__file__), evidence / 'runner.py')
     print(json.dumps({'repo': str(repo), 'evidence': str(evidence)}), flush=True)
@@ -256,10 +280,23 @@ def main():
     if destination.exists():
         parser.error('This turn already has evidence; preserve it and prepare a fresh run')
     if not args.execute:
-        print(json.dumps({'turn': args.turn, 'gate': turn.get('gate'), 'prompt': turn['prompt']}))
+        print(json.dumps({'turn': args.turn, 'gate': turn.get('gate'), 'gate_conditions': turn.get('gate_conditions'), 'prompt': turn['prompt']}))
         return
+    report = None
+    if args.turn > 1:
+        if not args.approve_gate or not args.gate_report:
+            parser.error('Continuation requires --approve-gate and --gate-report')
+        try:
+            report = json.loads(args.gate_report.read_text())
+            if not isinstance(report, dict):
+                raise ValueError('Gate report must be an object')
+            validate_gate(turn, report, meta['session_id'], args.turn)
+        except (OSError, ValueError) as error:
+            parser.error(str(error))
     destination.mkdir()
     save(destination / 'turn.json', turn)
+    if report is not None:
+        save(destination / 'gate-report.json', report)
     # External input is supplied only after the evaluator explicitly advances.
     for name, content in turn.get('files', {}).items():
         path = safe_path(repo, name)

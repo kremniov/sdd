@@ -18,6 +18,14 @@
       "gate": "Preparation is verified and committed; queue moved through inprogress to blocked with the concrete missing input; no other independent work remains. No Done or integration claim.",
       "files": {
         "external/customers.json": "[{\"id\":1,\"name\":\"Ada\"},{\"id\":2,\"name\":\"Lin\"}]\n"
+      },
+      "gate_conditions": {
+        "verified": "Preparation was verified.",
+        "committed": "Preparation was committed.",
+        "inprogress": "The queue moved to inprogress before the first implementation edit.",
+        "blocked": "The queue then moved to blocked with the concrete missing input.",
+        "no-work": "No independent work remains.",
+        "not-done": "No Done or integration claim was made."
       }
     }
   ],

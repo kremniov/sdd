@@ -11,7 +11,7 @@ are never reset or reused as inputs.
 `scenarios/` stores target-agent prompts, instruction selection and links to
 criteria in `tests/scenarios/`. Criteria are saved with evidence but are not sent
 to the target agent. A scenario can contain ordered `turns`. Each has a target `prompt`, an evaluator
-`gate`, and optional external input `files`. Gates are not sent to the agent.
+`gate`, individually identified `gate_conditions`, and optional external input `files`. Gates are not sent to the agent.
 The runner executes exactly one turn per invocation.
 
 ## Prepare and run
@@ -102,14 +102,46 @@ python3 tests/behavior/runner/run.py --continue-run <evidence-directory> --turn 
 After inspecting the completed first turn against the next turn's gate:
 
 ```sh
-python3 tests/behavior/runner/run.py --continue-run <evidence-directory> --turn 2 --approve-gate --execute
+python3 tests/behavior/runner/run.py --continue-run <evidence-directory> --turn 2 --approve-gate --gate-report <report.json> --execute
 ```
 
-Omit `--execute` to preview the prompt and gate without supplying external files
-or calling Claude. `--approve-gate` records the evaluator's decision to supply
-that scripted message; it is not a method gate sent to the target agent. Do not
-advance if the observed proposal exceeds the approval scripted in the next turn.
-Record the discrepancy and adjust the scenario separately.
+Omit `--execute` to preview the prompt and conditions without a report, supplying
+external files or calling Claude. Inspect every `gate_conditions` entry against
+the preceding turn's events, repository snapshot and Git history. Write a report:
+
+```json
+{
+  "session_id": "UUID from metadata.json",
+  "turn": 2,
+  "checks": [
+    {
+      "id": "work-loaded",
+      "status": "passed",
+      "evidence": ["turn-01/events.jsonl: event 18, Skill sdd:work from the candidate plugin"]
+    }
+  ]
+}
+```
+
+Include each condition ID exactly once. Use `passed`, `failed` or `unknown`.
+Evidence must identify concrete events, files or commits supporting the verdict;
+for absence claims, name the inspected event range and repository comparison.
+The example is one entry, not a complete report for any current scenario.
+
+Only all-passed reports with nonempty evidence permit execution. The runner checks
+report structure, session and turn, not the truth of evaluator claims. It saves
+the accepted report as `turn-NN/gate-report.json`, outside the target prompt.
+`--approve-gate` alone is insufficient. A rejected report supplies no external
+files and starts no model turn. Preserve failed/unknown reports with the run's
+assessment. Resolve an evidence gap only from existing records; do not relabel
+an observed failure to continue.
+
+Do not advance if the observed proposal exceeds the next scripted approval.
+Do not change conditions, add hints or retry the agent within the run. Record
+the discrepancy and revise a scenario separately when warranted. Saved scenarios
+are hash-checked before execution; older runs without the hash require a fresh
+preparation. For debug-custom-verify, both debug and work must be loaded before
+the second message; work loaded only after that message cannot satisfy the gate.
 
 Multi-turn scenarios use `--session-id` and then `--resume` with the same saved
 UUID. Claude therefore persists session data in its local storage. The runner

@@ -79,21 +79,47 @@ class BehaviorFixturesTest(unittest.TestCase):
         self.assertNotIn('/sdd:work', system)
         self.assertNotIn('Bash', first[first.index('--allowedTools') + 1].split(','))
 
-    def test_continuation_requires_manual_gate(self):
+    def test_continuation_rejects_incomplete_reports_before_external_input(self):
         import sys
+        import hashlib
         from unittest.mock import patch
-        with tempfile.TemporaryDirectory() as temp:
-            evidence = Path(temp)
-            repo = evidence / 'repo'
-            (repo / '.git').mkdir(parents=True)
-            runner.save(evidence / 'scenario.json', {'turns': [{'prompt': 'first'}, {'prompt': 'next'}]})
-            runner.save(evidence / 'metadata.json', {'repo': str(repo), 'completed_turn': 1})
-            args = ['run.py', '--continue-run', str(evidence), '--turn', '2', '--execute']
-            with patch.object(sys, 'argv', args), patch.object(runner, 'run_turn') as execute:
-                with self.assertRaises(SystemExit) as error:
-                    runner.main()
-                self.assertEqual(error.exception.code, 2)
-                execute.assert_not_called()
+        cases = ['no-report', 'missing', 'failed', 'unknown', 'no-evidence', 'duplicate', 'wrong-session', 'wrong-turn', 'changed-scenario']
+        for case in cases:
+            with self.subTest(case=case), tempfile.TemporaryDirectory() as temp:
+                evidence = Path(temp)
+                repo = evidence / 'repo'
+                (repo / '.git').mkdir(parents=True)
+                scenario = {'turns': [{'prompt': 'first'}, {'prompt': 'next',
+                    'gate_conditions': {'debug': 'debug loaded', 'work': 'work loaded'},
+                    'files': {'external.json': '{}'}}]}
+                runner.save(evidence / 'scenario.json', scenario)
+                digest = hashlib.sha256((evidence / 'scenario.json').read_bytes()).hexdigest()
+                runner.save(evidence / 'metadata.json', {'repo': str(repo), 'completed_turn': 1,
+                    'session_id': 'session', 'plugin_sha256': {}, 'scenario_sha256': digest})
+                report = {'session_id': 'session', 'turn': 2, 'checks': [
+                    {'id': key, 'status': 'passed', 'evidence': ['turn-01/events.jsonl: Skill ' + key]}
+                    for key in ['debug', 'work']]}
+                if case == 'missing': report['checks'].pop()
+                if case == 'failed': report['checks'][1]['status'] = 'failed'
+                if case == 'unknown': report['checks'][1]['status'] = 'unknown'
+                if case == 'no-evidence': report['checks'][1]['evidence'] = []
+                if case == 'duplicate': report['checks'][1] = report['checks'][0]
+                if case == 'wrong-session': report['session_id'] = 'another'
+                if case == 'wrong-turn': report['turn'] = 3
+                if case == 'changed-scenario':
+                    scenario['turns'][1]['gate_conditions'].pop('work')
+                    runner.save(evidence / 'scenario.json', scenario)
+                runner.save(evidence / 'report.json', report)
+                args = ['run.py', '--continue-run', str(evidence), '--turn', '2', '--approve-gate', '--execute']
+                if case != 'no-report': args += ['--gate-report', str(evidence / 'report.json')]
+                with patch.object(sys, 'argv', args), patch.object(runner, 'run_turn') as execute:
+                    with self.assertRaises(SystemExit) as error:
+                        runner.main()
+                    self.assertEqual(error.exception.code, 2)
+                    execute.assert_not_called()
+                self.assertFalse((repo / 'external.json').exists())
+                self.assertFalse((evidence / 'turn-02').exists())
+                self.assertEqual(json.loads((evidence / 'metadata.json').read_text())['completed_turn'], 1)
 
     def test_fake_cli_error_and_timeout_preserve_evidence(self):
         import os
@@ -148,7 +174,7 @@ class BehaviorFixturesTest(unittest.TestCase):
                 {'message': 'baseline', 'files': {'.gitignore': 'external.json\n'}}]})
             runner.save(base / 'scenarios/case.json', {'fixture': 'case', 'skills': [], 'resident': False,
                 'expectations': 'expected.md', 'turns': [{'prompt': 'initial'},
-                    {'prompt': 'approved exact change', 'gate': 'EVALUATOR ONLY', 'files': {'external.json': '{}'}}]})
+                    {'prompt': 'approved exact change', 'gate': 'EVALUATOR ONLY', 'gate_conditions': {'checked': 'EVALUATOR ONLY'}, 'files': {'external.json': '{}'}}]})
             work = root / 'work'
             work.mkdir()
             with patch.object(runner, 'REPO', source), patch.object(runner, 'BASE', base), \
@@ -160,8 +186,12 @@ class BehaviorFixturesTest(unittest.TestCase):
                 self.assertFalse((work / 'repo/external.json').exists())
                 evidence = source / 'docs/stuff/eval-runs/work'
                 first = json.loads((evidence / 'metadata.json').read_text())
+                report = {'session_id': first['session_id'], 'turn': 2, 'checks': [
+                    {'id': 'checked', 'status': 'passed', 'evidence': ['turn-01: stub evidence']}]}
+                report_path = root / 'gate.json'
+                runner.save(report_path, report)
                 with patch.object(sys, 'argv', ['run.py', '--continue-run', str(evidence),
-                                               '--turn', '2', '--approve-gate', '--execute']):
+                                               '--turn', '2', '--approve-gate', '--gate-report', str(report_path), '--execute']):
                     runner.main()
                 self.assertEqual(execute.call_count, 2)
                 self.assertEqual((work / 'repo/external.json').read_text(), '{}')
@@ -171,6 +201,7 @@ class BehaviorFixturesTest(unittest.TestCase):
                 self.assertEqual(execute.call_args.args[4]['prompt'], 'approved exact change')
                 self.assertTrue((evidence / 'turn-01/turn.json').is_file())
                 self.assertTrue((evidence / 'turn-02/turn.json').is_file())
+                self.assertEqual(json.loads((evidence / 'turn-02/gate-report.json').read_text()), report)
 
 
     def test_new_fixture_programs_and_initial_states(self):

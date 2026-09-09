@@ -343,3 +343,19 @@ a missing branch despite the correct reference text. They also check that the
 prepared export preserves the source records and stays off the working branch.
 The verifier logs the resolved commit on closure. No live agent run was performed;
 the previous evaluation's missing-reference finding remains historical evidence.
+
+
+## Enforce continuation reports (2026-09-09)
+
+Current multi-turn scenarios enumerate gate conditions by ID. Continuation now
+requires a report for the saved session and next turn: every condition appears
+once, passes and has concrete evidence. The accepted report is saved with the
+next turn and is not sent to the target. The saved scenario hash prevents
+changing conditions during a run. Historical runs without the hash cannot resume
+under the new runner; their existing evidence remains available for assessment.
+
+Local tests reject absent reports, missing/duplicate conditions, failed/unknown
+verdicts, absent evidence, wrong session/turn and changed scenarios before model
+execution or external input. A stubbed successful continuation preserves the
+session and report. These checks establish protocol enforcement, not evaluator
+honesty or improved target behavior. No live model runs were performed.
