@@ -1,0 +1,26 @@
+{
+  "branch": "feature/test",
+  "provenance": "Synthetic input for the approved six coverage gaps, 2026-09-09",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        ".gitignore": "docs/notes/\nexternal/\nverify-runs.jsonl\n",
+        "docs/architecture/invariants.md": "# Invariants\nNo invariant change is needed for the approved work.\n",
+        "docs/roadmap.md": "# Roadmap\nSynthetic local workflow checks.\n",
+        ".sdd.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: true\nticket: T\nrules: CLAUDE.md\n",
+        "docs/features/split/design.md": "# Approved design\nCreate alpha.txt, beta.txt and gamma.txt, each containing its stem and one newline.\n",
+        "docs/features/split/plan.md": "# Approved plan (G3)\nStep 1: add alpha.txt and beta.txt in separate commits. Check their exact content before each commit and both before ending the step.\nStep 2: add gamma.txt; check and commit it. Run true after all work.\n"
+      }
+    },
+    {
+      "message": "feat: add alpha",
+      "files": {
+        "alpha.txt": "alpha\n"
+      }
+    }
+  ],
+  "working_files": {
+    "docs/notes/split-status.md": "Branch feature/test; no ticket; Tier 2; G1/G2/G3 approved. Step 1 unfinished: alpha.txt checked and committed; beta.txt not implemented. Step 2 not started. See docs/features/split/.\n"
+  }
+}

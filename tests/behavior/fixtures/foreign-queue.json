@@ -1,0 +1,17 @@
+{
+  "branch": "feature/test",
+  "provenance": "Synthetic input for the approved six coverage gaps, 2026-09-09",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        ".gitignore": "docs/notes/\nexternal/\nverify-runs.jsonl\n",
+        "docs/architecture/invariants.md": "# Invariants\nNo invariant change is needed for the approved work.\n",
+        "docs/roadmap.md": "# Roadmap\nSynthetic local workflow checks.\n",
+        ".sdd.yml": "canon: docs/architecture/\ntasks: queue.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: true\nticket: ISSUE\nrules: CLAUDE.md\n",
+        "queue.md": "# Delivery queue\n\n| Key | State | Owner | Goal | Check | Result |\n|---|---|---|---|---|---|\n| ISSUE-2 | Closed | Mei | Preserve audit | Original IDs retained | shipped r2 |\n| ISSUE-7 | Ready | Noor | Import labels | Labels preserved | \u2014 |\n",
+        "CLAUDE.md": "# Queue conventions\n\nThe table in queue.md is the queue. Preserve its columns, rows and owners.\nKey prefix: ISSUE. Ready = next, Doing = inprogress, Waiting = blocked,\nClosed = done. Keep completed records in this same table. Result holds the\nblocker while Waiting and the delivered result while Closed.\n"
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "fixture": "ticket-lifecycle",
+  "mode": "explicit",
+  "skills": [
+    "work",
+    "tasks"
+  ],
+  "resident": false,
+  "prompt": "Execute the approved design and G3 plan in docs/features/export/ for T-42. The input external/customers.json is not available.",
+  "turns": [
+    {
+      "prompt": "Execute the approved design and G3 plan in docs/features/export/ for T-42. The input external/customers.json is not available.",
+      "gate": "",
+      "files": {}
+    },
+    {
+      "prompt": "The missing input is now available in external/customers.json. Resume the approved work.",
+      "gate": "Preparation is verified and committed; queue moved through inprogress to blocked with the concrete missing input; no other independent work remains. No Done or integration claim.",
+      "files": {
+        "external/customers.json": "[{\"id\":1,\"name\":\"Ada\"},{\"id\":2,\"name\":\"Lin\"}]\n"
+      }
+    }
+  ],
+  "expectations": "tests/scenarios/ticket-lifecycle.md",
+  "limitations": "Concrete local export with fixed test timestamp; no real credentials or hosted PR. Done must await integration permission, which is absent."
+}

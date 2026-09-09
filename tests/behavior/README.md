@@ -1,13 +1,16 @@
 # Behavioral fixtures
 
 `fixtures/` stores synthetic starting files and ordered baseline commits as JSON.
+Optional `refs` create initial local branches; `working_files` supply ignored
+status or other uncommitted initial state after those commits.
 The runner creates a fresh Git repository for each preparation. Existing runs
 are never reset or reused as inputs.
 
 `scenarios/` stores target-agent prompts, instruction selection and links to
 criteria in `tests/scenarios/`. Criteria are saved with evidence but are not sent
-to the target agent. Keep subsequent user approvals explicit when adding a
-multi-turn scenario; the current runner executes one prompt only.
+to the target agent. A scenario can contain ordered `turns`. Each has a target `prompt`, an evaluator
+`gate`, and optional external input `files`. Gates are not sent to the agent.
+The runner executes exactly one turn per invocation.
 
 ## Prepare and run
 
@@ -22,8 +25,8 @@ python3 tests/behavior/runner/run.py port-files --execute --model sonnet --timeo
 Preparation does not invoke Claude. Each command creates a unique
 `/tmp/sdd-behavior-*` directory and an evidence directory with the same name under
 ignored `docs/stuff/eval-runs/`. Preparation saves the fixture, scenario, runner,
-plugin snapshot and hashes. Execution also saves inputs, raw events, errors,
-Git history and the final repository archive, including untracked working notes.
+plugin snapshot and hashes. Each executed `turn-NN/` saves inputs, raw events, errors, Git history and the
+final repository archive, including untracked working notes.
 Keep evidence when removing temporary working directories.
 
 Execution requires local Claude Code authenticated with `claude.ai`. The runner
@@ -32,8 +35,14 @@ environment and refuses other authentication methods. It uses Sonnet medium by
 default; Opus is an explicit option. It does not invoke the paid API directly.
 The timeout terminates the CLI process group and preserves partial evidence.
 
-The runner supplies selected instructions explicitly. It does not establish
-resident-to-skill discovery, interactive continuation or hosted merge behavior.
+The default mode supplies selected instructions explicitly. `mode: plugin`
+loads the candidate through `--plugin-dir`, renders its resident rules into the
+fixture, and retains the built-in system prompt. It omits `--safe-mode` and
+does not inject skill bodies. Inspect tool events to establish actual skill
+loading; plugin availability alone is insufficient. User/project settings and
+hooks are disabled. Managed policies and any remaining ambient customization
+are not controlled by the fixture; inspect initialization events for interference.
+No mode establishes hosted merge behavior.
 CLI tool permissions are not an operating-system sandbox. Run only synthetic,
 reviewed fixtures in the controlled local environment. Permission denials and
 CLI errors are evidence to assess, not automatic method failures.
@@ -67,10 +76,50 @@ The ticket-status prompt claimed preparation was complete without matching
 artifacts and left the export action unspecified. Its baseline remains archived;
 it must not be treated as a complete lifecycle test.
 
-Before testing remaining gaps, extend these inputs for discovery, custom verify,
-foreign queue conventions, concrete status transitions, interrupted steps and
-merge permission without review. Do not count fixture preparation as those tests.
+The six additional scenarios below cover the previously identified gaps.
+Do not count fixture preparation as observed behavioral success.
 
 The CLI flags follow the installed `claude --help` and the official
 [CLI reference](https://code.claude.com/docs/en/cli-reference) and
 [headless usage](https://code.claude.com/docs/en/headless) documentation.
+
+## Advance a conversation
+
+Prepare without calling Claude:
+
+```sh
+python3 tests/behavior/runner/run.py discover-work
+```
+
+Use the printed evidence directory to run the prepared first turn:
+
+```sh
+python3 tests/behavior/runner/run.py --continue-run <evidence-directory> --turn 1 --execute
+```
+
+After inspecting the completed first turn against the next turn's gate:
+
+```sh
+python3 tests/behavior/runner/run.py --continue-run <evidence-directory> --turn 2 --approve-gate --execute
+```
+
+Omit `--execute` to preview the prompt and gate without supplying external files
+or calling Claude. `--approve-gate` records the evaluator's decision to supply
+that scripted message; it is not a method gate sent to the target agent. Do not
+advance if the observed proposal exceeds the approval scripted in the next turn.
+Record the discrepancy and adjust the scenario separately.
+
+Multi-turn scenarios use `--session-id` and then `--resume` with the same saved
+UUID. Claude therefore persists session data in its local storage. The runner
+keeps raw events and repository snapshots per turn; it does not delete Claude's
+session store. Temporary repositories must remain available for continuation.
+Reusing a turn number, skipping a turn or overwriting an attempted turn is refused.
+After an error, keep evidence and start a new run. Candidate plugin files and
+scenario inputs come from the saved run, not the current checkout.
+
+## Six coverage gaps
+
+The new `discover-work`, `debug-custom-verify`, `foreign-queue`,
+`ticket-lifecycle`, `interrupted-step` and `merge-without-review` scenarios
+have dedicated evaluator documents. Preparation and CLI-stub tests check the
+fixtures and runner; live behavioral evaluation remains a separate step.

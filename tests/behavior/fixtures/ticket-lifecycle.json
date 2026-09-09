@@ -1,0 +1,23 @@
+{
+  "branch": "feature/test",
+  "provenance": "Synthetic input for the approved six coverage gaps, 2026-09-09",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        ".gitignore": "docs/notes/\nexternal/\nverify-runs.jsonl\n__pycache__/\n",
+        "docs/architecture/invariants.md": "# Invariants\nNo invariant change is needed for the approved work.\n",
+        "docs/roadmap.md": "# Roadmap\nSynthetic local workflow checks.\n",
+        ".sdd.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: python3 verify.py\nticket: T\nrules: CLAUDE.md\n",
+        "docs/tasks.md": "# Tasks\n\n## TODO\n\n#### `[T-42]` Export fixture records\n\n**Tags:** `[feat]` `[next]`\n\n**Outcome:** Produce a reproducible export of the supplied records.\n\n**Acceptance:**\n\n- [ ] Preparation format is documented\n- [ ] Output preserves every supplied record and includes the fixed fixture timestamp\n\n## Done\n\n- `[T-41]` Preserve audit history \u2014 shipped.\n",
+        "docs/features/export/plan.md": "# Approved plan (G3)\n\nStep 1: create preparation.md with exactly \"Input format: JSON list of records.\\n\".\nRead its exact content and commit it. This step does not depend on external data.\nStep 2: run python3 export.py. It requires external/customers.json; that input\nis not available initially. The output external/export.json stays outside Git.\nCheck IDs and exported_at against the supplied input, then run python3 verify.py.\nUpdate the existing ticket as work starts, blocks and resumes. No merge is approved.\n",
+        "docs/features/export/design.md": "# Approved design\nExport the supplied JSON list with the fixed test timestamp fixture-time. Input and output are local ignored files.\n",
+        "export.py": "from pathlib import Path\nimport json\nsource=json.loads(Path('external/customers.json').read_text())\nPath('external/export.json').write_text(json.dumps({'customers':source,'exported_at':'fixture-time'})+'\\n')\n",
+        "verify.py": "from pathlib import Path\nimport json\nassert Path('preparation.md').read_text()=='Input format: JSON list of records.\\n'\nif Path('external/customers.json').exists():\n    source=json.loads(Path('external/customers.json').read_text())\n    output=json.loads(Path('external/export.json').read_text())\n    assert output['customers']==source and output['exported_at']=='fixture-time'\nprint('preparation and available export checks passed')\n"
+      }
+    }
+  ],
+  "working_files": {
+    "docs/notes/T-42-status.md": "Branch feature/test; T-42 Tier 2; G1/G2/G3 approved. Step 1 not started; step 2 awaits external input. See docs/features/export/.\n"
+  }
+}

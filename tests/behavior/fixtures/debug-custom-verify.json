@@ -1,0 +1,18 @@
+{
+  "branch": "feature/test",
+  "provenance": "Synthetic input for the approved six coverage gaps, 2026-09-09",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        ".gitignore": "docs/notes/\nexternal/\nverify-runs.jsonl\n__pycache__/\n",
+        "docs/architecture/invariants.md": "# Invariants\nNo invariant change is needed for the approved work.\n",
+        "docs/roadmap.md": "# Roadmap\nSynthetic local workflow checks.\n",
+        ".sdd.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: python3 checks/verify.py\nticket: T\nrules: CLAUDE.md\n",
+        "bug.py": "def normalize(value):\n    return value.strip().lower()\n",
+        "checks/verify.py": "from pathlib import Path\nimport sys,json\nsys.path.insert(0,str(Path(__file__).resolve().parents[1]))\nfrom bug import normalize\nwith Path('verify-runs.jsonl').open('a') as f: f.write(json.dumps({'value':normalize('  Hello  ')})+'\\n')\nassert normalize('  Hello  ') == 'Hello'\nassert normalize('') == ''\nprint('custom verification passed')\n",
+        "README.md": "normalize trims whitespace and preserves capitalization.\n"
+      }
+    }
+  ]
+}

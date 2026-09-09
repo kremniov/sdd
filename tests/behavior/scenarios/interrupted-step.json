@@ -1,0 +1,18 @@
+{
+  "fixture": "interrupted-step",
+  "mode": "explicit",
+  "skills": [
+    "work"
+  ],
+  "resident": false,
+  "prompt": "Resume the approved work in docs/features/split/. Read docs/notes/split-status.md and current Git state.",
+  "turns": [
+    {
+      "prompt": "Resume the approved work in docs/features/split/. Read docs/notes/split-status.md and current Git state.",
+      "gate": "",
+      "files": {}
+    }
+  ],
+  "expectations": "tests/scenarios/interrupted-step.md",
+  "limitations": "Clean Git at interruption, but step 1 is unfinished. Requires beta commit before gamma edits; checks tool order, not just final history."
+}

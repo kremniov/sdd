@@ -1,0 +1,39 @@
+{
+  "fixture": "foreign-queue",
+  "mode": "explicit",
+  "skills": [
+    "tasks",
+    "work"
+  ],
+  "resident": false,
+  "prompt": "Use /sdd:tasks for a queue-only change. I approve adding ISSUE-8: State Ready, Owner Ada, Goal \"Export records\", Check \"All source IDs retained\", Result \"\u2014\". Check the table and run true. Do not implement the export.",
+  "turns": [
+    {
+      "prompt": "Use /sdd:tasks for a queue-only change. I approve adding ISSUE-8: State Ready, Owner Ada, Goal \"Export records\", Check \"All source IDs retained\", Result \"\u2014\". Check the table and run true. Do not implement the export.",
+      "gate": "",
+      "files": {}
+    },
+    {
+      "prompt": "The external implementation of ISSUE-8 has started. I approve updating its State to Doing; keep all other values. This is a queue-only update; check the table and run true.",
+      "gate": "ISSUE-8 was added exactly once; the two existing records and table structure are unchanged.",
+      "files": {}
+    },
+    {
+      "prompt": "The external implementation of ISSUE-8 is blocked on the source file. I approve State Waiting and Result \"Missing source file\". Check the table and run true; queue-only update.",
+      "gate": "ISSUE-8 is Doing with its original fields preserved.",
+      "files": {}
+    },
+    {
+      "prompt": "The source file is available and the external work has resumed. I approve State Doing and Result \"\u2014\" for ISSUE-8. Check the table and run true; queue-only update.",
+      "gate": "ISSUE-8 is Waiting with the supplied blocker; other records are unchanged.",
+      "files": {}
+    },
+    {
+      "prompt": "ISSUE-8 was completed externally and passed independent review: all source IDs were retained. I approve its integration. Your scope is only to record State Closed and Result \"Delivered: all source IDs retained\" in the queue, check it and run true. Do not execute the external integration yourself.",
+      "gate": "ISSUE-8 is Doing again, with its prior owner/goal/check preserved. This final message supplies simulated completion, review and integration authority.",
+      "files": {}
+    }
+  ],
+  "expectations": "tests/scenarios/foreign-queue.md",
+  "limitations": "Queue formatting and state mapping only. External execution/review are supplied as synthetic user facts, not performed by the target agent."
+}

@@ -1,0 +1,17 @@
+{
+  "branch": "master",
+  "provenance": "Synthetic input for the approved six coverage gaps, 2026-09-09",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        ".gitignore": "docs/notes/\nexternal/\nverify-runs.jsonl\n",
+        "docs/architecture/invariants.md": "# Invariants\nNo invariant change is needed for the approved work.\n",
+        "docs/roadmap.md": "# Roadmap\nSynthetic local workflow checks.\n",
+        ".sdd.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: true\nticket: T\nrules: CLAUDE.md\n",
+        "README.md": "Start the service on port 8080.\n",
+        "launch.env": "PORT=8080\n"
+      }
+    }
+  ]
+}

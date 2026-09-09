@@ -209,3 +209,38 @@ This check does not replace independent method review.
 A local CLI stub then simulated an authentication failure; inputs, commands,
 preflight stderr and the final repository archive were all retained. The stub
 did not invoke Claude Code or a model.
+
+## Six coverage-gap scenarios prepared (2026-09-09)
+
+Added discover-work, debug-custom-verify, foreign-queue, ticket-lifecycle,
+interrupted-step and merge-without-review fixtures and evaluator criteria.
+The catalog now contains 22 fixtures and 16 scenario records, one of which is
+the blocked historical ticket-status input. The replacement ticket-lifecycle
+provides concrete preparation, missing input and a working export verifier.
+
+The runner now supports normal plugin loading and manually selected conversation
+turns. It uses a persistent session ID and resumes it; each invocation executes
+one turn. A next turn requires an evaluator gate acknowledgment. External input
+changes are recorded separately from agent actions. Each turn retains raw output
+and a repository archive; continuation checks the saved plugin hashes.
+
+Local checks cover all baseline trees, clean initial state, ordered history,
+ignored working notes, plugin command construction, continuation authority,
+external input timing, stubbed success/error/timeout, actual fixture failure and
+fix, preparation without input, export with input, and local merge rejection
+before a synthetic review receipt followed by a real local fast-forward.
+These are harness/fixture checks, not observed agent behavior. No live Claude
+Code or paid API runs were started in this preparation step. Plugin discovery
+and actual conversational continuation remain unvalidated with a live agent.
+
+The foreign queue case supplies external work/review facts and checks queue
+maintenance only. The merge case simulates the PR service and independent review
+receipt; it does not validate hosted PR checks, remote push or actual independent
+review. Existing method instructions were not changed.
+
+Validation completed: nine offline fixture/runner tests passed;
+`SDD_BASE=ea248b0 ./scripts/check.sh` passed with 19 unit tests. CLI preparation
+of all six scenarios succeeded without calling Claude, including resident
+rendering with no unresolved placeholders. A cheap background agent performed
+a read-only consistency check of the six final scenarios and reported no
+concrete mismatches. This author-side check is not independent method review.
