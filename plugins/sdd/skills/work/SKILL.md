@@ -62,6 +62,8 @@ approval of the concrete proposal, including at tier 0. A currently unused port
 can belong to a stopped service; state what the check establishes when proposing
 its replacement. The request alone does not approve values you selected.
 
+At first approval, create `<notes>/<task>-status.md` outside Git, before edits.
+
 Tier 2 runs `/sdd:design` after G1 and `/sdd:plan` after G2. Approval persists
 within its scope across commits, breaks and context compaction. G3 authorizes
 every planned step through a reviewable PR.
@@ -154,9 +156,8 @@ keep Done last.
 
 ## Status
 
-Create `<notes>/<task>-status.md` at first approval; keep outside Git. Record
-branch, task, tier, approved decisions, passed gates, current step, check
-results and open questions. Link decisions and artifacts. Update after
+Record branch, task, tier, approved decisions, passed gates, current step,
+check results and open questions. Link decisions and artifacts. Update after
 approvals, completed steps and before handoff; mark unfinished work.
 
 After a break or handoff, read status and current-stage instructions, check Git

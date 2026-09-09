@@ -93,6 +93,9 @@ concrete proposal. A request to solve a problem does not confirm values or
 constraints the agent selected independently. A port that has no listener now
 may still belong to a stopped service. State that limit when proposing it.
 
+At first approval, create one status file per task in the configured notes
+directory before editing project files.
+
 Approval remains valid for the agreed scope and decision across commits, breaks
 and context compaction. Implementation approval does not authorize integration.
 
@@ -290,8 +293,7 @@ and unresolved conflicts. Re-running must not duplicate completed changes.
 
 ## Resuming work
 
-Create one status file per task at the first approval in the configured notes
-directory. Keep working notes outside Git. Record the branch, task, tier,
+Keep working notes outside Git. Record the branch, task, tier,
 approved decisions, passed gates, current step, check results
 and open questions. Link artifacts and the decision log. Update status after
 approvals, after checking and committing a completed step, and before handoff.

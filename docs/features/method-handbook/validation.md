@@ -278,3 +278,14 @@ Raw evidence and the detailed classification are under ignored
 are indexed there. No runner, scenario or method instruction was changed in
 response, and no behavioral run was repeated. Independent review and integration
 remain outstanding.
+
+## Status creation sequencing correction (2026-09-09)
+
+User approved moving status creation to the approval sequence. Work now creates
+the ignored status file at first approval, before edits, across all tiers. The
+Status section retains contents and update/resume instructions without repeating
+the creation rule. English method and ignored Russian handbook are aligned.
+Ticket ordering, merge prerequisites, runner and scenarios are unchanged.
+
+Work remains within the 1200-word limit. Structural/frontmatter checks validate
+the edit; no live behavioral repeat is claimed for this correction.
