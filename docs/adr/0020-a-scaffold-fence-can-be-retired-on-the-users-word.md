@@ -1,6 +1,6 @@
 # ADR 0020 — A scaffold fence can be retired, once, on the user's word
 
-**Status:** accepted · **Date:** 2026-09-04 · **PR:** —
+**Status:** accepted · **Date:** 2026-09-04 · **PR:** [#6](https://github.com/kremniov/sdd/pull/6)
 
 ## Context
 

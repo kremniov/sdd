@@ -1,6 +1,6 @@
 # ADR 0019 — A skill with no artifact is named after what a person types
 
-**Status:** accepted · **Date:** 2026-09-04 · **PR:** —
+**Status:** accepted · **Date:** 2026-09-04 · **PR:** [#6](https://github.com/kremniov/sdd/pull/6)
 
 ## Context
 

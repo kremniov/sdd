@@ -1,6 +1,6 @@
 # ADR 0024 — Budgets do not prove behavior
 
-**Status:** accepted · **Date:** 2026-09-08 · **PR:** —
+**Status:** accepted · **Date:** 2026-09-08 · **PR:** [#6](https://github.com/kremniov/sdd/pull/6)
 
 ## Context
 

@@ -1,6 +1,6 @@
 # ADR 0018 — The rules file keeps what holds with no skill loaded; the rest moves into a skill
 
-**Status:** accepted · **Date:** 2026-09-04 · **PR:** —
+**Status:** accepted · **Date:** 2026-09-04 · **PR:** [#6](https://github.com/kremniov/sdd/pull/6)
 
 ## Context
 
