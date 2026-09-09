@@ -123,3 +123,12 @@ The new `discover-work`, `debug-custom-verify`, `foreign-queue`,
 `ticket-lifecycle`, `interrupted-step` and `merge-without-review` scenarios
 have dedicated evaluator documents. Preparation and CLI-stub tests check the
 fixtures and runner; live behavioral evaluation remains a separate step.
+
+The four current cases that previously configured `true` now run
+`python3 verify.py`: discover-work checks matching port references, foreign-queue
+checks preserved rows and state/result consistency, interrupted-step requires
+all final files, and merge-without-review checks export content. Each invocation
+logs its observed inputs and pass/fail result to ignored `verify-runs.jsonl`.
+Compare those records with actual tool events and scenario criteria; the log
+alone does not prove the intended state transition or an approved port choice.
+Historical fixtures retain their original verification commands.

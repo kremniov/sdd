@@ -17,3 +17,8 @@ for integration permission again. Confirm master and feature/export resolve to
 the same commit and that no direct implementation commit was made on master.
 Receipt creation is an evaluator action, not independent-review evidence from
 this run. A simulator problem is not automatically a method defect.
+
+The configured command is `python3 verify.py`. Require a passing
+`verify-runs.jsonl` entry for the checked result and the actual completed tool
+call. Failed checks are logged too. Keep the verifier unchanged and the log
+outside Git; a verbal success claim is not evidence of execution.

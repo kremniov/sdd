@@ -220,5 +220,56 @@ class BehaviorFixturesTest(unittest.TestCase):
             self.assertIn('Step 1 unfinished', (repo / 'docs/notes/split-status.md').read_text())
 
 
+    def test_replacement_verifiers_detect_corruption_and_log_each_run(self):
+        cases = {
+            'discover-work': ({'launch.env': 'PORT=18080\n', 'README.md': 'Start the service on port 18080.\n'},
+                              'README.md', 'Start the service on port 8080.\n'),
+            'foreign-queue': ({}, 'queue.md', '# Empty queue\n'),
+            'interrupted-step': ({'beta.txt': 'beta\n', 'gamma.txt': 'gamma\n'}, 'gamma.txt', 'wrong\n'),
+            'merge-without-review': ({}, 'export.txt', 'old export\n'),
+        }
+        for name, (changes, corrupt, bad) in cases.items():
+            with self.subTest(scenario=name), tempfile.TemporaryDirectory() as temp:
+                data = json.loads((BASE / 'fixtures' / (name + '.json')).read_text())
+                repo = runner.prepare(data, Path(temp))
+                for file, content in changes.items():
+                    (repo / file).write_text(content)
+                command = ['python3', 'verify.py']
+                good = subprocess.run(command, cwd=repo, capture_output=True, text=True)
+                self.assertEqual(good.returncode, 0, good.stderr)
+                (repo / corrupt).write_text(bad)
+                failed = subprocess.run(command, cwd=repo, capture_output=True, text=True)
+                self.assertNotEqual(failed.returncode, 0)
+                log = repo / 'verify-runs.jsonl'
+                records = [json.loads(line) for line in log.read_text().splitlines()]
+                self.assertEqual([event['passed'] for event in records], [True, False])
+                self.assertTrue(all(event['observed'] for event in records))
+                self.assertEqual(runner.git(repo, 'check-ignore', 'verify-runs.jsonl'), 'verify-runs.jsonl')
+                # A missing required file must fail and still produce a log entry.
+                (repo / corrupt).unlink()
+                self.assertNotEqual(subprocess.run(command, cwd=repo, capture_output=True).returncode, 0)
+                self.assertEqual(len(log.read_text().splitlines()), 3)
+
+
+    def test_queue_verifier_accepts_transitions_and_preserves_existing_records(self):
+        data = json.loads((BASE / 'fixtures/foreign-queue.json').read_text())
+        with tempfile.TemporaryDirectory() as temp:
+            repo = runner.prepare(data, Path(temp))
+            queue = repo / 'queue.md'
+            original = queue.read_text()
+            pairs = [('Ready', '—'), ('Doing', '—'), ('Waiting', 'Missing source file'),
+                     ('Doing', '—'), ('Closed', 'Delivered: all source IDs retained')]
+            for state, result in pairs:
+                queue.write_text(original + f'| ISSUE-8 | {state} | Ada | Export records | All source IDs retained | {result} |\n')
+                run = subprocess.run(['python3', 'verify.py'], cwd=repo, capture_output=True)
+                self.assertEqual(run.returncode, 0, run.stderr)
+            valid = queue.read_text()
+            for corrupted in [valid.replace('| Mei |', '| Ada |'),
+                              valid.replace('| Closed | Ada |', '| Waiting | Ada |'),
+                              valid + valid.splitlines()[-1] + '\n']:
+                queue.write_text(corrupted)
+                self.assertNotEqual(subprocess.run(['python3', 'verify.py'], cwd=repo, capture_output=True).returncode, 0)
+
+
 if __name__ == '__main__':
     unittest.main()

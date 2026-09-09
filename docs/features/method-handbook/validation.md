@@ -314,3 +314,18 @@ The merge scenario's continuation gate now rejects any premature merge attempt,
 including one rejected by the simulator, and requires permission recorded in
 status. Structural/frontmatter validation covers the edited artifacts; no live
 repeat is claimed. The prior mixed result remains historical evidence.
+
+## Replace current no-op verification fixtures (2026-09-09)
+
+Replaced verify: true in discover-work, foreign-queue, interrupted-step and
+merge-without-review with python3 verify.py. These commands check scenario
+content and log observed inputs plus success/failure to ignored verify-runs.jsonl.
+Updated the affected queue prompts, approved step plan and evaluator criteria.
+Historical fixtures and recorded run results remain unchanged.
+
+Local tests reject corrupted and missing content, preserve logs for failures,
+and accept all five expected queue transitions while rejecting changed old rows,
+invalid state/result pairs and duplicate records. The port checker validates
+consistency without disclosing a future user-selected value. No agent runs
+were performed; method instructions and the plugin version are unchanged.
+The missing external closure reference remains a separate scenario issue.

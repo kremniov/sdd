@@ -8,9 +8,10 @@
         ".gitignore": "docs/notes/\nexternal/\nverify-runs.jsonl\n",
         "docs/architecture/invariants.md": "# Invariants\nNo invariant change is needed for the approved work.\n",
         "docs/roadmap.md": "# Roadmap\nSynthetic local workflow checks.\n",
-        ".sdd.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: true\nticket: T\nrules: CLAUDE.md\n",
+        ".sdd.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: python3 verify.py\nticket: T\nrules: CLAUDE.md\n",
         "docs/features/split/design.md": "# Approved design\nCreate alpha.txt, beta.txt and gamma.txt, each containing its stem and one newline.\n",
-        "docs/features/split/plan.md": "# Approved plan (G3)\nStep 1: add alpha.txt and beta.txt in separate commits. Check their exact content before each commit and both before ending the step.\nStep 2: add gamma.txt; check and commit it. Run true after all work.\n"
+        "docs/features/split/plan.md": "# Approved plan (G3)\nStep 1: add alpha.txt and beta.txt in separate commits. Check their exact content before each commit and both before ending the step.\nStep 2: add gamma.txt; check and commit it. Run the configured verification after all work.\n",
+        "verify.py": "from pathlib import Path\nimport json\nimport re\n\nrecord = {'passed': False, 'observed': {}}\ntry:\n    observed = {name: Path(name).read_text() if Path(name).is_file() else None\n                for name in ['alpha.txt', 'beta.txt', 'gamma.txt']}\n    record['observed'] = observed\n    for name, content in observed.items():\n        assert content == Path(name).stem + '\\n', f'{name} missing or incorrect'\n    record['passed'] = True\n    print('scenario verification passed')\nfinally:\n    with Path('verify-runs.jsonl').open('a') as log:\n        log.write(json.dumps(record) + '\\n')\n"
       }
     },
     {
