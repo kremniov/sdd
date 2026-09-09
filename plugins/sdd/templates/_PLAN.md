@@ -1,80 +1,48 @@
 # <Feature> — plan
 
-**Ticket:** <ID> · **Design:** [design.md](design.md)
+**Design:** [design.md](design.md)
 
 <!--
-Tier 2 only (see the tier table in the project's rules file). Saved as <features>/<name>/plan.md,
-where <features> is the path in .sdd.yml. Written after design.md is settled;
-this file sequences the work, it does not re-decide it.
-
-**Approving this plan authorizes every step in it.** Execution stops only on a
-red DoD, on a decision the design does not cover, or at a step marked `[gate]` —
-a check the operator runs by hand. Anything else is a step, not a question.
-
-**A plan ends at a merge-ready branch.** Integration is not a step — do not
-write one. The operator merges, after the independent review, and no approval
-given here reaches that far.
-
-**Mirror the steps into the task tool** at the start of execution: one task per
-step, in order, marked in-progress when it starts and completed when its DoD is
-green. The plan is the contract; the task list is where its progress is readable
-while the branch is being written.
-
-**No implementation bodies.** A step names what must become true, under which
-constraints, and how that is checked — not the code that gets there. Writing the
-implementation twice fixes it at the moment least is known about it, and the
-first version arrives at execution looking like an agreed commitment.
-
-What a step MAY carry, because these are interface decisions rather than a
-draft: exported signatures and types, schema, an API fragment, an event payload
-shape, a config key. Rule of thumb: if deleting it would leave a question about
-a seam unanswered, keep it; if it would only save typing, cut it.
-
-Budget: one screen per step. A plan past ~400 lines is describing code.
-
-Keep the headers verbatim so the corpus stays greppable.
+Write beside the approved design. Keep applicable headings; omit empty sections.
+Budget: at most 400 lines. Replace guidance and examples with the actual plan.
 -->
 
 ## Scope
 
-One paragraph: what ships when the last step is green, and the design.md it
-executes. Name what is deliberately left for a follow-up ticket.
+State the result delivered by this plan and link the agreed design.
 
 ## Order
 
-Why the steps run in this order — the dependency that forces it (a migration
-before the code that reads it, a seam before its callers). Say if steps are
-independent and may be parallelized.
+Explain dependencies that determine the sequence. Identify independent steps.
 
 ## Steps
 
-Repeat per step. Number them; a step is a commit, or a tight group of commits.
-A commit boundary is not a checkpoint — append `[gate]` to the heading of a step
-that genuinely needs the operator, and only that step pauses.
+### Step N — <observable result>
 
-### Step N — <what becomes true>
+**Result:** <what becomes true>
 
-**Goal:** the observable change, one sentence.
+**Constraints:** <links to agreed decisions and rules>
 
-**Constraints:** the invariants and prior decisions this step must hold, one
-line each. Link the design.md decision or the invariant rather than restating
-the reasoning.
+**Touches:** <components and files>
 
-**Touches:** packages and files, with the exported signatures or schema this
-step introduces or changes.
+**Check:** <command and expected result, or manual procedure, observation and owner>
 
-**DoD:** the command that proves it, and what its output must show. A test name,
-a lint target, a migration that applies and rolls back — something runnable, not
-"works correctly". A step whose DoD is the whole suite writes the `verify:`
-command from `.sdd.yml`.
+<!--
+Example: import valid rows despite rejected rows.
+Constraints: the agreed per-row outcome contract in design.md.
+Touches: the importer and result presentation.
+Check: mixed-validity input imports valid rows and lists each rejected row with
+its reason; required project checks pass.
 
-## Verification
+A step can contain several commits. Commit the verified result before the next
+step. Mark a required human action [gate] and specify what is needed.
+-->
 
-The gate for the branch as a whole: the `verify:` command from `.sdd.yml`, plus
-anything this branch needs beyond it, and the manual check if any (naming who
-runs it).
+## Final verification
 
-## Docs & ADR
+Run the configured verify command after code and document changes. State any
+additional checks and who runs manual verification.
 
-Which architecture docs update in the same PR, and which design.md decisions
-were marked `→ ADR` and therefore need one written before merge.
+## Documents and decisions
+
+Link the canon updates and ADRs required in this PR. Assign them to steps above.

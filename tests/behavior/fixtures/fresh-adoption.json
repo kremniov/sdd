@@ -1,0 +1,11 @@
+{
+  "branch": "master",
+  "provenance": "Reconstructed input from original harness; repository has no baseline commit.",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {},
+      "executable": []
+    }
+  ]
+}

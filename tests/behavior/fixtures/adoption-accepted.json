@@ -1,0 +1,13 @@
+{
+  "branch": "master",
+  "provenance": "Reconstructed input from original harness; repository has no baseline commit.",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        "CLAUDE.md": "# Project rules\n\n<!-- sdd:rules v1.0.0 -->\nThe user runs the merge command.\nProject constraint: reserve port 8000 for offline tests.\n<!-- /sdd:rules -->\n\n## Project body\nKeep task IDs and links.\n"
+      },
+      "executable": []
+    }
+  ]
+}

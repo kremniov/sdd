@@ -1,115 +1,54 @@
 ---
 name: design
-description: Use when a tier-2 task is picked up — a new seam, an invariant that moves, or several decisions that have to be agreed together — to turn an ambiguous ticket into an agreed design before any code, then into a plan that sequences the work. Produces design.md and plan.md.
+description: Write a complete tier-2 design from approved discussion decisions and submit it for G2 approval.
 ---
+ # Design
 
-# Design and Plan
+For files intended for Git, follow `/sdd:work` Branch and completion before
+editing and when handing over the result.
 
-Turn a ticket into a design through dialogue, then write it down.
+## Inputs
 
-**Which tasks:** tier 2 in the tier table in the project's rules file (`rules:`
-in `.sdd.yml`, usually `CLAUDE.md`). Tier 1 gets a design paragraph in the
-conversation; tier 0 gets none.
+Use `/sdd:work` for scope, approval and stop conditions. Begin after G1. Read
+`.sdd.yml` for `features`, `notes`, `tasks`, `roadmap`, `canon` and `adr`. Split
+each line at its first colon and remove comments from the first `#`. If
+configuration is absent, offer `/sdd:setup`. Ask for required missing values.
 
-When the operator invoked this skill by name, run it — they have already made
-the sizing call. Judge the tier yourself only when you reached this skill on
-your own, and say which tier you judged it and why before starting.
+Read the approved `<notes>/<task>-decisions.md`, the request or ticket, relevant
+product requirements, roadmap, canon, ADRs and code. A task without a ticket
+uses the request. If approved decisions are missing from the log, recover them
+from the conversation and record them; ask about decisions that cannot be
+recovered.
 
-Paths come from `.sdd.yml`: `canon:`, `tasks:`, `features:`, `adr:`, `rules:`.
-Read it first.
+Identify disagreements between acceptance, requirements, constraints and code.
+Present new evidence that changes an agreed decision to the user before relying
+on the change. Keep settled choices unless that evidence requires reopening
+them.
 
-Reading `.sdd.yml`: one `key: value` per line; the first `:` separates them and
-everything from the first `#` is a comment. Values are used verbatim — no
-unquoting, no variable expansion. If the file is absent, say so and stop — the project has not
-adopted this method (`/sdd:setup`). If a key this skill needs is absent
-or its value is empty, name the key and ask; do not fall back to a default path,
-because writing to a guessed location is how a project ends up with two task
-queues.
+## Write and submit
 
+1. Read `${CLAUDE_PLUGIN_ROOT}/templates/_DESIGN.md` in place.
+2. Write `<features>/<task>/design.md`. State the observed problem, required
+   result, scope, decisions, contracts, interactions, failures and verification.
+3. Link governing invariants and existing contracts. Name documents that need
+   updates. Mark durable decisions `→ ADR`; `/sdd:work` records them with the work.
+4. Check for missing decisions, conflicting sections and scope beyond the
+   request. Retain a detail when deleting it leaves a material choice open or
+   prevents verification. Omit empty sections.
+5. Present the complete document at G2. Discuss it section by section only when
+   the user requests that process. Apply feedback and wait for approval.
+6. Commit the approved design. Continue with `/sdd:plan` when the task includes
+   that phase. For design alone, hand over the approved artifact through
+   `/sdd:work`; leave implementation unstarted.
 
-## Process
+Use current project patterns within agreed constraints. Include a local
+structural correction when the change requires it; propose unrelated refactoring
+as separate work.
 
-**1. Read the context first.** The ticket in the queue, then the canon —
-`invariants.md`, `layout.md`, and the subsystem doc the work touches. Existing
-decisions in the ADR directory that govern the seam. Recent commits in the
-modules involved. Come to the first question already knowing what the repo does
-today.
+## Content budget
 
-**2. Ask one question per message.** Purpose, constraints, success criteria —
-what the ticket leaves open. Prefer a small set of concrete options over an open
-prompt; lead with your recommendation and say why. A question whose answer you
-could have found in the repo is a question you should not ask.
-
-**3. Propose 2–3 approaches** with trade-offs, recommendation first. YAGNI
-ruthlessly: strip from every approach what the ticket does not ask for. If
-something outside the ticket is worth doing, name it as a separate ticket rather
-than folding it in.
-
-**4. Present the design in sections**, each scaled to its complexity — a couple
-of sentences when it is straightforward. Cover the seams touched, the data model
-and flow, error handling, and what proves it works. Check after each section
-that it still looks right.
-
-**5. Write the design** to `<features>/<feature-name>/design.md`, following the
-skeleton at `${CLAUDE_PLUGIN_ROOT}/templates/_DESIGN.md`. Read the skeleton
-rather than reproducing it from memory — the copy is what keeps the corpus
-greppable. Mark decisions `→ ADR` where they outlive the feature; the merging PR
-promotes them.
-
-**6. Self-review the written design**, once, and fix inline: placeholders and
-TBDs; sections that contradict each other; a requirement that reads two ways —
-pick one and say it; scope that no longer fits a single plan.
-
-**7. Ask the operator to read it** before moving to the plan. Changes come back
-here; the design is what the plan executes, so it settles first.
-
-## Designing for an existing codebase
-
-- Explore the current structure before proposing changes, and follow the
-  patterns already there. The canon is authoritative — link it rather than
-  restating it in the design.
-- Each unit gets one purpose, a defined interface, and independent tests. For
-  each: what does it do, how is it used, what does it depend on. If a consumer
-  has to read the internals, the boundary is wrong.
-- Where existing code in the path of the work has a real problem — a file that
-  outgrew its purpose, a tangled responsibility — include the targeted fix in the
-  design, the way a careful developer improves code they are working in.
-  Unrelated refactoring stays out.
-- Name which invariants the work touches and which canon documents update in the
-  same PR. A design that moves an invariant without saying so is not finished.
-  If the work changes a seam no subsystem document covers, say that the branch
-  will write one (`/sdd:subsystem`).
-
-## After the design: the plan
-
-Tier 2 continues into `<features>/<feature-name>/plan.md`, following
-`${CLAUDE_PLUGIN_ROOT}/templates/_PLAN.md`. The plan sequences the work; it does
-not contain it. Steps carry a goal, constraints, what they touch, and a runnable
-DoD — not function bodies.
-
-The last step leaves a merge-ready branch. Execution's terminal state is that
-branch plus the independent review's findings, handed to the operator, who
-decides whether it integrates — so no step is written for the merge itself.
-
-## At merge: the ADR
-
-A decision marked `→ ADR` in the design is written when the work merges, into
-`<adr>/NNNN-<slug>.md`, following `${CLAUDE_PLUGIN_ROOT}/templates/_ADR.md`.
-Numbers are sequential and never reused; check the directory for the highest.
-
-Its `PR:` field is filled as soon as the number exists, and at the latest in the
-commit that moves the ticket to Done. That commit is the backstop because it is
-the only one that certainly runs after the number is known; nothing else on the
-branch comes back for it, which is how ADRs end up shipping with a dash.
-
-This is the only place the ADR skeleton's location is written down, because
-the rules file cannot name it — the plugin path resolves inside skill text, not in
-a project file. When an ADR is due and this skill is not loaded, invoke it, or
-read the skeleton at the path above.
-
-## What this is not
-
-Not a template to fill in. Scale each section to what the ticket actually leaves
-open: two sentences where the answer is obvious, a real argument where it is
-not. The cost of the cycle is real and falls on the operator's attention, so
-spend it on the genuinely open questions rather than on filling headers.
+Aim for at most 1300 words, with a 2000-word ceiling and at most 12 headings.
+These are upper bounds, not content targets. State a choice and its decisive
+constraint briefly. Include additional evidence when needed to assess it. There
+is no minimum sentence or decision count. Keep detailed existing contracts at
+their source and link them.

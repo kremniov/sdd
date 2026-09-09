@@ -1,0 +1,14 @@
+{
+  "branch": "master",
+  "provenance": "Recovered first commit abef3a58260dde5cef1006023e55f50e190d618a",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        ".sdd.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: true\nticket: T\nrules: CLAUDE.md\n",
+        "attempts.md": "Three distinct fixes failed to resolve a reproduced failure: timeout adjustment, cache removal, retry adjustment. Each still produces the same incorrect result. These fixes were reverted. Current evidence does not identify the cause.\n"
+      },
+      "executable": []
+    }
+  ]
+}

@@ -1,114 +1,85 @@
 # Architectural invariants
 
-Canonical list. These rules apply to all work in this repository. Any change
-that violates one is a regression and requires an explicit, documented invariant
-change — open an ADR under `docs/adr/`.
+Current rules for this plugin. [The method](../method.md) specifies workflow
+behavior. Decision records preserve history. Link these entries by number.
 
-This is the single source of truth. `CLAUDE.md` and feature designs **link
-here**; they do not restate them.
-
-1. **The plugin knows no project paths.** A skill reads every project location
-   from `.sdd.yml`. A hardcoded `docs/...` in a skill's *instructions* is a
-   defect — it is what makes a method unportable. Paths inside an illustrative
-   `.sdd.yml` block are not instructions and are exempt.
-   *Detect:* read the skill; the distinction needs a reader, not a grep.
-   *On violation:* reject — route the path through a config key.
-2. **Artifact skeletons are read, never copied.** `_DESIGN.md`, `_PLAN.md` and
-   `_ADR.md` are read in place from `${CLAUDE_PLUGIN_ROOT}/templates/`; nothing
-   copies them into a project (ADR 0002). The project *scaffold* under
-   `templates/project/` is the opposite by design — written into the repo once,
-   at adoption, and thereafter owned by the project. It is read again only to
-   compare, and the comparison is between version stamps, never between texts:
-   the plugin's half of each scaffold file is fenced (ADR 0009) and the fence
-   carries the version its region last changed in, so a re-run offers the
-   changes described in `templates/project/CHANGES.md` between that version and
-   the project's, and offers nothing at all when the stamps match (ADR 0011). It
-   is never read to overwrite.
-   *Detect:* `./scripts/check.sh` — every referenced path must exist, every
-   shipped skeleton must be named by some skill, and every scaffold file must
-   carry exactly one well-formed fence, stamped with a version that is not ahead
-   of the plugin's, that moves whenever the region does, and that the change log
-   accounts for.
-   *On violation:* reject.
-3. **Adoption is additive.** No skill overwrites or reformats a file it did not
-   write in this run. Where it would change something that exists, it reports
-   and asks. A method that rearranges someone's repository on first contact does
-   not get a second run.
-   *Detect:* run adoption against a repo with existing docs; `git status` must
-   show additions only.
-   *On violation:* reject — this is the rule that makes the plugin safe to try.
-4. **Execution-time rules live in the project's rules file.** Not in a skeleton
-   comment, which does not survive into the generated artifact, and not only in
-   a skill, which loads on a trigger (ADR 0002).
-   *Detect:* ask when the rule must be in context. If the answer is "while
-   writing code", it belongs in `CLAUDE.section.md`.
-   *On violation:* move the rule; leave a pointer where it was.
-5. **Nothing from the origin codebase leaks in.** No stack, vendor, or domain
-   terms in skills or templates — the method is language-agnostic, and an
-   example that is not generic is a bug.
-   *Detect:* `./scripts/check.sh` matches skills and templates against a list
-   of ecosystem terms spanning many stacks — a list tuned to one project would
-   itself describe that project. A domain term it does not name needs a reader.
-   *On violation:* reject, and add the term if the list should have had it.
-6. **The canon is observed, never invented.** `/sdd:canon` writes only rules
-   the code actually holds, and writes nothing when there are none (ADR 0003). A
-   speculative invariant is worse than a missing one: it gets cited as if it had
-   been checked.
-   *Detect:* every entry must name the code that holds it.
-   *On violation:* strike the entry — an unfounded rule is not fixed by
-   softening its wording.
-7. **Shipped text states what to do, not why to do it.** Skills, templates and
-   the project scaffold carry rules; they do not carry the argument for a rule,
-   nor anti-rationalization tables, red-flag blocks or "regardless of perceived
-   simplicity" gates (ADR 0015). A clause naming what does *not* satisfy a rule
-   is part of the rule and stays. When a rule is disobeyed it gets reworded, not
-   annotated. One exception: the "three failed fixes" rule in `/sdd:debug`, a
-   threshold rather than an argument, kept because that failure mode was
-   observed rather than imagined. `templates/project/CHANGES.md` is not shipped
-   text and is outside this rule: it reaches no project, and an entry that
-   dropped what the guidance replaced would leave an instruction to overwrite,
-   which is the failure ADR 0011 exists to end.
-   *Detect:* delete the sentence and ask whether anything someone may do
-   changed. If nothing did, it was justification. A table of excuses or a
-   paragraph arguing against skipping the step above it needs no test.
-   *On violation:* cut it — the instruction is the product, and padding it
-   with compliance prose is what this method exists to avoid.
-8. **Invariant numbers are stable.** Documents cite them. Append; never
-   renumber. A retired rule keeps its number, struck through, naming the ADR.
-   *Detect:* a diff that changes an existing entry's number.
-   *On violation:* reject.
-9. **This repo's `CLAUDE.md` is a render of the scaffold, not a copy.** It is
-   generated by substituting `.sdd.yml` into
-   `templates/project/CLAUDE.section.md`, so the method is dogfooded on the repo
-   that ships it. Edit the template, then re-render — never edit `CLAUDE.md`.
-   *Detect:* `./scripts/check.sh` fails when the two drift.
-   *On violation:* re-render from the template; the template is the source.
-10. **Every catalogue entry resolves to a plugin manifest.** A source is spelled
-    in full from the marketplace root, `./`-prefixed; `metadata.pluginRoot` is
-    not used (ADR 0008). Schema validation passes on a source that points
-    nowhere, and a manifest no installation can follow is the one defect that
-    reaches every user and that no user can work around.
-    *Detect:* `./scripts/check.sh` resolves each `source` and requires
-    `.claude-plugin/plugin.json` under it, naming the same plugin.
-    *On violation:* reject — nothing else in a release matters until this passes.
-11. **Shipped text names only skills that exist, and names them `/sdd:<skill>`.**
-    A rename lands in the directory and the frontmatter together and leaves the
-    prose behind, where the old name reads as an instruction to run something
-    absent from `/skills`. The scaffold is the worst place for one: it is copied
-    into a repository and outlives any correction here.
-    *Detect:* `./scripts/check.sh` resolves every `/sdd:` reference against the
-    skills directory and fails on a retired name. The canon is scanned; frozen
-    artifacts and decision records quote old names on purpose and are not.
-    *On violation:* reject — and if the name changed, add it to the retired map
-    so the next occurrence is caught rather than read.
+1. **Project locations come from configuration.** Skills read project paths
+   from `.sdd.yml`. Example configurations may show illustrative paths.
+   *Detect:* manual review of skill inputs and every project file operation.
+   *On violation:* use the configured location.
+2. **Skeletons and scaffold have different lifecycles.** Skills read artifact
+   skeletons in place from the plugin. Setup writes scaffold into missing project
+   files. Existing managed guidance updates through stamped, described changes;
+   matching versions need no edit. Legacy retirement follows ADR 0020.
+   *Detect:* `./scripts/check.sh` checks paths, reachability, fences, stamps and
+   migration entries; manual scenario review checks semantic updates.
+   *On violation:* correct the reference or migration before release.
+3. **Adoption preserves project content.** Existing-file changes require an
+   approved concrete proposal. Preserve unrelated text and project additions.
+   Legacy region replacement is shown in full and requires explicit approval.
+   *Detect:* fresh, existing-process, accepted-update, declined-update and
+   malformed-marker scenarios compare file contents with the approved edits.
+   These are manual or agent-run checks, not assertions made by the structural suite.
+   *On violation:* restore unapproved changes and correct the setup procedure.
+4. **Instructions load where they are needed.** Resident text holds cross-session
+   constraints and routing. Work owns the execution sequence; specialized skills
+   own their procedures and standalone inputs. References have loading conditions.
+   Templates specify artifact content. See ADR 0022, amending ADR 0018.
+   *Detect:* manual coverage review against `docs/method.md` and scenario inputs.
+   *On violation:* assign a rule to its owner and remove unnecessary duplication.
+5. **The method is portable across project stacks.** Skills and templates do
+   not require the origin project's technology or domain. Examples are generic.
+   *Detect:* `./scripts/check.sh` checks ecosystem terms and source/command
+   patterns; manual review covers assumptions outside that vocabulary list.
+   *On violation:* replace the project-specific requirement with a portable one.
+6. **Canon rules require evidence and accepted obligations.** Separate current
+   behavior, required rules and proposals. A violation does not authorize changing
+   the obligation. See ADR 0023, amending ADR 0003.
+   *Detect:* manual review of rule evidence and detector coverage; canon scenarios
+   check unsupported proposals and widespread violations.
+   *On violation:* report the discrepancy and obtain agreement before changing a rule.
+7. **Working instructions change an action or decision.** State actions,
+   conditions, authority and results. Keep a reason only when needed to choose
+   correctly. Omit rhetoric and incident history. Migration entries may explain
+   replaced guidance; ADRs preserve decision history. See ADR 0023, amending ADR 0015.
+   *Detect:* manual deletion test: would removing the sentence change a justified
+   action, decision or result? Scenario evaluation checks the remaining behavior.
+   *On violation:* remove or rewrite unnecessary prose.
+8. **Invariant numbers are stable.** Append new rules. Retired entries retain
+   their number and link the retirement ADR.
+   *Detect:* compare numbered entries with the base revision.
+   *On violation:* restore numbering and correct references.
+9. **The repository rules are rendered from the scaffold.** Substitute `.sdd.yml`
+   into `templates/project/CLAUDE.section.md` to produce the managed CLAUDE section.
+   *Detect:* `./scripts/check.sh` checks that the render is present in CLAUDE.md.
+   *On violation:* edit the template and re-render.
+10. **Catalogue sources resolve to matching manifests.** Spell the source in
+    full relative to the marketplace root, prefixed with `./`; omit pluginRoot.
+    *Detect:* `./scripts/check.sh` resolves each source and checks plugin identity.
+    *On violation:* correct the catalogue path or manifest.
+11. **Active skill references resolve.** Use `/sdd:<skill>` and matching skill
+    directories and frontmatter. Historical records can retain old names.
+    *Detect:* `./scripts/check.sh` scans active documents and resolves skill names.
+    *On violation:* update the reference and any affected migration guidance.
+12. **Size checks and behavior checks are distinct.** A SKILL.md has at most
+    1200 words including examples; resident rules have at most 400. Skill,
+    resident and skeleton headings stop at H3 outside fenced examples. Negation
+    frequency is advisory. Report reference and migration text volume separately
+    from any measured session load. See ADR 0024, replacing ADR 0021's density gate.
+    *Detect:* `./scripts/check.sh` checks size/depth and checker tests. Scenario
+    review and observed runs assess behavior; the counters do not establish it.
+    *On violation:* reduce excess size or depth; investigate behavior separately.
 
 ## Layout responsibilities
 
-| Part | Location | Owns | Must NOT |
-|---|---|---|---|
-| Marketplace | `.claude-plugin/` | the catalogue entry pointing at the plugin | contain the plugin itself |
-| Plugin manifest | `plugins/sdd/.claude-plugin/` | name, version, metadata | anything a skill reads at runtime |
-| Skills | `plugins/sdd/skills/<name>/` | one job each, config-driven | hardcode a project path, or carry `{{placeholders}}` |
-| Templates | `plugins/sdd/templates/` | artifact skeletons | reference the origin project |
-| Project scaffold | `plugins/sdd/templates/project/` | what adoption writes into a repo, fenced and version-stamped where the plugin's half ends; `CHANGES.md` says what each version changed and ships to no project | be read to overwrite; outside adoption it is read only to compare stamps and carry a described change |
-| Checks | `scripts/` | the structural gate | require a language runtime beyond python3 |
+| Part | Location | Responsibility |
+|---|---|---|
+| Catalogue | `.claude-plugin/` | Resolve the plugin source |
+| Manifest | `plugins/sdd/.claude-plugin/` | Version and package metadata |
+| Skills | `plugins/sdd/skills/` | Scoped procedures and conditional references |
+| Skeletons | `plugins/sdd/templates/_*.md` | Artifact content, read in place |
+| Scaffold | `plugins/sdd/templates/project/` | Rendered project guidance and semantic migration history |
+| Method | `docs/method.md` | Complete agreed behavior for readers and maintainers |
+| Scenarios | `tests/scenarios/` | Versioned input cases and evaluator expectations |
+| Behavioral fixtures | `tests/behavior/` | Reproducible repositories, prompts and local agent runner |
+| Checks | `scripts/`, `tests/test_*.py` | Structural checks using the standard library |

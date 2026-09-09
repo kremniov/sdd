@@ -2,8 +2,8 @@
 
 import sys
 
-REQUIRED = ("canon", "tasks", "roadmap", "features", "adr", "verify", "ticket", "rules")
-DIRS = ("canon", "features", "adr")
+REQUIRED = ("canon", "tasks", "roadmap", "features", "adr", "notes", "verify", "ticket", "rules")
+DIRS = ("canon", "features", "adr", "notes")
 
 ok = True
 seen = {}

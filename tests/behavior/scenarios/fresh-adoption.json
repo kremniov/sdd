@@ -1,0 +1,10 @@
+{
+  "fixture": "fresh-adoption",
+  "skills": [
+    "setup"
+  ],
+  "resident": false,
+  "prompt": "Set up SDD in this disposable repository. I already approve this exact configuration:\ncanon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: true\nticket: T\nrules: CLAUDE.md\n\nI approve creating the missing scaffold, a new CLAUDE.md resident section and ignoring docs/notes/ in .gitignore. No existing project content or process exists outside the supplied bundle. Apply this approved proposal; keep the bundle unchanged. File tools are available; report checks requiring unavailable tools as skipped.",
+  "expectations": "tests/scenarios/fresh-adoption.md",
+  "limitations": "Explicit instruction injection; does not test skill discovery. No remote or hosted PR operations."
+}

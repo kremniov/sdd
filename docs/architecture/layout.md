@@ -1,55 +1,24 @@
 # Layout
 
-Where things live. Read `invariants.md` first — this says where, that says what
-must hold.
+| Path | Responsibility |
+|---|---|
+| `.claude-plugin/marketplace.json` | Catalogue entry resolving the plugin |
+| `plugins/sdd/.claude-plugin/plugin.json` | Plugin identity and version |
+| `plugins/sdd/skills/<name>/SKILL.md` | One procedure with matching frontmatter |
+| `plugins/sdd/skills/<name>/*.md` | Conditional procedure references |
+| `plugins/sdd/templates/_*.md` | Design, plan and ADR skeletons, read in place |
+| `plugins/sdd/templates/project/` | Rendered scaffold; CHANGES.md stays in the plugin |
+| `docs/method.md` | Complete agreed method |
+| `docs/architecture/` | Current invariants, map and plugin interactions |
+| `docs/adr/` | Durable decision history |
+| `docs/features/<name>/` | Feature artifacts, historical after merge |
+| `docs/tasks.md`, `docs/roadmap.md` | Queue and direction |
+| `tests/scenarios/` | Behavioral cases and evaluation procedure |
+| `tests/test_register.py` | Register checker behavior tests |
+| `scripts/check.sh` | Entry point for structural checks |
+| `docs/stuff/` | Ignored discussion, status and evaluation evidence |
 
-```
-.claude-plugin/marketplace.json   the catalogue: one entry, pointing at plugins/sdd
-plugins/sdd/
-  .claude-plugin/plugin.json      name, version, license, keywords
-  skills/<name>/SKILL.md          one skill per directory; the directory name is
-                                  the skill name and the frontmatter must match
-  templates/
-    _DESIGN.md _PLAN.md _ADR.md   artifact skeletons, read via ${CLAUDE_PLUGIN_ROOT}
-    project/                      what adoption writes INTO a repo, with
-                                  {{placeholders}} substituted from .sdd.yml
-      CHANGES.md                  what each version changed; read by a re-run,
-                                  written into no project
-docs/
-  architecture/                   this canon
-    invariants.md                 the rules
-    layout.md                     this file
-    plugin-mechanics.md           what crosses the plugin/project boundary, when
-  adr/                            one decision per file
-  features/<name>/                design.md + plan.md, frozen at merge
-  tasks.md  roadmap.md
-scripts/check.sh                  the structural gate
-```
-
-## Where to start reading
-
-`README.md` for what the method is. Then `plugins/sdd/templates/project/CLAUDE.section.md`
-— that file **is** the method, in the form a project receives it. The skills are
-supporting procedures around it. Before changing how a skill reaches a project,
-read `plugin-mechanics.md`.
-
-## The two directories that look alike
-
-`templates/` holds skeletons the model reads while writing an artifact in
-someone's project. `templates/project/` holds files that get written into the
-project once, at adoption, with placeholders substituted. Nothing under
-`templates/` directly is ever copied.
-
-A scaffold file is read once more after that, and only to compare: each carries
-a `<!-- sdd:scaffold vN.N.N -->` fence around the part the plugin wrote, stamped
-with the version its region last changed in. A re-run of `/sdd:setup` compares
-that stamp against the template's and offers the entries `CHANGES.md` records in
-between, so a project takes a correction into its own wording and keeps what it
-wrote below (ADR 0009, ADR 0011; invariant 2).
-
-## Adding a skill
-
-A directory under `plugins/sdd/skills/`, a `SKILL.md` whose frontmatter `name`
-matches the directory, a description that says when to use it. Then
-`./scripts/check.sh`. Bump `version` in `plugin.json` — without a bump,
-installed copies do not update.
+Start with `docs/method.md` for behavior, then the relevant skill. Read
+`invariants.md` before changing plugin rules and `plugin-mechanics.md` before
+changing adoption or file resolution. Scenario results must identify whether they
+are textual walkthroughs or observed agent runs.

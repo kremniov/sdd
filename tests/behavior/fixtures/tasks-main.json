@@ -1,0 +1,15 @@
+{
+  "branch": "main",
+  "provenance": "Recovered first commit 06015a5d419310b7d07245750dd0f16b89b63180",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        ".gitignore": "docs/notes/\n",
+        ".sdd.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: true\nticket: T\nrules: CLAUDE.md\n",
+        "docs/tasks.md": "# Tasks\n\n## Active\n\n## Done\n"
+      },
+      "executable": []
+    }
+  ]
+}

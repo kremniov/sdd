@@ -1,0 +1,11 @@
+{
+  "fixture": "ticket-status",
+  "skills": [
+    "work",
+    "tasks"
+  ],
+  "resident": false,
+  "prompt": "",
+  "expectations": "tests/scenarios/ticket-status-transitions.md",
+  "blocked": "Repair initial conditions before running: original prompt claimed completed preparation without artifacts; export action and credential simulation were unspecified."
+}

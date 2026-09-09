@@ -2,8 +2,8 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "sdd",
   "displayName": "Spec-Driven Development",
-  "version": "0.5.1",
-  "description": "Sizes design process to the task at hand. Brings a tier table, the rules that make an approved plan run to its end, artifact skeletons, and skills to build and keep a project's architectural canon.",
+  "version": "1.1.12",
+  "description": "Research, concrete approvals, committed implementation steps and user-authorized integration, with skills for design, verification and architectural records.",
   "author": {
     "name": "Andrey Kremnev",
     "url": "https://github.com/kremniov"

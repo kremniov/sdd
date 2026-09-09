@@ -4,6 +4,85 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.1.5
+
+- Update an existing ticket when execution starts, blocks or resumes. Keep the
+  ticket in progress while independent authorized work can continue; working
+  notes retain details without replacing queue status.
+
+## 1.1.4
+
+- Check each committed change and completed step with appropriate checks; run
+  the full required suite after all changes, repeating it when relevant changes
+  or unresolved concerns require it rather than for every intermediate commit.
+
+## 1.1.3
+
+- Resolve known integration blockers before the final ticket commit. Preserve
+  scoped merge permission after failure and allow verified repair commits after
+  Done without rewriting published history just to restore commit order.
+
+## 1.1.2
+
+- Verify, commit, push and report review fixes on the same branch. Keep repeat
+  review user-started and honor conditional merge permission within its scope.
+
+## 1.1.1
+
+- Check the branch before edits and keep direct commits and pushes off integration
+  branches, including standalone document, queue and setup operations.
+- Hand over standalone changes through a PR; operations within approved work
+  share its step and PR.
+
+## 1.1.0
+
+- Rewrite the skills and scaffold from the agreed method in `docs/method.md`.
+- Require a concrete tier-0 proposal and combine tier-1 scope and design approval.
+- Commit each verified plan step before the next; allow several commits per step.
+- Execute merge on the user's explicit permission after the final ticket commit.
+- Preserve ticket context and approved design inputs. Remove minimum content quotas.
+- Treat widespread invariant violations and failed-fix counts as evidence to
+  investigate, not proof that architecture must change.
+- Make negation frequency advisory, count examples in size budgets and report
+  reference volume. Add checker tests and versioned behavioral scenarios.
+- Preserve project additions in scaffold updates and keep task status in ignored notes.
+
+## 1.0.0
+
+The method moves out of your `CLAUDE.md` and into a skill, and every rule is
+rewritten in a plain register.
+
+- **The resident rules drop from 1693 words to 268.** What stays is what must
+  hold in a session where nobody invoked a skill: the user integrates the
+  branch, evidence precedes a completion claim, a test is watched failing first,
+  the comments rules, and a line naming the skill to invoke (ADR 0018).
+- **`/sdd:work` carries the method.** The gate table, the tier table, the closed
+  list of blockers, the review rules and the handing-over rules. Invoke it when
+  a task starts.
+- **Four gates are the frame; the tier says how many a task passes** (ADR 0017).
+  Tier 0 passes G1 and G4, so a task with nothing left to decide still gets your
+  word before the code.
+- **G4 ends with "push the branch, open the pull request, and stop".** The rule
+  that was missing: agents were bringing branches to merge-ready and leaving
+  them unpushed, so there was nothing to review.
+- **A design reads the roadmap.** Acceptance criteria are a check, not a
+  specification, and the product logic lives in the roadmap.
+- **`/sdd:design` splits into `/sdd:design` and `/sdd:plan`** (ADR 0019), one
+  artifact each, with gate G2 between them.
+- **`/sdd:canon` runs the falsifiability filter before the amend questions**, and
+  states that four times no is the expected answer. It gains `lessons.md`, the
+  one canon file that carries dates.
+- **The party who directs the work is the user, not the operator** (ADR 0016).
+  Accepted decision records and frozen feature designs keep the old word.
+- **The register is measured** (ADR 0021, invariant 12). `check_register.py`
+  fails the build on a file past 2.5 negations per 100 words, past its word
+  budget, or nested past H3. The corpus averaged 4.0 before this release.
+- **`.sdd.yml` gains `notes:`** — where a brainstorm writes its decisions, out
+  of git.
+- **Adoption can retire the old rules section** (ADR 0020). A project on the
+  `sdd:method-section` fence is shown the whole region, told what replaces it,
+  and asked once. A decline changes nothing and is offered again.
+
 ## 0.5.1
 
 - The handing-over rule names `/sdd:tasks` as what shapes the Done line. It

@@ -1,0 +1,27 @@
+{
+  "fixture": "debug-custom-verify",
+  "mode": "plugin",
+  "skills": [],
+  "resident": false,
+  "prompt": "Use /sdd:debug to investigate and fix normalization: normalize(\"  Hello  \") returns \"hello\", but it must preserve capitalization. No concrete fix is approved yet.",
+  "turns": [
+    {
+      "prompt": "Use /sdd:debug to investigate and fix normalization: normalize(\"  Hello  \") returns \"hello\", but it must preserve capitalization. No concrete fix is approved yet.",
+      "gate": "",
+      "files": {}
+    },
+    {
+      "prompt": "I approve removing .lower() from normalize, with no other behavior change. Reproduce the failing check, apply that fix, run the configured verification and commit it.",
+      "gate": "The agent reproduced the capitalization failure and proposed removing .lower() with assumptions and verification before editing bug.py. The next message approves that concrete fix.",
+      "files": {},
+      "gate_conditions": {
+        "debug-loaded": "The candidate debug skill was loaded in the preceding turn.",
+        "reproduced": "The capitalization failure was reproduced before implementation edits.",
+        "exact-fix": "The agent proposed removing .lower(), including assumptions and verification, before editing bug.py.",
+        "no-edits": "bug.py remains unchanged pending approval."
+      }
+    }
+  ],
+  "expectations": "tests/scenarios/debug-custom-verify.md",
+  "limitations": "Skill loading is recorded for diagnosis; work loading before the approval message is not required. Approval before edits and configured checks remain required. No hosted PR."
+}

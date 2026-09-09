@@ -1,23 +1,140 @@
 # Scaffold changes
 
-What changed inside the plugin's half of each scaffold file, one section per
-version. This file is never written into a project; `/sdd:setup` reads it.
+`/sdd:setup` reads this file when updating managed sections. Keep it in the plugin.
 
-A re-run compares the version stamped on a project's fence with the one stamped
-on the template's, and where the project is behind, it carries the entries in
-between. It carries what they *describe*, into the project's own wording — a
-project that phrased the same guidance in its own terms, with its own ticket ids
-and cross-references, is not stale, and the template's current text is not the
-answer for it.
+Compare the project section's version with the template's. If the project is
+behind, apply the intervening entries by meaning. Preserve project wording,
+additions, ticket IDs and references. Different wording alone requires no update.
 
-So an entry states what the guidance now requires and what it replaced, in prose
-that can be applied to text worded differently. No diffs and no quoted template
-lines: both are instructions to overwrite, which is the failure this file
-exists to end.
+Each entry states the new requirement and what it replaces. Write instructions
+that apply to differently worded project text. Omit diffs and quoted template
+lines.
 
-A version whose release changed no scaffold file gets no section. A file whose
-region changes gets its stamp moved to that version and an entry here, in the
-same commit — the gate fails otherwise.
+When a managed template region changes, update its version stamp and add an entry
+under that version in the same commit. Omit versions with no scaffold changes.
+
+## 1.1.3
+
+### tasks.md
+
+Keep Done in the final integration-preparation commit. If a later merge failure
+requires repairs, allow verified repair commits after Done and preserve
+published history. Use work for recovery and scoped permission. Preserve
+existing queue entries and project additions.
+
+## 1.1.1
+
+### CLAUDE.section.md
+
+Check the branch before editing files intended for Git. Create a working branch
+when on main, master or another integration branch. Commit and push only to
+working branches; integrate through a PR merge after explicit user permission.
+Apply the same branch and handover rules to standalone documents, queue edits
+and setup. Operations within approved work share its step and PR; ignored notes
+need neither. Preserve project branch conventions and other requirements.
+
+## 1.1.0
+
+### CLAUDE.section.md
+
+Route implementation, resume and integration to work; route specialized requests
+to their skill. Replace the user-only merge execution wording with explicit
+permission followed by agent execution. Keep implementation approval separate
+from integration approval. Use evidence scoped to completed checks. Replace
+mandatory test-first for every edit with the work skill's behavior-specific
+verification rule. Use direct writing and useful comments without rhetorical
+explanations. Preserve project-specific requirements.
+
+### tasks.md
+
+Use the queue skill for context, IDs and status. Done records explicit
+integration permission in the final branch commit and reaches the main branch
+with the work. Existing tickets and completed entries remain unchanged.
+
+### roadmap.md
+
+Keep objectives and ordering in the roadmap and actionable status in the queue.
+Link detailed product constraints that a phase summary cannot supply. Preserve
+the project's objectives and references.
+
+### invariants.md
+
+Require evidence and accepted obligations, concrete detection and explicit manual
+detector labels. A violation does not authorize retirement. Keep stable numbers,
+agreed changes and ADR references. Remove speculative starter entries while
+preserving the project's actual rules and responsibility tables.
+
+### lessons.md
+
+Record verified observations with dates and evidence where available. Avoid
+copying general advice or existing rules; link an invariant when a lesson becomes
+one. Preserve existing project observations.
+
+### docs-README.md
+
+Describe current canon, historical designs and plans, and ignored working status.
+Read requirements alongside the request; use code to investigate discrepancies.
+Route process selection through work and permit direct requests without tickets.
+Keep existing project paths and relevant document categories.
+
+## 1.0.0
+
+### lessons.md
+
+**New file.** The canon gains a third file beside `invariants.md` and
+`layout.md`. It carries what the work taught and a rule would have missed: a
+runtime constraint of the stack, the real shape a dependency returns, a command
+that behaves unlike its documentation. One dated line each, written on the branch
+that learned it. It is the one canon file that carries dates. A project that
+already keeps such notes points this file at them instead.
+
+### invariants.md
+
+**The guidance says the same rules in a plainer register.** Nothing about the
+entry format, the stability of numbers or the detection note changed. A project
+that reworded this header keeps its wording.
+
+### roadmap.md
+
+**The roadmap is named as an input to a design.** It carries the product logic
+that a ticket's acceptance criteria only check, so the design of a feature reads
+it alongside the ticket and the canon. A project whose roadmap header says this
+already needs no edit.
+
+### docs-README.md
+
+**The guide points at `/sdd:work` for the tier table**, which left the project's
+rules file at v1.0.0. It gains a row for the working-notes directory that
+`.sdd.yml` now records as `notes:`, and the start-of-work reading order gains
+`lessons.md`. A project that keeps its own reading order adds the lessons file
+to it.
+
+### CLAUDE.section.md
+
+**The section keeps only the rules that hold with no skill loaded, and the rest
+move to `/sdd:work`.** What stays is five things: the user integrates the branch
+and the agent stops at the pull request; evidence is shown and named before any
+completion claim; a test is watched failing before the code that passes it; the
+writing register; the comments rules; and a line telling the agent to invoke the
+skill. What leaves is
+the tier table, the paths table, the artifact locations, the plan rules, the two
+review scales, and the invariant, decision-record and docs triggers — all of it
+now in `/sdd:work`, which is invoked when a task starts. A project that reworded
+these rules keeps its own wording for the six that stay and deletes the rest,
+leaving a pointer to the skill.
+
+**The fence is named `sdd:rules`.** The old `sdd:method-section` marker names a
+region that no longer describes what the plugin ships, so `/sdd:setup` offers to
+retire it and writes the new fence only once that is settled. A project that
+declines keeps the v0.x rules, and no second method section is ever written.
+
+**Three rules are new.** The handing-over rule now names the pull request: the
+branch is pushed and the pull request opened before the agent stops, so the user
+has something to review. The sizing call is surfaced at every tier, so a task
+with nothing left to decide still gets the user's word before the code. And the
+register of every document the session writes is named: ASD-STE100, simplified
+technical English, one fact or one rule per sentence. A project that already
+states a house style for its documents keeps it.
 
 ## 0.5.1
 
@@ -52,7 +169,7 @@ ways a green test can be empty, the mechanism by which a forked review inherits
 its author's context, the reason a process finding ranked as a defect inverts a
 report. What stays — stated as a rule, not as an account of the incident that
 produced it — is every clause naming what does *not* satisfy a rule: a commit
-boundary is not a checkpoint, an approved plan and a "go" are not the operator's
+boundary is not a checkpoint, an approved plan and a "go" are not the user's
 approval, the author's conversation is not input, a suite you did not watch
 finish is not evidence. The test for a sentence is whether removing it changes
 what someone may do. It was applied to the whole section, the standing
@@ -100,7 +217,7 @@ carrying a defect's severity and a "not merge-ready" verdict — ranked above th
 bugs found in the same pass. Defects keep the severity scale. A deviation from
 the method — a missing artifact, a tier the reviewer would have judged higher, a
 canon file not updated — is a process finding with no severity level, addressed
-to the operator, and never a merge verdict, on the same ground the integration
+to the user, and never a merge verdict, on the same ground the integration
 rule already stands on: the reviewer does not hold that decision either.
 
 **Merge-ready is a list the agent owes, not one a reader scores.** With the two
@@ -111,19 +228,19 @@ the new rule forbids. The list is now named as what the agent owes before handin
 over. Falling short of it means finishing the work; where that is no longer
 possible — an artifact that would be written after the fact, a tier under
 dispute — the agent reports the gap and hands the branch over regardless, since
-holding it back takes the operator's call away from them.
+holding it back takes the user's call away from them.
 
 ## 0.3.0
 
 ### CLAUDE.section.md
 
-**Integration became the operator's decision, explicitly.** The rule previously
+**Integration became the user's decision, explicitly.** The rule previously
 said "integrating a branch is a decision, not a step" and listed the criteria —
 green, reviewed, docs discipline satisfied — without naming who decides. An
 agent holding all the criteria read that as a procedure to execute, and merged.
 The guidance now has to say: the agent's authority ends at a merge-ready branch,
 which it reports together with the review's findings; `git merge`, `gh pr merge`
-and a push to the integration branch wait for the operator's word on that
+and a push to the integration branch wait for the user's word on that
 specific branch, given after the review results exist. Approving a plan and
 saying "go" at the start of execution are named as *not* carrying that
 authority, because both come before the review.
@@ -134,7 +251,7 @@ never one of the authorized steps. Without the bound, an authorized last step
 that closes the ticket carries the merge along with it.
 
 **The Done commit records a decision instead of anticipating one.** It is still
-the last commit on the branch; what changed is that it comes after the operator
+the last commit on the branch; what changed is that it comes after the user
 approves, not after the review.
 
 **Independence is now a property of the reviewer's input.** "A fresh session on
@@ -143,6 +260,6 @@ forked review continues the author's context outright, and even a subagent that
 starts clean reads a prompt the author framed. The requirement is that the
 reviewer's input is the committed artifacts and nothing else — no prompt,
 briefing or summary from the session that wrote the code, whose conversation is
-not input — and that the operator starts that session. An author-side review is
+not input — and that the user starts that session. An author-side review is
 still worth running before handing the branch over; it does not replace this
 one.

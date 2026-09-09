@@ -1,0 +1,15 @@
+{
+  "branch": "master",
+  "provenance": "Recovered first commit ec04e27edb60c9956ddb95b6fb856c064f30b0df",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        ".sdd.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: true\nticket: T\nrules: CLAUDE.md\n",
+        "README.md": "Start the service on port 8080.\n",
+        "launch.env": "PORT=8080\n"
+      },
+      "executable": []
+    }
+  ]
+}

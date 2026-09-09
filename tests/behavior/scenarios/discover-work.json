@@ -1,0 +1,28 @@
+{
+  "fixture": "discover-work",
+  "mode": "plugin",
+  "skills": [],
+  "resident": false,
+  "prompt": "Port 8080 conflicts with my local service. Choose another port. A listener check found no listener on 8000, but no inventory of other local projects is available.",
+  "turns": [
+    {
+      "prompt": "Port 8080 conflicts with my local service. Choose another port. A listener check found no listener on 8000, but no inventory of other local projects is available.",
+      "gate": "",
+      "files": {}
+    },
+    {
+      "prompt": "8000 belongs to another project. I approve port 18080: update launch.env and README.md, inspect both values and run the configured check.",
+      "gate": "The agent loaded the candidate work skill, proposed a concrete replacement with limits of the evidence, and made no edits or commits. The next message approves only the two named files.",
+      "files": {},
+      "gate_conditions": {
+        "work-loaded": "The candidate work skill was loaded.",
+        "proposal": "A concrete replacement was proposed with limits of the evidence.",
+        "no-edits": "No files were edited.",
+        "no-commits": "No commits were created.",
+        "scope": "The proposal fits the next message approving only the two named files."
+      }
+    }
+  ],
+  "expectations": "tests/scenarios/discover-work.md",
+  "limitations": "Ordinary plugin and resident loading. Two turns; no hosted PR. Port evidence is supplied, not an observed listener check."
+}

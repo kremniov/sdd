@@ -1,71 +1,64 @@
 # Plugin mechanics
 
-How the plugin reaches a project, and when each kind of file is read. This is
-the seam the whole method rests on: get the timing wrong and a skill points at a
-path the model cannot resolve.
+This document covers file resolution, adoption and upgrades. Workflow behavior
+is in [the method](../method.md). Invariants 1–4 govern the plugin/project boundary.
 
-Governed by invariants 1, 2 and 4.
+## Files and loading
 
-## Responsibility
-
-This document covers what crosses the boundary between the plugin and an
-adopting repository, and in what order. It does not cover what the skills say —
-that is each skill's own text.
-
-## The three read moments
-
-| Read at | What | Resolved by |
+| File | Read when | Result |
 |---|---|---|
-| Skill invocation | `templates/_DESIGN.md`, `_PLAN.md`, `_ADR.md` | `${CLAUDE_PLUGIN_ROOT}`, substituted into skill text before the model sees it |
-| Adoption, once | `templates/project/*` | the skill, which substitutes `{{placeholders}}` from `.sdd.yml` and writes the result into the repo |
-| Re-run, to compare | `templates/project/*` | the skill, which compares the version stamped on the template's fence against the project's |
-| Every session | the project's rules file and canon | the project, as ordinary files |
+| SKILL.md | The activity applies | Instructions for that activity |
+| Skill reference | Its stated mode or condition applies | Additional procedure |
+| Artifact skeleton | A design, plan or ADR is written | A project artifact, not a copied skeleton |
+| Project scaffold | Adoption needs a missing file | Placeholder-substituted file with managed markers |
+| CHANGES.md | An older managed region needs an update | Proposed semantic edits, not a template overwrite |
+| Project rules | Loaded by the project harness | Resident constraints and routing |
+| Canon | Relevant work or review | Current obligations and interactions |
 
-The distinction between the first two rows is the one that gets broken. Both are
-"templates" in the directory listing; they are opposites in lifecycle. An
-artifact skeleton is read in place, every time an artifact is written, and never
-lands in the project. A scaffold file lands in the project once, and from then
-on the project owns it.
+Skills resolve bundled paths through `${CLAUDE_PLUGIN_ROOT}`. Project files use
+rendered project paths and skill names, not that plugin variable. `.sdd.yml`
+provides project locations. Readers split at the first colon, strip comments
+from the first `#`, and use unquoted values. Directory values include a final `/`.
 
-The second and third rows are the same files read for opposite purposes, and the
-difference is what keeps the copy safe. At adoption the template is the source
-and produces the file. At a re-run it is not a source at all: the plugin's half
-of each scaffold file sits between `<!-- sdd:scaffold vN.N.N -->` markers, and
-the re-run compares the two stamps, never the two texts. Where the project is
-behind, it offers what `CHANGES.md` records between the two versions, one entry
-at a time, to be carried into the project's own wording; where the stamps match
-it offers nothing. Everything outside the fence is the project's — its queue,
-its phases, its rules — and is not read, not compared, and not written. Nothing
-is replaced without an answer (ADR 0009, ADR 0011).
+## Adoption order
 
-## What must never cross
+1. Survey existing instructions, paths, verification and queue conventions.
+2. Show the proposed config and concrete changes, including the notes ignore rule.
+3. Write approved configuration before files that depend on it.
+4. Create missing scaffold files and preserve existing project content.
+5. Apply the approved resident section or leave a separate proposal when the
+   current process is unresolved.
+6. Check renders, paths, markers and ignored notes; report applied and pending work.
 
-**`${CLAUDE_PLUGIN_ROOT}` never appears in a file written into the project.** It
-is substituted into *skill text* at invocation; a project file containing it is
-a literal string the model cannot resolve. This is why the rules section cannot
-name the ADR skeleton's path and instead names the skill that can.
+The invariant scaffold starts empty. Canon establishment follows adoption.
+Notes use ignored files; feature and ADR directories can use tracked placeholders.
 
-**A project path never appears in a skill's instructions.** Skills read
-locations from `.sdd.yml`. The illustrative config block in `/sdd:setup` is
-not an instruction and is the one exemption.
+## Upgrade behavior
 
-## The order that matters
+An opening marker records the version of a managed region. Equal stamps require
+no edit; newer project stamps are left alone. Older stamps select CHANGES.md
+entries after the project version through the template version. Bare valid
+legacy markers use the documented v0.2.0 baseline. Unknown history or malformed
+boundaries require user resolution.
 
-1. `/sdd:setup` writes `.sdd.yml` **first** — every later skill reads it, and
-   a skill that runs before it has no paths.
-2. Scaffold files are written only where nothing exists. Adoption is additive by
-   invariant 3, so an existing file always wins over the scaffold.
-3. The rules section is appended **last**, because it renders paths from the
-   config written in step 1.
-4. `/sdd:canon` runs after adoption, never before: it fills the body of an
-   `invariants.md` that adoption placed. It does not create the file.
+Present each proposed change in the project's wording and apply it on approval.
+Keep IDs, links, additions and content outside the region. Advance the stamp
+through fully satisfied contiguous versions. A declined entry remains pending.
+On re-run, an applied later entry is recognized by meaning if an earlier decline
+prevented recording it in the stamp.
 
-Breaking this order does not fail loudly. It produces a project configured
-against paths that do not exist, which surfaces one session later as a skill
-writing to the wrong place.
+A valid legacy method section can be replaced with the new rules section after
+the complete replacement is shown and approved. Carry project constraints into
+the proposal. Declining preserves the old section and leaves the new fence
+unwritten. Report conflicts with the installed skill version. Keep one active
+method section.
 
-## Versioning
+## Version and checks
 
-`plugins/sdd/.claude-plugin/plugin.json` carries an explicit `version`. Without
-a bump, installed copies do not update — a fix to a skill or a skeleton reaches
-nobody. Bump it in the same commit as the change that earns it.
+The manifest version identifies the release. Changed scaffold guidance advances
+its stamp and gains an entry in CHANGES.md in the same commit. Existing migration
+entries remain available. Catalogue metadata must resolve the manifest.
+
+`check.sh` verifies structure, references, render presence and version accounting.
+It does not execute adoption. `tests/scenarios/` supplies cases for fixture
+walkthroughs and agent evaluations, with their evidence classified separately.

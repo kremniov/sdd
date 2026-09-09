@@ -1,242 +1,73 @@
 ---
 name: canon
-description: Use to establish, amend or audit the architectural invariants — write down the rules a codebase already holds, add one when a merging branch moved a seam or changed a checker, or re-check the list against code that has drifted. Ask before integrating any branch.
+description: Establish, amend or audit architectural invariants and the system map, and record verified project lessons.
 ---
+ # Canon
 
-# The Invariants Canon
+For files intended for Git, follow `/sdd:work` Branch and completion before
+editing and when handing over the result.
 
-Write down the rules this codebase already follows, so later work can link them
-instead of rediscovering them. The canon is **observed, not invented**: an
-invariant is a rule the code obeys today and that a reviewer would push back on
-breaking.
+## Inputs and mode
 
-**A claim that something is missing is held to the same standard, and it is the
-one that becomes work.** A gap recorded in an entry turns into a ticket, and the
-ticket gets worked before anyone re-checks the claim behind it. Locate the place
-the thing would be and show it is not there, naming the file and line you
-looked at — so a reader can disagree with your evidence instead of your
-conclusion. Beware the shapes that read as absence and are not: a call needs no
-import when both sides sit in one package, a name can arrive by embedding or
-generation, and a grep for the wrong spelling comes back empty either way.
-Where you cannot find the place it would be, that is what to write down.
+Read the request and `.sdd.yml` values `canon`, `adr` and `tasks` as needed.
+Split each line at the first colon and remove comments from the first `#`. If
+configuration is absent, offer `/sdd:setup`. Ask for required missing values.
 
-Paths come from `.sdd.yml` (`canon:`).
+The canon directory holds `invariants.md`, `layout.md`, `lessons.md` and
+subsystem documents. Code supplies evidence of behavior; requirements and
+accepted decisions also supply obligations. Investigate disagreements before
+changing either. Cite concrete evidence for claims, including absence.
 
-Reading `.sdd.yml`: one `key: value` per line; the first `:` separates them and
-everything from the first `#` is a comment. Values are used verbatim — no
-unquoting, no variable expansion. If the file is absent, say so and stop — the
-project has not adopted this method (`/sdd:setup`). If a key this skill
-needs is absent or its value is empty, name the key and ask; do not fall back to
-a default path, because writing to a guessed location is how a project ends up
-with two task queues.
-
-## Which mode
-
-| Mode | When | Cost |
+| Mode | When | Procedure |
 |---|---|---|
-| **Bootstrap** | `invariants.md` has no rules yet | Hours. Reads the codebase. |
-| **Amend** | A branch about to merge moved a seam | Minutes. Reads one diff. |
-| **Audit** | The canon is suspected stale | Hours. Reads the codebase against the list. |
+| Establish | The invariant list is empty | Read `${CLAUDE_PLUGIN_ROOT}/skills/canon/bootstrap.md` |
+| Amend | Assess a changed branch | Use Amend below |
+| Audit | The user requests a recheck or suspects stale rules | Read `${CLAUDE_PLUGIN_ROOT}/skills/canon/audit.md` |
 
-Pick from the state, not from the invocation: an empty list means bootstrap; an
-uncommitted or unmerged diff in hand means amend; an explicit request to
-re-check means audit. Say which mode you are in before starting.
+State the mode. A review or audit reports first; changes need approval. An
+existing approval for the exact canon change remains valid.
 
-Amend is the common case by an order of magnitude. A canon grows one line at a
-time, on the branch that earned the line.
-
-## The entry format
-
-Every invariant is a numbered entry with three parts, in this order:
+## Invariant format
 
 ```markdown
-7. **Short name.** What must hold, stated so a reviewer can decide whether a
-   diff violates it. One to three sentences.
-   *Detect:* how to see a violation — a command, a grep, a review question.
-   *On violation:* what happens — reject, or open an ADR to move the rule.
+7. **Short name.** The rule and its scope.
+   *Detect:* a runnable check, or an explicitly manual review question.
+   *On violation:* reject the change, or agree a rule change and record an ADR.
 ```
 
-The two italic lines are not decoration. An agent reading this file is deciding
-one of three things: whether its own diff violates the rule, how hard to push in
-review, and whether a new line is owed. *Detect* answers the first, *On
-violation* the second, and both together tell it whether the rule is a wall or a
-default.
+A candidate must have a concrete possible violation and a material consequence.
+Require evidence that it is a current rule. Repetition alone is insufficient.
+Exclude generic values, duplicates and guarantees already enforced by the
+language or framework. A project checker can enforce an eligible rule.
 
-Write *Detect* as something runnable when a checker exists — `make lint`, a test
-name, a grep — and as the question a reviewer asks when it does not. A rule
-whose *Detect* is only a question is a convention; say so plainly rather than
-implying a rigour that is absent. **The enforcement note lives on the rule, not
-in a summary at the end of the file.** A footer saying "rules 12–14 are checked
-mechanically" goes stale the first time a checker grows, and nothing catches it.
-
-**Numbers are stable.** Other documents cite them. Append; never renumber. A
-retired rule keeps its number and is struck through with one line saying which
-ADR retired it — a gap in the numbering is cheaper than a citation that now
-points at a different rule.
-
-## Bootstrap
-
-### 1. Read the code, not the docs
-
-Deliberately ignore existing architecture prose on the first pass — it may
-describe an intention the code abandoned. Where the two disagree, the code is
-the fact, and the disagreement is itself a finding worth reporting.
-
-Cover, in this order:
-
-- **The shape.** Top-level directories, the module graph, entry points. What
-  depends on what, and what conspicuously does not.
-- **The boundaries.** Where does a layer stop? A directory that imports narrowly
-  while its neighbours import widely is usually a rule someone enforces by hand.
-- **The repeated pattern.** The same construction in five places is a
-  convention; in twenty, an invariant. Read enough instances to tell which.
-- **What is checked mechanically.** Lint config, CI steps, custom scripts,
-  codegen, pre-commit hooks. A rule with a checker is the strongest kind and
-  belongs at the top of the list. Read the checker itself: what it actually
-  covers is routinely narrower or wider than what the docs claim.
-- **What the tests assert about structure** rather than behaviour — an
-  architecture test, an import-cycle check, a golden file of the public API.
-- **The exceptions.** A rule followed in 19 places and broken in the 20th: find
-  out which is the mistake. Ask if it is not obvious.
-
-For a large codebase, sample rather than read everything: the entry points, the
-two or three busiest modules, the newest module (it shows the current
-convention) and the oldest (it shows what changed).
-
-### 2. Draft
-
-A good invariant is **falsifiable and load-bearing**. Test each candidate:
-
-- Could I point at a diff that violates it? If not, it is a value, not a rule.
-- Would breaking it be a bug, or just unusual? Only the first is an invariant.
-- Is it a consequence of another rule already listed? Drop it — a canon of forty
-  derived rules is not read.
-- Does the language or framework already enforce it? Then it is filler.
-
-**Cut to fifteen before presenting, not after.** Rank: mechanically enforced
-first, then those whose violation is a bug, then the rest. Present at most
-fifteen, and list the cut candidates in one line each underneath so the operator
-can pull one back. A canon nobody finishes reading is not consulted in the
-review where it would have mattered.
-
-### 3. Confirm
-
-Present the candidates as a numbered list, one line each, in file order, marking
-which are mechanically enforced. Ask the operator to strike what they disagree
-with and name what is missing — they know the rules that live only in their
-head, which is what this exercise is for.
-
-Flag separately, never folded into the list:
-
-- **Contradictions** — the code does X here and not-X there.
-- **Code/doc disagreements** found despite step 1.
-- **Rules that look like accidents** rather than decisions.
-
-### 4. Write
-
-Fill the body of the `invariants.md` that adoption placed under `canon`, in the
-entry format above. If that file is absent the project has not been adopted —
-run `/sdd:setup` rather than creating it here.
-
-`layout.md` says where things live: a directory map with one line of purpose
-each, the entry points, and where a newcomer starts reading. Not a file listing
-— a reader who wants files runs `ls`.
-
-Both files state what is true now. No history, no "we used to" — that belongs in
-an ADR.
-
-### 5. When there is nothing to find
-
-A codebase can genuinely have no discernible rules: too new, too small, or
-inconsistent enough that any statement would be a wish. Say so and write
-nothing. A speculative list is worse than an empty one — it gets linked, cited,
-and defended in review as if it had been observed.
-
-The honest output is a short note in `invariants.md` saying the canon is not yet
-established, plus two or three rules worth adopting deliberately as the codebase
-grows.
+Verify that Detect covers the claimed rule. A manual detector is labeled manual;
+a passing narrow checker does not prove a broader claim. Preserve numbers.
+Append new entries; retain a retired entry's number, struck through and linked
+to its ADR. A changed or retired rule requires agreement and an ADR. Wording
+edits that preserve the rule's meaning do not require an ADR.
 
 ## Amend
 
-Runs against a branch that is finished and about to merge — the same moment the
-docs discipline and the ADR trigger are checked, and for the same reason: before
-the code exists a rule is an intention, and a design that promised to move an
-invariant does not always turn out to have moved it.
+Read the branch diff, relevant current code, rules and agreed decisions. Check
+four questions:
 
-**1. Read the diff, then ask the four questions.** Not the design, not the plan
-— the diff. What actually landed is the only evidence that a rule changed.
+- Does an existing rule stop holding?
+- Does the change establish a required rule that passes the candidate filter?
+- Does a detector change its coverage?
+- Does an exception change the rule's scope?
 
-- **Did a rule on the list stop being true?** The diff is the exception that
-  breaks it. Either the diff is wrong, or the rule moved — and which one is the
-  operator's call, never yours. This is the only branch that can retire a rule,
-  and it needs an ADR.
-- **Did the diff establish a rule that is now load-bearing?** A new seam whose
-  whole point is that callers must not cross it; a constraint that, once broken,
-  reintroduces the bug this branch fixed. Apply the falsifiability tests above
-  before proposing it.
-- **Did a checker change?** A new lint rule or CI step either enforces an
-  existing entry — update its *Detect* — or enforces nothing on the list, which
-  is a rule someone codified without writing down.
-- **Did a rule's exception list change?** Narrowing or widening an exemption
-  changes the rule as surely as rewording it.
+No change is a normal result. State the evidence briefly and finish when all
+four answers are no. Otherwise present the exact proposed edit and its basis.
+Distinguish a code violation from a proposed rule change; the user decides which
+to correct. Write approved changes in the same PR as the affected behavior. An
+already agreed design decision need not be approved again.
 
-If all four are no, say so and stop. Most branches earn no line. Saying "no
-invariant moved" is a real answer and the common one — do not manufacture an
-entry to justify having looked.
+Use `/sdd:subsystem` for interaction changes and update `layout.md` when the map
+changes. Record a durable decision using `/sdd:work` and its ADR template.
 
-**2. Propose the exact text**, in the entry format, as a diff against the file.
-One line each for what changes and why the branch earned it.
+## Lessons
 
-**3. Write it after the operator agrees**, in the same commit as the code or
-the ADR it belongs to — never as a standalone docs commit. A canon entry
-separated from the change that caused it loses the only evidence a later reader
-has for why the rule exists.
-
-An entry that moves or retires an existing rule needs an ADR in the same PR.
-Adding a rule the code already followed does not: nothing changed, it was merely
-unwritten.
-
-## Audit
-
-Read the code first, the existing list second — same discipline as bootstrap,
-because reading the list first is how you talk yourself into seeing rules that
-have quietly lapsed.
-
-Where an entry's *Detect* is runnable, run it and report what it printed. That
-is the cheapest evidence in the whole procedure and the only kind an operator
-can check without re-reading the code behind you.
-
-Report four lists and write nothing without confirmation:
-
-- **Held** — still true, and described accurately.
-- **Drifted** — the rule holds; its entry does not. A *Detect* naming a checker
-  that has since grown or been replaced, an *On violation* promising an alert
-  that is a log line, a header calling the list hand-checked while three
-  checkers enforce parts of it. This is where an audit pays for itself: a broken
-  rule announces itself the next time the code runs, and a lying entry is
-  believed.
-- **Broken** — the code no longer obeys. State how many violations and whether
-  they cluster; a rule broken in one new module is a regression, a rule broken
-  in nine is a rule that expired without anyone recording it.
-- **Undocumented** — rules the code now holds that the list does not carry.
-
-The operator decides each. A rule the code stopped obeying may mean the code
-regressed, not that the rule expired, and only they can say which — retiring a
-rule that was merely being violated launders a bug into a policy.
-
-A list inherited from another method drifts in a way of its own, and the first
-audit of one is mostly this: the rules are sound but carry no *Detect* and no
-*On violation*, because whatever wrote them did not ask for those. Propose the
-two missing lines per entry and leave the rule itself alone — a canon is a
-review procedure only once each entry says how a violation surfaces and what
-happens then. Where you cannot say how one would be detected, say so; that
-answer is worth more than a plausible sentence, because it is usually the rule
-nobody has been enforcing.
-
-An audit reads the whole codebase, so it also finds things that are not
-invariants: a package with no files, a dependency declared and never used, a
-goroutine that outlives what started it. Keep them out of the four lists — they
-are not rules — and out of the conversation, which ends when the session does.
-Name them in a short section of their own and offer to file them through
-`/sdd:tasks`. This is the only other harvest of a full read of the code, and it
-is thrown away by default.
+Record verified project observations in `lessons.md`: runtime constraints,
+observed dependency behavior or a command's unexpected effect. Use one dated
+entry with evidence or an ADR link where available. Omit general advice and
+copies of invariants. If a lesson becomes an agreed invariant, link its number.

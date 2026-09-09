@@ -1,27 +1,13 @@
-<!-- sdd:scaffold v0.2.0 -->
+<!-- sdd:scaffold v1.1.0 -->
 # Roadmap
 
-Strategic and long-lived. Phases and objectives — **not** a task list (that is
-`{{tasks}}`). Sequence, not dates. Updated rarely, when direction shifts.
+Record product objectives and their dependency order. State what each phase
+makes possible and how completion is recognized. Keep actionable work and its
+status in `{{tasks}}`.
 
-A roadmap item is an objective with a gate: what becomes possible when the phase
-closes, and how you know it closed. Items become tickets in the queue when they
-are picked up; the roadmap itself does not track their status.
+Update direction when product requirements change. Designs read this roadmap
+alongside the request and relevant requirements. Link detailed product constraints
+where a phase summary cannot describe them.
 <!-- /sdd:scaffold -->
 
----
-
-## Phase 1 — <name>  *(current)*
-
-**Objective:** one sentence — what is true when this phase is done.
-
-- <a capability, not a task>
-- <another>
-
-## Phase 2 — <name>
-
-**Objective:** …
-
-## Phase 3 — <name>
-
-**Objective:** …
+## Current objectives

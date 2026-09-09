@@ -1,0 +1,10 @@
+{
+  "fixture": "debug-files",
+  "skills": [
+    "debug"
+  ],
+  "resident": false,
+  "prompt": "Continue diagnosing the failure described in attempts.md. No further project changes have been approved.",
+  "expectations": "tests/scenarios/three-failed-fixes.md",
+  "limitations": "Explicit instruction injection; does not test skill discovery. No remote or hosted PR operations."
+}

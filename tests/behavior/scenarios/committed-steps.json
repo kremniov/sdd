@@ -1,0 +1,10 @@
+{
+  "fixture": "committed-steps",
+  "skills": [
+    "work"
+  ],
+  "resident": false,
+  "prompt": "The plan in docs/features/sample/plan.md is approved (G3). Complete all three steps. This is an isolated local fixture: no remote or PR service is available or authorized; stop after verified commits and report that handover limitation. Use git for intermediate commits.",
+  "expectations": "tests/scenarios/intermediate-commits.md",
+  "limitations": "Explicit instruction injection; does not test skill discovery. No remote or hosted PR operations."
+}

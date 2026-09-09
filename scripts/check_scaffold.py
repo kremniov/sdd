@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 MARKERS = {
-    "CLAUDE.section.md": "sdd:method-section",
+    "CLAUDE.section.md": "sdd:rules",
 }
 DEFAULT = "sdd:scaffold"
 CHANGES = "CHANGES.md"

@@ -4,6 +4,7 @@ tasks:    docs/tasks.md
 roadmap:  docs/roadmap.md
 features: docs/features/
 adr:      docs/adr/
+notes:    docs/stuff/
 verify:   ./scripts/check.sh
 ticket:   T
 rules:    CLAUDE.md

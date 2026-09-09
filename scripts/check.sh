@@ -54,6 +54,15 @@ PY
 echo "skill references"
 python3 scripts/check_skill_refs.py || fail=1
 
+echo "vocabulary"
+targets=(plugins README.md CLAUDE.md docs/architecture docs/roadmap.md docs/tasks.md)
+if grep -rniE '\boperators?\b' --include='*.md' "${targets[@]}" >/dev/null 2>&1; then
+  grep -rniE '\boperators?\b' --include='*.md' "${targets[@]}" | sed 's/^/  /'
+  note FAIL "the party directing the work is the user (ADR 0016)"
+else
+  note OK "no 'operator' outside the decision records and the frozen designs"
+fi
+
 echo "bundled paths"
 python3 - <<'PY' || fail=1
 import re, os, glob, sys
@@ -70,6 +79,12 @@ PY
 
 echo "portability"
 python3 scripts/check_portability.py || fail=1
+
+echo "register"
+python3 scripts/check_register.py || fail=1
+
+echo "checker tests"
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_*.py' || fail=1
 
 echo "every shipped skeleton is reachable"
 python3 - <<'PY' || fail=1
@@ -99,6 +114,8 @@ for line in open('.sdd.yml'):
     line = line.split('#')[0].strip()
     if ':' in line:
         k, v = line.split(':', 1); cfg[k.strip()] = v.strip()
+if '<!-- sdd:dogfooding-paused -->' in open('CLAUDE.md').read():
+    print('  SKIP    dogfooding paused — invariant 9 is not in force'); sys.exit(0)
 tpl = open('plugins/sdd/templates/project/CLAUDE.section.md').read()
 missing = {k for k in re.findall(r'\{\{(\w+)\}\}', tpl) if k not in cfg}
 if missing:

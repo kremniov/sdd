@@ -36,6 +36,22 @@ TERMS = [
 # Words that are ordinary English in context and must not be matched bare.
 PATTERNS = {t: re.compile(rf"(?<![\w-]){re.escape(t)}(?![\w-])", re.I) for t in TERMS}
 
+# A stack also arrives without its name: a source path carries the extension, and
+# a build tool is invoked as a verb. "go", "gem" and "mix" are ordinary English,
+# so these shapes match them only where the syntax gives them away.
+SHAPES = {
+    "a source file extension": re.compile(
+        r"\.(?:go|rs|py|rb|ts|tsx|jsx|java|kt|swift|scala|ex|exs|hs|clj|cljs"
+        r"|php|cs|fs|cpp|hpp|erl|pl|dart|m|mm)(?![\w-])"
+    ),
+    "a build tool as a command": re.compile(
+        r"(?<![\w-])(?:go|gem|mix|dotnet|swift|cabal|stack|sbt|rebar3|dune|lein"
+        r"|tsc|node|ruby|python3?)\s+(?:test|build|run|get|install|mod|exec|fmt)"
+        r"(?![\w-])", re.I
+    ),
+}
+PATTERNS.update(SHAPES)
+
 # A line that surveys several ecosystems neutrally reveals nothing about any one
 # project. Each exemption names the file, the term, and why it is not a leak.
 EXEMPT = {
@@ -59,5 +75,6 @@ if hits:
         print(f"          {line[:100]}")
     sys.exit(1)
 
-print(f"  OK      no stack vocabulary in skills or templates ({len(TERMS)} terms checked)")
+print(f"  OK      no stack vocabulary in skills or templates "
+      f"({len(TERMS)} terms, {len(SHAPES)} shapes checked)")
 sys.exit(0)

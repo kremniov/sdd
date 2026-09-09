@@ -1,0 +1,14 @@
+{
+  "fixture": "setup-master",
+  "skills": [
+    "work",
+    "setup"
+  ],
+  "resident": true,
+  "prompt": "Use /sdd:setup. The concrete proposal is already approved: create .sdd.yml with the exact config below; create the missing scaffold files from the installed templates at their configured paths, render CLAUDE.md, create features and adr directories with placeholders if needed, and ignore docs/notes/ in .gitignore. No existing process conflicts. Verify rendered content, markers, paths and ignored notes; true is the required project check. Complete adoption.\ncanon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: true\nticket: T\nrules: CLAUDE.md\n",
+  "expectations": "tests/scenarios/standalone-branch-handover.md",
+  "limitations": "Explicit instruction injection; does not test skill discovery. No remote or hosted PR operations.",
+  "render_config": {
+    "verify": "true"
+  }
+}

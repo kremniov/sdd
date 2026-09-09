@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "kremniov",
-  "description": "Spec-driven development sized to the task: a tier table, execution rules, artifact skeletons, and skills to build a project's canon.",
+  "description": "Spec-driven development with concrete approvals, committed steps and evidence-backed handover.",
   "owner": {
     "name": "Andrey Kremnev",
     "url": "https://github.com/kremniov"

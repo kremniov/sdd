@@ -1,0 +1,26 @@
+{
+  "branch": "feature/test",
+  "provenance": "Synthetic input for the approved six coverage gaps, 2026-09-09",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        ".gitignore": "docs/notes/\nexternal/\nverify-runs.jsonl\n",
+        "docs/architecture/invariants.md": "# Invariants\nNo invariant change is needed for the approved work.\n",
+        "docs/roadmap.md": "# Roadmap\nSynthetic local workflow checks.\n",
+        ".sdd.yml": "canon: docs/architecture/\ntasks: queue.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: python3 verify.py\nticket: ISSUE\nrules: CLAUDE.md\n",
+        "queue.md": "# Delivery queue\n\n| Key | State | Owner | Goal | Check | Result |\n|---|---|---|---|---|---|\n| ISSUE-2 | Closed | Mei | Preserve audit | Original IDs retained | shipped r2 |\n| ISSUE-7 | Ready | Noor | Import labels | Labels preserved | \u2014 |\n",
+        "CLAUDE.md": "# Queue conventions\n\nThe table in queue.md is the queue. Preserve its columns, rows and owners.\nKey prefix: ISSUE. Ready = next, Doing = inprogress, Waiting = blocked,\nClosed = done. Keep completed records in this same table. Result holds the\nblocker while Waiting and the delivered result while Closed.\n",
+        "verify.py": "from pathlib import Path\nimport json\nimport re\nimport subprocess\n\nrecord = {'passed': False, 'observed': {}}\ntry:\n    observed = {name: Path(name).read_text() if Path(name).is_file() else None\n                for name in ['queue.md']}\n    record['observed'] = observed\n    text = observed['queue.md']\n    assert text is not None, 'queue.md is missing'\n    lines = [line for line in text.splitlines() if line.strip()]\n    assert lines[0] == '# Delivery queue', 'queue title changed'\n    assert all(line.startswith('|') and line.endswith('|') for line in lines[1:]), 'unexpected queue structure'\n    rows = [[cell.strip() for cell in line.strip('|').split('|')] for line in lines[1:]]\n    assert len(rows) in (4, 5), 'missing or duplicate queue rows'\n    assert rows[0] == ['Key', 'State', 'Owner', 'Goal', 'Check', 'Result'], 'columns changed'\n    assert rows[1] == ['---'] * 6, 'table separator changed'\n    assert rows[2] == ['ISSUE-2', 'Closed', 'Mei', 'Preserve audit', 'Original IDs retained', 'shipped r2'], 'completed record changed'\n    assert rows[3] == ['ISSUE-7', 'Ready', 'Noor', 'Import labels', 'Labels preserved', '\u2014'], 'existing active record changed'\n    if len(rows) == 5:\n        row = rows[4]\n        assert len(row) == 6, 'new row has wrong column count'\n        assert row[0] == 'ISSUE-8' and row[2:5] == ['Ada', 'Export records', 'All source IDs retained'], 'new record identity or content changed'\n        results = {'Ready': '\u2014', 'Doing': '\u2014', 'Waiting': 'Missing source file', 'Closed': 'Delivered: all source IDs retained; change: fixture/issue-8-export'}\n        assert row[1] in results and row[5] == results[row[1]], 'state and result do not match'\n        if row[1] == 'Closed':\n            change = subprocess.run(['git', 'rev-parse', '--verify', 'refs/heads/fixture/issue-8-export^{commit}'],\n                                    capture_output=True, text=True)\n            record['change_commit'] = change.stdout.strip() if change.returncode == 0 else None\n            assert change.returncode == 0, 'closure change branch is missing'\n    record['passed'] = True\n    print('scenario verification passed')\nfinally:\n    with Path('verify-runs.jsonl').open('a') as log:\n        log.write(json.dumps(record) + '\\n')\n"
+      }
+    },
+    {
+      "branch": "fixture/issue-8-export",
+      "message": "fixture: preserve source IDs in export",
+      "files": {
+        "delivery/source.json": "[{\"id\": \"source-1\", \"name\": \"Alpha\"}, {\"id\": \"source-2\", \"name\": \"Beta\"}]\n",
+        "delivery/export.json": "[{\"id\": \"source-1\", \"name\": \"Alpha\"}, {\"id\": \"source-2\", \"name\": \"Beta\"}]\n"
+      }
+    }
+  ]
+}

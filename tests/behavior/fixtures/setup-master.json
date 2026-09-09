@@ -1,0 +1,13 @@
+{
+  "branch": "master",
+  "provenance": "Recovered first commit 54cb6b84e61f3185a9869a518dc1ab48af592f96",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        "README.md": "# Fixture\nIntegration branch: master.\n"
+      },
+      "executable": []
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "fixture": "port-files",
+  "skills": [
+    "work"
+  ],
+  "resident": false,
+  "prompt": "Port 8080 conflicts with my local service. Choose another port. A local listener check found no listener on 8000, but no inventory of other local projects is available.",
+  "expectations": "tests/scenarios/tier-0-port-conflict.md",
+  "limitations": "Explicit instruction injection; does not test skill discovery. No remote or hosted PR operations."
+}

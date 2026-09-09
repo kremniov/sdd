@@ -1,0 +1,19 @@
+{
+  "branch": "main",
+  "provenance": "Recovered first commit 42e2f2c465afd2594c1c5ae39a55a5a1e4976ec2",
+  "commits": [
+    {
+      "message": "fixture baseline",
+      "files": {
+        ".sdd.yml": "tasks: docs/tasks.md\nroadmap: docs/roadmap.md\ncanon: docs/architecture/\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: python3 verify.py\nticket: T\n",
+        "docs/architecture/invariants.md": "# Invariants\n",
+        "docs/features/recovery/design.md": "# Design\nThe approved task has one independent local preparation part and one final export part.\n",
+        "docs/features/recovery/plan.md": "# Plan\nThe local preparation is approved. The final export requires the unavailable `EXPORT_CREDENTIAL`.\n",
+        "docs/roadmap.md": "# Roadmap\n",
+        "docs/tasks.md": "# Tasks\n\n## TODO\n\n#### `[T-40]` Export the recovery snapshot\n\n**Tags:** `[feat]` `[next]`\n\n**Outcome:** The recovery snapshot can be restored consistently.\n\n**Acceptance:**\n\n- [ ] The snapshot preserves all relationships\n- [ ] An unavailable export credential stops the final export\n\n---\n\n## Done\n",
+        "verify.py": "from pathlib import Path\nassert Path('docs/tasks.md').exists()\nprint('fixture verify passed')\n"
+      },
+      "executable": []
+    }
+  ]
+}

@@ -1,77 +1,47 @@
 ---
 name: debug
-description: Use on any bug, test failure or unexpected behaviour, before proposing a fix — find the root cause first, reproduce it in a failing test, and question the architecture once three fixes have failed.
+description: Investigate a bug or failed check, test causal hypotheses and verify an approved fix. Stop a series after three failed fixes to discuss the evidence.
 ---
+ # Debug
 
-# Systematic Debugging
+For files intended for Git, follow `/sdd:work` Branch and completion before
+editing and when handing over the result.
 
-Find the cause before changing anything. A fix aimed at a symptom moves the bug
-rather than removing it, and the next person pays for it.
+## Scope
 
-This applies at every tier, including a one-file change.
+Read the request, observed failure, relevant code, checks and recent changes. If
+the request is diagnosis only, return findings without implementing a fix. For a
+requested fix, use `/sdd:work` to approve the concrete change before editing
+project files. Investigation does not require an implementation decision first.
 
-## 1. Investigate
+## Investigate
 
-- **Read the error completely** — the whole stack trace, the line numbers, the
-  codes. It often names the answer.
-- **Reproduce it.** Exact steps, every time. If it will not reproduce, gather
-  data; do not guess from one occurrence.
-- **Check what changed.** `git log` / `git diff` on the modules involved, recent
-  schema changes, new config keys, a dependency bump.
-- **Instrument the boundaries** when more than one component is in play. Log what
-  enters and what leaves each one, run it once, and let the evidence say which
-  boundary breaks. Then investigate that one.
-- **Trace the bad value backwards** to where it originates — what passed it in,
-  and what passed it to that. Fix it at the source. A frequent shape: a zero
-  value that was harmless until something started reading it.
+Reproduce the failure or collect observations that can distinguish its cause.
+Read the full error and trace the incorrect value through relevant boundaries.
+Compare with a working path where one exists. Collect temporary diagnostics in a
+disposable environment; project instrumentation is a proposed change.
 
-## 2. Compare against what works
+State a hypothesis and the evidence for it. Choose the smallest experiment that
+can distinguish it from alternatives. Evaluate the result before the next
+experiment. A rejected hypothesis is not itself a failed fix.
 
-Find the nearest working example in the repo — the sibling handler, the other
-adapter, the module that does the same thing correctly. List every difference,
-including the ones that "cannot matter". Read the reference implementation
-completely rather than skimming it.
+When reproduction is intermittent or unavailable, state what is known and what
+additional observation is needed. Environmental or external behavior is a
+possible cause, not a reason to invent one. Propose handling only when the
+observations support it.
 
-## 3. Hypothesize, then test one thing
+## Fix and verify
 
-State it in one sentence: *X is the cause, because Y*. Make the smallest change
-that would prove it, one variable at a time. If it does not work, form a new
-hypothesis — do not stack another fix on top of it. When you do not understand
-something, say so plainly instead of proceeding as if you do.
+Present the concrete fix, assumptions and verification through `/sdd:work`.
+After approval, observe an appropriate test fail for the intended reason before
+the fix. For changes without testable behavior, use a suitable structural or
+manual check. Keep unrelated improvements outside the fix.
 
-## 4. Fix the cause
+Check that the reproduction is resolved and run relevant regression checks and
+required project checks. Report the commands, completed results and remaining
+uncertainty. Commit the verified fix as part of its step.
 
-- **Reproduce it in a test first**, at the level the bug lives at — the
-  test-first rule in the project's rules file, where the red run is the
-  reproduction itself.
-- **One change.** No "while I'm here" improvements bundled in.
-- **Verify**: the new test passes, nothing else broke, and the original
-  behaviour is actually gone. Run the commands and read the output before saying
-  it is fixed.
-
-**Three failed fixes means the architecture is the problem.** Not a fourth
-attempt. The pattern is recognizable: each fix reveals fresh coupling somewhere
-else, or demands a refactor to be implementable, or breaks something new. Stop
-and take it to the operator as an architectural question — that is a different
-conversation from a failed hypothesis.
-
-## Rationalizations that mean stop
-
-| Thought | What is actually true |
-|---|---|
-| "Quick fix now, investigate later" | The first fix sets the shape. Later never comes. |
-| "It's probably X, let me change it" | Seeing a symptom is not understanding a cause. |
-| "Let me change these two things and rerun" | Then you cannot tell which one mattered. |
-| "Too simple to need this" | Simple bugs have causes too, and finding them is quick. |
-| "No time for the process" | Guess-and-check is slower, and it is how three fixes fail. |
-| "One more attempt" (after two) | Three failures is the architecture, not the hypothesis. |
-| "The reference is long, I'll adapt it" | Partial understanding is where the next bug comes from. |
-
-## When there is genuinely no cause to find
-
-Sometimes the answer is environmental, timing-dependent, or in someone else's
-system. Then: write down what you ruled out, implement the handling that fits
-(retry, timeout, an error the caller can act on), and add the logging that would
-make the next occurrence diagnosable. Reach for this only after the
-investigation is done — most "no root cause" is an investigation that stopped
-early.
+After three failed fixes, stop the series. Report the attempts, evidence and
+options to the user before another fix. Architecture reassessment is an option;
+the count alone does not establish an architectural cause. Use `/sdd:work` stop
+conditions when new evidence changes an agreed decision or access is missing.

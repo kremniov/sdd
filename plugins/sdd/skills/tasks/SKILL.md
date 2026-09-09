@@ -1,143 +1,93 @@
 ---
 name: tasks
-description: Use when adding, editing, or closing an item in the project's task queue — writing a ticket for a feature, bug, tech-debt or chore, allocating its id, updating its status, or collapsing it to Done at merge.
+description: Add, clarify or close entries in the project queue, preserving context, stable IDs and the agreed integration status.
 ---
+ # Tasks
 
-# The Task Queue
+For files intended for Git, follow `/sdd:work` Branch and completion before
+editing and when handing over the result.
 
-The task queue is the "what do I pull next" list. Its path and the ticket-id
-prefix are in `.sdd.yml` (`tasks:` and `ticket:`); read them before editing.
+## Inputs and scope
 
-Reading `.sdd.yml`: one `key: value` per line; the first `:` separates them and
-everything from the first `#` is a comment. Values are used verbatim — no
-unquoting, no variable expansion. If the file is absent, say so and stop — the project has not
-adopted this method (`/sdd:setup`). If a key this skill needs is absent
-or its value is empty, name the key and ask; do not fall back to a default path,
-because writing to a guessed location is how a project ends up with two task
-queues.
+Read the request and `.sdd.yml` values `tasks` and `ticket`. Split each line at
+the first colon and remove comments from the first `#`. If configuration is
+absent, offer `/sdd:setup`. Ask for required missing values.
 
+Read the whole queue, including completed entries, before choosing an ID. Follow
+project ID conventions; for a new queue, use the configured prefix and
+increasing numbers. Never reuse or renumber IDs. Preserve valid dependency
+references. A request to file a task does not authorize implementation. Use
+`/sdd:work` for approval of proposed edits and for integration timing.
 
-A **ticket** states the outcome and how you'll know it's done — nothing else.
-Reasoning, history, and option-comparisons live in the feature's `design.md`,
-written when the task is picked up. A ticket is a pickup contract, not a design
-doc: an agent takes it → designs → plans → executes.
+## Write a ticket
 
-## The ticket
+Preserve an existing queue's fields, structure, labels and ID conventions,
+including completed entries. Map method states to project statuses. If required
+content or a state has no unambiguous representation, propose a concrete
+addition and agree it before changing the format.
 
-Write exactly these slots, in this order. Omit optional lines when they have no
-real content — never pad.
+For a new queue, use the following shape and tag conventions. Keep blank lines
+between fields and around lists. Omit Context or Pointers when unnecessary.
 
 ```markdown
-#### `[T-40]` Short imperative title
+#### `[T-40]` Add a recovery export
 
-**Tags:** `[feat]` `[launch]` `[api]` `[someday]`
+**Tags:** `[feat]` `[next]`
 
-**Outcome:** One sentence — what becomes true when this is done.
+**Outcome:** A recovery export contains a consistent restorable snapshot.
+
+**Context:** The export supports disaster recovery, so cross-record consistency
+is required. Implementation choices remain open.
 
 **Acceptance:**
 
-- [ ] A checkable criterion (an observable end-state, not a step)
-- [ ] …2–5 total
+- [ ] Restoring the export preserves the recorded relationships
+- [ ] An incomplete export is reported as failed
 
-**Pointers:** deps: T-38 · design: <path> · code: <path>   ← only real ones, whole line optional
-
----
-```
-
-- **Heading** — `#### ` + the `` `[ID]` `` + a short imperative title. Tags go on
-  their own `**Tags:**` line below, not inline.
-- **Outcome** — the end-state in one sentence, not the motivation.
-- **Acceptance** — 2–5 boxes. Each is something you can tick by observing the
-  result. If you can't check it, it's not acceptance — it's a wish or a step.
-- **`---`** — a thematic break closes each ticket and separates it from the next.
-
-**Blank lines are mandatory** between the heading, each `**Label:**` paragraph,
-and around the `- [ ]` list — CommonMark otherwise glues `**Pointers:**` into the
-acceptance list. Keep the blank line **before** `**Pointers:**` (it closes the
-acceptance list) and blank lines around the trailing `---`.
-
-## Tags and IDs
-
-Tags are bracketed and live on the ticket's `**Tags:**` line for grep-filtering
-(`grep '\[api\]'`; add `-B2` to pull in the heading). Order:
-**type · phase · area · status**.
-
-| Group | Values |
-|---|---|
-| type | `[feat]` `[bug]` `[debt]` `[chore]` |
-| phase | project-specific — the roadmap's phase names |
-| area | project-specific — one per subsystem, added as needed; cross-cutting → several |
-| status | `[next]` `[in-progress]` `[blocked]` `[someday]` |
-
-**IDs are stable and never reused.** New items take the next free number with the
-prefix from `.sdd.yml`. To find it, grep the whole file — `grep -o '\[T-[0-9]*\]'
-<tasks> | sort -t- -k2 -n | tail -1` — and take one past the highest. Scanning
-only the TODO section is the way duplicates happen: a higher id usually sits in
-Done, collapsed to one line. A `deps:` reference must survive forever, so never
-renumber.
-
-## Moving to Done
-
-Once the operator has approved integration — the Done move records that
-decision, so it cannot precede it; see the integration rule in the project's
-rules file (`rules:` in `.sdd.yml`) — **collapse the ticket to one line** and swap the status tag
-for a ref tag (`[PR #N]` / `[branch-name]` / `[commit-hash]`). Acceptance is
-dropped — git remembers. Keep type/phase/area tags.
-
-The same commit fills the `PR:` field of any ADR the branch wrote and left as a
-dash. It is the last chance: nothing after it is on the branch.
-
-```markdown
-- `[T-40]` `[feat]` `[launch]` `[api]` `[PR #91]` Title — one-sentence result.
-```
-
-## Leave out — and where it goes instead
-
-Each of these is what makes a ticket "watery". Cut it from the ticket:
-
-| Don't put in the ticket | Put it here instead |
-|---|---|
-| Why / motivation / rationale | the feature's `design.md` |
-| History ("found during X", "as we discussed") | nowhere — git and the PR carry it |
-| Option comparisons, "go with approach 2" | `design.md`, decided at pickup |
-| Implementation narrative | the plan, at pickup |
-
-## Example: before → after
-
-**Watery:**
-
-> …the importer rejects the whole file when one row fails validation, so a
-> 10,000-row upload dies on a typo in row 3. Noticed while debugging a support
-> ticket last week. **Go with option 2 = per-row outcomes**, not option 1
-> (fail-fast with a better message) — users need the good rows to land, and
-> partial success is what every comparable tool does. Once it lands we should
-> probably revisit the batch size too, though that is a separate concern…
-
-**Ticket:**
-
-```markdown
-#### `[T-39]` Partial success on bulk import
-
-**Tags:** `[feat]` `[import]` `[next]`
-
-**Outcome:** A bulk import applies every valid row and reports the rejected ones, instead of failing the whole file.
-
-**Acceptance:**
-
-- [ ] Valid rows are committed when others fail validation
-- [ ] The response lists each rejected row with its reason
-- [ ] A file where every row fails still returns a non-2xx status
-
-**Pointers:** deps: T-38
+**Pointers:** requirements: <source> · deps: T-38
 
 ---
 ```
 
-## Self-check before saving
+State the outcome and observable acceptance. Include the reason or constraint
+when omitting it would change the task. Link primary requirements, dependencies
+and existing code. There is no minimum criterion count. Leave execution steps
+for a plan and unsettled implementation choices for discussion at pickup.
 
-- Could every sentence be ticked or pointed to? If a line only explains *why*,
-  delete it.
-- Is each acceptance box observable (an end-state), not a verb ("investigate",
-  "consider")?
-- New item: did you take the next free number and confirm it's unused?
-- Done: collapsed to one line with a ref tag?
+For a new queue, order tags by type, phase, area and status. Use `[feat]`,
+`[bug]`, `[debt]` or `[chore]` for type; use project phase and area names.
+Status is `[next]`, `[in-progress]`, `[blocked]` or `[someday]`.
+
+When starting or resuming implementation, set an existing ticket to the project
+status equivalent to `[in-progress]`. Include the update in the current step's
+implementation commit. Set `[blocked]` or its project equivalent when an obstacle prevents
+continuing the task and no independent authorized work remains. A blocked part alone does not block the
+whole ticket. Keep details in working notes; those notes do not replace the
+queue status. Leave Done to integration. Update an existing ticket; these
+transitions do not require creating one.
+
+## Close a ticket
+
+Close after explicit permission to integrate its branch, before merge, as part
+of `/sdd:work` Integration. Preserve the project's completed-entry format,
+retaining the ID, result and a change reference. For a queue using this skill's
+format, collapse the entry to one line in Done, newest first. Keep type, phase
+and area; drop acceptance and replace the status tag with the reference.
+
+```markdown
+- `[T-40]` `[feat]` `[PR #91]` Add a recovery export — produces a consistent snapshot.
+```
+
+Use a PR, branch or commit reference that exists. In the same final branch
+commit, fill missing PR references in its ADRs. Done on the branch records
+integration approval; report actual merge separately. Do not close on plan
+approval or merely because implementation checks passed. Resolve known merge
+blockers before this commit. If merge later fails, follow `/sdd:work`
+Integration: verified repair commits may follow Done; preserve the published
+history.
+
+## Check the edit
+
+Check IDs against the full queue, retain necessary context and real references,
+and inspect the rendered Markdown structure. A completed entry must identify its
+result and change. Report what changed.
