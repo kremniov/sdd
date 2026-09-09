@@ -70,8 +70,8 @@ every planned step through a reviewable PR.
 
 ## Execute
 
-Use `/sdd:tasks` to update an existing ticket when execution starts, becomes
-blocked or resumes.
+Use `/sdd:tasks` for existing tickets before starting or resuming implementation
+edits, and when blocked.
 
 For each step: implement, verify, commit all its changes, update Status, then
 continue. Several commits per step are allowed; independent review need not

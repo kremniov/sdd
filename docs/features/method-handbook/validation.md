@@ -289,3 +289,15 @@ Ticket ordering, merge prerequisites, runner and scenarios are unchanged.
 
 Work remains within the 1200-word limit. Structural/frontmatter checks validate
 the edit; no live behavioral repeat is claimed for this correction.
+
+## Ticket start and resume sequencing correction (2026-09-09)
+
+User approved updating an existing ticket before the first implementation edit
+and before resuming blocked implementation. Work routes these transitions to
+tasks; tasks defines the project status mapping and allows the update to share
+the step's implementation commit. Research before implementation is not this
+trigger. English method and ignored Russian handbook are aligned.
+
+Block conditions, ticket creation rules and integration permission are unchanged.
+This text correction has structural/frontmatter validation only; the previously
+withheld live resume turn has not been run, and no behavior improvement is claimed.

@@ -269,8 +269,10 @@ content or a state cannot be expressed unambiguously, propose a concrete additio
 and agree it before changing the format. Use the skill's format for a new queue.
 
 Check the whole queue, including completed entries, before allocating an ID.
-Never reuse IDs. For an existing ticket, set in-progress when execution starts
-or resumes. Set blocked when an obstacle prevents continuing the task and no
+Never reuse IDs. Before the first implementation edit, set an existing ticket
+to in-progress. When resuming a blocked task, do this before continuing
+implementation. The status change can share the step's implementation commit.
+Set blocked when an obstacle prevents continuing the task and no
 independent authorized work remains. A blocked part alone does not block the
 whole ticket. Working notes retain details but do not replace the queue status.
 These transitions do not require creating a ticket. Done records integration
