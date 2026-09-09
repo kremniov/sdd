@@ -301,3 +301,16 @@ trigger. English method and ignored Russian handbook are aligned.
 Block conditions, ticket creation rules and integration permission are unchanged.
 This text correction has structural/frontmatter validation only; the previously
 withheld live resume turn has not been run, and no behavior improvement is claimed.
+
+## Merge prerequisite correction (2026-09-09)
+
+User approved checking independent review and readiness through status/checks
+before invoking merge. Missing review or a known blocker pauses integration
+without cancelling permission. Work and both method handbooks now make that
+sequence explicit. Failed-merge recovery, scoped permission, final ticket/ADR
+commit and history-preserving repairs remain in place.
+
+The merge scenario's continuation gate now rejects any premature merge attempt,
+including one rejected by the simulator, and requires permission recorded in
+status. Structural/frontmatter validation covers the edited artifacts; no live
+repeat is claimed. The prior mixed result remains historical evidence.

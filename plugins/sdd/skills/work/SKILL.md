@@ -134,25 +134,25 @@ to the user.
 
 ## Integration
 
-G4 is the user's explicit permission to integrate the specific PR, after review.
-On permission such as "merge this PR":
+G4 is explicit user permission to integrate a specific PR. On "merge this PR":
 
-1. Resolve known integration blockers and run available checks before the final
-   commit. Return changes to agreed decisions or scope to the user.
-2. Close its ticket through `/sdd:tasks`, if one exists. Fill missing ADR PR
-   references in the same final branch commit.
-3. Run required checks, push and merge subject to required project checks.
-   Report the actual result.
+1. Check independent review and readiness through status/checks. If review is
+   missing or a known blocker remains, retain permission and pause integration.
+   Resolve blockers and run available checks before the final commit; return
+   changed decisions or scope to the user.
+2. Close any ticket through `/sdd:tasks` and fill missing ADR PR references in
+   the same final branch commit.
+3. Run required project checks and push. Call merge only after prerequisites
+   pass; report the actual result.
 
-Do not ask again for method permission to run the merge command. Implementation
-approval is not merge permission. Done records approval, not a completed merge.
+Implementation approval is not merge permission. Given integration permission,
+do not ask again. Done records approval, not a completed merge.
 
 If merge fails, report the cause and branch state. Permission persists within
-its scope: resolve technical blockers, verify and retry when ready. Missing
-access or changed decisions or scope trigger Stop conditions above. If repairs
-are needed after the final commit, preserve history and append verified repair
-commits. Do not rewrite published history or add an empty final commit solely to
-keep Done last.
+scope: resolve technical blockers, verify and retry when ready. Missing access
+or changed decisions or scope trigger Stop conditions. Preserve history if
+repairs follow the final commit: append verified repair commits. Do not rewrite
+published history or add an empty final commit to keep Done last.
 
 ## Status
 

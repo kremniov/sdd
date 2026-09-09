@@ -239,11 +239,13 @@ review. Stop before merge without integration permission. If the user already
 authorized "fix these findings and merge", proceed to integration once the stated
 conditions are met. Return changes to agreed decisions or scope to the user.
 
-After explicit permission such as "merge this PR", resolve known integration
-blockers and run available checks before the final commit. Close the ticket in
-that commit, fill missing ADR PR references, run required checks and push. Then
-merge subject to required project checks and report the result. The method
-requires no second permission for the merge command. Skip ticket closure if
+After explicit permission such as "merge this PR", check independent review and
+integration readiness through status/checks. If review is missing or a known
+blocker remains, retain permission and pause integration. Resolve blockers and
+run available checks before the final commit. Close the ticket in that commit,
+fill missing ADR PR references, run required checks and push. Then call merge
+only after the required checks and other prerequisites pass, and report the
+result. The method requires no second permission for the merge command. Skip ticket closure if
 there is no ticket. Done on the working branch records integration approval;
 it reaches the integration branch with the change. Confirm actual merge separately.
 
