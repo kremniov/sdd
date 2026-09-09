@@ -1,6 +1,8 @@
 # Behavioral fixtures
 
 `fixtures/` stores synthetic starting files and ordered baseline commits as JSON.
+An optional `branch` on a commit creates a separate branch from the current
+working-branch HEAD, writes that commit, then returns to the working branch.
 Optional `refs` create initial local branches; `working_files` supply ignored
 status or other uncommitted initial state after those commits.
 The runner creates a fresh Git repository for each preparation. Existing runs

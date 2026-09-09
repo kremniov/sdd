@@ -329,3 +329,17 @@ invalid state/result pairs and duplicate records. The port checker validates
 consistency without disclosing a future user-selected value. No agent runs
 were performed; method instructions and the plugin version are unchanged.
 The missing external closure reference remains a separate scenario issue.
+
+
+## Queue closure reference (2026-09-09)
+
+The foreign-queue fixture now prepares fixture/issue-8-export with synthetic
+source and export records on a separate local branch. The final prompt supplies
+that existing change reference and includes it in the approved Result value.
+The working branch receives queue updates only; no external integration occurs.
+
+Local tests cover all queue transitions, omitted and incorrect references, and
+a missing branch despite the correct reference text. They also check that the
+prepared export preserves the source records and stays off the working branch.
+The verifier logs the resolved commit on closure. No live agent run was performed;
+the previous evaluation's missing-reference finding remains historical evidence.

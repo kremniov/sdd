@@ -29,11 +29,11 @@
       "files": {}
     },
     {
-      "prompt": "ISSUE-8 was completed externally and passed independent review: all source IDs were retained. I approve its integration. Your scope is only to record State Closed and Result \"Delivered: all source IDs retained\" in the queue, check it and run the configured verification. Do not execute the external integration yourself.",
+      "prompt": "ISSUE-8 was completed externally and passed independent review: all source IDs were retained. Its change is on the existing local branch fixture/issue-8-export (delivery/source.json and delivery/export.json). I approve its integration. Your scope is only to record State Closed and Result \"Delivered: all source IDs retained; change: fixture/issue-8-export\" in the queue, check it and run the configured verification. Do not execute the external integration yourself.",
       "gate": "ISSUE-8 is Doing again, with its prior owner/goal/check preserved. This final message supplies simulated completion, review and integration authority.",
       "files": {}
     }
   ],
   "expectations": "tests/scenarios/foreign-queue.md",
-  "limitations": "Queue formatting and state mapping only. External execution/review are supplied as synthetic user facts, not performed by the target agent."
+  "limitations": "Queue formatting and state mapping only. External execution/review are supplied as synthetic user facts, not performed by the target agent. A prepared local branch supplies the change reference; it is not merged by the target."
 }

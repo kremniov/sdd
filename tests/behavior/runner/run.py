@@ -39,6 +39,8 @@ def prepare(fixture, root):
                        ('commit.gpgsign', 'false'), ('core.hooksPath', '/dev/null')]:
         git(repo, 'config', key, value)
     for commit in fixture['commits']:
+        if 'branch' in commit:
+            git(repo, 'switch', '-q', '-c', commit['branch'])
         for name in commit.get('delete', []):
             safe_path(repo, name).unlink()
         for name, content in commit['files'].items():
@@ -48,6 +50,8 @@ def prepare(fixture, root):
             path.chmod(0o755 if name in commit.get('executable', []) else 0o644)
         git(repo, 'add', '.')
         git(repo, 'commit', '-q', '--allow-empty', '-m', commit['message'])
+        if 'branch' in commit:
+            git(repo, 'switch', '-q', fixture['branch'])
     for name, revision in fixture.get('refs', {}).items():
         git(repo, 'branch', name, revision)
     for name, content in fixture.get('working_files', {}).items():

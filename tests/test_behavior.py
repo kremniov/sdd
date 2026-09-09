@@ -258,7 +258,7 @@ class BehaviorFixturesTest(unittest.TestCase):
             queue = repo / 'queue.md'
             original = queue.read_text()
             pairs = [('Ready', '—'), ('Doing', '—'), ('Waiting', 'Missing source file'),
-                     ('Doing', '—'), ('Closed', 'Delivered: all source IDs retained')]
+                     ('Doing', '—'), ('Closed', 'Delivered: all source IDs retained; change: fixture/issue-8-export')]
             for state, result in pairs:
                 queue.write_text(original + f'| ISSUE-8 | {state} | Ada | Export records | All source IDs retained | {result} |\n')
                 run = subprocess.run(['python3', 'verify.py'], cwd=repo, capture_output=True)
@@ -266,9 +266,32 @@ class BehaviorFixturesTest(unittest.TestCase):
             valid = queue.read_text()
             for corrupted in [valid.replace('| Mei |', '| Ada |'),
                               valid.replace('| Closed | Ada |', '| Waiting | Ada |'),
-                              valid + valid.splitlines()[-1] + '\n']:
+                              valid + valid.splitlines()[-1] + '\n',
+                              valid.replace('; change: fixture/issue-8-export', ''),
+                              valid.replace('fixture/issue-8-export', 'fixture/missing')]:
                 queue.write_text(corrupted)
                 self.assertNotEqual(subprocess.run(['python3', 'verify.py'], cwd=repo, capture_output=True).returncode, 0)
+
+
+    def test_queue_closure_reference_resolves_to_isolated_export(self):
+        data = json.loads((BASE / 'fixtures/foreign-queue.json').read_text())
+        with tempfile.TemporaryDirectory() as temp:
+            repo = runner.prepare(data, Path(temp))
+            ref = 'fixture/issue-8-export'
+            self.assertEqual(runner.git(repo, 'branch', '--show-current'), 'feature/test')
+            self.assertEqual(runner.git(repo, 'status', '--porcelain'), '')
+            self.assertFalse((repo / 'delivery').exists())
+            self.assertNotEqual(runner.git(repo, 'rev-parse', ref), runner.git(repo, 'rev-parse', 'HEAD'))
+            source = json.loads(runner.git(repo, 'show', ref + ':delivery/source.json'))
+            exported = json.loads(runner.git(repo, 'show', ref + ':delivery/export.json'))
+            self.assertEqual(exported, source)
+            queue = repo / 'queue.md'
+            queue.write_text(queue.read_text() + '| ISSUE-8 | Closed | Ada | Export records | All source IDs retained | Delivered: all source IDs retained; change: fixture/issue-8-export |\n')
+            self.assertEqual(subprocess.run(['python3', 'verify.py'], cwd=repo, capture_output=True).returncode, 0)
+            runner.git(repo, 'branch', '-D', ref)
+            self.assertNotEqual(subprocess.run(['python3', 'verify.py'], cwd=repo, capture_output=True).returncode, 0)
+            records = [json.loads(line) for line in (repo / 'verify-runs.jsonl').read_text().splitlines()]
+            self.assertEqual([record['passed'] for record in records], [True, False])
 
 
 if __name__ == '__main__':
