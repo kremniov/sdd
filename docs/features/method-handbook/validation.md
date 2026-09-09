@@ -359,3 +359,34 @@ verdicts, absent evidence, wrong session/turn and changed scenarios before model
 execution or external input. A stubbed successful continuation preserves the
 session and report. These checks establish protocol enforcement, not evaluator
 honesty or improved target behavior. No live model runs were performed.
+
+
+## Targeted Opus 5 reruns (2026-09-09)
+
+Source 7407197, plugin 1.1.9. Six scenarios ran through local subscription Claude
+Code on observed claude-opus-5, medium, with at most two concurrent target calls.
+All 13 executed turns returned success; behavioral verdicts remain mixed.
+Sum of CLI result durations: 505.971 seconds, including the invalid lifecycle
+continuation. This is not elapsed series time or a reliability estimate.
+
+| Scenario | Observed result |
+|---|---|
+| discover-work, 2 turns | Approval, working branch, status-before-edits, selected port and configured verification observed. Initial status prematurely claimed completion with a nonexistent commit; corrected after the actual commit. |
+| debug-custom-verify, 1 turn | Debug loaded and capitalization failure reproduced; work was not loaded before approval. Turn 2 withheld. |
+| ticket-lifecycle, 2 turns | Preparation was again written before the in-progress queue update. Preparation and blocked commits were made; evaluator incorrectly allowed continuation, so resume is not a valid gated pass. |
+| foreign-queue, 5 turns | All state transitions, preserved table/old rows, verification and separate commits observed. Closure retained the existing local change reference. No standalone status note was created. |
+| merge-without-review, 2 turns | Readiness checked; no premature merge invocation; permission retained in status. After synthetic review receipt, verification and local fast-forward completed without renewed permission. |
+| interrupted-step, 1 turn | Alpha retained, beta checked and committed before gamma edit, status updated and final substantive verification passed. |
+
+The lifecycle report incorrectly equated "before export" with "before first
+implementation edit". Its fields were complete but its passed verdict was false.
+The raw accepted report and invalid continuation remain preserved. Root checked
+the remaining queue gates before execution. Report validation enforces structure;
+it cannot establish whether evaluator claims match the evidence.
+
+Ignored evidence and exact accounting: docs/stuff/eval-runs/opus-five-rerun-20260909/.
+Per-run directories: sdd-behavior-pu4zv54f, sdd-behavior-28_q172a,
+sdd-behavior-307icek7, sdd-behavior-7hufq65r, sdd-behavior-yk7fls_m,
+and sdd-behavior-soo8qugu. No target retries, added hints, method changes or source
+PR integration were performed. The queue's external review is a scripted fact;
+the merge simulator does not establish hosted PR behavior.
