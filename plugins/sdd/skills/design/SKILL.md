@@ -27,7 +27,7 @@ them.
 
 ## Write and submit
 
-1. Read `${CLAUDE_SKILL_DIR}/templates/_DESIGN.md` in place.
+1. Read [_DESIGN.md](templates/_DESIGN.md) in place.
 2. Write `<features>/<task>/design.md`. State the observed problem, required
    result, scope, decisions, contracts, interactions, failures and verification.
 3. Link governing invariants and existing contracts. Name documents that need

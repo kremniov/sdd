@@ -15,11 +15,10 @@ is in [the method](../method.md). Invariants 1–4 govern the plugin/project bou
 | Project rules | Loaded by the project harness | Resident constraints and routing |
 | Canon | Relevant work or review | Current obligations and interactions |
 
-Each skill keeps its templates under its own directory. SKILL.md resolves them
-through `${CLAUDE_SKILL_DIR}`; references can use `${CLAUDE_PLUGIN_ROOT}` with
-the full skill-local path. Design, plan and work own their artifact skeletons;
+Each skill keeps its templates under its own directory. Instructions link bundled resources with relative Markdown paths, resolved
+from the containing instruction file. Design, plan and work own their artifact skeletons;
 setup owns project scaffold and migration history. Project files use
-rendered project paths and skill names, not that plugin variable. `.sdd.yml`
+rendered project paths and skill names. `.sdd.yml`
 provides project locations. Readers split at the first colon, strip comments
 from the first `#`, and use unquoted values. Directory values include a final `/`.
 

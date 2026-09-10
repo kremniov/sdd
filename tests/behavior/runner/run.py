@@ -96,7 +96,7 @@ def instructions(repo, bundle, scenario):
         return system
     sources = ([bundle / 'skills/setup/templates/project/CLAUDE.section.md'] if scenario['resident'] else [])
     sources += [bundle / 'skills' / skill / 'SKILL.md' for skill in scenario['skills']]
-    return system + ''.join('\n' + render(p.read_text(), config_values(repo, scenario), bundle, p.parent) for p in sources)
+    return system + ''.join('\nBase directory for this skill: ' + str(p.parent) + '\n' + render(p.read_text(), config_values(repo, scenario), bundle, p.parent) for p in sources)
 
 
 def command_for(repo, bundle, scenario, meta, turn_number, system):

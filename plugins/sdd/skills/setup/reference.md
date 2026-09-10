@@ -20,7 +20,7 @@ A rules file with both current and legacy sections also requires resolution.
 | No fence | Show the proposed boundary and ask; add markers on approval at `v0.2.0`, then assess updates |
 | Unknown version history | Report the missing migration basis and ask before editing |
 
-Read `${CLAUDE_PLUGIN_ROOT}/skills/setup/templates/project/CHANGES.md` for entries after the
+Read [CHANGES.md](templates/project/CHANGES.md) for entries after the
 project's stamp and through the template's stamp. Use the current template as
 the basis for the complete proposed region. Preserve project requirements,
 terms, IDs and references; replace generic legacy prose with current wording.

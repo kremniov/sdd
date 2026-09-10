@@ -63,7 +63,7 @@ before applying it. Keep unrelated keys and project content.
 
 ## Scaffold
 
-Read `${CLAUDE_SKILL_DIR}/templates/project/`. Create files only where absent.
+Read [project](templates/project/). Create files only where absent.
 Substitute config values for placeholders and retain the template's markers and
 version. Do not copy `CHANGES.md` into the project.
 
@@ -81,13 +81,13 @@ For an existing README without markers, propose necessary targeted corrections.
 Adding a managed section requires separate approval of its boundary and content.
 
 For existing managed files, read
-`${CLAUDE_PLUGIN_ROOT}/skills/setup/reference.md` and follow its version
+[reference.md](reference.md) and follow its version
 procedure. Preserve everything outside the managed region. Ask about unknown or
 ambiguous boundaries before editing that file.
 
 ## Resident rules
 
-Read `${CLAUDE_SKILL_DIR}/templates/project/CLAUDE.section.md` and render it
+Read [CLAUDE.section.md](templates/project/CLAUDE.section.md) and render it
 using the config. The destination is `rules`.
 
 | Existing state | Action |

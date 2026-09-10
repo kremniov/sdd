@@ -64,19 +64,23 @@ else
 fi
 
 echo "bundled paths"
-python3 - <<'PY' || fail=1
-import re, os, glob, sys
+python3 - <<'PYCODE' || fail=1
+import re, sys
+from pathlib import Path
 ok = True
-for f in glob.glob('plugins/sdd/skills/**/*.md', recursive=True):
-    for scope, ref in re.findall(r'\$\{(CLAUDE_PLUGIN_ROOT|CLAUDE_SKILL_DIR)\}/([A-Za-z0-9_./-]+)', open(f).read()):
-        base = 'plugins/sdd' if scope == 'CLAUDE_PLUGIN_ROOT' else os.path.dirname(f)
-        p = os.path.join(base, ref.rstrip('.'))
-        if os.path.exists(p):
-            print(f'  OK      {ref}')
+for source in Path('plugins/sdd/skills').rglob('*.md'):
+    if 'templates' in source.parts:
+        continue  # Template links resolve in the adopting project.
+    for ref in re.findall(r'\]\(([^)]+)\)', source.read_text()):
+        if re.match(r'[a-zA-Z][a-zA-Z0-9+.-]*:', ref) or ref.startswith('#'):
+            continue
+        target = source.parent / ref.split('#', 1)[0]
+        if target.exists():
+            print(f'  OK      {ref} (from {source})')
         else:
-            print(f'  FAIL    {ref} (from {f})'); ok = False
+            print(f'  FAIL    {ref} (from {source})'); ok = False
 sys.exit(0 if ok else 1)
-PY
+PYCODE
 
 echo "portability"
 python3 scripts/check_portability.py || fail=1

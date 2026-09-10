@@ -4,6 +4,11 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.1.16
+
+- Use relative Markdown links for bundled skill resources. Validate links from
+  their containing instruction file and supply that base in explicit runner mode.
+
 ## 1.1.15
 
 - Keep artifact and project templates inside their owning skills; update resource
