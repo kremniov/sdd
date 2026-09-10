@@ -2,6 +2,7 @@
 
 Date: 2026-09-10
 Status: Accepted
+PR: [#7](https://github.com/kremniov/sdd/pull/7)
 
 ## Context
 
