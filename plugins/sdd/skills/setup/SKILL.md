@@ -77,6 +77,9 @@ version. Do not copy `CHANGES.md` into the project.
 | `features`, `adr` | Create missing directories; use a tracked placeholder if needed |
 | `notes` | Create the ignored directory with the approved ignore rule |
 
+For an existing README without markers, propose necessary targeted corrections.
+Adding a managed section requires separate approval of its boundary and content.
+
 For existing managed files, read
 `${CLAUDE_PLUGIN_ROOT}/skills/setup/reference.md` and follow its version
 procedure. Preserve everything outside the managed region. Ask about unknown or

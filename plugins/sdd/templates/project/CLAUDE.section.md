@@ -1,4 +1,4 @@
-<!-- sdd:rules v1.1.1 -->
+<!-- sdd:rules v1.1.14 -->
 ## Development method
 
 Use `/sdd:work` for implementation, resuming work and authorized integration.

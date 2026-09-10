@@ -10,7 +10,7 @@ behavior. Decision records preserve history. Link these entries by number.
 2. **Skeletons and scaffold have different lifecycles.** Skills read artifact
    skeletons in place from the plugin. Setup writes scaffold into missing project
    files. Existing managed guidance updates through stamped, described changes;
-   matching versions need no edit. Legacy retirement follows ADR 0020.
+   matching versions need no edit. Generic prose refresh follows ADR 0029; legacy retirement follows ADR 0020.
    *Detect:* `./scripts/check.sh` checks paths, reachability, fences, stamps and
    migration entries; manual scenario review checks semantic updates.
    *On violation:* correct the reference or migration before release.

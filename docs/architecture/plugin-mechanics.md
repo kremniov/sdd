@@ -11,7 +11,7 @@ is in [the method](../method.md). Invariants 1–4 govern the plugin/project bou
 | Skill reference | Its stated mode or condition applies | Additional procedure |
 | Artifact skeleton | A design, plan or ADR is written | A project artifact, not a copied skeleton |
 | Project scaffold | Adoption needs a missing file | Placeholder-substituted file with managed markers |
-| CHANGES.md | An older managed region needs an update | Proposed semantic edits, not a template overwrite |
+| CHANGES.md | An older managed region needs an update | Required changes and prior declines for the proposed region |
 | Project rules | Loaded by the project harness | Resident constraints and routing |
 | Canon | Relevant work or review | Current obligations and interactions |
 
@@ -46,8 +46,11 @@ entries after the project version through the template version. Bare valid
 legacy markers use the documented v0.2.0 baseline. Unknown history or malformed
 boundaries require user resolution.
 
-Present each proposed change in the project's wording and apply it on approval.
-Keep IDs, links, additions and content outside the region. Advance the stamp
+Use the current template as the proposal basis. Refresh generic legacy prose;
+preserve project requirements, terms, IDs, links and content outside the region.
+Check current skills and config before carrying legacy rules as project additions.
+Retain declined requirements until accepted, even when the template differs.
+Show the full proposed region and apply it on approval. See ADR 0029. Advance the stamp
 through fully satisfied contiguous versions. A declined entry remains pending.
 On re-run, an applied later entry is recognized by meaning if an earlier decline
 prevented recording it in the stamp.

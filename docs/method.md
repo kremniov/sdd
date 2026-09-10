@@ -291,11 +291,18 @@ structure unless the user chooses otherwise. Create missing files and apply
 approved changes. Present process conflicts before replacing instructions.
 Choose the working-notes location explicitly and keep working notes outside Git.
 
-Compare managed-section versions on updates. Carry changes by meaning while
-preserving project additions. Equal versions require no change. Report ambiguous
+Compare managed-section versions on updates. Use the current template as the
+proposal basis, preserving project requirements, terms, IDs and references while
+replacing generic legacy prose. Check current skills and configuration before
+carrying old method rules as project additions. Preserve declined requirements
+until accepted; account for them through the migration entries. Equal versions require no change. Report ambiguous
 boundaries, malformed markers and unknown versions. Show a replacement section
 in full and apply it with approval. Report applied, skipped and declined changes
 and unresolved conflicts. Re-running must not duplicate completed changes.
+
+An existing README without markers remains project-owned. Propose necessary
+targeted corrections; adding a managed section requires separate approval of
+its boundary and content.
 
 ## Resuming work
 

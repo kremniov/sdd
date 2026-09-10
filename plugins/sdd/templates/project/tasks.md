@@ -1,4 +1,4 @@
-<!-- sdd:scaffold v1.1.3 -->
+<!-- sdd:scaffold v1.1.14 -->
 # Tasks
 
 Use `/sdd:tasks` for stable IDs, necessary context, acceptance and status.

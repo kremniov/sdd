@@ -1,4 +1,4 @@
-<!-- sdd:scaffold v1.1.0 -->
+<!-- sdd:scaffold v1.1.14 -->
 # Lessons
 
 Record verified observations useful in later project work. Each entry includes

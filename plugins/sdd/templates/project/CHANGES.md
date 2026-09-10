@@ -3,8 +3,10 @@
 `/sdd:setup` reads this file when updating managed sections. Keep it in the plugin.
 
 Compare the project section's version with the template's. If the project is
-behind, apply the intervening entries by meaning. Preserve project wording,
-additions, ticket IDs and references. Different wording alone requires no update.
+behind, account for intervening entries and propose the current template wording.
+Preserve project requirements, terms, IDs and references, not generic legacy
+prose. The 1.1.14 refresh supersedes earlier instructions to retain wording.
+Keep declined requirements unchanged until accepted.
 
 Each entry states the new requirement and what it replaces. Write instructions
 that apply to differently worded project text. Omit diffs and quoted template
@@ -12,6 +14,44 @@ lines.
 
 When a managed template region changes, update its version stamp and add an entry
 under that version in the same commit. Omit versions with no scaffold changes.
+
+## 1.1.14
+
+### CLAUDE.section.md
+
+Refresh generic managed prose from the current template. Preserve project
+requirements, terms, IDs and references. This replaces preservation of generic
+legacy wording; retain declined requirements until the user accepts them.
+
+### docs-README.md
+
+Refresh generic managed prose from the current template. Preserve project
+requirements, terms, IDs and references. This replaces preservation of generic
+legacy wording; retain declined requirements until the user accepts them.
+
+### invariants.md
+
+Refresh generic managed prose from the current template. Preserve project
+requirements, terms, IDs and references. This replaces preservation of generic
+legacy wording; retain declined requirements until the user accepts them.
+
+### lessons.md
+
+Refresh generic managed prose from the current template. Preserve project
+requirements, terms, IDs and references. This replaces preservation of generic
+legacy wording; retain declined requirements until the user accepts them.
+
+### roadmap.md
+
+Refresh generic managed prose from the current template. Preserve project
+requirements, terms, IDs and references. This replaces preservation of generic
+legacy wording; retain declined requirements until the user accepts them.
+
+### tasks.md
+
+Refresh generic managed prose from the current template. Preserve project
+requirements, terms, IDs and references. This replaces preservation of generic
+legacy wording; retain declined requirements until the user accepts them.
 
 ## 1.1.3
 

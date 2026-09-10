@@ -21,23 +21,31 @@ A rules file with both current and legacy sections also requires resolution.
 | Unknown version history | Report the missing migration basis and ask before editing |
 
 Read `${CLAUDE_PLUGIN_ROOT}/templates/project/CHANGES.md` for entries after the
-project's stamp and through the template's stamp. For each entry, show the exact
-proposed semantic edit in the project's wording. Preserve project-specific
-rules, IDs and links. Apply it after approval. An entry already satisfied by the
-project text needs no edit. A declined entry remains unapplied.
+project's stamp and through the template's stamp. Use the current template as
+the basis for the complete proposed region. Preserve project requirements,
+terms, IDs and references; replace generic legacy prose with current wording.
+Before carrying a rule, check whether current skills or configuration already
+cover it. Show substantive changes and process conflicts for approval.
+
+Use the migration entries to account for required changes and previous declines.
+Keep declined requirements unchanged in the proposal unless the user now accepts
+them; a current template does not override a decline. An entry already satisfied
+needs no repeated edit. Preserve everything outside the approved region.
 
 Advance the stamp to the highest contiguous version whose entries for that file
 are all applied or already satisfied. If nothing is satisfied past the current
 stamp, leave it. On re-run, re-offer declined changes; recognize already applied
 entries by their meaning when a later accepted edit could not advance the stamp.
-Do not replace the region with the current template to implement an update.
+
 
 ## Retire the legacy rules section
 
 For a valid `sdd:method-section` region:
 
 1. Show the complete old region and complete proposed `sdd:rules` replacement.
-   Carry project-specific constraints and references into the proposal.
+   Preserve project requirements and references; replace generic legacy prose.
+   Check current skills and configuration before treating an old rule as a
+   project-specific addition.
 2. Explain that execution rules are now in `/sdd:work` and identify actual
    conflicts between the old rules and the installed skills.
 3. Ask for the replacement once. On approval, replace only that region and
