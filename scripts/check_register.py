@@ -4,7 +4,7 @@ import re
 import sys
 from pathlib import Path
 
-RESIDENT = Path("plugins/sdd/templates/project/CLAUDE.section.md")
+RESIDENT = Path("plugins/sdd/skills/setup/templates/project/CLAUDE.section.md")
 NEGATION = re.compile(r"\b(?:not|never|no|only|without)\b|\brather than\b", re.I)
 WORD = re.compile(r"[A-Za-z][A-Za-z'-]*")
 HEADING = re.compile(r"^(#{1,6}) ", re.M)
@@ -31,8 +31,7 @@ def prose_only(text):
 
 
 def shipped():
-    return sorted(set(Path("plugins/sdd/skills").rglob("*.md")) |
-                  set(Path("plugins/sdd/templates").rglob("*.md")))
+    return sorted(Path("plugins/sdd/skills").rglob("*.md"))
 
 
 def measure(path):

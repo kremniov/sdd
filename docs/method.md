@@ -334,7 +334,8 @@ that the implementation leaves unclear. Remove comments that restate code.
 A skill states its trigger, inputs, actions, result and stopping conditions.
 One skill owns the overall procedure. Specialized skills have enough inputs for
 standalone use. Resident text contains rules needed without a skill and routing.
-Templates specify sufficient content. Examples resolve actual ambiguity.
+Templates specify sufficient content and live inside the skill that uses them.
+Examples resolve actual ambiguity.
 References have explicit loading conditions.
 
 Length and heading depth have budgets. Negation frequency is a review signal.

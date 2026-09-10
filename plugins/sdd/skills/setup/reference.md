@@ -20,7 +20,7 @@ A rules file with both current and legacy sections also requires resolution.
 | No fence | Show the proposed boundary and ask; add markers on approval at `v0.2.0`, then assess updates |
 | Unknown version history | Report the missing migration basis and ask before editing |
 
-Read `${CLAUDE_PLUGIN_ROOT}/templates/project/CHANGES.md` for entries after the
+Read `${CLAUDE_PLUGIN_ROOT}/skills/setup/templates/project/CHANGES.md` for entries after the
 project's stamp and through the template's stamp. Use the current template as
 the basis for the complete proposed region. Preserve project requirements,
 terms, IDs and references; replace generic legacy prose with current wording.
@@ -36,7 +36,6 @@ Advance the stamp to the highest contiguous version whose entries for that file
 are all applied or already satisfied. If nothing is satisfied past the current
 stamp, leave it. On re-run, re-offer declined changes; recognize already applied
 entries by their meaning when a later accepted edit could not advance the stamp.
-
 
 ## Retire the legacy rules section
 

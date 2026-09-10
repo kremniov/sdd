@@ -51,7 +51,7 @@ behavior. Decision records preserve history. Link these entries by number.
    *Detect:* compare numbered entries with the base revision.
    *On violation:* restore numbering and correct references.
 9. **The repository rules are rendered from the scaffold.** Substitute `.sdd.yml`
-   into `templates/project/CLAUDE.section.md` to produce the managed CLAUDE section.
+   into `skills/setup/templates/project/CLAUDE.section.md` to produce the managed CLAUDE section.
    *Detect:* `./scripts/check.sh` checks that the render is present in CLAUDE.md.
    *On violation:* edit the template and re-render.
 10. **Catalogue sources resolve to matching manifests.** Spell the source in
@@ -78,8 +78,8 @@ behavior. Decision records preserve history. Link these entries by number.
 | Catalogue | `.claude-plugin/` | Resolve the plugin source |
 | Manifest | `plugins/sdd/.claude-plugin/` | Version and package metadata |
 | Skills | `plugins/sdd/skills/` | Scoped procedures and conditional references |
-| Skeletons | `plugins/sdd/templates/_*.md` | Artifact content, read in place |
-| Scaffold | `plugins/sdd/templates/project/` | Rendered project guidance and semantic migration history |
+| Skeletons | `plugins/sdd/skills/{design,plan,work}/templates/_*.md` | Artifact content, read in place |
+| Scaffold | `plugins/sdd/skills/setup/templates/project/` | Rendered project guidance and semantic migration history |
 | Method | `docs/method.md` | Complete agreed behavior for readers and maintainers |
 | Scenarios | `tests/scenarios/` | Versioned input cases and evaluator expectations |
 | Behavioral fixtures | `tests/behavior/` | Reproducible repositories, prompts and local agent runner |

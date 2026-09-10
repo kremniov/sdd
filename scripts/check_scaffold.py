@@ -21,7 +21,7 @@ DEFAULT = "sdd:scaffold"
 CHANGES = "CHANGES.md"
 BASELINE = (0, 2, 0)
 
-ROOT = Path("plugins/sdd/templates/project")
+ROOT = Path("plugins/sdd/skills/setup/templates/project")
 CEILING = json.loads(Path("plugins/sdd/.claude-plugin/plugin.json").read_text())["version"]
 
 
@@ -62,7 +62,11 @@ def baseline():
 
 def committed(rev, path):
     """The file at `rev`, or None outside a git tree / before the file existed."""
-    return git("show", f"{rev}:{path.as_posix()}")
+    text = git("show", f"{rev}:{path.as_posix()}")
+    if text is None and path.is_relative_to(ROOT):
+        old = Path("plugins/sdd/templates/project") / path.relative_to(ROOT)
+        text = git("show", f"{rev}:{old.as_posix()}")
+    return text
 
 
 def fence(text, name):
