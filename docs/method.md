@@ -281,6 +281,10 @@ reference.
 
 ## Adoption and updates
 
+Setup carries the approval, discussion, writing, branch and handover rules
+needed to run adoption before current resident rules exist. It compares legacy
+instructions with the installed method and presents conflicts for agreement.
+
 Survey documents, active instructions, ticket conventions and verification.
 Show the path configuration and concrete changes. Preserve the project's
 structure unless the user chooses otherwise. Create missing files and apply

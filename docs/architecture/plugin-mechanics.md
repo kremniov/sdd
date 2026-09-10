@@ -20,6 +20,11 @@ rendered project paths and skill names, not that plugin variable. `.sdd.yml`
 provides project locations. Readers split at the first colon, strip comments
 from the first `#`, and use unquoted values. Directory values include a final `/`.
 
+Setup includes the execution constraints needed before adoption: concrete
+approval, one question at a time, complete proposals, direct writing, working
+branches, verified commits and PR handover. Integration uses work after explicit
+permission and independent review.
+
 ## Adoption order
 
 1. Survey existing instructions, paths, verification and queue conventions.

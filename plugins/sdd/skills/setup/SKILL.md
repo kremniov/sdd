@@ -4,8 +4,23 @@ description: Adopt or update SDD by mapping project paths, proposing exact scaff
 ---
  # Setup
 
-For files intended for Git, follow `/sdd:work` Branch and completion before
-editing and when handing over the result.
+## Run setup
+
+Survey first and obtain approval of the concrete changes before writing them.
+Compare existing process instructions with the installed method; show conflicts
+before replacing them. Apply an already approved proposal without asking again.
+Discuss related questions together, asking one at a time. Prefer
+`AskUserQuestion` when available. Show complete proposed managed sections without
+placeholders for omitted text.
+
+Use ASD-STE100 as a readability reference: direct sentences, consistent terms
+and an explicit actor. Preserve precise conditions; remove rhetoric and repetition.
+
+Before editing files for Git, check the branch. Create a working branch when on
+main, master or another integration branch. Preserve user changes; use a worktree
+when isolation is needed. Verify and commit completed steps, then push and open
+a PR. Report completed checks and limitations. Stop for user-started independent
+review; merge requires separate explicit permission and `/sdd:work` Integration.
 
 ## Survey
 
@@ -14,9 +29,7 @@ ticket conventions and any existing `.sdd.yml`. Record actual paths before
 asking. Inspect existing content and managed markers before writing files.
 
 Prefer existing project locations. Show the complete proposed config and the
-concrete file changes together for approval. Present process conflicts before
-replacing instructions. Approval of paths alone is not approval to replace a
-process. Apply an already approved proposal without asking again.
+concrete file changes together for approval. Approval of paths alone is not approval to replace a process.
 
 ## Configuration
 

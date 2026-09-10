@@ -24,7 +24,8 @@ behavior. Decision records preserve history. Link these entries by number.
 4. **Instructions load where they are needed.** Resident text holds cross-session
    constraints and routing. Work owns the execution sequence; specialized skills
    own their procedures and standalone inputs. References have loading conditions.
-   Templates specify artifact content. See ADR 0022, amending ADR 0018.
+   Templates specify artifact content. Setup also carries the constraints needed
+   before resident rules are adopted. See ADR 0028, amending ADR 0022.
    *Detect:* manual coverage review against `docs/method.md` and scenario inputs.
    *On violation:* assign a rule to its owner and remove unnecessary duplication.
 5. **The method is portable across project stacks.** Skills and templates do
