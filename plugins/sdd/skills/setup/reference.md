@@ -28,14 +28,15 @@ Before carrying a rule, check whether current skills or configuration already
 cover it. Show substantive changes and process conflicts for approval.
 
 Use the migration entries to account for required changes and previous declines.
-Keep declined requirements unchanged in the proposal unless the user now accepts
-them; a current template does not override a decline. An entry already satisfied
-needs no repeated edit. Preserve everything outside the approved region.
+Offer each previously declined change again as a separate choice. Until the user
+accepts it, keep the project's current wording for that requirement in the
+proposal; a current template does not override a decline. An entry already
+satisfied needs no repeated edit. Preserve everything outside the approved region.
 
 Advance the stamp to the highest contiguous version whose entries for that file
 are all applied or already satisfied. If nothing is satisfied past the current
-stamp, leave it. On re-run, re-offer declined changes; recognize already applied
-entries by their meaning when a later accepted edit could not advance the stamp.
+stamp, leave it. On re-run, recognize already applied entries by their meaning
+when a later accepted edit could not advance the stamp.
 
 ## Retire the legacy rules section
 

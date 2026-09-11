@@ -67,15 +67,22 @@ echo "bundled paths"
 python3 - <<'PYCODE' || fail=1
 import re, sys
 from pathlib import Path
+bundle = Path('plugins/sdd').resolve()
 ok = True
 for source in Path('plugins/sdd/skills').rglob('*.md'):
     if 'templates' in source.parts:
         continue  # Template links resolve in the adopting project.
-    for ref in re.findall(r'\]\(([^)]+)\)', source.read_text()):
-        if re.match(r'[a-zA-Z][a-zA-Z0-9+.-]*:', ref) or ref.startswith('#'):
-            continue
-        target = source.parent / ref.split('#', 1)[0]
-        if target.exists():
+    text = source.read_text()
+    refs = [(ref, source.parent / ref.split('#', 1)[0])
+            for ref in re.findall(r'\]\(([^)]+)\)', text)
+            if not re.match(r'[a-zA-Z][a-zA-Z0-9+.-]*:', ref) and not ref.startswith('#')]
+    refs += [('${CLAUDE_PLUGIN_ROOT}/' + ref, bundle / ref.rstrip('.'))
+             for ref in re.findall(r'\$\{CLAUDE_PLUGIN_ROOT\}/([A-Za-z0-9_./-]+)', text)]
+    for ref, target in refs:
+        # Only the plugin directory is installed; a link out of it is dead for users.
+        if target.resolve() != bundle and bundle not in target.resolve().parents:
+            print(f'  FAIL    {ref} leaves the plugin bundle (from {source})'); ok = False
+        elif target.exists():
             print(f'  OK      {ref} (from {source})')
         else:
             print(f'  FAIL    {ref} (from {source})'); ok = False

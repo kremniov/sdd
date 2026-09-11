@@ -18,10 +18,11 @@ prose. Check whether current skills or configuration cover old method rules
 before retaining them as project additions.
 
 Keep version comparison, migration history and contiguous stamp advancement.
-A template never overrides a declined requirement. Release 1.1.14 explicitly
-refreshes all managed sections, including projects with the previous stamps.
-Unmanaged READMEs receive proposed targeted corrections; managed boundaries
-require separate approval. This amends ADR 0011; ADR 0020 still governs retirement.
+A template never overrides a declined requirement. Scaffold stamp 1.1.14,
+shipped in plugin 1.1.15, explicitly refreshes all managed sections, including
+projects with the previous stamps. Unmanaged READMEs receive proposed targeted
+corrections; managed boundaries require separate approval. This amends ADR 0011;
+ADR 0020 still governs retirement.
 
 ## Consequences
 
