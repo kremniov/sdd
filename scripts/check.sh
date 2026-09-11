@@ -68,16 +68,22 @@ python3 - <<'PYCODE' || fail=1
 import re, sys
 from pathlib import Path
 bundle = Path('plugins/sdd').resolve()
+ROOT = '${CLAUDE_PLUGIN_ROOT}/'
 ok = True
 for source in Path('plugins/sdd/skills').rglob('*.md'):
     if 'templates' in source.parts:
         continue  # Template links resolve in the adopting project.
     text = source.read_text()
-    refs = [(ref, source.parent / ref.split('#', 1)[0])
-            for ref in re.findall(r'\]\(([^)]+)\)', text)
-            if not re.match(r'[a-zA-Z][a-zA-Z0-9+.-]*:', ref) and not ref.startswith('#')]
-    refs += [('${CLAUDE_PLUGIN_ROOT}/' + ref, bundle / ref.rstrip('.'))
-             for ref in re.findall(r'\$\{CLAUDE_PLUGIN_ROOT\}/([A-Za-z0-9_./-]+)', text)]
+    refs = []
+    for ref in re.findall(r'\]\(([^)]+)\)', text):
+        if re.match(r'[a-zA-Z][a-zA-Z0-9+.-]*:', ref) or ref.startswith('#'):
+            continue
+        path = ref.split('#', 1)[0]
+        base = bundle if path.startswith(ROOT) else source.parent
+        refs.append((ref, base / path.removeprefix(ROOT)))
+    bare = re.sub(r'\]\([^)]+\)', '', text)
+    refs += [(ROOT + ref, bundle / ref.rstrip('.'))
+             for ref in re.findall(r'\$\{CLAUDE_PLUGIN_ROOT\}/([A-Za-z0-9_./-]+)', bare)]
     for ref, target in refs:
         # Only the plugin directory is installed; a link out of it is dead for users.
         if target.resolve() != bundle and bundle not in target.resolve().parents:
