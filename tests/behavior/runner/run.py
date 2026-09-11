@@ -94,9 +94,11 @@ def instructions(repo, bundle, scenario):
               'simulation may be used if present; report its limits. Do not use other agents.\n')
     if scenario.get('mode') == 'plugin':
         return system
-    sources = ([bundle / 'skills/setup/templates/project/CLAUDE.section.md'] if scenario['resident'] else [])
-    sources += [bundle / 'skills' / skill / 'SKILL.md' for skill in scenario['skills']]
-    return system + ''.join('\nBase directory for this skill: ' + str(p.parent) + '\n' + render(p.read_text(), config_values(repo, scenario), bundle, p.parent) for p in sources)
+    cfg = config_values(repo, scenario)
+    if scenario['resident']:
+        system += '\n' + render((bundle / 'skills/setup/templates/project/CLAUDE.section.md').read_text(), cfg, bundle)
+    skills = [bundle / 'skills' / skill / 'SKILL.md' for skill in scenario['skills']]
+    return system + ''.join('\nBase directory for this skill: ' + str(p.parent) + '\n' + render(p.read_text(), cfg, bundle, p.parent) for p in skills)
 
 
 def command_for(repo, bundle, scenario, meta, turn_number, system):
