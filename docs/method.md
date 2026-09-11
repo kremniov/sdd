@@ -243,8 +243,8 @@ blocker remains, retain permission and pause integration. Resolve blockers and
 run available checks before the final commit. Close the ticket in that commit,
 fill missing ADR PR references, run required checks and push. Then call merge
 only after the required checks and other prerequisites pass, and report the
-result. The method requires no second permission for the merge command. Skip ticket closure if
-there is no ticket. Done on the working branch records integration approval;
+result. No second permission is required for the merge command. Skip ticket
+closure if there is no ticket. Done on the working branch records integration approval;
 it reaches the integration branch with the change. Confirm actual merge separately.
 
 If merge fails, report the cause and branch state. Permission remains valid
@@ -271,8 +271,7 @@ and agree it before changing the format. Use the skill's format for a new queue.
 Check the whole queue, including completed entries, before allocating an ID.
 Never reuse IDs. When starting or resuming implementation, set an existing
 ticket to in-progress. Include the update in the current step's implementation
-commit.
-Set blocked when an obstacle prevents continuing the task and no
+commit. Set blocked when an obstacle prevents continuing the task and no
 independent authorized work remains. A blocked part alone does not block the
 whole ticket. Working notes retain details but do not replace the queue status.
 These transitions do not require creating a ticket. Done records integration
@@ -281,9 +280,8 @@ reference.
 
 ## Adoption and updates
 
-Setup carries the approval, discussion, writing, branch and handover rules
-needed to run adoption before current resident rules exist. It compares legacy
-instructions with the installed method and presents conflicts for agreement.
+Setup states the approval, discussion, writing, branch and handover rules
+needed before current resident instructions are installed.
 
 Survey documents, active instructions, ticket conventions and verification.
 Show the path configuration and concrete changes. Preserve the project's
@@ -291,14 +289,17 @@ structure unless the user chooses otherwise. Create missing files and apply
 approved changes. Present process conflicts before replacing instructions.
 Choose the working-notes location explicitly and keep working notes outside Git.
 
-Compare managed-section versions on updates. Use the current template as the
-proposal basis, preserving project requirements, terms, IDs and references while
-replacing generic legacy prose. Check current skills and configuration before
-carrying old method rules as project additions. Preserve declined requirements
-until accepted; account for them through the migration entries. Equal versions require no change. Report ambiguous
-boundaries, malformed markers and unknown versions. Show a replacement section
-in full and apply it with approval. Report applied, skipped and declined changes
-and unresolved conflicts. Re-running must not duplicate completed changes.
+Compare managed-section versions. Equal versions require no change. Report
+ambiguous boundaries, malformed markers and unknown versions.
+
+Base update proposals on the current template. Preserve project requirements,
+terms, IDs and references; replace generic legacy prose. Check current skills
+and configuration before treating old method rules as project additions. Use
+migration entries to assess changes; keep declined requirements unchanged until
+accepted. Show the complete replacement and apply it after approval.
+
+Report applied, skipped and declined changes and unresolved conflicts. On re-run,
+leave completed changes alone.
 
 An existing README without markers remains project-owned. Propose necessary
 targeted corrections; adding a managed section requires separate approval of
@@ -309,8 +310,7 @@ its boundary and content.
 For multi-step work, keep a status file in the configured notes directory outside
 Git. Save unfinished work before a pause or handoff. A single-step task completed
 in the current session needs no status file. Record the branch, task, tier,
-approved decisions, passed gates, current step, check results
-and open questions. Link artifacts and the decision log. Update status after
+approved decisions, passed gates, current step, check results and open questions. Link artifacts and the decision log. Update status after
 approvals, after checking and committing a completed step, and before handoff.
 Record unfinished work within the current step; a commit alone does not mark
 the step complete.
@@ -335,8 +335,7 @@ A skill states its trigger, inputs, actions, result and stopping conditions.
 One skill owns the overall procedure. Specialized skills have enough inputs for
 standalone use. Resident text contains rules needed without a skill and routing.
 Templates specify sufficient content and live inside the skill that uses them.
-Examples resolve actual ambiguity.
-References have explicit loading conditions.
+Examples resolve actual ambiguity. References have explicit loading conditions.
 
 Length and heading depth have budgets. Negation frequency is a review signal.
 Counters do not establish clarity or correctness. Cut repetitions, rhetoric and

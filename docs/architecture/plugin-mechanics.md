@@ -11,21 +11,22 @@ is in [the method](../method.md). Invariants 1–4 govern the plugin/project bou
 | Skill reference | Its stated mode or condition applies | Additional procedure |
 | Artifact skeleton | A design, plan or ADR is written | A project artifact, not a copied skeleton |
 | Project scaffold | Adoption needs a missing file | Placeholder-substituted file with managed markers |
-| CHANGES.md | An older managed region needs an update | Required changes and prior declines for the proposed region |
+| CHANGES.md | An older managed region needs an update | Changes to assess for the proposed region |
 | Project rules | Loaded by the project harness | Resident constraints and routing |
 | Canon | Relevant work or review | Current obligations and interactions |
 
-Each skill keeps its templates under its own directory. Instructions link bundled resources with relative Markdown paths, resolved
-from the containing instruction file. Design, plan and work own their artifact skeletons;
-setup owns project scaffold and migration history. Project files use
-rendered project paths and skill names. `.sdd.yml`
-provides project locations. Readers split at the first colon, strip comments
-from the first `#`, and use unquoted values. Directory values include a final `/`.
+Each skill keeps its templates in its own directory. Resolve relative Markdown
+links from the instruction file that contains them. Design, plan and work hold
+artifact skeletons; setup holds project scaffold and migration history.
 
-Setup includes the execution constraints needed before adoption: concrete
-approval, one question at a time, complete proposals, direct writing, working
-branches, verified commits and PR handover. Integration uses work after explicit
-permission and independent review.
+Project files use configured paths and skill names. Read locations from
+`.sdd.yml`: split each line at the first colon, strip comments from the first
+`#`, and use unquoted values. Directory values end in `/`.
+
+Setup states the rules needed before resident instructions are installed:
+concrete approval, one question at a time, complete proposals, direct writing,
+working branches, verified commits and PR handover. Use work for integration
+after explicit permission and independent review.
 
 ## Adoption order
 
@@ -48,20 +49,20 @@ entries after the project version through the template version. Bare valid
 legacy markers use the documented v0.2.0 baseline. Unknown history or malformed
 boundaries require user resolution.
 
-Use the current template as the proposal basis. Refresh generic legacy prose;
-preserve project requirements, terms, IDs, links and content outside the region.
-Check current skills and config before carrying legacy rules as project additions.
-Retain declined requirements until accepted, even when the template differs.
-Show the full proposed region and apply it on approval. See ADR 0029. Advance the stamp
-through fully satisfied contiguous versions. A declined entry remains pending.
-On re-run, an applied later entry is recognized by meaning if an earlier decline
-prevented recording it in the stamp.
+Base the proposal on the current template. Replace generic legacy prose;
+preserve project requirements, terms, IDs, links and text outside the region.
+Check current skills and config before treating legacy rules as project additions.
+Keep declined requirements unchanged until accepted. Show the complete proposed
+region and apply it after approval. See ADR 0029.
 
-A valid legacy method section can be replaced with the new rules section after
-the complete replacement is shown and approved. Carry project constraints into
-the proposal. Declining preserves the old section and leaves the new fence
-unwritten. Report conflicts with the installed skill version. Keep one active
-method section.
+Advance the stamp through consecutive versions whose entries are all satisfied.
+Leave declined entries pending. On re-run, recognize applied entries by meaning
+when an earlier decline prevented advancing the stamp.
+
+For a valid legacy method section, show the complete replacement and preserve
+project constraints. Replace it after approval. On decline, keep the old section
+and leave the new fence unwritten. Report conflicts with the installed skills.
+Keep one active method section.
 
 ## Version and checks
 
