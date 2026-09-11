@@ -4,6 +4,13 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.1.17
+
+- Check that bundled references stay inside the plugin and validate plugin-root
+  paths alongside relative links.
+- Supply a skill base directory only for skills in explicit runner mode.
+- Clarify declined-update instructions and the prose-refresh stamp in ADR 0029.
+
 ## 1.1.16
 
 - Use relative Markdown links for bundled skill resources. Validate links from

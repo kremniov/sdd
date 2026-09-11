@@ -27,11 +27,10 @@ terms, IDs and references; replace generic legacy prose with current wording.
 Before carrying a rule, check whether current skills or configuration already
 cover it. Show substantive changes and process conflicts for approval.
 
-Use the migration entries to account for required changes and previous declines.
-Offer each previously declined change again as a separate choice. Until the user
-accepts it, keep the project's current wording for that requirement in the
-proposal; a current template does not override a decline. An entry already
-satisfied needs no repeated edit. Preserve everything outside the approved region.
+Use migration entries to track required changes and previous declines. On re-run,
+offer each declined change separately. Keep its current project wording in the
+proposal until the user approves the change. Skip edits for satisfied entries.
+Preserve everything outside the approved region.
 
 Advance the stamp to the highest contiguous version whose entries for that file
 are all applied or already satisfied. If nothing is satisfied past the current
