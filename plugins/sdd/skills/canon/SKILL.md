@@ -20,9 +20,9 @@ changing either. Cite concrete evidence for claims, including absence.
 
 | Mode | When | Procedure |
 |---|---|---|
-| Establish | The invariant list is empty | Read `${CLAUDE_PLUGIN_ROOT}/skills/canon/bootstrap.md` |
+| Establish | The invariant list is empty | Read [bootstrap.md](bootstrap.md) |
 | Amend | Assess a changed branch | Use Amend below |
-| Audit | The user requests a recheck or suspects stale rules | Read `${CLAUDE_PLUGIN_ROOT}/skills/canon/audit.md` |
+| Audit | The user requests a recheck or suspects stale rules | Read [audit.md](audit.md) |
 
 State the mode. A review or audit reports first; changes need approval. An
 existing approval for the exact canon change remains valid.

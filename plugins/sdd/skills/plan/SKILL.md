@@ -14,7 +14,7 @@ stop conditions and integration. Read `features` and `verify` from `.sdd.yml`.
 Split each line at the first colon and remove comments from the first `#`. If
 configuration is absent, offer `/sdd:setup`. Ask for required missing values.
 
-Read the design and `${CLAUDE_PLUGIN_ROOT}/templates/_PLAN.md` in place. Return
+Read the design and [_PLAN.md](templates/_PLAN.md) in place. Return
 a new material decision to the user and update the design before planning its
 implementation.
 

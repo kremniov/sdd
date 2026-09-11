@@ -18,4 +18,4 @@ Show the semantic change and preserve custom content. On decline, leave the sect
 
 ## Evaluator: failure conditions
 
-Fail if the agent overwrites custom content, advances the declined version, duplicates sections, or repeats already accepted changes.
+Fail if the agent loses project requirements or applies a declined requirement from the current template, advances the declined version, duplicates sections, or repeats already accepted changes.

@@ -4,8 +4,23 @@ description: Adopt or update SDD by mapping project paths, proposing exact scaff
 ---
  # Setup
 
-For files intended for Git, follow `/sdd:work` Branch and completion before
-editing and when handing over the result.
+## Run setup
+
+Survey first and obtain approval of the concrete changes before writing them.
+Compare existing process instructions with the installed method; show conflicts
+before replacing them. Apply an already approved proposal without asking again.
+Discuss related questions together, asking one at a time. Prefer
+`AskUserQuestion` when available. Show complete proposed managed sections without
+placeholders for omitted text.
+
+Use ASD-STE100 as a readability reference: direct sentences, consistent terms
+and an explicit actor. Preserve precise conditions; remove rhetoric and repetition.
+
+Before editing files for Git, check the branch. Create a working branch when on
+main, master or another integration branch. Preserve user changes; use a worktree
+when isolation is needed. Verify and commit completed steps, then push and open
+a PR. Report completed checks and limitations. Stop for user-started independent
+review; merge requires separate explicit permission and `/sdd:work` Integration.
 
 ## Survey
 
@@ -14,9 +29,7 @@ ticket conventions and any existing `.sdd.yml`. Record actual paths before
 asking. Inspect existing content and managed markers before writing files.
 
 Prefer existing project locations. Show the complete proposed config and the
-concrete file changes together for approval. Present process conflicts before
-replacing instructions. Approval of paths alone is not approval to replace a
-process. Apply an already approved proposal without asking again.
+concrete file changes together for approval. Approval of paths alone is not approval to replace a process.
 
 ## Configuration
 
@@ -50,7 +63,7 @@ before applying it. Keep unrelated keys and project content.
 
 ## Scaffold
 
-Read `${CLAUDE_PLUGIN_ROOT}/templates/project/`. Create files only where absent.
+Read [project](templates/project/). Create files only where absent.
 Substitute config values for placeholders and retain the template's markers and
 version. Do not copy `CHANGES.md` into the project.
 
@@ -64,14 +77,17 @@ version. Do not copy `CHANGES.md` into the project.
 | `features`, `adr` | Create missing directories; use a tracked placeholder if needed |
 | `notes` | Create the ignored directory with the approved ignore rule |
 
+For an existing README without markers, propose necessary targeted corrections.
+Adding a managed section requires separate approval of its boundary and content.
+
 For existing managed files, read
-`${CLAUDE_PLUGIN_ROOT}/skills/setup/reference.md` and follow its version
+[reference.md](reference.md) and follow its version
 procedure. Preserve everything outside the managed region. Ask about unknown or
 ambiguous boundaries before editing that file.
 
 ## Resident rules
 
-Read `${CLAUDE_PLUGIN_ROOT}/templates/project/CLAUDE.section.md` and render it
+Read [CLAUDE.section.md](templates/project/CLAUDE.section.md) and render it
 using the config. The destination is `rules`.
 
 | Existing state | Action |

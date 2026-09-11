@@ -64,18 +64,36 @@ else
 fi
 
 echo "bundled paths"
-python3 - <<'PY' || fail=1
-import re, os, glob, sys
+python3 - <<'PYCODE' || fail=1
+import re, sys
+from pathlib import Path
+bundle = Path('plugins/sdd').resolve()
+ROOT = '${CLAUDE_PLUGIN_ROOT}/'
 ok = True
-for f in glob.glob('plugins/sdd/skills/*/SKILL.md'):
-    for ref in re.findall(r'\$\{CLAUDE_PLUGIN_ROOT\}/([A-Za-z0-9_./-]+)', open(f).read()):
-        p = os.path.join('plugins/sdd', ref.rstrip('.'))
-        if os.path.exists(p):
-            print(f'  OK      {ref}')
+for source in Path('plugins/sdd/skills').rglob('*.md'):
+    if 'templates' in source.parts:
+        continue  # Template links resolve in the adopting project.
+    text = source.read_text()
+    refs = []
+    for ref in re.findall(r'\]\(([^)]+)\)', text):
+        if re.match(r'[a-zA-Z][a-zA-Z0-9+.-]*:', ref) or ref.startswith('#'):
+            continue
+        path = ref.split('#', 1)[0]
+        base = bundle if path.startswith(ROOT) else source.parent
+        refs.append((ref, base / path.removeprefix(ROOT)))
+    bare = re.sub(r'\]\([^)]+\)', '', text)
+    refs += [(ROOT + ref, bundle / ref.rstrip('.'))
+             for ref in re.findall(r'\$\{CLAUDE_PLUGIN_ROOT\}/([A-Za-z0-9_./-]+)', bare)]
+    for ref, target in refs:
+        # Only the plugin directory is installed; a link out of it is dead for users.
+        if target.resolve() != bundle and bundle not in target.resolve().parents:
+            print(f'  FAIL    {ref} leaves the plugin bundle (from {source})'); ok = False
+        elif target.exists():
+            print(f'  OK      {ref} (from {source})')
         else:
-            print(f'  FAIL    {ref} (from {f})'); ok = False
+            print(f'  FAIL    {ref} (from {source})'); ok = False
 sys.exit(0 if ok else 1)
-PY
+PYCODE
 
 echo "portability"
 python3 scripts/check_portability.py || fail=1
@@ -91,7 +109,7 @@ python3 - <<'PY' || fail=1
 import glob, os, sys
 refs = ''.join(open(f).read() for f in glob.glob('plugins/sdd/skills/*/SKILL.md'))
 ok = True
-for t in sorted(glob.glob('plugins/sdd/templates/_*.md')):
+for t in sorted(glob.glob('plugins/sdd/skills/*/templates/_*.md')):
     name = os.path.basename(t)
     if name in refs:
         print(f'  OK      {name} is referenced by a skill')
@@ -116,7 +134,7 @@ for line in open('.sdd.yml'):
         k, v = line.split(':', 1); cfg[k.strip()] = v.strip()
 if '<!-- sdd:dogfooding-paused -->' in open('CLAUDE.md').read():
     print('  SKIP    dogfooding paused — invariant 9 is not in force'); sys.exit(0)
-tpl = open('plugins/sdd/templates/project/CLAUDE.section.md').read()
+tpl = open('plugins/sdd/skills/setup/templates/project/CLAUDE.section.md').read()
 missing = {k for k in re.findall(r'\{\{(\w+)\}\}', tpl) if k not in cfg}
 if missing:
     print(f'  FAIL    .sdd.yml lacks keys the scaffold needs: {sorted(missing)}'); sys.exit(1)
@@ -130,8 +148,8 @@ echo "scaffold fences"
 python3 scripts/check_scaffold.py || fail=1
 
 echo "section nests"
-if grep -m1 '^#' plugins/sdd/templates/project/CLAUDE.section.md | grep -q '^## '; then
-  if grep -q '^# ' plugins/sdd/templates/project/CLAUDE.section.md; then
+if grep -m1 '^#' plugins/sdd/skills/setup/templates/project/CLAUDE.section.md | grep -q '^## '; then
+  if grep -q '^# ' plugins/sdd/skills/setup/templates/project/CLAUDE.section.md; then
     note FAIL "CLAUDE.section.md has an H1 — it is appended into someone's file"
   else
     note OK "CLAUDE.section.md starts at H2 and has no H1"
@@ -149,7 +167,7 @@ for line in open('.sdd.yml'):
     if ':' in line:
         k, v = line.split(':', 1); cfg[k.strip()] = v.strip()
 ok = True
-for f in glob.glob('plugins/sdd/templates/project/*.md'):
+for f in glob.glob('plugins/sdd/skills/setup/templates/project/*.md'):
     unknown = {k for k in re.findall(r'\{\{(\w+)\}\}', open(f).read()) if k not in cfg}
     if unknown:
         print(f'  FAIL    {f}: placeholders with no .sdd.yml key: {sorted(unknown)}'); ok = False
@@ -160,8 +178,8 @@ PY
 
 echo "placeholders"
 stray='^[^`]*\{\{(canon|tasks|roadmap|features|adr|verify|ticket|rules)\}\}[^`]*$'
-if grep -rnE "$stray" plugins/sdd/skills >/dev/null 2>&1; then
-  grep -rnE "$stray" plugins/sdd/skills | sed 's/^/  /'
+if grep -rnE --exclude-dir=templates "$stray" plugins/sdd/skills >/dev/null 2>&1; then
+  grep -rnE --exclude-dir=templates "$stray" plugins/sdd/skills | sed 's/^/  /'
   note FAIL "skills must not carry {{placeholders}} — those belong in templates/project/"
 else
   note OK "no stray placeholders in skills"

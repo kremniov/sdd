@@ -1,4 +1,4 @@
-<!-- sdd:scaffold v1.1.0 -->
+<!-- sdd:scaffold v1.1.14 -->
 # Architectural invariants
 
 Use `/sdd:canon` to establish, amend or audit this list. Record current rules

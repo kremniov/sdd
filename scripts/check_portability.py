@@ -60,7 +60,7 @@ EXEMPT = {
         "agent can find the verify command in whatever ecosystem it landed in",
 }
 
-roots = [Path("plugins/sdd/skills"), Path("plugins/sdd/templates")]
+roots = [Path("plugins/sdd/skills")]
 hits = []
 for root in roots:
     for path in sorted(root.rglob("*.md")):

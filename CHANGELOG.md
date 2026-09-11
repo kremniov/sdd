@@ -4,6 +4,27 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.1.17
+
+- Check that bundled references stay inside the plugin and validate plugin-root
+  paths alongside relative links.
+- Supply a skill base directory only for skills in explicit runner mode.
+- Clarify declined-update instructions and the prose-refresh stamp in ADR 0029.
+
+## 1.1.16
+
+- Use relative Markdown links for bundled skill resources. Validate links from
+  their containing instruction file and supply that base in explicit runner mode.
+
+## 1.1.15
+
+- Keep artifact and project templates inside their owning skills; update resource
+  resolution, the local runner and structural checks.
+- Make setup's approval, discussion, writing and handover constraints explicit
+  before current resident rules are installed (1.1.13).
+- Refresh generic managed prose from current templates while preserving project
+  requirements and declined changes; scaffold stamps advance to 1.1.14 (1.1.14).
+
 ## 1.1.5
 
 - Update an existing ticket when execution starts, blocks or resumes. Keep the

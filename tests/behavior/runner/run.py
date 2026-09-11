@@ -81,8 +81,10 @@ def config_values(repo, scenario):
     return cfg
 
 
-def render(text, cfg, bundle):
+def render(text, cfg, bundle, skill_dir=None):
     text = text.replace('${CLAUDE_PLUGIN_ROOT}', str(bundle))
+    if skill_dir is not None:
+        text = text.replace('${CLAUDE_SKILL_DIR}', str(skill_dir))
     return re.sub(r'\{\{(\w+)\}\}', lambda m: cfg.get(m[1], m[0]), text)
 
 
@@ -92,9 +94,11 @@ def instructions(repo, bundle, scenario):
               'simulation may be used if present; report its limits. Do not use other agents.\n')
     if scenario.get('mode') == 'plugin':
         return system
-    sources = ([bundle / 'templates/project/CLAUDE.section.md'] if scenario['resident'] else [])
-    sources += [bundle / 'skills' / skill / 'SKILL.md' for skill in scenario['skills']]
-    return system + ''.join('\n' + render(p.read_text(), config_values(repo, scenario), bundle) for p in sources)
+    cfg = config_values(repo, scenario)
+    if scenario['resident']:
+        system += '\n' + render((bundle / 'skills/setup/templates/project/CLAUDE.section.md').read_text(), cfg, bundle)
+    skills = [bundle / 'skills' / skill / 'SKILL.md' for skill in scenario['skills']]
+    return system + ''.join('\nBase directory for this skill: ' + str(p.parent) + '\n' + render(p.read_text(), cfg, bundle, p.parent) for p in skills)
 
 
 def command_for(repo, bundle, scenario, meta, turn_number, system):
@@ -251,7 +255,7 @@ def main():
         shutil.copytree(REPO / 'plugins/sdd', bundle)
         shutil.copytree(bundle, evidence / 'plugin')
         if scenario and scenario.get('mode') == 'plugin':
-            resident = render((bundle / 'templates/project/CLAUDE.section.md').read_text(), config_values(repo, scenario), bundle)
+            resident = render((bundle / 'skills/setup/templates/project/CLAUDE.section.md').read_text(), config_values(repo, scenario), bundle)
             with (repo / 'CLAUDE.md').open('a') as f:
                 f.write('\n' + resident)
             git(repo, 'add', 'CLAUDE.md')

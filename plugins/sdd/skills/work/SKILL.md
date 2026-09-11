@@ -86,7 +86,7 @@ and omissions, limiting claims to evidence.
 Update affected subsystem documents in the same PR (`/sdd:subsystem`). Check
 invariants, detectors and exceptions with `/sdd:canon`. No invariant change is
 normal. Write durable decisions in `adr` using
-`${CLAUDE_PLUGIN_ROOT}/templates/_ADR.md`: invariant changes, significant
+[_ADR.md](templates/_ADR.md): invariant changes, significant
 trade-offs or choices whose reasons will be hard to recover. Update design and
 remaining plan after agreed changes; routine corrections need no ADR.
 

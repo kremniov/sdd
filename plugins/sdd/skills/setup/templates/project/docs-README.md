@@ -1,4 +1,4 @@
-<!-- sdd:scaffold v1.1.0 -->
+<!-- sdd:scaffold v1.1.14 -->
 # Project documents
 
 | Path | Content and maintenance |
