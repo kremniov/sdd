@@ -289,14 +289,19 @@ structure unless the user chooses otherwise. Create missing files and apply
 approved changes. Present process conflicts before replacing instructions.
 Choose the working-notes location explicitly and keep working notes outside Git.
 
-Compare managed-section versions. Equal versions require no change. Report
-ambiguous boundaries, malformed markers and unknown versions.
+Compare existing managed guidance with the current template. Stamps identify
+template versions; matching stamps do not replace content review. Leave newer
+project sections unchanged. Missing stamps require no assumed baseline or
+migration history. Agree malformed or ambiguous boundaries and stamps before
+editing.
 
-Base update proposals on the current template. Preserve project requirements,
-terms, IDs and references; replace generic legacy prose. Check current skills
-and configuration before treating old method rules as project additions. Use
-migration entries to assess changes; keep declined requirements unchanged until
-accepted. Show the complete replacement and apply it after approval.
+Preserve project requirements, terms, IDs and references; replace generic legacy
+prose. Check current skills and configuration before treating old method rules
+as project additions. Leave content that meets current guidance and style alone.
+Show the complete replacement and material changes, including process conflicts.
+Apply the approved replacement with the template's stamp. On decline, leave the
+section and stamp unchanged. Use this procedure for legacy method sections too;
+keep one active method section and preserve text outside the approved boundary.
 
 Report applied, skipped and declined changes and unresolved conflicts. On re-run,
 leave completed changes alone.

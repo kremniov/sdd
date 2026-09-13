@@ -4,6 +4,15 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.2.0
+
+- Update existing guidance directly from current templates through an approved
+  replacement that preserves project requirements and links.
+- Keep setup's update procedure in SKILL.md. Remove its reference file and the
+  bundled migration journal; unstamped sections need no historical baseline.
+- Retain template stamps and downgrade protection. Compare content even when
+  stamps match; remove migration-chain accounting from structural checks.
+
 ## 1.1.17
 
 - Check that bundled references stay inside the plugin and validate plugin-root

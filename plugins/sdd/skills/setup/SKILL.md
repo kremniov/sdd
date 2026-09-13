@@ -29,7 +29,8 @@ ticket conventions and any existing `.sdd.yml`. Record actual paths before
 asking. Inspect existing content and managed markers before writing files.
 
 Prefer existing project locations. Show the complete proposed config and the
-concrete file changes together for approval. Approval of paths alone is not approval to replace a process.
+concrete file changes together for approval. Approval of paths alone does not
+approve replacing a process.
 
 ## Configuration
 
@@ -63,9 +64,9 @@ before applying it. Keep unrelated keys and project content.
 
 ## Scaffold
 
-Read [project](templates/project/). Create files only where absent.
+Read the [project templates](templates/project/). Create files only where absent.
 Substitute config values for placeholders and retain the template's markers and
-version. Do not copy `CHANGES.md` into the project.
+version.
 
 | Destination | Source |
 |---|---|
@@ -80,10 +81,7 @@ version. Do not copy `CHANGES.md` into the project.
 For an existing README without markers, propose necessary targeted corrections.
 Adding a managed section requires separate approval of its boundary and content.
 
-For existing managed files, read
-[reference.md](reference.md) and follow its version
-procedure. Preserve everything outside the managed region. Ask about unknown or
-ambiguous boundaries before editing that file.
+For existing managed files, follow Update existing guidance below.
 
 ## Resident rules
 
@@ -94,13 +92,31 @@ using the config. The destination is `rules`.
 |---|---|
 | No rules file | Create a project title and the approved section |
 | File without a process or managed section | Append the approved section; preserve existing content |
-| Managed section | Follow the version procedure in `reference.md` |
-| Old `sdd:method-section` | Follow the retirement procedure in `reference.md` |
+| Managed or legacy `sdd:method-section` | Follow Update existing guidance below |
 | Different existing process | Show conflicts and write the proposal to `<rules>.sdd-section` if approved; let the user choose integration |
 
-Check malformed or duplicate markers before selecting a row. Keep one active
-method section. A user can adopt config and scaffold while leaving resident
-rules pending. Report that limited state and the unresolved process choice.
+A user can adopt config and scaffold while leaving resident rules pending.
+Report that limited state and the unresolved process choice.
+
+## Update existing guidance
+
+Locate the managed region: `sdd:rules` for resident rules, `sdd:scaffold` for
+other files, or the legacy `sdd:method-section`. Check marker pairs and stamps.
+If boundaries or stamps are malformed or ambiguous, ask before editing that
+file. For a file without markers, agree the boundary and content before adding
+a managed section. Leave a section newer than the installed template unchanged
+and report the version mismatch. A missing stamp requires no assumed baseline.
+
+Compare the region with the current template. Preserve project requirements,
+terms, IDs and links; replace generic legacy prose. Check current skills and
+configuration before treating old method rules as project additions. Leave
+content that already meets the current guidance and writing style alone.
+
+Show the complete proposed replacement and material changes, including process
+conflicts. After approval, replace only that region and use the template's stamp.
+On decline, leave the region and stamp unchanged. Replace a legacy
+`sdd:method-section` with `sdd:rules` through this same procedure. Keep one active
+method section and preserve everything outside the approved boundary.
 
 ## Verify and report
 
