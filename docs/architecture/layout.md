@@ -7,7 +7,7 @@
 | `plugins/sdd/skills/<name>/SKILL.md` | One procedure with matching frontmatter |
 | `plugins/sdd/skills/<name>/*.md` | Conditional procedure references |
 | `plugins/sdd/skills/{design,plan,work}/templates/_*.md` | Design, plan and ADR skeletons, read in place |
-| `plugins/sdd/skills/setup/templates/project/` | Rendered scaffold; CHANGES.md stays in the plugin |
+| `plugins/sdd/skills/setup/templates/project/` | Project scaffold rendered during setup |
 | `docs/method.md` | Complete agreed method |
 | `docs/architecture/` | Current invariants, map and plugin interactions |
 | `docs/adr/` | Durable decision history |

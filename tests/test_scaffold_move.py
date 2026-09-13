@@ -1,5 +1,6 @@
-"""Migration accounting must survive relocation of the bundled scaffold."""
+"""Template stamps and boundaries remain checked after scaffold relocation."""
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -30,12 +31,15 @@ class ScaffoldMoveChecks(unittest.TestCase):
             if fault == "stamp":
                 path = root / NEW / "tasks.md"
                 path.write_text(path.read_text().replace("# Tasks", "# Changed guidance"))
-            elif fault == "history":
-                path = root / NEW / "CHANGES.md"
-                text = path.read_text()
-                start = text.index("## 1.1.3")
-                end = text.index("## 1.1.1", start)
-                path.write_text(text[:start] + text[end:])
+            elif fault == "downgrade":
+                path = root / NEW / "tasks.md"
+                path.write_text(re.sub(r"v[0-9]+\.[0-9]+\.[0-9]+", "v0.0.0", path.read_text(), count=1))
+            elif fault == "ahead":
+                path = root / NEW / "tasks.md"
+                path.write_text(re.sub(r"v[0-9]+\.[0-9]+\.[0-9]+", "v999.0.0", path.read_text(), count=1))
+            elif fault == "boundary":
+                path = root / NEW / "tasks.md"
+                path.write_text(path.read_text().replace("<!-- /sdd:scaffold -->", ""))
             return subprocess.run([sys.executable, str(SOURCE / "scripts/check_scaffold.py")],
                                   cwd=root, env={**os.environ, "SDD_BASE": "HEAD"},
                                   capture_output=True, text=True)
@@ -47,9 +51,19 @@ class ScaffoldMoveChecks(unittest.TestCase):
     def test_move_cannot_hide_unstamped_change(self):
         result = self.run_case("stamp")
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn("did not move", result.stdout)
+        self.assertIn("must advance", result.stdout)
 
-    def test_move_cannot_hide_removed_history(self):
-        result = self.run_case("history")
+    def test_stamp_cannot_decrease(self):
+        result = self.run_case("downgrade")
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn("entries are append-only", result.stdout)
+        self.assertIn("must not decrease", result.stdout)
+
+    def test_stamp_cannot_exceed_plugin_version(self):
+        result = self.run_case("ahead")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("ahead of the plugin", result.stdout)
+
+    def test_missing_boundary_fails(self):
+        result = self.run_case("boundary")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("0 closers", result.stdout)

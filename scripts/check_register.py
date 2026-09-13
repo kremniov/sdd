@@ -86,7 +86,7 @@ def main(args=None):
         for skill in sorted(Path("plugins/sdd/skills").glob("*/SKILL.md")):
             full = sum(total for path, total in totals.items() if path.is_relative_to(skill.parent))
             print(f"  SIZE    {skill.parent.name}: {full} words including all local references")
-        print(f"  SIZE    corpus: {sum(totals.values())} words including examples and migration history")
+        print(f"  SIZE    corpus: {sum(totals.values())} words including examples and references")
         print("  NOTE    reference totals are potential loads, not a measured session; counts do not prove clarity")
     return 0 if ok else 1
 

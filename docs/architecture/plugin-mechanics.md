@@ -11,13 +11,12 @@ is in [the method](../method.md). Invariants 1–4 govern the plugin/project bou
 | Skill reference | Its stated mode or condition applies | Additional procedure |
 | Artifact skeleton | A design, plan or ADR is written | A project artifact, not a copied skeleton |
 | Project scaffold | Adoption needs a missing file | Placeholder-substituted file with managed markers |
-| CHANGES.md | An older managed region needs an update | Changes to assess for the proposed region |
 | Project rules | Loaded by the project harness | Resident constraints and routing |
 | Canon | Relevant work or review | Current obligations and interactions |
 
 Each skill keeps its templates in its own directory. Resolve relative Markdown
 links from the instruction file that contains them. Design, plan and work hold
-artifact skeletons; setup holds project scaffold and migration history.
+artifact skeletons; setup holds project scaffold.
 
 Project files use configured paths and skill names. Read locations from
 `.sdd.yml`: split each line at the first colon, strip comments from the first
@@ -43,32 +42,30 @@ Notes use ignored files; feature and ADR directories can use tracked placeholder
 
 ## Upgrade behavior
 
-An opening marker records the version of a managed region. Equal stamps require
-no edit; newer project stamps are left alone. Older stamps select CHANGES.md
-entries after the project version through the template version. Bare valid
-legacy markers use the documented v0.2.0 baseline. Unknown history or malformed
-boundaries require user resolution.
+Compare existing managed guidance with the current template. A stamp identifies
+the template version; it does not replace content review. Leave newer project
+sections unchanged. For unstamped sections, compare content directly without
+assigning an earlier version or reading a migration history.
 
-Base the proposal on the current template. Replace generic legacy prose;
-preserve project requirements, terms, IDs, links and text outside the region.
-Check current skills and config before treating legacy rules as project additions.
-Keep declined requirements unchanged until accepted. Show the complete proposed
-region and apply it after approval. See ADR 0029.
+Check marker pairs and stamps. Ask about malformed or ambiguous boundaries or
+stamps before editing the file. Agree the boundary and content before adding
+markers to an unmanaged file.
 
-Advance the stamp through consecutive versions whose entries are all satisfied.
-Leave declined entries pending. On re-run, recognize applied entries by meaning
-when an earlier decline prevented advancing the stamp.
+Base the complete proposal on the current template. Preserve project requirements,
+terms, IDs, links and text outside the region. Replace generic legacy prose;
+check current skills and configuration before retaining old method rules as
+project additions. Leave content that meets current guidance and style alone.
+Show material changes and conflicts. Apply the approved replacement with the
+template's stamp. On decline, leave the section and stamp unchanged.
 
-For a valid legacy method section, show the complete replacement and preserve
-project constraints. Replace it after approval. On decline, keep the old section
-and leave the new fence unwritten. Report conflicts with the installed skills.
-Keep one active method section.
+Use the same procedure to replace a legacy `sdd:method-section` with `sdd:rules`.
+Keep one active method section. See ADR 0030.
 
 ## Version and checks
 
-The manifest version identifies the release. Changed scaffold guidance advances
-its stamp and gains an entry in CHANGES.md in the same commit. Existing migration
-entries remain available. Catalogue metadata must resolve the manifest.
+The manifest version identifies the release. Advance a template's stamp when
+its managed guidance changes; never decrease it. Release changes belong in the
+repository changelog. Catalogue metadata must resolve the manifest.
 
 `check.sh` verifies structure, references, render presence and version accounting.
 It does not execute adoption. `tests/scenarios/` supplies cases for fixture
