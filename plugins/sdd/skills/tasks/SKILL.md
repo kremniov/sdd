@@ -72,6 +72,9 @@ of `/sdd:work` Integration. Preserve the project's completed-entry format,
 retaining the ID, result and a change reference. For a queue using this skill's
 format, collapse the entry to one line in Done, newest first. Keep type, phase
 and area; drop acceptance and replace the status tag with the reference.
+State the resulting behavior in one or two sentences with its change and
+document references. Review history stays in the PR; record a lesson in
+`lessons.md` and a decision in an ADR.
 
 ```markdown
 - `[T-40]` `[feat]` `[PR #91]` Add a recovery export — produces a consistent snapshot.

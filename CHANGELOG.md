@@ -17,6 +17,8 @@ copy when that number rises.
   rule to Evidence (ADR 0018). The branch check covers creating or editing
   tracked files, and review, audit or explanation does not permit editing files,
   in the skills, the method and the resident rules alike.
+- Bound a Done entry to one or two sentences with references; review history
+  stays in the PR. The queue template keeps two rules and drops the rest.
 
 ## 1.1.17
 

@@ -37,6 +37,13 @@ State that a design linked from a ticket is history after its merge, and that
 the canon and ADRs state current obligations. This adds a reading rule; it
 replaces nothing.
 
+### tasks.md
+
+Reduce the managed text to two rules: use `/sdd:tasks` to add, change or close
+a ticket, and close a ticket in the final branch commit after explicit
+permission to integrate. This replaces the list of what the queue skill covers
+and the failed-merge sentence, which `/sdd:work` integration carries.
+
 ## 1.1.14
 
 ### CLAUDE.section.md
