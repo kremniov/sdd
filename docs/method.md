@@ -39,7 +39,10 @@ propose a resolution to the user.
 
 Code establishes current behavior. Documents also record obligations. Either can
 be wrong when they disagree. After merge, design and plan remain historical;
-the canon describes the current system and ADRs preserve decision history.
+the canon describes the current system and ADRs preserve decision history. A
+design linked from a ticket is therefore context, not a current obligation.
+Each task's design and plan go in a new directory named by a short slug agreed
+at G1.
 
 ## Routes
 
@@ -74,7 +77,7 @@ Reassess when new evidence changes the work.
 | Tier | Unresolved work | Proposal before implementation |
 |---|---|---|
 | 0 | No material decision remains | Exact change, scope, assumptions and verification; wait for approval |
-| 1 | One material decision | Recommended solution, scope, assumptions and verification in one message |
+| 1 | One material decision | Recommended solution, scope, assumptions and verification in one message; no design document |
 | 2 | A new component boundary, an invariant change, or multiple interdependent decisions | Agreed decisions, design and plan |
 
 Tier 2 takes precedence even when a boundary or invariant change involves only
@@ -90,8 +93,8 @@ a topic alone does not make them interdependent.
 
 Tier 1 combines G1 and G2 in one approval. Tier 0 also waits for approval of the
 concrete proposal. A request to solve a problem does not confirm values or
-constraints the agent selected independently. A port that has no listener now
-may still belong to a stopped service. State that limit when proposing it.
+constraints the agent selected independently. For a selected value, state what
+the agent's check of it establishes.
 
 Approval remains valid for the agreed scope and decision across commits, breaks
 and context compaction. Implementation approval does not authorize integration.
@@ -104,8 +107,8 @@ it changes or is lost from context.
 
 Resolve questions from available project evidence before asking the user. A
 material question changes behavior, a contract, scope, an architectural
-constraint or significant cost. Discuss related questions together, asking one
-at a time. Prefer `AskUserQuestion` when available. Recommend a solution and
+constraint or significant cost, and no ticket, canon entry or ADR settles it.
+Group related questions and ask them one at a time. Prefer `AskUserQuestion` when available. Recommend a solution and
 state the relevant cost of real alternatives. Reopen an agreed decision when
 new evidence requires it.
 
@@ -218,7 +221,8 @@ general advice.
 
 Plan steps are committed before handover. Run final checks and self-review.
 Verify and commit resulting corrections. Confirm the checked state matches the
-commits, push the branch, open the PR and report its state. Stop before integration.
+commits, push the branch, open the PR and report its state. Tell the user that
+independent review is due. Stop before integration.
 
 The PR describes the problem, resulting behavior, verification and limitations.
 Independent review is required at every tier, including document changes. The

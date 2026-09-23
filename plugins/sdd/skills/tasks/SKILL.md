@@ -9,9 +9,8 @@ editing and when handing over the result.
 
 ## Inputs and scope
 
-Read the request and `.sdd.yml` values `tasks` and `ticket`. Split each line at
-the first colon and remove comments from the first `#`. If configuration is
-absent, offer `/sdd:setup`. Ask for required missing values.
+Read the request and `.sdd.yml` values `tasks` and `ticket`. If the file or a
+required value is absent, offer `/sdd:setup`.
 
 Read the whole queue, including completed entries, before choosing an ID. Follow
 project ID conventions; for a new queue, use the configured prefix and

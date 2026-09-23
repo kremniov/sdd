@@ -9,9 +9,8 @@ editing and when handing over the result.
 
 ## Inputs
 
-Read the request and `canon` from `.sdd.yml`. Split each line at the first colon
-and remove comments from the first `#`. If configuration is absent, offer
-`/sdd:setup`. Ask for a required missing value.
+Read the request and `canon` from `.sdd.yml`. If the file or a required value is
+absent, offer `/sdd:setup`.
 
 Read the relevant code, existing document, governing invariants, accepted
 requirements and branch diff. Use `/sdd:work` for proposed-change approval. A

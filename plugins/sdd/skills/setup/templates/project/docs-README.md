@@ -1,4 +1,4 @@
-<!-- sdd:scaffold v1.1.14 -->
+<!-- sdd:scaffold v1.1.18 -->
 # Project documents
 
 | Path | Content and maintenance |
@@ -12,7 +12,8 @@
 
 Start with the request and relevant requirements, then the applicable invariants,
 system map, subsystem document and lessons. Inspect code to establish behavior
-and investigate disagreements with obligations.
+and investigate disagreements with obligations. A design linked from a ticket is
+history after its merge; the canon and ADRs state current obligations.
 
 Use `/sdd:work` to select the route and approvals. `/sdd:design` and `/sdd:plan`
 write tier-2 artifacts. `/sdd:canon` and `/sdd:subsystem` maintain current

@@ -15,6 +15,14 @@ lines.
 When a managed template region changes, update its version stamp and add an entry
 under that version in the same commit. Omit versions with no scaffold changes.
 
+## 1.1.18
+
+### docs-README.md
+
+State that a design linked from a ticket is history after its merge, and that
+the canon and ADRs state current obligations. This adds a reading rule; it
+replaces nothing.
+
 ## 1.1.14
 
 ### CLAUDE.section.md

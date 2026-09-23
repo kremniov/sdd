@@ -10,9 +10,8 @@ editing and when handing over the result.
 ## Inputs
 
 Use `/sdd:work` for scope, approval and stop conditions. Begin after G1. Read
-`.sdd.yml` for `features`, `notes`, `tasks`, `roadmap`, `canon` and `adr`. Split
-each line at its first colon and remove comments from the first `#`. If
-configuration is absent, offer `/sdd:setup`. Ask for required missing values.
+`.sdd.yml` for `features`, `notes`, `tasks`, `roadmap`, `canon` and `adr`. If
+the file or a required value is absent, offer `/sdd:setup`.
 
 Read the approved `<notes>/<task>-decisions.md`, the request or ticket, relevant
 product requirements, roadmap, canon, ADRs and code. A task without a ticket
@@ -28,7 +27,7 @@ them.
 ## Write and submit
 
 1. Read [_DESIGN.md](templates/_DESIGN.md) in place.
-2. Write `<features>/<task>/design.md`. State the observed problem, required
+2. Write `<features>/<feature>/design.md`. State the observed problem, required
    result, scope, decisions, contracts, interactions, failures and verification.
 3. Link governing invariants and existing contracts. Name documents that need
    updates. Mark durable decisions `→ ADR`; `/sdd:work` records them with the work.

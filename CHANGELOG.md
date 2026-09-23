@@ -4,6 +4,16 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.1.18
+
+- Define a material decision and state that tier 1 produces no design document.
+- Name feature directories by a slug agreed at G1 and notes files by ticket ID;
+  a design linked from a ticket is history after its merge.
+- Move PR integration into `work/integration.md`, loaded on merge permission.
+- Replace the per-skill `.sdd.yml` parsing rule with a pointer to `/sdd:setup`,
+  which defines the format.
+- Tell the user at handover that independent review is due.
+
 ## 1.1.17
 
 - Check that bundled references stay inside the plugin and validate plugin-root
