@@ -18,16 +18,18 @@ Select the requested result before starting an implementation workflow:
 |---|---|
 | Implement a change | Follow the stages below |
 | Diagnose a bug | Use `/sdd:debug`, then approve the proposed change |
-| Review or audit | Report findings; fixes require a separate instruction |
+| Review or audit | Report findings |
 | Maintain the queue | Use `/sdd:tasks`; leave implementation unstarted |
 | Adopt or update the method | Use `/sdd:setup` |
 | Explain or investigate | Return evidence and open questions |
+
+Review, audit or explanation does not permit editing files.
 | Resume | Read Status below |
 | Merge a PR | Read [integration.md](integration.md) |
 
 ## Branch and completion
 
-Before editing files intended for Git, identify the current and integration
+Before creating or editing tracked files, identify the current and integration
 branches from project conventions and Git state. On an integration branch
 (`main`, `master` or the project equivalent), create a working branch first.
 Commit and push only to working branches. Integrate through a PR merge after

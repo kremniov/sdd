@@ -4,8 +4,8 @@ description: Describe a subsystem's contracts and interactions, or update that d
 ---
  # Subsystem document
 
-For files intended for Git, follow `/sdd:work` Branch and completion before
-editing and when handing over the result.
+Before creating or editing tracked files, follow `/sdd:work` Branch and
+completion before editing and when handing over the result.
 
 ## Inputs
 

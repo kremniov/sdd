@@ -4,8 +4,8 @@ description: Add, clarify or close entries in the project queue, preserving cont
 ---
  # Tasks
 
-For files intended for Git, follow `/sdd:work` Branch and completion before
-editing and when handing over the result.
+Before creating or editing tracked files, follow `/sdd:work` Branch and
+completion before editing and when handing over the result.
 
 ## Inputs and scope
 

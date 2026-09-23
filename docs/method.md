@@ -50,19 +50,19 @@ at G1.
 |---|---|
 | Change code, configuration or documents | Research, approval by tier, implementation, verification, PR |
 | Diagnose and fix a bug | Diagnosis, approval of the proposed change, the change route |
-| Review or audit | Research and report; fixes need a separate instruction |
+| Review or audit | Research and report; editing files needs a separate instruction |
 | Add or update a ticket | Update the queue; this does not authorize implementation |
 | Adopt or update SDD | Survey, propose exact changes, apply agreed changes, verify |
 | Explain or investigate | Evidence and open questions; artifacts as needed |
 
-Before editing files intended for Git, check the current branch and identify
+Before creating or editing tracked files, check the current branch and identify
 the integration branch from project conventions and Git state. If on `main`,
 `master` or another integration branch, create a working branch first. Commit
 and push only to working branches. Changes enter an integration branch through
 a PR merge after explicit user permission. Use a separate worktree when
 isolation is needed or requested. Preserve the user's existing changes.
 
-Standalone operations that change files intended for Git also end with
+Standalone operations that change tracked files also end with
 verification, commits and PR handover. This includes documents, queue edits and
 method setup. Operations within ongoing approved work use that work's step and
 PR. Ignored working notes need no commit or PR. Preparing a ticket or design

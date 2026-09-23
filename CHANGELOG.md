@@ -13,6 +13,10 @@ copy when that number rises.
 - Replace the per-skill `.sdd.yml` parsing rule with a pointer to `/sdd:setup`,
   which defines the format.
 - Tell the user at handover that independent review is due.
+- Resident rules gain an Authorization subsection and restore the test-first
+  rule to Evidence (ADR 0018). The branch check covers creating or editing
+  tracked files, and review, audit or explanation does not permit editing files,
+  in the skills, the method and the resident rules alike.
 
 ## 1.1.17
 

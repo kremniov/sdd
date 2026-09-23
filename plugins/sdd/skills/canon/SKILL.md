@@ -4,8 +4,8 @@ description: Establish, amend or audit architectural invariants and the system m
 ---
  # Canon
 
-For files intended for Git, follow `/sdd:work` Branch and completion before
-editing and when handing over the result.
+Before creating or editing tracked files, follow `/sdd:work` Branch and
+completion before editing and when handing over the result.
 
 ## Inputs and mode
 
