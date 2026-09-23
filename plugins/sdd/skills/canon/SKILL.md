@@ -4,14 +4,13 @@ description: Establish, amend or audit architectural invariants and the system m
 ---
  # Canon
 
-For files intended for Git, follow `/sdd:work` Branch and completion before
-editing and when handing over the result.
+Before creating or editing tracked files, follow `/sdd:work` Branch and
+completion before editing and when handing over the result.
 
 ## Inputs and mode
 
-Read the request and `.sdd.yml` values `canon`, `adr` and `tasks` as needed.
-Split each line at the first colon and remove comments from the first `#`. If
-configuration is absent, offer `/sdd:setup`. Ask for required missing values.
+Read the request and `.sdd.yml` values `canon`, `adr` and `tasks` as needed. If
+the file or a required value is absent, offer `/sdd:setup`.
 
 The canon directory holds `invariants.md`, `layout.md`, `lessons.md` and
 subsystem documents. Code supplies evidence of behavior; requirements and

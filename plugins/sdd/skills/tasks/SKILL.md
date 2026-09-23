@@ -4,14 +4,13 @@ description: Add, clarify or close entries in the project queue, preserving cont
 ---
  # Tasks
 
-For files intended for Git, follow `/sdd:work` Branch and completion before
-editing and when handing over the result.
+Before creating or editing tracked files, follow `/sdd:work` Branch and
+completion before editing and when handing over the result.
 
 ## Inputs and scope
 
-Read the request and `.sdd.yml` values `tasks` and `ticket`. Split each line at
-the first colon and remove comments from the first `#`. If configuration is
-absent, offer `/sdd:setup`. Ask for required missing values.
+Read the request and `.sdd.yml` values `tasks` and `ticket`. If the file or a
+required value is absent, offer `/sdd:setup`.
 
 Read the whole queue, including completed entries, before choosing an ID. Follow
 project ID conventions; for a new queue, use the configured prefix and
@@ -73,6 +72,9 @@ of `/sdd:work` Integration. Preserve the project's completed-entry format,
 retaining the ID, result and a change reference. For a queue using this skill's
 format, collapse the entry to one line in Done, newest first. Keep type, phase
 and area; drop acceptance and replace the status tag with the reference.
+State the resulting behavior in one or two sentences with its change and
+document references. Review history stays in the PR; record a lesson in
+`lessons.md` and a decision in an ADR.
 
 ```markdown
 - `[T-40]` `[feat]` `[PR #91]` Add a recovery export — produces a consistent snapshot.

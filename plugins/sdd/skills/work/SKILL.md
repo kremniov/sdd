@@ -7,10 +7,10 @@ description: Run an implementation task from research and approval through commi
 ## Inputs and route
 
 Read the request and `.sdd.yml`. Use its `tasks`, `roadmap`, `canon`,
-`features`, `adr`, `notes`, `verify` and `ticket` values when needed. Parse one
-key and value per line at the first colon; strip comments from the first `#`. If
-configuration is absent, offer `/sdd:setup`. Ask for a required missing value
-before dependent work. A direct request can replace a ticket.
+`features`, `adr`, `notes`, `verify` and `ticket` values when needed. If the
+file or a required value is absent, offer `/sdd:setup`. A direct request can
+replace a ticket. `<task>` in a notes file name is the ticket ID, or a short
+slug of the request when there is no ticket.
 
 Select the requested result before starting an implementation workflow:
 
@@ -18,15 +18,18 @@ Select the requested result before starting an implementation workflow:
 |---|---|
 | Implement a change | Follow the stages below |
 | Diagnose a bug | Use `/sdd:debug`, then approve the proposed change |
-| Review or audit | Report findings; fixes require a separate instruction |
+| Review or audit | Report findings |
 | Maintain the queue | Use `/sdd:tasks`; leave implementation unstarted |
 | Adopt or update the method | Use `/sdd:setup` |
 | Explain or investigate | Return evidence and open questions |
-| Resume or merge | Read Status or Integration below |
+
+Review, audit or explanation does not permit editing files.
+| Resume | Read Status below |
+| Merge a PR | Read [integration.md](integration.md) |
 
 ## Branch and completion
 
-Before editing files intended for Git, identify the current and integration
+Before creating or editing tracked files, identify the current and integration
 branches from project conventions and Git state. On an integration branch
 (`main`, `master` or the project equivalent), create a working branch first.
 Commit and push only to working branches. Integrate through a PR merge after
@@ -45,9 +48,12 @@ Read relevant requirements, roadmap, canon, decisions and code. Read history
 when it helps explain a constraint. Resolve available facts before asking. When
 acceptance conflicts with requirements or architecture, show the disagreement
 and recommend a resolution. Code shows current behavior; a document can also
-state an obligation that broken code fails to meet.
+state an obligation that broken code fails to meet. A design linked from a
+ticket is history after its merge; the canon and ADRs state current obligations.
 
-Discuss related questions together, asking one at a time. Prefer
+A decision is material when it changes behavior, a contract, scope, an
+architectural constraint or significant cost, and no ticket, canon entry or ADR
+settles it. Group related questions and ask them one at a time. Prefer
 `AskUserQuestion` when available.
 Recommend a choice with material trade-offs. Date decisions in
 `<notes>/<task>-decisions.md`. Reopen agreed choices on new evidence.
@@ -55,17 +61,19 @@ Recommend a choice with material trade-offs. Date decisions in
 | Tier | Decision scope | Approval before implementation |
 |---|---|---|
 | 0 | No material decision remains | G1: exact change, scope, assumptions and verification |
-| 1 | One material decision | G1 and G2 together: recommended solution, scope, assumptions and verification |
+| 1 | One material decision | G1 and G2 together in one message: recommended solution, scope, assumptions and verification. No design document |
 | 2 | A new boundary, invariant change or multiple interdependent decisions | G1 decisions, G2 design, G3 plan |
 
 Tier 2 takes precedence. Justify the tier by decisions, not file count. Wait for
-approval of the concrete proposal, including at tier 0. A currently unused port
-can belong to a stopped service; state what the check establishes when proposing
-its replacement. The request alone does not approve values you selected.
+approval of the concrete proposal, including at tier 0. The request alone does
+not approve values you selected. For a selected value, state what your check of
+it establishes.
 
-Tier 2 runs `/sdd:design` after G1 and `/sdd:plan` after G2. Approval persists
-within its scope across commits, breaks and context compaction. G3 authorizes
-every planned step through a reviewable PR.
+Tier 2 runs `/sdd:design` after G1 and `/sdd:plan` after G2. Their artifacts go
+to `<features>/<feature>/`, where `<feature>` is a short slug for the change,
+agreed at G1. A new task gets a new directory. Approval persists within its
+scope across commits, breaks and context compaction. G3 authorizes every planned
+step through a reviewable PR.
 
 ## Execute
 
@@ -111,8 +119,9 @@ no approval. Progress reports do not ask permission to continue.
 Complete code and documents, run final checks and review the branch yourself.
 Verify and commit corrections. Confirm that the checked state matches the
 committed state. Push, open the PR, report the result and stop before
-integration. Describe the problem, resulting behavior, verification and
-limitations in the PR.
+integration. Tell the user that independent review is due, for example `/code-
+review` in a new session. Describe the problem, resulting behavior, verification
+and limitations in the PR.
 
 Independent review is required at every tier, including documents. The user
 starts it; its depth follows risk and the change. Inputs are the review request,
@@ -127,30 +136,8 @@ Verify, commit and push requested fixes on the same branch. Report resolved and
 remaining findings and their verification. The user starts any repeat
 independent review. Without integration permission, stop before merge.
 Conditional permission such as "fix these findings and merge" authorizes
-Integration below once its conditions are met. Return changed decisions or scope
+integration once its conditions are met. Return changed decisions or scope
 to the user.
-
-## Integration
-
-G4 is explicit user permission to integrate a specific PR. On "merge this PR":
-
-1. Check independent review and readiness through status/checks. If review is
-   missing or a known blocker remains, retain permission and pause integration.
-   Resolve blockers and run available checks before the final commit; return
-   changed decisions or scope to the user.
-2. Close any ticket through `/sdd:tasks` and fill missing ADR PR references in
-   the same final branch commit.
-3. Run required project checks and push. Call merge only after prerequisites
-   pass; report the actual result.
-
-Implementation approval is not merge permission. Given integration permission,
-do not ask again. Done records approval, not a completed merge.
-
-If merge fails, report the cause and branch state. Permission persists within
-scope: resolve technical blockers, verify and retry when ready. Missing access
-or changed decisions or scope trigger Stop conditions. Preserve history if
-repairs follow the final commit: append verified repair commits. Do not rewrite
-published history or add an empty final commit to keep Done last.
 
 ## Status
 

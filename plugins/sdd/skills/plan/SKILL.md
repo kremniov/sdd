@@ -4,15 +4,14 @@ description: Sequence an approved tier-2 design into verifiable implementation s
 ---
  # Plan
 
-For files intended for Git, follow `/sdd:work` Branch and completion before
-editing and when handing over the result.
+Before creating or editing tracked files, follow `/sdd:work` Branch and
+completion before editing and when handing over the result.
 
 ## Inputs
 
 Begin after G2 with the approved, committed design. `/sdd:work` owns execution,
 stop conditions and integration. Read `features` and `verify` from `.sdd.yml`.
-Split each line at the first colon and remove comments from the first `#`. If
-configuration is absent, offer `/sdd:setup`. Ask for required missing values.
+If the file or a required value is absent, offer `/sdd:setup`.
 
 Read the design and [_PLAN.md](templates/_PLAN.md) in place. Return
 a new material decision to the user and update the design before planning its
@@ -20,7 +19,7 @@ implementation.
 
 ## Write and submit
 
-Write `<features>/<task>/plan.md`. Explain dependencies that determine the order
+Write `<features>/<feature>/plan.md`. Explain dependencies that determine the order
 and identify independent steps. Each step ends in a coherent, checkable result.
 A step can contain several commits. Its changes must be verified and committed
 before the next step; `/sdd:work` enforces that execution sequence.

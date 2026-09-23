@@ -16,7 +16,7 @@ placeholders for omitted text.
 Use ASD-STE100 as a readability reference: direct sentences, consistent terms
 and an explicit actor. Preserve precise conditions; remove rhetoric and repetition.
 
-Before editing files for Git, check the branch. Create a working branch when on
+Before creating or editing tracked files, check the branch. Create a working branch when on
 main, master or another integration branch. Preserve user changes; use a worktree
 when isolation is needed. Verify and commit completed steps, then push and open
 a PR. Report completed checks and limitations. Stop for user-started independent

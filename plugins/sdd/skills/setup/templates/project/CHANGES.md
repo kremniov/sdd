@@ -15,6 +15,35 @@ lines.
 When a managed template region changes, update its version stamp and add an entry
 under that version in the same commit. Omit versions with no scaffold changes.
 
+## 1.1.18
+
+### CLAUDE.section.md
+
+Add an Authorization subsection: each permission is granted individually;
+review, audit or explanation does not permit editing files; a ticket or design
+does not permit implementing its subject; implementation does not permit
+integration. It replaces the single sentence on reviews and the closing
+sentence on implementation approval.
+
+Scope the branch check to creating or editing tracked files, replacing "files
+for Git". Point integration at `/sdd:work` rather than a named section of it.
+
+Restore the test-first rule to Evidence: observe a covering test fail for the
+intended reason before the change that makes it pass.
+
+### docs-README.md
+
+State that a design linked from a ticket is history after its merge, and that
+the canon and ADRs state current obligations. This adds a reading rule; it
+replaces nothing.
+
+### tasks.md
+
+Reduce the managed text to two rules: use `/sdd:tasks` to add, change or close
+a ticket, and close a ticket in the final branch commit after explicit
+permission to integrate. This replaces the list of what the queue skill covers
+and the failed-merge sentence, which `/sdd:work` integration carries.
+
 ## 1.1.14
 
 ### CLAUDE.section.md
