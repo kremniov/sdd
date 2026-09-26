@@ -4,12 +4,13 @@ Current rules for this plugin. [The method](../method.md) specifies workflow
 behavior. Decision records preserve history. Link these entries by number.
 
 1. **Project locations come from configuration.** Skills read project paths
-   from `.sdd.yml`. Example configurations may show illustrative paths.
+   from `.sdd/config.yml`. Example configurations may show illustrative paths.
    *Detect:* manual review of skill inputs and every project file operation.
    *On violation:* use the configured location.
 2. **Skeletons and scaffold have different lifecycles.** Skills read artifact
    skeletons in place from the plugin. Setup writes scaffold into missing project
-   files. Existing managed guidance updates through stamped, described changes;
+   files and copies shipped tools into `.sdd/`; the plugin owns a tool's whole
+   file. Existing managed guidance updates through stamped, described changes;
    matching versions need no edit. Generic prose refresh follows ADR 0029; legacy retirement follows ADR 0020.
    *Detect:* `./scripts/check.sh` checks paths, reachability, fences, stamps and
    migration entries; manual scenario review checks semantic updates.
@@ -50,9 +51,12 @@ behavior. Decision records preserve history. Link these entries by number.
    their number and link the retirement ADR.
    *Detect:* compare numbered entries with the base revision.
    *On violation:* restore numbering and correct references.
-9. **The repository rules are rendered from the scaffold.** Substitute `.sdd.yml`
-   into `skills/setup/templates/project/CLAUDE.section.md` to produce the managed CLAUDE section.
-   *Detect:* `./scripts/check.sh` checks that the render is present in CLAUDE.md.
+9. **The repository rules are rendered from the scaffold.** Substitute
+   `.sdd/config.yml` into `skills/setup/templates/project/CLAUDE.section.md` to
+   produce the managed CLAUDE section. `.sdd/tasks-index` is a copy of the
+   shipped tool.
+   *Detect:* `./scripts/check.sh` checks that the render is present in CLAUDE.md
+   and that the tool copy matches the template.
    *On violation:* edit the template and re-render.
 10. **Catalogue sources resolve to matching manifests.** Spell the source in
     full relative to the marketplace root, prefixed with `./`; omit pluginRoot.
@@ -79,7 +83,7 @@ behavior. Decision records preserve history. Link these entries by number.
 | Manifest | `plugins/sdd/.claude-plugin/` | Version and package metadata |
 | Skills | `plugins/sdd/skills/` | Scoped procedures and conditional references |
 | Skeletons | `plugins/sdd/skills/{design,plan,work}/templates/_*.md` | Artifact content, read in place |
-| Scaffold | `plugins/sdd/skills/setup/templates/project/` | Rendered project guidance and semantic migration history |
+| Scaffold | `plugins/sdd/skills/setup/templates/project/` | Rendered project guidance, shipped tools and semantic migration history |
 | Method | `docs/method.md` | Complete agreed behavior for readers and maintainers |
 | Scenarios | `tests/scenarios/` | Versioned input cases and evaluator expectations |
 | Behavioral fixtures | `tests/behavior/` | Reproducible repositories, prompts and local agent runner |

@@ -25,8 +25,9 @@ review; merge requires separate explicit permission and `/sdd:work` Integration.
 ## Survey
 
 Read the request, root rules files, docs layout, verification configuration,
-ticket conventions and any existing `.sdd.yml`. Record actual paths before
-asking. Inspect existing content and managed markers before writing files.
+ticket conventions and any existing `.sdd/config.yml` or legacy `.sdd.yml`.
+Record actual paths before asking. Inspect existing content and managed markers
+before writing files.
 
 Prefer existing project locations. Show the complete proposed config and the
 concrete file changes together for approval. Approval of paths alone is not approval to replace a process.
@@ -37,13 +38,16 @@ Use one unquoted `key: value` per line. The first colon separates the key; the
 first `#` starts a comment. Values cannot contain `#` and quotes are not
 removed. Directory values end in `/`. `ticket` is the prefix alone, without a
 trailing hyphen. `verify` is a command that exits non-zero when a required check
-fails.
+fails. `tickets` is the directory of ticket files; `tasks` and `tasks_done` are
+the generated indexes of open and closed tickets.
 
 Example locations, replaced with the project's own:
 
 ```yaml
 canon: docs/architecture/
 tasks: docs/tasks.md
+tasks_done: docs/tasks-done.md
+tickets: docs/tasks/
 roadmap: docs/roadmap.md
 features: docs/features/
 adr: docs/adr/
@@ -58,8 +62,10 @@ policy and proposed ignore entry. Notes must stay outside Git; do not create a
 tracked placeholder there. If the selected directory already contains tracked
 files, propose a separate untracked location rather than untracking user files.
 
-After approval, write `.sdd.yml`. For an existing config, show the exact diff
-before applying it. Keep unrelated keys and project content.
+After approval, write `.sdd/config.yml`. For an existing config, show the exact
+diff before applying it. Keep unrelated keys and project content. Move a legacy
+`.sdd.yml` to `.sdd/config.yml` with its history and propose the reference
+changes.
 
 ## Scaffold
 
@@ -72,10 +78,18 @@ version. Do not copy `CHANGES.md` into the project.
 | `canon` + `invariants.md` | `invariants.md` |
 | `canon` + `lessons.md` | `lessons.md` |
 | `tasks` | `tasks.md` |
+| `tasks_done` | `tasks-done.md` |
+| `tickets` | Create the missing directory |
+| `.sdd/tasks-index` | `tasks-index`, executable |
 | `roadmap` | `roadmap.md` |
 | Parent of `canon`, if not the repository root and no README exists | `docs-README.md` |
 | `features`, `adr` | Create missing directories; use a tracked placeholder if needed |
 | `notes` | Create the ignored directory with the approved ignore rule |
+
+Propose adding `.sdd/tasks-index --check` to the `verify` command. For an
+existing single-file queue, propose its conversion to ticket files by the
+`tasks.md` entry in [CHANGES.md](templates/project/CHANGES.md). A declined
+conversion leaves `tickets` unset.
 
 For an existing README without markers, propose necessary targeted corrections.
 Adding a managed section requires separate approval of its boundary and content.

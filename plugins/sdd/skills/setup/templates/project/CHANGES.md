@@ -15,6 +15,45 @@ lines.
 When a managed template region changes, update its version stamp and add an entry
 under that version in the same commit. Omit versions with no scaffold changes.
 
+## 1.2.0
+
+### CLAUDE.section.md
+
+The project configuration is `.sdd/config.yml`. This replaces `.sdd.yml` at the
+repository root. Move the file with its history and change each reference.
+
+### docs-README.md
+
+The ticket directory holds one file per ticket with its outcome, context,
+acceptance, dependencies and status. The `tasks` file is a generated index of
+open tickets, and `tasks_done` is a generated index of closed tickets. These
+rows replace the single queue row.
+
+### tasks.md
+
+Each ticket is a file in the ticket directory, and `.sdd/tasks-index`
+generates this index of open tickets and the closed index. Nobody edits an
+index by hand. This replaces the single queue file with its Done section.
+
+To convert an existing queue, write one file per entry in the format of
+`/sdd:tasks`. Keep each ID, title and body. A completed entry becomes a closed
+ticket: its one-line result becomes the Result field, and its change reference
+becomes `ref`. Recover a title or body from the version history when the
+completed entry lost it. Add the index markers after the managed region and
+run `.sdd/tasks-index`. The conversion needs approval of the ticket format and
+the moved content.
+
+### tasks-done.md
+
+A new file: the generated index of closed tickets, most recently closed first.
+
+### tasks-index
+
+A new tool at `.sdd/tasks-index`. It generates both ticket indexes from the
+ticket files and, with `--check`, fails when an index is stale or a ticket is
+malformed. Add the check to the `verify` command. The plugin owns the whole
+file; replace it when its stamp is older.
+
 ## 1.1.18
 
 ### CLAUDE.section.md

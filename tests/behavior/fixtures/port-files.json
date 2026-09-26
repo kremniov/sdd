@@ -5,7 +5,7 @@
     {
       "message": "fixture baseline",
       "files": {
-        ".sdd.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: true\nticket: T\nrules: CLAUDE.md\n",
+        ".sdd/config.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: true\nticket: T\nrules: CLAUDE.md\n",
         "README.md": "Start the service on port 8080.\n",
         "launch.env": "PORT=8080\n"
       },

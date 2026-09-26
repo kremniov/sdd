@@ -11,6 +11,7 @@ is in [the method](../method.md). Invariants 1–4 govern the plugin/project bou
 | Skill reference | Its stated mode or condition applies | Additional procedure |
 | Artifact skeleton | A design, plan or ADR is written | A project artifact, not a copied skeleton |
 | Project scaffold | Adoption needs a missing file | Placeholder-substituted file with managed markers |
+| Shipped tool | Adoption or an older tool stamp | A plugin-owned file in `.sdd/` |
 | CHANGES.md | An older managed region needs an update | Changes to assess for the proposed region |
 | Project rules | Loaded by the project harness | Resident constraints and routing |
 | Canon | Relevant work or review | Current obligations and interactions |
@@ -20,8 +21,14 @@ links from the instruction file that contains them. Design, plan and work hold
 artifact skeletons; setup holds project scaffold and migration history.
 
 Project files use configured paths and skill names. Read locations from
-`.sdd.yml`: split each line at the first colon, strip comments from the first
-`#`, and use unquoted values. Directory values end in `/`.
+`.sdd/config.yml`: split each line at the first colon, strip comments from the
+first `#`, and use unquoted values. Directory values end in `/`. The `.sdd/`
+directory holds the config and the tools that setup copies from the plugin.
+
+A queue with a `tickets` directory keeps one file per ticket. `.sdd/tasks-index`
+generates the open index `tasks` and the closed index `tasks_done` from the
+ticket files, so a skill reads the open index without the closed history. The
+tool reads its paths from the config and carries no project vocabulary.
 
 Setup states the rules needed before resident instructions are installed:
 concrete approval, one question at a time, complete proposals, direct writing,
@@ -43,8 +50,9 @@ Notes use ignored files; feature and ADR directories can use tracked placeholder
 
 ## Upgrade behavior
 
-An opening marker records the version of a managed region. Equal stamps require
-no edit; newer project stamps are left alone. Older stamps select CHANGES.md
+An opening marker records the version of a managed region. A shipped tool
+records its version on a `# sdd:scaffold vN.N.N` line and is replaced whole.
+Equal stamps require no edit; newer project stamps are left alone. Older stamps select CHANGES.md
 entries after the project version through the template version. Bare valid
 legacy markers use the documented v0.2.0 baseline. Unknown history or malformed
 boundaries require user resolution.

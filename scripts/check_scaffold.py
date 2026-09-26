@@ -95,6 +95,16 @@ def fence(text, name):
     return opens[0], region
 
 
+def stamp_line(text, name):
+    """(stamp, rest) for a whole-file tool stamped on one comment line."""
+    stamps = re.findall(rf"^# {re.escape(name)} v(\S+)$", text, re.M)
+    if len(stamps) != 1:
+        return f"no {name} stamp" if not stamps else f"{len(stamps)} {name} stamps — expected one"
+    if parse(stamps[0]) is None:
+        return f"version {stamps[0]!r} is not N.N.N"
+    return stamps[0], re.sub(rf"^# {re.escape(name)} v\S+\n", "", text, flags=re.M)
+
+
 def logged(text):
     """{(version, filename)} — every entry declared in the change log."""
     entries, version = set(), None
@@ -110,12 +120,13 @@ ok = True
 stamps = {}
 broken = set()
 BASE = baseline()
-for path in sorted(ROOT.glob("*.md")):
+for path in sorted(p for p in ROOT.iterdir() if p.is_file()):
     if path.name == CHANGES:
         continue
     name = MARKERS.get(path.name, DEFAULT)
     text = path.read_text()
-    result = fence(text, name)
+    read = fence if path.suffix == ".md" else stamp_line
+    result = read(text, name)
 
     if isinstance(result, str):
         print(f"  FAIL    {path.name}: {result}")
@@ -131,7 +142,7 @@ for path in sorted(ROOT.glob("*.md")):
         continue
 
     before = committed(BASE, path)
-    was = fence(before, name) if before is not None else None
+    was = read(before, name) if before is not None else None
     if isinstance(was, tuple) and was[1] != region and was[0] == stamp:
         print(f"  FAIL    {path.name}: the fenced region changed and v{stamp} did not move")
         broken.add(path.name)

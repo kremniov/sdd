@@ -1,4 +1,4 @@
-<!-- sdd:scaffold v1.1.18 -->
+<!-- sdd:scaffold v1.2.0 -->
 # Project documents
 
 | Path | Content and maintenance |
@@ -6,7 +6,9 @@
 | `{{canon}}` | Current invariants, system map, subsystem interactions and verified lessons. Update affected claims in the same PR as the behavior |
 | `{{adr}}` | Durable decisions and their reasons. Preserve history |
 | `{{roadmap}}` | Product direction and objectives; link detailed requirements |
-| `{{tasks}}` | Outcomes, necessary context, acceptance, dependencies and status |
+| `{{tickets}}` | One file per ticket: outcome, necessary context, acceptance, dependencies and status |
+| `{{tasks}}` | Generated index of open tickets |
+| `{{tasks_done}}` | Generated index of closed tickets; read it for closed work |
 | `{{features}}` | Agreed designs and plans; historical after merge |
 | `{{notes}}` | Ignored decision logs and task status files for working context |
 

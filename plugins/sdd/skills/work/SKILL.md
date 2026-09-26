@@ -6,7 +6,7 @@ description: Run an implementation task from research and approval through commi
 
 ## Inputs and route
 
-Read the request and `.sdd.yml`. Use its `tasks`, `roadmap`, `canon`,
+Read the request and `.sdd/config.yml`. Use its `tasks`, `roadmap`, `canon`,
 `features`, `adr`, `notes`, `verify` and `ticket` values when needed. If the
 file or a required value is absent, offer `/sdd:setup`. A direct request can
 replace a ticket. `<task>` in a notes file name is the ticket ID, or a short

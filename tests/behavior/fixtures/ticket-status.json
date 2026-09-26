@@ -5,7 +5,7 @@
     {
       "message": "fixture baseline",
       "files": {
-        ".sdd.yml": "tasks: docs/tasks.md\nroadmap: docs/roadmap.md\ncanon: docs/architecture/\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: python3 verify.py\nticket: T\n",
+        ".sdd/config.yml": "tasks: docs/tasks.md\nroadmap: docs/roadmap.md\ncanon: docs/architecture/\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: python3 verify.py\nticket: T\n",
         "docs/architecture/invariants.md": "# Invariants\n",
         "docs/features/recovery/design.md": "# Design\nThe approved task has one independent local preparation part and one final export part.\n",
         "docs/features/recovery/plan.md": "# Plan\nThe local preparation is approved. The final export requires the unavailable `EXPORT_CREDENTIAL`.\n",

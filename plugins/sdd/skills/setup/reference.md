@@ -20,6 +20,10 @@ A rules file with both current and legacy sections also requires resolution.
 | No fence | Show the proposed boundary and ask; add markers on approval at `v0.2.0`, then assess updates |
 | Unknown version history | Report the missing migration basis and ask before editing |
 
+A shipped tool such as `tasks-index` carries its stamp on a
+`# sdd:scaffold vN.N.N` line, and the plugin owns the whole file. When the
+project stamp is older, replace the whole file after approval.
+
 Read [CHANGES.md](templates/project/CHANGES.md) for entries after the
 project's stamp and through the template's stamp. Use the current template as
 the basis for the complete proposed region. Preserve project requirements,

@@ -2,7 +2,7 @@
 
 ## Initial state
 
-An existing rules file has a different development process. Architecture notes and a task queue contain project-authored material. No .sdd.yml exists.
+An existing rules file has a different development process. Architecture notes and a task queue contain project-authored material. No .sdd/config.yml exists.
 
 ## User request
 

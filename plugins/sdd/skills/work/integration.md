@@ -13,11 +13,11 @@ this PR". Then:
    pass; report the actual result.
 
 Implementation approval is not merge permission. Given integration permission,
-do not ask again. A Done entry records the approval; report the merge result
-separately.
+do not ask again. A closed ticket records the approval; report the merge
+result separately.
 
 If merge fails, report the cause and branch state. Permission persists within
 scope: resolve technical blockers, verify and retry when ready. Missing access
 or changed decisions or scope trigger the Stop conditions of `/sdd:work`. Preserve history if
 repairs follow the final commit: append verified repair commits. Do not rewrite
-published history or add an empty final commit to keep Done last.
+published history or add an empty final commit to keep the closing commit last.
