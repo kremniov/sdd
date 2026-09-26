@@ -1,0 +1,11 @@
+{
+  "fixture": "tasks-main",
+  "skills": [
+    "work",
+    "tasks"
+  ],
+  "resident": true,
+  "prompt": "Use /sdd:tasks to file a bug: when the nightly export job is retried, the report lists each order twice. The report must list each order once. The retry appends its rows again; code is in jobs/export.py. This queue edit and its verification by reading the queue and running true are approved. Complete the queue operation.",
+  "expectations": "tests/scenarios/ticket-title.md",
+  "limitations": "Explicit instruction injection; does not test skill discovery. No remote or hosted PR operations. One fresh queue; a queue with existing titles is not covered."
+}
