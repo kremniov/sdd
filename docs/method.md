@@ -262,6 +262,7 @@ order.
 ## Queue
 
 A ticket has a stable ID, short title, outcome and checkable acceptance criteria.
+The title names the work or the symptom; the outcome states the target behavior.
 Include context when omitting it loses the reason or a constraint. Link primary
 requirements, dependencies and code. Ticket creation need not settle the
 implementation. Criteria scale with the outcome; execution order belongs in a

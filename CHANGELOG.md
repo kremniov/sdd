@@ -4,6 +4,13 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.1.19
+
+- A ticket title is a short noun phrase that names the work or, for a bug, the
+  symptom; it does not restate the Outcome. The queue template shows a bug
+  ticket beside the feature ticket, and the method states the same rule.
+- Add the `ticket-title` scenario.
+
 ## 1.1.18
 
 - Define a material decision and state that tier 1 produces no design document.

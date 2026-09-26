@@ -29,7 +29,7 @@ For a new queue, use the following shape and tag conventions. Keep blank lines
 between fields and around lists. Omit Context or Pointers when unnecessary.
 
 ```markdown
-#### `[T-40]` Add a recovery export
+#### `[T-40]` Recovery export
 
 **Tags:** `[feat]` `[next]`
 
@@ -46,8 +46,26 @@ is required. Implementation choices remain open.
 **Pointers:** requirements: <source> · deps: T-38
 
 ---
+
+#### `[T-41]` Duplicate reminder emails
+
+**Tags:** `[bug]` `[next]`
+
+**Outcome:** A customer receives one reminder per due invoice.
+
+**Context:** A restarted worker sends again the reminders it already sent.
+
+**Acceptance:**
+
+- [ ] A restarted worker sends no reminder twice
+
+**Pointers:** code: <reminder job>
+
+---
 ```
 
+A title is a short noun phrase that names the work or, for a bug, the symptom.
+The Outcome states the target behavior; the title does not restate it.
 State the outcome and observable acceptance. Include the reason or constraint
 when omitting it would change the task. Link primary requirements, dependencies
 and existing code. There is no minimum criterion count. Leave execution steps
@@ -77,7 +95,7 @@ document references. Review history stays in the PR; record a lesson in
 `lessons.md` and a decision in an ADR.
 
 ```markdown
-- `[T-40]` `[feat]` `[PR #91]` Add a recovery export — produces a consistent snapshot.
+- `[T-40]` `[feat]` `[PR #91]` Recovery export — produces a consistent snapshot.
 ```
 
 Use a PR, branch or commit reference that exists. In the same final branch
