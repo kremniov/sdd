@@ -2,7 +2,7 @@
 
 Date: 2026-09-27
 Status: Accepted
-PR: —
+PR: #12
 
 ## Context
 
