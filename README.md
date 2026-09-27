@@ -46,11 +46,13 @@ them. Existing project content is preserved. Updates use versioned semantic
 changes and retain project additions. Run `/sdd:canon` to establish or audit the
 invariant list after adoption.
 
-Example `.sdd.yml`:
+Example `.sdd/config.yml`:
 
 ```yaml
 canon: docs/architecture/
 tasks: docs/tasks.md
+tasks_done: docs/tasks-done.md
+tickets: docs/tasks/
 roadmap: docs/roadmap.md
 features: docs/features/
 adr: docs/adr/
@@ -63,6 +65,8 @@ rules: CLAUDE.md
 Use project paths and an actual verification command. Values are unquoted;
 directory paths end in `/`. `#` starts a comment and cannot occur in a value.
 Working notes stay outside Git. Rules may live in CLAUDE.md or AGENTS.md.
+Each ticket is a file in `tickets`; `.sdd/tasks-index` generates the open and
+closed indexes, and `.sdd/tasks-index --check` belongs in the `verify` command.
 
 ## Documents and checks
 

@@ -9,8 +9,8 @@ completion before editing and when handing over the result.
 
 ## Inputs
 
-Read the request and `canon` from `.sdd.yml`. If the file or a required value is
-absent, offer `/sdd:setup`.
+Read the request and `canon` from `.sdd/config.yml`. If the file or a required
+value is absent, offer `/sdd:setup`.
 
 Read the relevant code, existing document, governing invariants, accepted
 requirements and branch diff. Use `/sdd:work` for proposed-change approval. A

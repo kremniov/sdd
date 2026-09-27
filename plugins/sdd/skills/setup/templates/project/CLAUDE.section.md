@@ -1,10 +1,10 @@
-<!-- sdd:rules v1.1.18 -->
+<!-- sdd:rules v1.2.0 -->
 ## Development method
 
 Use `/sdd:work` for implementation, resuming work and authorized integration.
 Use the skill that matches a specialized request: `/sdd:design`, `/sdd:plan`,
 `/sdd:debug`, `/sdd:tasks`, `/sdd:canon`, `/sdd:subsystem` or `/sdd:setup`.
-Project paths and the verification command are in `.sdd.yml`.
+Project paths and the verification command are in `.sdd/config.yml`.
 
 ### Authorization
 

@@ -1,14 +1,15 @@
-"""Validate .sdd.yml against the parsing rules the skills document."""
+"""Validate .sdd/config.yml against the parsing rules the skills document."""
 
 import sys
 
 REQUIRED = ("canon", "tasks", "roadmap", "features", "adr", "notes", "verify", "ticket", "rules")
-DIRS = ("canon", "features", "adr", "notes")
+DIRS = ("canon", "features", "adr", "notes", "tickets")
+TICKET_FILES = ("tickets", "tasks_done")
 
 ok = True
 seen = {}
 
-for n, raw in enumerate(open(".sdd.yml"), 1):
+for n, raw in enumerate(open(".sdd/config.yml"), 1):
     stripped = raw.strip()
     if not stripped or stripped.startswith("#"):
         continue
@@ -34,6 +35,10 @@ for key in DIRS:
     if key in seen and not seen[key].endswith("/"):
         print(f'  FAIL    {key}: must end in "/" — it is concatenated with a filename')
         ok = False
+
+if sum(key in seen for key in TICKET_FILES) == 1:
+    print(f"  FAIL    {' and '.join(TICKET_FILES)} are set together or not at all")
+    ok = False
 
 for key in REQUIRED:
     if key not in seen:

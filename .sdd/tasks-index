@@ -1,0 +1,209 @@
+#!/usr/bin/env python3
+# sdd:scaffold v1.2.0
+"""Generate the ticket indexes from the ticket files. .sdd/config.yml names
+the paths: `tickets` (one file per ticket), `tasks` (open tickets) and
+`tasks_done` (closed tickets).
+
+Usage: .sdd/tasks-index [--check]
+
+--check exits 1 when an index differs from the ticket files."""
+import datetime, os, re, sys
+
+CONFIG = ".sdd/config.yml"
+BEGIN, END = "<!-- tasks:index -->", "<!-- /tasks:index -->"
+
+TYPES = ("feat", "bug", "debt", "chore")
+OPEN = ("in-progress", "next", "blocked", "someday")
+ID = re.compile(r"^([A-Za-z]+)-(\d+)$")
+PREFIX = None
+KEYS = ("type", "phase", "areas", "status", "group", "closed", "ref")
+RESERVED = {"true", "false", "yes", "no", "on", "off", "null", "~"}
+DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def plain(key, value, in_list=False):
+    """Reject plain text that YAML would read with another meaning."""
+    if not value:
+        return value
+    if value[0] in "-?:,[]{}#&*!|>'\"%@`\\":
+        raise ValueError(f"{key}: a plain value cannot start with {value[0]!r}; quote it")
+    if " #" in value:
+        raise ValueError(f"{key}: an unquoted # starts a comment in YAML; quote the value")
+    if ": " in value or value.endswith(":"):
+        raise ValueError(f"{key}: a plain value cannot contain ': '; quote it")
+    if value.lower() in RESERVED:
+        raise ValueError(f"{key}: YAML reads {value!r} as a keyword; quote it")
+    if in_list and any(c in value for c in ",[]{}\""):
+        raise ValueError(f"{key}: a list item cannot contain , [ ] {{ }} or quotes")
+    return value
+
+
+def parse(path):
+    text = open(path, encoding="utf-8").read()
+    m = re.match(r"---\n(.*?)\n---\n\n# (\S+): ([^\n]+)\n", text, re.S)
+    if not m:
+        raise ValueError("expected frontmatter, a blank line and '# <ID>: <title>'")
+    meta = {}
+    for line in m.group(1).splitlines():
+        key, sep, val = line.partition(": ")
+        if not sep or not re.fullmatch(r"[a-z_]+", key):
+            raise ValueError(f"bad frontmatter line {line!r}")
+        if key not in KEYS:
+            raise ValueError(f"unknown key {key}; expected one of {', '.join(KEYS)}")
+        if key in meta:
+            raise ValueError(f"duplicate key {key}")
+        val = val.strip()
+        if val.startswith("["):
+            if not val.endswith("]") or any(c in val[1:-1] for c in "[]"):
+                raise ValueError(f"bad frontmatter line {line!r}")
+            inner = val[1:-1].strip()
+            items = [v.strip() for v in inner.split(",")] if inner else []
+            if "" in items:
+                raise ValueError(f"bad frontmatter line {line!r}")
+            val = [plain(key, v, in_list=True) for v in items]
+        elif val.startswith('"'):
+            if "\\" in val:
+                raise ValueError(f"{key}: a quoted value cannot contain a backslash")
+            if len(val) < 2 or not val.endswith('"') or '"' in val[1:-1]:
+                raise ValueError(f"bad frontmatter line {line!r}")
+            val = val[1:-1]
+        else:
+            val = plain(key, val)
+        meta[key] = val
+    meta["id"], meta["title"] = m.group(2), m.group(3)
+    return meta
+
+
+def is_date(value):
+    if not isinstance(value, str) or not DATE.match(value):
+        return False
+    try:
+        datetime.date.fromisoformat(value)
+    except ValueError:
+        return False
+    return True
+
+
+def validate(t, stem):
+    errs = []
+    if not ID.match(stem):
+        return [f"the file name is not a ticket ID such as T-12"]
+    if t["id"] != stem:
+        errs.append(f"heading id {t['id']} does not match the file name")
+    for key in ("type", "phase", "status", "group", "closed", "ref"):
+        if t.get(key) == "":
+            errs.append(f"{key} is empty")
+    if not isinstance(t.get("areas", []), list):
+        errs.append("areas must be a list such as [a, b]")
+    for key in ("phase", "group", "closed", "ref"):
+        if isinstance(t.get(key, ""), list):
+            errs.append(f"{key} must be a single value")
+    if "closed" in t and not is_date(t["closed"]):
+        errs.append("closed must be a date YYYY-MM-DD")
+    if t.get("type") not in TYPES:
+        errs.append(f"type must be one of {', '.join(TYPES)}")
+    status = t.get("status")
+    if status == "done":
+        for key in ("closed", "ref"):
+            if key not in t:
+                errs.append(f"a done ticket needs {key}")
+    elif status not in OPEN:
+        errs.append(f"status must be one of {', '.join(OPEN + ('done',))}")
+    return errs
+
+
+def tags(t):
+    vals = [t["type"]] + ([t["phase"]] if "phase" in t else []) + t.get("areas", [])
+    if t["status"] != "done":
+        vals.append(t["status"])
+    return " ".join(f"`[{v}]`" for v in vals)
+
+
+def id_key(t):
+    prefix, num = ID.match(t["id"]).groups()
+    return (prefix != PREFIX, prefix, int(num))
+
+
+def config():
+    cfg = {}
+    for raw in open(CONFIG, encoding="utf-8"):
+        key, sep, val = raw.split("#", 1)[0].partition(":")
+        if sep and val.strip():
+            cfg[key.strip()] = val.strip()
+    missing = [k for k in ("tickets", "tasks", "tasks_done") if k not in cfg]
+    if missing:
+        raise SystemExit(f"{CONFIG}: missing {', '.join(missing)}")
+    return cfg
+
+
+def line(t, index):
+    href = os.path.relpath(t["path"], os.path.dirname(index))
+    s = f"- [{t['id']}]({href}) {t['title']} · {tags(t)}"
+    if t["status"] == "done":
+        s += f" · {t['ref']}"
+    return s
+
+
+def render_open(tickets, index):
+    open_ = [t for t in tickets if t["status"] != "done"]
+    out = [BEGIN, ""]
+    groups = sorted({t.get("group", "") for t in open_})
+    for group in groups:
+        if group:
+            out += [f"## {group}", ""]
+        rows = [t for t in open_ if t.get("group", "") == group]
+        rows.sort(key=lambda t: (OPEN.index(t["status"]), id_key(t)))
+        out += [line(t, index) for t in rows] + [""]
+    return "\n".join(out + [END])
+
+
+def render_done(tickets, index):
+    done = [t for t in tickets if t["status"] == "done"]
+    done.sort(key=lambda t: (t["closed"], id_key(t)), reverse=True)
+    return "\n".join([BEGIN, ""] + [line(t, index) for t in done] + ["", END])
+
+
+def update(path, block, check):
+    text = open(path, encoding="utf-8").read()
+    head, sep, rest = text.partition(BEGIN)
+    if not sep or END not in rest:
+        print(f"{path}: missing {BEGIN} ... {END}", file=sys.stderr)
+        return 1
+    new = head + block + rest.partition(END)[2]
+    if new == text:
+        return 0
+    if check:
+        print(f"{path} is stale: run .sdd/tasks-index", file=sys.stderr)
+        return 1
+    open(path, "w", encoding="utf-8").write(new)
+    return 0
+
+
+def main():
+    check = sys.argv[1:] == ["--check"]
+    cfg = config()
+    global PREFIX
+    PREFIX = cfg.get("ticket")
+    tickets, errs = [], []
+    for name in sorted(os.listdir(cfg["tickets"])):
+        if not name.endswith(".md"):
+            continue
+        path = os.path.join(cfg["tickets"], name)
+        try:
+            t = parse(path)
+            t["path"] = path
+        except ValueError as e:
+            errs.append(f"{path}: {e}")
+            continue
+        errs += [f"{path}: {e}" for e in validate(t, name[:-3])]
+        tickets.append(t)
+    if errs:
+        print("\n".join(errs), file=sys.stderr)
+        return 1
+
+    rc = update(cfg["tasks"], render_open(tickets, cfg["tasks"]), check)
+    done = cfg["tasks_done"]
+    return update(done, render_done(tickets, done), check) or rc
+
+
+sys.exit(main())

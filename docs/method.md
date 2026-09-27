@@ -248,16 +248,17 @@ run available checks before the final commit. Close the ticket in that commit,
 fill missing ADR PR references, run required checks and push. Then call merge
 only after the required checks and other prerequisites pass, and report the
 result. No second permission is required for the merge command. Skip ticket
-closure if there is no ticket. Done on the working branch records integration approval;
-it reaches the integration branch with the change. Confirm actual merge separately.
+closure if there is no ticket. A closed ticket on the working branch records
+integration approval; it reaches the integration branch with the change. Confirm
+actual merge separately.
 
 If merge fails, report the cause and branch state. Permission remains valid
 within its approved scope. Resolve technical blockers, verify and retry when
 ready; stop dependent work for missing access or changes to agreed decisions or
 scope. If repairs become necessary after the final commit, preserve history and
-append verified repair commits. This is an exception to Done being last: do not
-rewrite published history or add an empty final commit solely to restore that
-order.
+append verified repair commits. This is an exception to the closing commit
+being last: do not rewrite published history or add an empty final commit
+solely to restore that order.
 
 ## Queue
 
@@ -268,20 +269,27 @@ requirements, dependencies and code. Ticket creation need not settle the
 implementation. Criteria scale with the outcome; execution order belongs in a
 plan when one is required.
 
-Preserve an existing queue's fields, structure, labels, ID conventions and
-completed-entry format. Map method states to project statuses. If required
-content or a state cannot be expressed unambiguously, propose a concrete addition
-and agree it before changing the format. Use the skill's format for a new queue.
+Each ticket is a file in the configured ticket directory. A generated index
+lists open tickets, and a second generated index lists closed tickets. An agent
+reads the open index to choose work and reads the closed index only for closed
+work. Closing a ticket keeps its file, title and body, and adds the result and
+change reference. `.sdd/tasks-index` generates both indexes, and its check
+fails on a stale index or a malformed ticket.
 
-Check the whole queue, including completed entries, before allocating an ID.
+A project without a ticket directory keeps a single queue file. Preserve that
+queue's fields, structure, labels, ID conventions and completed-entry format.
+Map method states to project statuses. If required content or a state cannot be
+expressed unambiguously, propose a concrete addition and agree it before
+changing the format. Setup offers conversion to ticket files.
+
+Allocate the number after the highest existing ID, including closed tickets.
 Never reuse IDs. When starting or resuming implementation, set an existing
 ticket to in-progress. Include the update in the current step's implementation
 commit. Set blocked when an obstacle prevents continuing the task and no
 independent authorized work remains. A blocked part alone does not block the
 whole ticket. Working notes retain details but do not replace the queue status.
-These transitions do not require creating a ticket. Done records integration
-approval as described above. A completed entry keeps the result and change
-reference.
+These transitions do not require creating a ticket. Closing a ticket records
+integration approval as described above.
 
 ## Adoption and updates
 

@@ -71,7 +71,7 @@ def clean_env():
 
 def config_values(repo, scenario):
     cfg = dict(scenario.get('render_config', {}))
-    config = repo / '.sdd.yml'
+    config = repo / '.sdd/config.yml'
     if config.exists():
         for line in config.read_text().splitlines():
             line = line.split('#', 1)[0]

@@ -1,6 +1,6 @@
 ---
 name: tasks
-description: Add, clarify or close entries in the project queue, preserving context, stable IDs and the agreed integration status.
+description: Add, clarify or close tickets in the project queue, preserving context, stable IDs and the agreed integration status.
 ---
  # Tasks
 
@@ -9,29 +9,45 @@ completion before editing and when handing over the result.
 
 ## Inputs and scope
 
-Read the request and `.sdd.yml` values `tasks` and `ticket`. If the file or a
-required value is absent, offer `/sdd:setup`.
+Read the request and the `.sdd/config.yml` values `tasks`, `tasks_done`,
+`tickets` and `ticket`. If the config or a required value is absent, or the
+project still has `.sdd.yml`, offer `/sdd:setup`.
 
-Read the whole queue, including completed entries, before choosing an ID. Follow
-project ID conventions; for a new queue, use the configured prefix and
-increasing numbers. Never reuse or renumber IDs. Preserve valid dependency
-references. A request to file a task does not authorize implementation. Use
-`/sdd:work` for approval of proposed edits and for integration timing.
+When `tickets` is set, each ticket is a file `<tickets><ID>.md`, and
+`.sdd/tasks-index` generates two indexes from these files: `tasks` lists open
+tickets and `tasks_done` lists closed tickets. Read the open index to find work
+and dependencies. Read `tasks_done` only when the request concerns closed work.
+Read a ticket file when the request concerns that ticket. Never edit an index
+by hand.
+
+When `tickets` is absent, the queue is the single file `tasks`. Preserve its
+fields, structure, labels, ID conventions and completed entries. Map method
+states to project statuses. If required content or a state has no unambiguous
+representation, propose a concrete addition and agree it before changing the
+format. `/sdd:setup` can convert this queue to ticket files.
+
+Give a new ticket the next number after the highest existing ID: the ticket
+file names, or every entry of a single-file queue, including completed entries.
+Use the configured prefix. Never reuse or renumber IDs. Preserve valid
+dependency references. A request to file a task does not authorize
+implementation. Use `/sdd:work` for approval of proposed edits and for
+integration timing.
 
 ## Write a ticket
 
-Preserve an existing queue's fields, structure, labels and ID conventions,
-including completed entries. Map method states to project statuses. If required
-content or a state has no unambiguous representation, propose a concrete
-addition and agree it before changing the format.
-
-For a new queue, use the following shape and tag conventions. Keep blank lines
-between fields and around lists. Omit Context or Pointers when unnecessary.
+Write the ticket file in this shape. Keep blank lines between fields and around
+lists. Omit Context or Pointers when unnecessary.
 
 ```markdown
-#### `[T-40]` Recovery export
+---
+type: feat
+phase: launch
+areas: [billing]
+status: next
+group: Billing
+---
 
-**Tags:** `[feat]` `[next]`
+# T-40: Recovery export
 
 **Outcome:** A recovery export contains a consistent restorable snapshot.
 
@@ -44,70 +60,74 @@ is required. Implementation choices remain open.
 - [ ] An incomplete export is reported as failed
 
 **Pointers:** requirements: <source> · deps: T-38
-
----
-
-#### `[T-41]` Duplicate reminder emails
-
-**Tags:** `[bug]` `[next]`
-
-**Outcome:** A customer receives one reminder per due invoice.
-
-**Context:** A restarted worker sends again the reminders it already sent.
-
-**Acceptance:**
-
-- [ ] A restarted worker sends no reminder twice
-
-**Pointers:** code: <reminder job>
-
----
 ```
 
-A title is a short noun phrase that names the work or, for a bug, the symptom.
-The Outcome states the target behavior; the title does not restate it.
-State the outcome and observable acceptance. Include the reason or constraint
-when omitting it would change the task. Link primary requirements, dependencies
-and existing code. There is no minimum criterion count. Leave execution steps
-for a plan and unsettled implementation choices for discussion at pickup.
+The frontmatter is a restricted subset of YAML: one `key: value` per line, only
+the keys below, a list as `[a, b]`, and a value in double quotes when it
+contains `#` or `: `, starts with punctuation, or is a YAML keyword such as
+`yes` or `null`. A quoted value contains no `"` or backslash. `.sdd/tasks-index`
+rejects anything outside this subset and reads every value as text. A YAML
+parser reads the same text, but can type a bare number or the closing date.
 
-For a new queue, order tags by type, phase, area and status. Use `[feat]`,
-`[bug]`, `[debt]` or `[chore]` for type; use project phase and area names.
-Status is `[next]`, `[in-progress]`, `[blocked]` or `[someday]`.
+| Key | Value |
+|---|---|
+| `type` | `feat`, `bug`, `debt` or `chore` |
+| `phase` | A project phase; optional |
+| `areas` | Project area names; optional |
+| `status` | `next`, `in-progress`, `blocked`, `someday` or `done` |
+| `group` | The index heading of an open ticket; optional |
+| `closed` | The closing date, `YYYY-MM-DD`; closed tickets only |
+| `ref` | The PR, branch or commit that closes the ticket; closed tickets only |
 
-When starting or resuming implementation, set an existing ticket to the project
-status equivalent to `[in-progress]`. Include the update in the current step's
-implementation commit. Set `[blocked]` or its project equivalent when an obstacle prevents
-continuing the task and no independent authorized work remains. A blocked part alone does not block the
-whole ticket. Keep details in working notes; those notes do not replace the
-queue status. Leave Done to integration. Update an existing ticket; these
-transitions do not require creating one.
+A title is a short noun phrase that names the work or, for a bug, the symptom,
+such as `Duplicate reminder emails`. The Outcome states the target behavior;
+the title does not restate it. State the outcome and observable acceptance.
+Include the reason or constraint when omitting it would change the task. Link
+primary requirements, dependencies and existing code. There is no minimum
+criterion count. Leave execution steps for a plan and unsettled implementation
+choices for discussion at pickup.
+
+When starting or resuming implementation, set an existing ticket to
+`in-progress` or the project equivalent. Include the update in the current
+step's implementation commit. Set `blocked` or its project equivalent when an
+obstacle prevents continuing the task and no independent authorized work
+remains. A blocked part alone does not block the whole ticket. Keep details in
+working notes; those notes do not replace the ticket status. Leave closing to
+integration. Update an existing ticket; these transitions do not require
+creating one.
+
+After each change to a ticket file, run `.sdd/tasks-index` and commit the
+indexes with the ticket files.
 
 ## Close a ticket
 
 Close after explicit permission to integrate its branch, before merge, as part
-of `/sdd:work` Integration. Preserve the project's completed-entry format,
-retaining the ID, result and a change reference. For a queue using this skill's
-format, collapse the entry to one line in Done, newest first. Keep type, phase
-and area; drop acceptance and replace the status tag with the reference.
-State the resulting behavior in one or two sentences with its change and
-document references. Review history stays in the PR; record a lesson in
-`lessons.md` and a decision in an ADR.
+of `/sdd:work` Integration. Keep the ticket file, its title and its body. Set
+`status: done`, `closed` and `ref`, and add a Result field after the title:
 
 ```markdown
-- `[T-40]` `[feat]` `[PR #91]` Recovery export — produces a consistent snapshot.
+# T-40: Recovery export
+
+**Result:** A recovery export produces a consistent snapshot. See `docs/architecture/export.md`.
 ```
 
+State the resulting behavior in one or two sentences with its change and
+document references. Review history stays in the PR; record a lesson in
+`lessons.md` and a decision in an ADR. In a single-file queue, preserve the
+project's completed-entry format, retaining the ID, result and a change
+reference.
+
 Use a PR, branch or commit reference that exists. In the same final branch
-commit, fill missing PR references in its ADRs. Done on the branch records
-integration approval; report actual merge separately. Do not close on plan
-approval or merely because implementation checks passed. Resolve known merge
-blockers before this commit. If merge later fails, follow `/sdd:work`
-Integration: verified repair commits may follow Done; preserve the published
-history.
+commit, fill missing PR references in its ADRs. A closed ticket on the branch
+records integration approval; report actual merge separately. Do not close on
+plan approval or merely because implementation checks passed. Resolve known
+merge blockers before this commit. If merge later fails, follow `/sdd:work`
+Integration: verified repair commits may follow the closing commit; preserve
+the published history.
 
 ## Check the edit
 
-Check IDs against the full queue, retain necessary context and real references,
-and inspect the rendered Markdown structure. A completed entry must identify its
-result and change. Report what changed.
+When `tickets` is set, run `.sdd/tasks-index --check`. Check new IDs against
+all tickets, retain necessary context and real references, and inspect the
+rendered Markdown structure. A closed ticket must identify its result and
+change. Report what changed.

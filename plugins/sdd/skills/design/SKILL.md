@@ -10,8 +10,8 @@ completion before editing and when handing over the result.
 ## Inputs
 
 Use `/sdd:work` for scope, approval and stop conditions. Begin after G1. Read
-`.sdd.yml` for `features`, `notes`, `tasks`, `roadmap`, `canon` and `adr`. If
-the file or a required value is absent, offer `/sdd:setup`.
+`.sdd/config.yml` for `features`, `notes`, `tasks`, `roadmap`, `canon` and
+`adr`. If the file or a required value is absent, offer `/sdd:setup`.
 
 Read the approved `<notes>/<task>-decisions.md`, the request or ticket, relevant
 product requirements, roadmap, canon, ADRs and code. A task without a ticket

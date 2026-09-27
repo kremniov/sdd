@@ -6,7 +6,7 @@
       "message": "fixture baseline",
       "files": {
         ".gitignore": "docs/notes/\n",
-        ".sdd.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: true\nticket: T\nrules: CLAUDE.md\n",
+        ".sdd/config.yml": "canon: docs/architecture/\ntasks: docs/tasks.md\nroadmap: docs/roadmap.md\nfeatures: docs/features/\nadr: docs/adr/\nnotes: docs/notes/\nverify: true\nticket: T\nrules: CLAUDE.md\n",
         "docs/tasks.md": "# Tasks\n\n## Active\n\n## Done\n"
       },
       "executable": []

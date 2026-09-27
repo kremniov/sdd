@@ -4,6 +4,20 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.2.0
+
+- Each ticket is a file in the configured `tickets` directory. Closing a ticket
+  keeps its file, title and body and adds a Result field (ADR 0030).
+- `.sdd/tasks-index` generates the open index `tasks` and the closed index
+  `tasks_done`; `--check` fails on a stale index or a malformed ticket. Setup
+  copies the tool and offers conversion of a single-file queue.
+- The project configuration moves from `.sdd.yml` to `.sdd/config.yml`, beside
+  the copied tools (ADR 0031). Setup moves an existing file.
+- Ticket frontmatter is a restricted subset of YAML. `.sdd/tasks-index`
+  rejects unknown keys, empty values and text that YAML would read with
+  another meaning.
+- `check_scaffold.py` checks the stamp of a shipped tool.
+
 ## 1.1.19
 
 - A ticket title is a short noun phrase that names the work or, for a bug, the

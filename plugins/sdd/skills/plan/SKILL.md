@@ -10,8 +10,9 @@ completion before editing and when handing over the result.
 ## Inputs
 
 Begin after G2 with the approved, committed design. `/sdd:work` owns execution,
-stop conditions and integration. Read `features` and `verify` from `.sdd.yml`.
-If the file or a required value is absent, offer `/sdd:setup`.
+stop conditions and integration. Read `features` and `verify` from
+`.sdd/config.yml`. If the file or a required value is absent, offer
+`/sdd:setup`.
 
 Read the design and [_PLAN.md](templates/_PLAN.md) in place. Return
 a new material decision to the user and update the design before planning its

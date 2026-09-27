@@ -1,142 +1,21 @@
+<!-- sdd:scaffold v1.2.0 -->
 # Tasks
 
-The "what do I pull next" queue. Format: `/sdd:tasks`.
+Each ticket is a file in `docs/tasks/`. This index lists open tickets;
+`docs/tasks-done.md` lists closed ones. `.sdd/tasks-index` generates both indexes
+from the ticket files. Do not edit an index by hand. Use `/sdd:tasks` to add,
+change or close a ticket. Close a ticket in the final branch commit, after
+explicit permission to integrate.
+<!-- /sdd:scaffold -->
 
-## TODO
+<!-- tasks:index -->
 
-#### `[T-13]` Decide whether adoption offers an output style
+- [T-2](tasks/T-2.md) Portable structural checker for adopting projects · `[feat]` `[next]`
+- [T-8](tasks/T-8.md) Adoption offers permission rules for the integration commands · `[feat]` `[next]`
+- [T-9](tasks/T-9.md) Run the stamp comparison against a real prior adoption · `[chore]` `[next]`
+- [T-13](tasks/T-13.md) Decide whether adoption offers an output style · `[feat]` `[next]`
+- [T-3](tasks/T-3.md) Roadmap-authoring skill · `[feat]` `[someday]`
+- [T-5](tasks/T-5.md) Per-package adoption in a monorepo · `[feat]` `[someday]`
+- [T-14](tasks/T-14.md) An eval corpus for the register · `[chore]` `[someday]`
 
-**Tags:** `[feat]` `[next]`
-
-**Outcome:** The claim that Claude Code ships a built-in `Concise` style and reads `outputStyle` from project settings is verified, and `/sdd:setup` either offers it or the idea is closed.
-
-**Context:** Left out of the v1.0.0 rewrite as unverified. Two secondary sources claim it; neither was checked against the product.
-
-**Acceptance:**
-
-- [ ] The behaviour is confirmed or refuted against the product, and the evidence is written down
-- [ ] If it exists, adoption offers the setting and says what it costs
-- [ ] If it does not, this ticket closes with the finding recorded
-
----
-
-#### `[T-14]` An eval corpus for the register
-
-**Tags:** `[chore]` `[someday]`
-
-**Outcome:** A change to shipped text can be judged by what it does to an agent, not only by what `check_register.py` measures.
-
-**Context:** Invariant 12 measures length, depth and negation density. None of the three says whether a rewrite made a rule easier to follow, and the five field behaviours the v1.0.0 rewrite answered were found by reading pull requests one at a time.
-
-**Acceptance:**
-
-- [ ] A set of tasks that exercise the gates, the blockers and the handing-over rule
-- [ ] Each one records what an agent did, so two versions of a rule can be compared
-- [ ] The corpus lives where a change to the plugin can run against it
-
----
-
-#### `[T-5]` Per-package adoption in a monorepo
-
-**Tags:** `[feat]` `[someday]`
-
-**Outcome:** A monorepo can adopt the method per package, each with its own canon and queue, instead of one config at the root.
-
-**Acceptance:**
-
-- [ ] `.sdd.yml` resolution finds the nearest config, not only the repo root
-- [ ] Adoption asks which scope it is installing into when several packages exist
-- [ ] A skill invoked inside a package reads that package's paths
-
----
-
-#### `[T-9]` Run the stamp comparison against a real prior adoption
-
-**Tags:** `[chore]` `[next]`
-
-**Outcome:** The carry is known to work in the field, not only against the checkers.
-
-**Context:** T-7's fourth acceptance criterion, unmet at merge — plan step 5 is a `[gate]` and the branch shipped without it. Everything mechanical is enforced by `check_scaffold.py`; what no checker reaches is whether an agent, handed a `CHANGES.md` entry and a region worded in the project's own terms, edits the wording instead of replacing it. The first re-run also exercises the v0.2.0 baseline path, since the adopting project's fences predate the stamp.
-
-Runs after T-11, which rewrites the region this would carry — carrying it twice means the second run overwrites what the first just placed.
-
-**Acceptance:**
-
-- [ ] `/sdd:setup` re-run against the project whose fenced regions hold its own prose
-- [ ] Every entry from v0.2.0 to the current stamp lands; that project's wording, ids and cross-references survive
-- [ ] Stamps advance only on files where a carry happened, and nothing below a closing marker moves
-- [ ] What the run got wrong, if anything, is filed rather than fixed in place
-
-**Pointers:** deps: T-11
-
----
-
-#### `[T-8]` Adoption offers permission rules for the integration commands
-
-**Tags:** `[feat]` `[next]`
-
-**Outcome:** A project that adopts the method can have the user's merge
-decision enforced by a permission prompt, not only by prose an agent may reason
-past.
-
-**Context:** ADR 0010 records why the prose exists and why it is not enough — a
-text rule competes with the agent's own disposition toward autonomy and thins
-out over a long context. `ask` rules on `git merge*`, `git push*` and
-`gh pr merge*` in the project's `.claude/settings.json` make integration a
-dialog the agent cannot skip.
-
-The trade-off to settle first: prefix matching does not see the target branch,
-so `git push*` catches pushing a feature branch too — which the agent is
-supposed to do, before the review, to open the PR at all. Either accept the
-friction, since `ask` is a prompt and not a refusal, or reach for a hook that
-inspects the refspec. Decide it in the ticket rather than mid-implementation.
-
-**Acceptance:**
-
-- [ ] The feature-branch push question is settled one way and the reason is
-      written down
-- [ ] `/sdd:setup` proposes the rules and shows their exact JSON before asking
-- [ ] Declining is a first-class answer; adoption completes either way
-- [ ] An existing `permissions` block is extended, never replaced, and a rule
-      already present is not duplicated
-- [ ] The final report says whether the rules landed
-
----
-
-#### `[T-2]` Portable structural checker for adopting projects
-
-**Tags:** `[feat]` `[next]`
-
-**Outcome:** A project that adopted the method can check its own canon rules mechanically, the way `scripts/check.sh` checks this repo.
-
-**Acceptance:**
-
-- [ ] The check is expressed in the project's own terms, not this repo's
-- [ ] It runs from the `verify:` command in `.sdd.yml` or alongside it
-- [ ] It reports which invariants have a checker and which are conventions
-
----
-
-#### `[T-3]` Roadmap-authoring skill
-
-**Tags:** `[feat]` `[someday]`
-
-**Outcome:** A skill that turns a direction discussion into roadmap phases with objectives and gates, and keeps the roadmap out of ticket territory.
-
-**Acceptance:**
-
-- [ ] Produces phases with an objective and a closing gate each
-- [ ] Refuses to write items that are tickets in disguise
-- [ ] Names which roadmap items have tickets in the queue and which do not
-
----
-
-## Done
-
-- `[T-12]` `[bug]` `[PR #4]` Handing over names the skill that shapes the Done line — the one rule requiring an artifact edit without a pointer to the skill owning it. Stamp v0.5.1.
-- `[T-11]` `[debt]` `[PR #3]` Give the rules section somewhere for growth to go — partitioned by phase of work, the authority triad in one account, and a rule ships without its justification. 2115 → 1687 words with all 82 rules kept. ADR 0014, ADR 0015.
-- `[T-10]` `[bug]` `[PR #2]` A reviewer sizes by seam and cannot block on a missing artifact — the tier's signals name decisions instead of modules, and a methodology gap is reported to the user rather than ranked with the defects.
-- `[T-7]` `[fix]` `[PR #1]` Compare fence stamps instead of fenced text — the version on the marker, `CHANGES.md` as described changes, ADR 0011. Merged with the field gate outstanding; that is T-9.
-- `[T-6]` `[feat]` `[branch: feat/scaffold-upgrade]` Bring an adopted scaffold up to a newer plugin version — the fence, the gate that enforces it, ADR 0009. Gate run against a real prior adoption; the defect it surfaced is T-7.
-- `[T-4]` `[chore]` `[branch: main]` Publish to GitHub — public at `kremniov/sdd`, marketplace `kremniov`, plugin `sdd` 0.1.0.
-- `[T-1]` `[feat]` `[branch: master]` Extract the method into a portable plugin — five skills, three skeletons, a project scaffold, and a config seam.
+<!-- /tasks:index -->
