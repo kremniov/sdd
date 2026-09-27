@@ -10,11 +10,14 @@ behavior. Decision records preserve history. Link these entries by number.
 2. **Skeletons and scaffold have different lifecycles.** Skills read artifact
    skeletons in place from the plugin. Setup writes scaffold into missing project
    files and copies shipped tools into `.sdd/`; the plugin owns a tool's whole
-   file. Existing managed guidance updates through stamped, described changes;
-   matching versions need no edit. Generic prose refresh follows ADR 0029; legacy retirement follows ADR 0020.
-   *Detect:* `./scripts/check.sh` checks paths, reachability, fences, stamps and
-   migration entries; manual scenario review checks semantic updates.
-   *On violation:* correct the reference or migration before release.
+   file. Update existing guidance from the current template through an approved
+   replacement. Stamps identify template versions and prevent downgrades;
+   missing stamps require no historical baseline. A structural migration states
+   the condition under which it applies. See ADR 0032.
+   *Detect:* `./scripts/check.sh` checks paths, reachability, fences, stamp
+   progression and migration conditions; manual scenario review checks
+   preservation of project requirements and approval boundaries.
+   *On violation:* correct the reference or update procedure before release.
 3. **Adoption preserves project content.** Existing-file changes require an
    approved concrete proposal. Preserve unrelated text and project additions.
    Legacy region replacement is shown in full and requires explicit approval.
@@ -65,11 +68,11 @@ behavior. Decision records preserve history. Link these entries by number.
 11. **Active skill references resolve.** Use `/sdd:<skill>` and matching skill
     directories and frontmatter. Historical records can retain old names.
     *Detect:* `./scripts/check.sh` scans active documents and resolves skill names.
-    *On violation:* update the reference and any affected migration guidance.
+    *On violation:* update the reference and affected instructions.
 12. **Size checks and behavior checks are distinct.** A SKILL.md has at most
     1200 words including examples; resident rules have at most 400. Skill,
     resident and skeleton headings stop at H3 outside fenced examples. Negation
-    frequency is advisory. Report reference and migration text volume separately
+    frequency is advisory. Report reference text volume separately
     from any measured session load. See ADR 0024, replacing ADR 0021's density gate.
     *Detect:* `./scripts/check.sh` checks size/depth and checker tests. Scenario
     review and observed runs assess behavior; the counters do not establish it.
@@ -83,7 +86,8 @@ behavior. Decision records preserve history. Link these entries by number.
 | Manifest | `plugins/sdd/.claude-plugin/` | Version and package metadata |
 | Skills | `plugins/sdd/skills/` | Scoped procedures and conditional references |
 | Skeletons | `plugins/sdd/skills/{design,plan,work}/templates/_*.md` | Artifact content, read in place |
-| Scaffold | `plugins/sdd/skills/setup/templates/project/` | Rendered project guidance, shipped tools and semantic migration history |
+| Scaffold | `plugins/sdd/skills/setup/templates/project/` | Rendered project guidance and shipped tools |
+| Migrations | `plugins/sdd/skills/setup/migrations.md` | Structural changes with their conditions |
 | Method | `docs/method.md` | Complete agreed behavior for readers and maintainers |
 | Scenarios | `tests/scenarios/` | Versioned input cases and evaluator expectations |
 | Behavioral fixtures | `tests/behavior/` | Reproducible repositories, prompts and local agent runner |

@@ -17,6 +17,8 @@ class ScaffoldToolChecks(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             shutil.copytree(SOURCE / ROOT, root / ROOT)
+            journal = Path("plugins/sdd/skills/setup/migrations.md")
+            shutil.copyfile(SOURCE / journal, root / journal)
             manifest = Path("plugins/sdd/.claude-plugin/plugin.json")
             (root / manifest).parent.mkdir(parents=True)
             shutil.copyfile(SOURCE / manifest, root / manifest)
@@ -40,7 +42,7 @@ class ScaffoldToolChecks(unittest.TestCase):
     def test_changed_tool_needs_a_new_stamp(self):
         result = self.run_case(lambda text: text + "\n# changed\n")
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn("tasks-index: the fenced region changed", result.stdout)
+        self.assertIn("tasks-index: v1.2.0 must advance", result.stdout)
 
     def test_tool_needs_a_stamp(self):
         result = self.run_case(lambda text: text.replace("# sdd:scaffold v", "# scaffold v"))

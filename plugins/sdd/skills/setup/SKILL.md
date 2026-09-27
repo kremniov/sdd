@@ -63,15 +63,13 @@ tracked placeholder there. If the selected directory already contains tracked
 files, propose a separate untracked location rather than untracking user files.
 
 After approval, write `.sdd/config.yml`. For an existing config, show the exact
-diff before applying it. Keep unrelated keys and project content. Move a legacy
-`.sdd.yml` to `.sdd/config.yml` with its history and propose the reference
-changes.
+diff before applying it. Keep unrelated keys and project content.
 
 ## Scaffold
 
-Read [project](templates/project/). Create files only where absent.
-Substitute config values for placeholders and retain the template's markers and
-version. Do not copy `CHANGES.md` into the project.
+Read the [project templates](templates/project/). Create files only where
+absent. Substitute config values for placeholders and retain the template's
+markers and version.
 
 | Destination | Source |
 |---|---|
@@ -86,18 +84,12 @@ version. Do not copy `CHANGES.md` into the project.
 | `features`, `adr` | Create missing directories; use a tracked placeholder if needed |
 | `notes` | Create the ignored directory with the approved ignore rule |
 
-Propose adding `.sdd/tasks-index --check` to the `verify` command. For an
-existing single-file queue, propose its conversion to ticket files by the
-`tasks.md` entry in [CHANGES.md](templates/project/CHANGES.md). A declined
-conversion leaves `tickets` unset.
+Propose adding `.sdd/tasks-index --check` to the `verify` command.
 
 For an existing README without markers, propose necessary targeted corrections.
 Adding a managed section requires separate approval of its boundary and content.
 
-For existing managed files, read
-[reference.md](reference.md) and follow its version
-procedure. Preserve everything outside the managed region. Ask about unknown or
-ambiguous boundaries before editing that file.
+For existing managed files, follow Update existing guidance below.
 
 ## Resident rules
 
@@ -108,13 +100,39 @@ using the config. The destination is `rules`.
 |---|---|
 | No rules file | Create a project title and the approved section |
 | File without a process or managed section | Append the approved section; preserve existing content |
-| Managed section | Follow the version procedure in `reference.md` |
-| Old `sdd:method-section` | Follow the retirement procedure in `reference.md` |
+| Managed or legacy `sdd:method-section` | Follow Update existing guidance below |
 | Different existing process | Show conflicts and write the proposal to `<rules>.sdd-section` if approved; let the user choose integration |
 
-Check malformed or duplicate markers before selecting a row. Keep one active
-method section. A user can adopt config and scaffold while leaving resident
-rules pending. Report that limited state and the unresolved process choice.
+A user can adopt config and scaffold while leaving resident rules pending.
+Report that limited state and the unresolved process choice.
+
+## Update existing guidance
+
+Locate the managed region: `sdd:rules` for resident rules, `sdd:scaffold` for
+other files, or the legacy `sdd:method-section`. Check marker pairs and stamps.
+If boundaries or stamps are malformed, duplicated or ambiguous, ask before
+editing that file. For a file without markers, agree the boundary and content
+before adding a managed section. Leave a section newer than the installed
+template unchanged and report the version mismatch. A missing stamp requires
+no assumed baseline.
+
+Compare the region with the current template. Preserve project requirements,
+terms, IDs and links; replace generic legacy prose. Check current skills and
+configuration before treating old method rules as project additions. Leave
+content that already meets the current guidance and writing style alone.
+
+Show the complete proposed replacement and material changes, including process
+conflicts. After approval, replace only that region and use the template's
+stamp. On decline, leave the region and stamp unchanged. Replace a legacy
+`sdd:method-section` with `sdd:rules` through this same procedure. Keep one
+active method section and preserve everything outside the approved boundary.
+
+A shipped tool such as `.sdd/tasks-index` carries its stamp on a
+`# sdd:scaffold vN.N.N` line, and the plugin owns the whole file. When its
+stamp is older than the template's, propose replacing the whole file.
+
+Read [migrations.md](migrations.md). Propose each structural migration whose
+condition holds in the project, and apply it after approval.
 
 ## Verify and report
 

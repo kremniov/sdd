@@ -1,11 +1,8 @@
-"""Every scaffold file ships with exactly one well-formed, version-stamped fence.
+"""Check scaffold boundaries, template stamps and the migration journal.
 
-The fence is what a re-run compares against in an adopting repository, and the
-stamp is what it compares: a project whose stamp matches the template's is
-current whatever its wording says. A file that ships without one, or with a
-stamp that did not move when its guidance did, produces no error there — it
-produces silence, and the project keeps a stale copy nobody is told about.
-"""
+A stamp names the template version a project received. It advances when the
+guidance changes and never decreases. The journal lists structural migrations
+that a comparison with the current template cannot derive."""
 
 import json
 import os
@@ -18,10 +15,10 @@ MARKERS = {
     "CLAUDE.section.md": "sdd:rules",
 }
 DEFAULT = "sdd:scaffold"
-CHANGES = "CHANGES.md"
-BASELINE = (0, 2, 0)
 
 ROOT = Path("plugins/sdd/skills/setup/templates/project")
+JOURNAL = Path("plugins/sdd/skills/setup/migrations.md")
+CONDITION = "**Applies when:**"
 CEILING = json.loads(Path("plugins/sdd/.claude-plugin/plugin.json").read_text())["version"]
 
 
@@ -105,24 +102,42 @@ def stamp_line(text, name):
     return stamps[0], re.sub(rf"^# {re.escape(name)} v\S+\n", "", text, flags=re.M)
 
 
-def logged(text):
-    """{(version, filename)} — every entry declared in the change log."""
-    entries, version = set(), None
+def journal(text):
+    """{(version, title): [body, ...]} for every migration entry."""
+    entries, version, title = {}, None, None
     for line in text.splitlines():
         if line.startswith("## "):
-            version = line[3:].strip()
+            version, title = line[3:].strip(), None
         elif line.startswith("### ") and version:
-            entries.add((version, line[4:].strip()))
+            title = line[4:].strip()
+            entries.setdefault((version, title), []).append("")
+        elif title:
+            entries[(version, title)][-1] += line + "\n"
     return entries
 
 
+def shape(body):
+    """The first problem with an entry's condition and instructions, or None."""
+    blocks = [b for b in re.split(r"\n\s*\n", body.strip()) if b]
+    count = body.count(CONDITION)
+    if count != 1:
+        return f"states {count} conditions; it needs exactly one {CONDITION}"
+    if not blocks[0].startswith(CONDITION):
+        return "does not start with its condition"
+    if not blocks[0][len(CONDITION):].strip():
+        return "states an empty condition"
+    if len(blocks) < 2:
+        return "has no instructions after its condition"
+    return None
+
+
 ok = True
-stamps = {}
-broken = set()
 BASE = baseline()
-for path in sorted(p for p in ROOT.iterdir() if p.is_file()):
-    if path.name == CHANGES:
-        continue
+files = sorted(p for p in ROOT.iterdir() if p.is_file())
+if not files:
+    print("  FAIL    no scaffold templates found")
+    ok = False
+for path in files:
     name = MARKERS.get(path.name, DEFAULT)
     text = path.read_text()
     read = fence if path.suffix == ".md" else stamp_line
@@ -130,51 +145,48 @@ for path in sorted(p for p in ROOT.iterdir() if p.is_file()):
 
     if isinstance(result, str):
         print(f"  FAIL    {path.name}: {result}")
-        broken.add(path.name)
         ok = False
         continue
 
     stamp, region = result
     if parse(stamp) > parse(CEILING):
         print(f"  FAIL    {path.name}: stamped v{stamp}, ahead of the plugin's own {CEILING}")
-        broken.add(path.name)
         ok = False
         continue
 
     before = committed(BASE, path)
     was = read(before, name) if before is not None else None
-    if isinstance(was, tuple) and was[1] != region and was[0] == stamp:
-        print(f"  FAIL    {path.name}: the fenced region changed and v{stamp} did not move")
-        broken.add(path.name)
+    if isinstance(was, tuple) and (parse(stamp) < parse(was[0]) or
+                                   (was[1] != region and stamp == was[0])):
+        print(f"  FAIL    {path.name}: v{stamp} must advance when guidance changes "
+              f"and must not decrease (was v{was[0]})")
         ok = False
         continue
 
-    stamps[path.name] = stamp
     print(f"  OK      {path.name} ({name} v{stamp})")
 
-entries = logged((ROOT / CHANGES).read_text())
-for version, filename in sorted(entries):
-    if filename in broken:
-        continue  # already failed above; "not a scaffold file" would misname the cause
-    if filename not in stamps:
-        print(f"  FAIL    {CHANGES}: {version} names {filename}, which is not a scaffold file")
+entries = journal(JOURNAL.read_text()) if JOURNAL.exists() else {}
+if not JOURNAL.exists():
+    print(f"  FAIL    {JOURNAL.name} is missing")
+    ok = False
+for (version, title), bodies in sorted(entries.items()):
+    if parse(version) is None or parse(version) > parse(CEILING):
+        print(f"  FAIL    {JOURNAL.name}: {title!r} at {version} is ahead of the plugin's own {CEILING}")
         ok = False
-    elif parse(version) is None or parse(version) > parse(stamps[filename]):
-        print(f"  FAIL    {CHANGES}: {filename} has an entry for {version}, past its v{stamps[filename]}")
+    elif len(bodies) > 1:
+        print(f"  FAIL    {JOURNAL.name}: {title!r} at {version} appears {len(bodies)} times")
+        ok = False
+    elif problem := shape(bodies[0]):
+        print(f"  FAIL    {JOURNAL.name}: {title!r} at {version} {problem}")
         ok = False
 
-for filename, stamp in sorted(stamps.items()):
-    if parse(stamp) > BASELINE and (stamp, filename) not in entries:
-        print(f"  FAIL    {CHANGES}: nothing describes what changed in {filename} at v{stamp}")
-        ok = False
-
-# A project upgrades from wherever it stands, not from the last release, so an
-# entry stays reachable long after the stamp it describes has been passed.
-gone = logged(committed(BASE, ROOT / CHANGES) or "") - entries
-for version, filename in sorted(gone):
-    print(f"  FAIL    {CHANGES}: the {version} entry for {filename} was removed — entries are append-only")
+# A project updates from wherever it stands, so a structural step stays
+# reachable after later releases.
+gone = set(journal(committed(BASE, JOURNAL) or "")) - set(entries)
+for version, title in sorted(gone):
+    print(f"  FAIL    {JOURNAL.name}: {title!r} at {version} was removed — entries are append-only")
     ok = False
 
-if ok:
-    print(f"  OK      {CHANGES} accounts for every stamp past v{'.'.join(map(str, BASELINE))}")
+if ok and JOURNAL.exists():
+    print(f"  OK      {JOURNAL.name}: {len(entries)} structural migrations")
 sys.exit(0 if ok else 1)

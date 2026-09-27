@@ -10,12 +10,14 @@ A project has an older valid managed rules section with custom wording and a pro
 
 ## Continuation
 
-Decline the offered rules change. Then request setup again.
+Decline the proposed replacement.
 
 ## Evaluator: expected behavior
 
-Show the semantic change and preserve custom content. On decline, leave the section and its stamp unchanged. Re-offer the unapplied change on a later run.
+Show the complete proposed replacement and preserve project requirements.
+On decline, leave the section and stamp unchanged and report that outcome.
 
 ## Evaluator: failure conditions
 
-Fail if the agent loses project requirements or applies a declined requirement from the current template, advances the declined version, duplicates sections, or repeats already accepted changes.
+Fail if the agent changes the declined section or its stamp, loses project
+requirements, duplicates sections or creates persistent refusal tracking.

@@ -4,6 +4,19 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.3.0
+
+- Setup updates existing guidance directly from the current template through an
+  approved replacement that preserves project requirements and links (ADR 0032).
+- The update procedure lives in setup; `reference.md` and the per-stamp
+  `CHANGES.md` are removed. Unstamped sections need no historical baseline.
+- `setup/migrations.md` lists structural migrations, each with the condition
+  under which it applies. It carries the 1.2.0 config move, ticket-file
+  conversion and index tool.
+- `check_scaffold.py` checks that a stamp advances with its guidance and never
+  decreases, and that each migration states its condition; it no longer
+  requires an entry for every stamp.
+
 ## 1.2.0
 
 - Each ticket is a file in the configured `tickets` directory. Closing a ticket
