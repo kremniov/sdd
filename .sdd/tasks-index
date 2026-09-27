@@ -16,6 +16,7 @@ TYPES = ("feat", "bug", "debt", "chore")
 OPEN = ("in-progress", "next", "blocked", "someday")
 ID = re.compile(r"^([A-Za-z]+)-(\d+)$")
 PREFIX = None
+DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
 def parse(path):
@@ -44,6 +45,13 @@ def validate(t, stem):
         return [f"the file name is not a ticket ID such as T-12"]
     if t["id"] != stem:
         errs.append(f"heading id {t['id']} does not match the file name")
+    if not isinstance(t.get("areas", []), list):
+        errs.append("areas must be a list such as [a, b]")
+    for key in ("phase", "group", "closed", "ref"):
+        if isinstance(t.get(key, ""), list):
+            errs.append(f"{key} must be a single value")
+    if "closed" in t and not DATE.match(str(t["closed"])):
+        errs.append("closed must be a date YYYY-MM-DD")
     if t.get("type") not in TYPES:
         errs.append(f"type must be one of {', '.join(TYPES)}")
     status = t.get("status")

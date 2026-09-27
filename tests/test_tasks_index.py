@@ -99,6 +99,22 @@ class TasksIndex(unittest.TestCase):
             self.assertIn("T-2.md: status must be one of", result.stderr)
             self.assertIn("T-3.md: a done ticket needs ref", result.stderr)
 
+    def test_rejects_scalar_areas(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self.project(root, {"T-2.md": OPEN.replace("areas: [billing]", "areas: billing")})
+            result = self.run_index(root, "--check")
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("T-2.md: areas must be a list such as [a, b]", result.stderr)
+
+    def test_rejects_an_unpadded_closing_date(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self.project(root, {"T-1.md": DONE.replace("2026-01-05", "2026-1-05")})
+            result = self.run_index(root, "--check")
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("T-1.md: closed must be a date YYYY-MM-DD", result.stderr)
+
     def test_requires_the_configured_paths(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
