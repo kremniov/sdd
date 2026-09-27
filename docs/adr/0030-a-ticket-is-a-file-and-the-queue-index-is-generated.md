@@ -27,8 +27,10 @@ command.
 
 The frontmatter is a restricted subset of YAML, and the tool rejects anything
 outside it: unknown keys, empty values, nested values, escapes and plain text
-that YAML would read with another meaning. Every accepted file therefore reads
-the same as YAML, and the tool needs no YAML library.
+that YAML would read with another meaning. The tool reads every value as text.
+A YAML parser reads the same text for every accepted value, but can type a
+bare number or the closing date; the schema is string-valued, so that type
+carries no meaning. The tool needs no YAML library.
 
 A project without a `tickets` directory keeps its single queue file with its
 own conventions. Setup offers conversion.

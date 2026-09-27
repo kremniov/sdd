@@ -66,8 +66,8 @@ The frontmatter is a restricted subset of YAML: one `key: value` per line, only
 the keys below, a list as `[a, b]`, and a value in double quotes when it
 contains `#` or `: `, starts with punctuation, or is a YAML keyword such as
 `yes` or `null`. A quoted value contains no `"` or backslash. `.sdd/tasks-index`
-rejects anything outside this subset, so every accepted file reads the same as
-YAML.
+rejects anything outside this subset and reads every value as text. A YAML
+parser reads the same text, but can type a bare number or the closing date.
 
 | Key | Value |
 |---|---|
