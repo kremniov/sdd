@@ -7,6 +7,7 @@ list from the ticket files in `docs/tasks/`. Do not edit it by hand.
 
 <!-- tasks:index -->
 
+- [T-9](tasks/T-9.md) Run the stamp comparison against a real prior adoption · `[chore]` · PR #12
 - [T-12](tasks/T-12.md) Handing over names the skill that shapes the Done line · `[bug]` · PR #4
 - [T-11](tasks/T-11.md) Give the rules section somewhere for growth to go · `[debt]` · PR #3
 - [T-10](tasks/T-10.md) A reviewer sizes by seam and cannot block on a missing artifact · `[bug]` · PR #2

@@ -12,7 +12,6 @@ explicit permission to integrate.
 
 - [T-2](tasks/T-2.md) Portable structural checker for adopting projects · `[feat]` `[next]`
 - [T-8](tasks/T-8.md) Adoption offers permission rules for the integration commands · `[feat]` `[next]`
-- [T-9](tasks/T-9.md) Run the stamp comparison against a real prior adoption · `[chore]` `[next]`
 - [T-13](tasks/T-13.md) Decide whether adoption offers an output style · `[feat]` `[next]`
 - [T-3](tasks/T-3.md) Roadmap-authoring skill · `[feat]` `[someday]`
 - [T-5](tasks/T-5.md) Per-package adoption in a monorepo · `[feat]` `[someday]`
