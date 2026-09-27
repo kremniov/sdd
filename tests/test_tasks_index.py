@@ -115,6 +115,30 @@ class TasksIndex(unittest.TestCase):
             self.assertEqual(result.returncode, 1)
             self.assertIn("T-1.md: closed must be a date YYYY-MM-DD", result.stderr)
 
+    def test_rejects_an_unclosed_list(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self.project(root, {"T-2.md": OPEN.replace("areas: [billing]", "areas: [billing")})
+            result = self.run_index(root, "--check")
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("T-2.md: bad frontmatter line 'areas: [billing'", result.stderr)
+
+    def test_rejects_an_unclosed_quote(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self.project(root, {"T-1.md": DONE.replace('ref: "PR #7"', 'ref: "PR #7')})
+            result = self.run_index(root, "--check")
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("T-1.md: bad frontmatter line 'ref: \"PR #7'", result.stderr)
+
+    def test_rejects_a_date_that_does_not_exist(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self.project(root, {"T-1.md": DONE.replace("2026-01-05", "2026-02-30")})
+            result = self.run_index(root, "--check")
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("T-1.md: closed must be a date YYYY-MM-DD", result.stderr)
+
     def test_requires_the_configured_paths(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)

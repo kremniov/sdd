@@ -7,7 +7,7 @@ the paths: `tickets` (one file per ticket), `tasks` (open tickets) and
 Usage: .sdd/tasks-index [--check]
 
 --check exits 1 when an index differs from the ticket files."""
-import os, re, sys
+import datetime, os, re, sys
 
 CONFIG = ".sdd/config.yml"
 BEGIN, END = "<!-- tasks:index -->", "<!-- /tasks:index -->"
@@ -30,13 +30,26 @@ def parse(path):
         if not sep:
             raise ValueError(f"bad frontmatter line {line!r}")
         val = val.strip()
-        if val.startswith("["):
-            val = [v.strip() for v in val.strip("[]").split(",") if v.strip()]
-        elif val.startswith('"'):
-            val = val.strip('"')
+        if val.startswith("[") or val.startswith('"'):
+            close = "]" if val[0] == "[" else '"'
+            if len(val) < 2 or not val.endswith(close) or close in val[1:-1]:
+                raise ValueError(f"bad frontmatter line {line!r}")
+            val = val[1:-1]
+            if close == "]":
+                val = [v.strip() for v in val.split(",") if v.strip()]
         meta[key] = val
     meta["id"], meta["title"] = m.group(2), m.group(3)
     return meta
+
+
+def is_date(value):
+    if not isinstance(value, str) or not DATE.match(value):
+        return False
+    try:
+        datetime.date.fromisoformat(value)
+    except ValueError:
+        return False
+    return True
 
 
 def validate(t, stem):
@@ -50,7 +63,7 @@ def validate(t, stem):
     for key in ("phase", "group", "closed", "ref"):
         if isinstance(t.get(key, ""), list):
             errs.append(f"{key} must be a single value")
-    if "closed" in t and not DATE.match(str(t["closed"])):
+    if "closed" in t and not is_date(t["closed"]):
         errs.append("closed must be a date YYYY-MM-DD")
     if t.get("type") not in TYPES:
         errs.append(f"type must be one of {', '.join(TYPES)}")
