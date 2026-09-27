@@ -139,6 +139,37 @@ class TasksIndex(unittest.TestCase):
             self.assertEqual(result.returncode, 1)
             self.assertIn("T-1.md: closed must be a date YYYY-MM-DD", result.stderr)
 
+    def test_rejects_an_unknown_key(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self.project(root, {"T-2.md": OPEN.replace("status: next", "status: next\nstaus: next")})
+            result = self.run_index(root, "--check")
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("T-2.md: unknown key staus", result.stderr)
+
+    def test_rejects_an_empty_value(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            self.project(root, {"T-1.md": DONE.replace('ref: "PR #7"', 'ref: ""')})
+            result = self.run_index(root, "--check")
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("T-1.md: ref is empty", result.stderr)
+
+    def test_rejects_text_that_yaml_reads_differently(self):
+        cases = {
+            "ref: PR #7": "an unquoted # starts a comment",
+            'ref: "PR \\"7"': "a quoted value cannot contain",
+            "ref: &anchor": "cannot start with",
+            "ref: a: b": "cannot contain",
+        }
+        for value, message in cases.items():
+            with self.subTest(value=value), tempfile.TemporaryDirectory() as d:
+                root = Path(d)
+                self.project(root, {"T-1.md": DONE.replace('ref: "PR #7"', value)})
+                result = self.run_index(root, "--check")
+                self.assertEqual(result.returncode, 1)
+                self.assertIn(message, result.stderr)
+
     def test_requires_the_configured_paths(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)

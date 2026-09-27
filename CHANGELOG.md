@@ -13,6 +13,9 @@ copy when that number rises.
   copies the tool and offers conversion of a single-file queue.
 - The project configuration moves from `.sdd.yml` to `.sdd/config.yml`, beside
   the copied tools (ADR 0031). Setup moves an existing file.
+- Ticket frontmatter is a restricted subset of YAML. `.sdd/tasks-index`
+  rejects unknown keys, empty values and text that YAML would read with
+  another meaning.
 - `check_scaffold.py` checks the stamp of a shipped tool.
 
 ## 1.1.19

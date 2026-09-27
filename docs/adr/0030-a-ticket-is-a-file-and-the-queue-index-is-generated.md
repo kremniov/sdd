@@ -25,6 +25,11 @@ the closed index only for closed work. The tool's `--check` mode fails on a
 stale index or a malformed ticket, and belongs in the project's `verify`
 command.
 
+The frontmatter is a restricted subset of YAML, and the tool rejects anything
+outside it: unknown keys, empty values, nested values, escapes and plain text
+that YAML would read with another meaning. Every accepted file therefore reads
+the same as YAML, and the tool needs no YAML library.
+
 A project without a `tickets` directory keeps its single queue file with its
 own conventions. Setup offers conversion.
 
@@ -36,6 +41,9 @@ own conventions. Setup offers conversion.
   product.
 - **An index maintained by hand.** Tags and titles would live in two places and
   drift from the first edit.
+- **Full YAML frontmatter.** Parsing it needs a library outside the standard
+  library of the tool's interpreter, which an adopting project would have to
+  install. Ticket metadata needs only flat scalars and flat lists.
 - **One index with open and closed sections.** The closed section was more than
   half of the index in the adopting project and grows with every merge.
 

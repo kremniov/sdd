@@ -16,7 +16,26 @@ TYPES = ("feat", "bug", "debt", "chore")
 OPEN = ("in-progress", "next", "blocked", "someday")
 ID = re.compile(r"^([A-Za-z]+)-(\d+)$")
 PREFIX = None
+KEYS = ("type", "phase", "areas", "status", "group", "closed", "ref")
+RESERVED = {"true", "false", "yes", "no", "on", "off", "null", "~"}
 DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def plain(key, value, in_list=False):
+    """Reject plain text that YAML would read with another meaning."""
+    if not value:
+        return value
+    if value[0] in "-?:,[]{}#&*!|>'\"%@`\\":
+        raise ValueError(f"{key}: a plain value cannot start with {value[0]!r}; quote it")
+    if " #" in value:
+        raise ValueError(f"{key}: an unquoted # starts a comment in YAML; quote the value")
+    if ": " in value or value.endswith(":"):
+        raise ValueError(f"{key}: a plain value cannot contain ': '; quote it")
+    if value.lower() in RESERVED:
+        raise ValueError(f"{key}: YAML reads {value!r} as a keyword; quote it")
+    if in_list and any(c in value for c in ",[]{}\""):
+        raise ValueError(f"{key}: a list item cannot contain , [ ] {{ }} or quotes")
+    return value
 
 
 def parse(path):
@@ -27,16 +46,29 @@ def parse(path):
     meta = {}
     for line in m.group(1).splitlines():
         key, sep, val = line.partition(": ")
-        if not sep:
+        if not sep or not re.fullmatch(r"[a-z_]+", key):
             raise ValueError(f"bad frontmatter line {line!r}")
+        if key not in KEYS:
+            raise ValueError(f"unknown key {key}; expected one of {', '.join(KEYS)}")
+        if key in meta:
+            raise ValueError(f"duplicate key {key}")
         val = val.strip()
-        if val.startswith("[") or val.startswith('"'):
-            close = "]" if val[0] == "[" else '"'
-            if len(val) < 2 or not val.endswith(close) or close in val[1:-1]:
+        if val.startswith("["):
+            if not val.endswith("]") or any(c in val[1:-1] for c in "[]"):
+                raise ValueError(f"bad frontmatter line {line!r}")
+            inner = val[1:-1].strip()
+            items = [v.strip() for v in inner.split(",")] if inner else []
+            if "" in items:
+                raise ValueError(f"bad frontmatter line {line!r}")
+            val = [plain(key, v, in_list=True) for v in items]
+        elif val.startswith('"'):
+            if "\\" in val:
+                raise ValueError(f"{key}: a quoted value cannot contain a backslash")
+            if len(val) < 2 or not val.endswith('"') or '"' in val[1:-1]:
                 raise ValueError(f"bad frontmatter line {line!r}")
             val = val[1:-1]
-            if close == "]":
-                val = [v.strip() for v in val.split(",") if v.strip()]
+        else:
+            val = plain(key, val)
         meta[key] = val
     meta["id"], meta["title"] = m.group(2), m.group(3)
     return meta
@@ -58,6 +90,9 @@ def validate(t, stem):
         return [f"the file name is not a ticket ID such as T-12"]
     if t["id"] != stem:
         errs.append(f"heading id {t['id']} does not match the file name")
+    for key in ("type", "phase", "status", "group", "closed", "ref"):
+        if t.get(key) == "":
+            errs.append(f"{key} is empty")
     if not isinstance(t.get("areas", []), list):
         errs.append("areas must be a list such as [a, b]")
     for key in ("phase", "group", "closed", "ref"):

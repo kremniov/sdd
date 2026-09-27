@@ -62,8 +62,12 @@ is required. Implementation choices remain open.
 **Pointers:** requirements: <source> · deps: T-38
 ```
 
-The frontmatter has one `key: value` per line. A list is `[a, b]`. Put a value
-that contains `#` in double quotes.
+The frontmatter is a restricted subset of YAML: one `key: value` per line, only
+the keys below, a list as `[a, b]`, and a value in double quotes when it
+contains `#` or `: `, starts with punctuation, or is a YAML keyword such as
+`yes` or `null`. A quoted value contains no `"` or backslash. `.sdd/tasks-index`
+rejects anything outside this subset, so every accepted file reads the same as
+YAML.
 
 | Key | Value |
 |---|---|
