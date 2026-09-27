@@ -103,16 +103,16 @@ def stamp_line(text, name):
 
 
 def journal(text):
-    """{(version, title): body} for every migration entry."""
+    """{(version, title): [body, ...]} for every migration entry."""
     entries, version, title = {}, None, None
     for line in text.splitlines():
         if line.startswith("## "):
             version, title = line[3:].strip(), None
         elif line.startswith("### ") and version:
             title = line[4:].strip()
-            entries[(version, title)] = ""
+            entries.setdefault((version, title), []).append("")
         elif title:
-            entries[(version, title)] += line + "\n"
+            entries[(version, title)][-1] += line + "\n"
     return entries
 
 
@@ -169,11 +169,14 @@ entries = journal(JOURNAL.read_text()) if JOURNAL.exists() else {}
 if not JOURNAL.exists():
     print(f"  FAIL    {JOURNAL.name} is missing")
     ok = False
-for (version, title), body in sorted(entries.items()):
+for (version, title), bodies in sorted(entries.items()):
     if parse(version) is None or parse(version) > parse(CEILING):
         print(f"  FAIL    {JOURNAL.name}: {title!r} at {version} is ahead of the plugin's own {CEILING}")
         ok = False
-    elif problem := shape(body):
+    elif len(bodies) > 1:
+        print(f"  FAIL    {JOURNAL.name}: {title!r} at {version} appears {len(bodies)} times")
+        ok = False
+    elif problem := shape(bodies[0]):
         print(f"  FAIL    {JOURNAL.name}: {title!r} at {version} {problem}")
         ok = False
 

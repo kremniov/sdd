@@ -67,6 +67,11 @@ class MigrationChecks(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("'Index tool' at 1.2.0 has no instructions", result.stdout)
 
+    def test_titles_are_unique_within_a_version(self):
+        result = self.run_case(lambda text: text + "\n### Index tool\n\n**Applies when:** always.\n\nDo it.\n")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("'Index tool' at 1.2.0 appears 2 times", result.stdout)
+
     def test_entry_cannot_be_ahead_of_the_plugin(self):
         result = self.run_case(lambda text: text + "\n## 999.0.0\n\n### Future\n\n**Applies when:** never.\n")
         self.assertNotEqual(result.returncode, 0)
