@@ -40,7 +40,32 @@ class MigrationChecks(unittest.TestCase):
     def test_entry_needs_a_condition(self):
         result = self.run_case(lambda text: text.replace("**Applies when:**", "**When:**", 1))
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn("states no **Applies when:**", result.stdout)
+        self.assertIn("'Configuration in `.sdd/`' at 1.2.0 states 0 conditions", result.stdout)
+
+    def test_condition_is_not_empty(self):
+        result = self.run_case(lambda text: text.replace(
+            "**Applies when:** the config sets `tickets` and `.sdd/tasks-index` is missing.",
+            "**Applies when:**"))
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("'Index tool' at 1.2.0 states an empty condition", result.stdout)
+
+    def test_entry_states_one_condition(self):
+        result = self.run_case(lambda text: text + "\n**Applies when:** always.\n")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("'Index tool' at 1.2.0 states 2 conditions", result.stdout)
+
+    def test_condition_comes_first(self):
+        result = self.run_case(lambda text: text.replace(
+            "### Index tool\n", "### Index tool\n\nCopy the tool.\n"))
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("'Index tool' at 1.2.0 does not start with its condition", result.stdout)
+
+    def test_entry_has_instructions(self):
+        def drop_instructions(text):
+            return text[:text.index("Copy `tasks-index`")]
+        result = self.run_case(drop_instructions)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("'Index tool' at 1.2.0 has no instructions", result.stdout)
 
     def test_entry_cannot_be_ahead_of_the_plugin(self):
         result = self.run_case(lambda text: text + "\n## 999.0.0\n\n### Future\n\n**Applies when:** never.\n")

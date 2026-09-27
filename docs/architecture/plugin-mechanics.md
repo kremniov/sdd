@@ -70,8 +70,9 @@ same procedure to replace a legacy `sdd:method-section` with `sdd:rules`. Keep
 one active method section.
 
 `migrations.md` lists structural changes that a template comparison cannot
-derive, each with the condition under which it applies. Setup checks every
-condition and proposes the migrations that apply. See ADR 0032.
+derive. An entry is a `###` heading under its `##` version, then one
+non-empty `**Applies when:**` condition, then the instructions. Setup checks
+every condition and proposes the migrations that apply. See ADR 0032.
 
 ## Version and checks
 

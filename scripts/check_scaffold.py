@@ -18,6 +18,7 @@ DEFAULT = "sdd:scaffold"
 
 ROOT = Path("plugins/sdd/skills/setup/templates/project")
 JOURNAL = Path("plugins/sdd/skills/setup/migrations.md")
+CONDITION = "**Applies when:**"
 CEILING = json.loads(Path("plugins/sdd/.claude-plugin/plugin.json").read_text())["version"]
 
 
@@ -115,6 +116,21 @@ def journal(text):
     return entries
 
 
+def shape(body):
+    """The first problem with an entry's condition and instructions, or None."""
+    blocks = [b for b in re.split(r"\n\s*\n", body.strip()) if b]
+    count = body.count(CONDITION)
+    if count != 1:
+        return f"states {count} conditions; it needs exactly one {CONDITION}"
+    if not blocks[0].startswith(CONDITION):
+        return "does not start with its condition"
+    if not blocks[0][len(CONDITION):].strip():
+        return "states an empty condition"
+    if len(blocks) < 2:
+        return "has no instructions after its condition"
+    return None
+
+
 ok = True
 BASE = baseline()
 files = sorted(p for p in ROOT.iterdir() if p.is_file())
@@ -157,8 +173,8 @@ for (version, title), body in sorted(entries.items()):
     if parse(version) is None or parse(version) > parse(CEILING):
         print(f"  FAIL    {JOURNAL.name}: {title!r} at {version} is ahead of the plugin's own {CEILING}")
         ok = False
-    elif "**Applies when:**" not in body:
-        print(f"  FAIL    {JOURNAL.name}: {title!r} at {version} states no **Applies when:** condition")
+    elif problem := shape(body):
+        print(f"  FAIL    {JOURNAL.name}: {title!r} at {version} {problem}")
         ok = False
 
 # A project updates from wherever it stands, so a structural step stays
