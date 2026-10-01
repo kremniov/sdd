@@ -6,7 +6,7 @@ copy when that number rises.
 
 ## 1.3.1
 
-- Closing a ticket keeps its other frontmatter keys, `group` included.
+- Closing a ticket keeps its other frontmatter keys.
 
 ## 1.3.0
 

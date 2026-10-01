@@ -103,8 +103,8 @@ indexes with the ticket files.
 
 Close after explicit permission to integrate its branch, before merge, as part
 of `/sdd:work` Integration. Keep the ticket file, its title, its body and its
-other frontmatter keys, `group` included. Set `status: done`, `closed` and
-`ref`, and add a Result field after the title:
+other frontmatter keys. Set `status: done`, `closed` and `ref`, and add a
+Result field after the title:
 
 ```markdown
 # T-40: Recovery export
