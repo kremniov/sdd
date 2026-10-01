@@ -75,7 +75,7 @@ parser reads the same text, but can type a bare number or the closing date.
 | `phase` | A project phase; optional |
 | `areas` | Project area names; optional |
 | `status` | `next`, `in-progress`, `blocked`, `someday` or `done` |
-| `group` | The index heading of an open ticket; optional |
+| `group` | The index heading while the ticket is open; optional |
 | `closed` | The closing date, `YYYY-MM-DD`; closed tickets only |
 | `ref` | The PR, branch or commit that closes the ticket; closed tickets only |
 
@@ -102,8 +102,9 @@ indexes with the ticket files.
 ## Close a ticket
 
 Close after explicit permission to integrate its branch, before merge, as part
-of `/sdd:work` Integration. Keep the ticket file, its title and its body. Set
-`status: done`, `closed` and `ref`, and add a Result field after the title:
+of `/sdd:work` Integration. Keep the ticket file, its title, its body and its
+other frontmatter keys. Set `status: done`, `closed` and `ref`, and add a
+Result field after the title:
 
 ```markdown
 # T-40: Recovery export
