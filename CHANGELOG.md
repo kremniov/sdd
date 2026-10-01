@@ -4,6 +4,10 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.3.1
+
+- Closing a ticket keeps its other frontmatter keys, `group` included.
+
 ## 1.3.0
 
 - Setup updates existing guidance directly from the current template through an
