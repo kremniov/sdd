@@ -46,8 +46,11 @@ as separate work.
 
 ## Content budget
 
-Aim for at most 1300 words, with a 2000-word ceiling and at most 12 headings.
+Aim for at most 1300 words, with a 3000-word ceiling and at most 12 headings.
 These are upper bounds, not content targets. State a choice and its decisive
 constraint briefly. Include additional evidence when needed to assess it. There
 is no minimum sentence or decision count. Keep detailed existing contracts at
 their source and link them.
+
+If the design approaches the ceiling, ask the user to raise it before deleting
+or compressing useful content to fit.
