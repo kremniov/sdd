@@ -133,6 +133,10 @@ End a section when its question is answered. Omit empty sections. There is no
 minimum number of decisions or sentences. Retain a detail if deleting it leaves
 a material choice open or prevents verification.
 
+For a design, aim for at most 1300 words, with a 3000-word ceiling and at most
+12 headings. If the design approaches the ceiling, ask the user to raise it
+before deleting or compressing useful content to fit.
+
 A plan gives each step an observable result, constraints, affected parts and a
 check. Link contracts from the design. Agree a new material choice there first.
 Keep function bodies out of the plan. Order steps by dependencies and identify

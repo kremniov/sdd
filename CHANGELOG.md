@@ -4,6 +4,11 @@ Notable changes to the `sdd` plugin. Versions follow the `version` field in
 `plugins/sdd/.claude-plugin/plugin.json` — Claude Code only updates an installed
 copy when that number rises.
 
+## 1.3.2
+
+- Raise the design ceiling from 2000 to 3000 words. Near the ceiling, ask the
+  user to raise it before deleting or compressing useful content to fit.
+
 ## 1.3.1
 
 - Closing a ticket keeps its other frontmatter keys.

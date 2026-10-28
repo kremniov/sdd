@@ -4,9 +4,11 @@
 
 <!--
 Write under the configured features directory. Keep applicable headings below;
-omit empty sections. Aim for at most 1300 words, ceiling 2000, at most 12 headings.
+omit empty sections. Aim for at most 1300 words, ceiling 3000, at most 12 headings.
 There is no minimum content count. Replace this guidance with the actual design.
 Link existing contracts and invariants rather than duplicating them.
+If the design approaches the ceiling, ask the user to raise it before deleting
+or compressing useful content to fit.
 -->
 
 ## Problem and goal
